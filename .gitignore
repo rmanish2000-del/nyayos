@@ -1,0 +1,117 @@
+# ==========================================================================
+# NyayOS — repository exclusions
+#
+# THIS REPOSITORY IS DOCUMENTATION ONLY.
+#
+# PRIVATE-DATA WARNING
+# --------------------------------------------------------------------------
+# The NyayOS project references a founder-controlled private criminal matter
+# (the "Foodgod FPO matter"). That matter is PRIVATE EVALUATION ONLY.
+#
+# NEVER commit to this repository:
+#   - any file from the private matter (FIR, complaints, bail papers,
+#     chargesheets, court orders, correspondence, chat exports, media);
+#   - any document containing party names, addresses, phone numbers,
+#     Aadhaar/PAN/passport numbers, case numbers, CNR numbers or FIR numbers;
+#   - any real user, client or pilot-participant case material;
+#   - credentials, tokens, API keys, service-account files or .env files.
+#
+# Governance references to the matter (e.g. "this matter is private, do not
+# train on it") are policy statements and are permitted. Case CONTENT is not.
+#
+# If you are unsure whether a file is case content, DO NOT COMMIT IT.
+# ==========================================================================
+
+# --- Private case material (explicit) -------------------------------------
+Manish_Patel_Foodgod_Chat_Context_Export.pdf
+*Foodgod*
+*FOODGOD*
+/private/
+/case-files/
+/real-case/
+
+# --- Case-document file types (blanket block) -----------------------------
+*.pdf
+*.docx
+*.doc
+*.rtf
+*.odt
+*.eml
+*.msg
+*.pst
+*.vcf
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.tif
+*.tiff
+*.heic
+*.mp3
+*.mp4
+*.wav
+*.m4a
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+
+# --- Structured data exports (may carry PII) ------------------------------
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.sqlite
+*.db
+*.dump
+*.bak
+
+# --- Credentials and secrets ----------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+credentials.json
+service-account*.json
+secrets.json
+*_secret*
+*_token*
+.netrc
+.npmrc
+.pypirc
+
+# --- Local environment / tooling ------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+.claude/
+.cursor/
+
+# --- Build / dependency artefacts (none expected: docs-only repo) ---------
+node_modules/
+dist/
+build/
+out/
+.next/
+.cache/
+coverage/
+__pycache__/
+*.log
+
+# --- Working scratch -------------------------------------------------------
+/scratch/
+/tmp/
+/temp/
+*.tmp
+NYAYOS_V1_REVISED_DELIVERABLES/
