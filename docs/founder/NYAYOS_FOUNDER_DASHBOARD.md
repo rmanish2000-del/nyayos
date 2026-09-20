@@ -229,7 +229,7 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | **Repository URL** | https://github.com/rmanish2000-del/nyayos |
 | **Local workspace** | `C:\nyayos` |
 | **Branch** | `main` |
-| **Latest commit SHA** | `__INIT_COMMIT_SHA__` (initialization commit; see § *Note*) |
+| **Latest commit SHA** | `516ba15` — `516ba153470c9e30144e58f1f67dbfea95b76841` (initialization commit; see § *Note*) |
 | **Working-tree status** | Clean at time of writing |
 | **Deployment status** | **NOT DEPLOYED — deployment NOT ALLOWED** |
 | **Repository contents** | **Documentation only.** No application code, no schema, no migrations, no infrastructure, no database resources |
