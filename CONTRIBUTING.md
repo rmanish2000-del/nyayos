@@ -19,11 +19,15 @@ It is **documentation only**.
 
 ---
 
-## 2. This repository is public
+## 2. This repository is private — keep it that way
 
-`github.com/rmanish2000-del/nyayos` is **public**. Everything committed is published, and publication is **not reversible** — content can be cloned, cached and indexed before any later deletion.
+`github.com/rmanish2000-del/nyayos` is **private**. It was set to private on 20 September 2026, *before* the first push, because supplied documents carry governance references to a founder-controlled private criminal matter.
 
-**Before every commit, ask: would I be comfortable if this were indexed by a search engine tomorrow?** If not, do not commit it.
+**Do not make this repository public** without first completing a redaction review and recording the outcome as a decision in the decision log.
+
+Publication is **not reversible** — once content is public it can be cloned, cached and indexed before any later deletion. Privacy settings protect you only until the moment they are changed.
+
+**Before every commit, ask: would I be comfortable if this became public tomorrow?** If not, do not commit it.
 
 ---
 

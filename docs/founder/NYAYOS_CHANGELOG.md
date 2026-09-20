@@ -47,11 +47,15 @@ Two non-substantive changes were made, both recorded:
 - Repository is **documentation only**. No product code, no schema, no database resources, no deployment.
 - Lovable staging build (A-011) is **blocked** pending a recorded founder go decision.
 
-### Blocked — push to canonical repository
+### Changed — repository visibility PUBLIC → PRIVATE
 
-The initialization commit was made **locally only**.
+The canonical repository was found to be **public** during the pre-commit check. Four supplied documents reference the founder-controlled private criminal matter by name in governance context, so pushing to a public host would have been an irreversible disclosure.
 
-`github.com/rmanish2000-del/nyayos` was verified as **PUBLIC**. Four supplied documents reference the founder-controlled private criminal matter by name in governance context. Publishing them to a public repository is an irreversible disclosure, so the push was held for a founder decision. See `NYAYOS_OUTPUT_REGISTER.md` § *Residual item*.
+The push was **held** and the decision escalated to the founder, who directed: make the repository private, then push.
+
+Sequence: visibility changed to **PRIVATE** and verified → `main` pushed. **No NyayOS content was ever publicly visible** — the repository was empty for its entire public lifetime.
+
+Standing constraint recorded in `README.md` and `CONTRIBUTING.md` § 2: do not make this repository public without a completed redaction review recorded as a decision.
 
 ### Notes — open items requiring founder input
 

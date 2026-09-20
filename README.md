@@ -15,7 +15,7 @@
 | **Project stage** | Pre-build. Product Definition → Design Preparation |
 | **Private data** | **Never commit case material.** See [CONTRIBUTING.md](CONTRIBUTING.md) § *Private-data rules* |
 
-**This repository is public.** Treat everything in it as published. Do not add anything you would not want indexed.
+**This repository is private** (set to private on 20 Sep 2026, before the first push, because it carries governance references to a private criminal matter). Keep it private unless a redaction review is completed and recorded as a decision.
 
 ---
 

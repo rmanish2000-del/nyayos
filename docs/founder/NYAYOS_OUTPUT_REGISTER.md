@@ -88,17 +88,18 @@ Four supplied documents name the private matter **in governance context only** �
 
 These are **policy statements, not case material**. They were left unchanged because editing them would alter supplied content, which this assignment forbids.
 
-> ### ⚠ THE CANONICAL REPOSITORY IS PUBLIC
+> ### ⚠ VISIBILITY — RESOLVED, BUT KEEP IT THAT WAY
 >
-> `github.com/rmanish2000-del/nyayos` has visibility **PUBLIC** (verified 20 Sep 2026).
+> `github.com/rmanish2000-del/nyayos` was found to be **PUBLIC** during the A-007 pre-commit check (verified 20 Sep 2026).
 >
-> On a public repository, the governance references above disclose that a **named entity is the subject of a founder-controlled criminal matter**. That is a materially different exposure from the same sentence in a private repository, and publication to a public host is **not reversible** — content may be cloned, cached and indexed before any later deletion.
+> On a public repository, the governance references above would disclose that a **named entity is the subject of a founder-controlled criminal matter** — a materially different exposure from the same sentence in a private repository, and **not reversible**, since content may be cloned, cached and indexed before any later deletion.
 >
-> **For this reason the initialization commit was made locally and NOT pushed.** The founder must choose one of:
+> **The push was therefore held for a founder decision.** The founder directed: *make the repository private, then push.*
 >
-> 1. make the repository **private**, then push;
-> 2. authorize a **redaction pass** over the four documents above, then push to public;
-> 3. push to public **as-is**, accepting the disclosure;
-> 4. keep the repository **local-only** for now.
+> **Action taken, in this order:**
+> 1. repository visibility changed **PUBLIC → PRIVATE** and verified;
+> 2. only then was `main` pushed.
 >
-> Until that decision is recorded, the canonical repository remains empty and this repository exists only in the local workspace.
+> **No NyayOS content was ever publicly visible.** The repository was empty for its entire public lifetime.
+>
+> **Standing constraint:** do not make this repository public without first completing a redaction review of the four documents above and recording the outcome as a decision in the decision log. See [CONTRIBUTING.md](../../CONTRIBUTING.md) § 2.
