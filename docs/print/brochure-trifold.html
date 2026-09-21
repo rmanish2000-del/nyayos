@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — Tri-Fold Brochure</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:#1C3D5A; --navy-mid:#2D6A8F; --amber:#E8A020;
+    --text:#111827; --muted:#374151; --light:#F7F8FA; --white:#FFFFFF;
+    --border:#E5E7EB; --green:#15803D;
+  }
+  @page { size: A4 landscape; margin: 0; }
+  body {
+    width: 297mm; height: 210mm;
+    font-family: 'Noto Sans', sans-serif;
+    color: var(--text);
+    display: flex;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    overflow: hidden;
+  }
+  .panel {
+    width: 99mm; height: 210mm;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-right: 0.5pt dashed var(--border);
+    display: flex; flex-direction: column;
+  }
+  .panel:last-child { border-right: none; }
+  .panel-cover {
+    background: var(--navy);
+    align-items: center; justify-content: center; text-align: center;
+    padding: 10mm;
+  }
+  .cover-logo svg { width: 48px; height: 48px; margin-bottom: 5mm; }
+  .cover-wordmark { font-family: 'Hind Siliguri',sans-serif; font-size: 32px; font-weight: 700; color: white; letter-spacing: 0.04em; margin-bottom: 3mm; }
+  .cover-tagline { font-size: 11px; color: rgba(255,255,255,0.75); font-style: italic; margin-bottom: 12mm; }
+  .cover-illus { width: 44mm; height: 44mm; background: rgba(255,255,255,0.06); border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 12mm; }
+  .cover-cta { background: var(--amber); color: var(--navy); font-family: 'Hind Siliguri',sans-serif; font-size: 11px; font-weight: 700; padding: 3mm 8mm; border-radius: 20px; display: inline-block; }
+  .cover-url { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 8mm; }
+  .panel-2 { background: var(--white); padding: 8mm 7mm; }
+  .p2-head { font-family: 'Hind Siliguri',sans-serif; font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 4mm; }
+  .p2-body { font-size: 9px; line-height: 1.6; color: var(--muted); margin-bottom: 5mm; }
+  .problem-list { list-style: none; padding: 0; margin-bottom: 5mm; }
+  .problem-list li { font-size: 9px; line-height: 1.5; color: var(--muted); padding-left: 12px; position: relative; margin-bottom: 2mm; }
+  .problem-list li::before { content: '→'; position: absolute; left: 0; color: var(--navy-mid); font-weight: 700; }
+  .pull-quote { background: var(--light); border-left: 3px solid var(--amber); padding: 4mm 5mm; border-radius: 0 4px 4px 0; }
+  .pull-quote p { font-family: 'Hind Siliguri',sans-serif; font-size: 10px; font-weight: 600; color: var(--navy); line-height: 1.4; font-style: italic; }
+  .panel-3 { background: var(--light); padding: 8mm 7mm; }
+  .panel-section-head { font-family: 'Hind Siliguri',sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy-mid); margin-bottom: 4mm; }
+  .step-item { display: flex; gap: 3mm; margin-bottom: 4mm; align-items: flex-start; }
+  .step-badge { width: 20px; height: 20px; border-radius: 50%; background: var(--navy); color: white; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-content strong { font-size: 9.5px; font-weight: 600; display: block; color: var(--text); margin-bottom: 1px; }
+  .step-content span { font-size: 8.5px; color: var(--muted); line-height: 1.4; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 5mm 0; }
+  .does-not-box { background: white; border: 1px solid var(--border); border-radius: 5px; padding: 4mm; margin-top: 4mm; }
+  .does-not-title { font-size: 8.5px; font-weight: 700; color: #B91C1C; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2.5mm; }
+  .does-not-list { list-style: none; padding: 0; }
+  .does-not-list li { font-size: 8.5px; color: var(--muted); padding-left: 10px; position: relative; line-height: 1.5; }
+  .does-not-list li::before { content: '×'; position: absolute; left: 0; color: #B91C1C; font-weight: 700; }
+  .panel-4 { background: var(--white); padding: 8mm 7mm; }
+  .for-whom { margin-bottom: 6mm; }
+  .for-whom h3 { font-family: 'Hind Siliguri',sans-serif; font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 3mm; }
+  .for-whom ul { list-style: none; padding: 0; }
+  .for-whom ul li { font-size: 9px; line-height: 1.6; color: var(--muted); padding-left: 12px; position: relative; }
+  .for-whom ul li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .contact-box { background: var(--navy); border-radius: 5px; padding: 5mm; margin-top: auto; }
+  .contact-box h4 { font-family: 'Hind Siliguri',sans-serif; font-size: 10px; font-weight: 700; color: var(--amber); margin-bottom: 3mm; }
+  .contact-box p { font-size: 8.5px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .contact-url { font-family: 'Hind Siliguri',sans-serif; font-size: 13px; font-weight: 700; color: var(--amber); display: block; margin-bottom: 2mm; }
+  .qr-placeholder { width: 18mm; height: 18mm; background: white; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; font-size: 6px; color: var(--navy); font-weight: 600; margin-top: 3mm; }
+  .legal { font-size: 7px; color: var(--muted); line-height: 1.4; margin-top: 5mm; }
+</style>
+</head>
+<body>
+<div class="panel panel-cover" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+  <div class="cover-logo">
+    <svg viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="4" fill="#E8A020"/>
+      <line x1="24" y1="3" x2="24" y2="19" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      <line x1="24" y1="29" x2="24" y2="45" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      <line x1="3" y1="24" x2="19" y2="24" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      <line x1="29" y1="24" x2="45" y2="24" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="24" cy="24" r="20" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <div class="cover-wordmark">NyayOS</div>
+  <div class="cover-tagline">Your guide through what happened.</div>
+  <div class="cover-illus">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <path d="M6 30 L18 6 L30 30" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linejoin="round"/>
+      <line x1="10" y1="22" x2="26" y2="22" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <div class="cover-cta">Dispute Readiness for Businesses</div>
+  <div class="cover-url">nyayos.in</div>
+</div>
+<div class="panel panel-2" style="display:flex;flex-direction:column;">
+  <h2 class="p2-head">The problem with disputes is not the law.<br>It's the chaos.</h2>
+  <p class="p2-body">Most businesses deal with vendor disputes, unpaid invoices, and broken contracts every year. The ones that go unresolved usually share the same problem — nobody organised what happened before it was too late.</p>
+  <ul class="problem-list">
+    <li>Documents are scattered across phones, emails, and WhatsApp</li>
+    <li>The timeline of events is unclear or disputed</li>
+    <li>It's hard to know what's legally relevant</li>
+    <li>A lawyer charges just to understand the situation</li>
+    <li>Most disputes get abandoned before resolution</li>
+  </ul>
+  <div class="pull-quote">
+    <p>"NyayOS gives you the organised starting point that everything else depends on."</p>
+  </div>
+</div>
+<div class="panel panel-3" style="display:flex;flex-direction:column;">
+  <div class="panel-section-head">How NyayOS works</div>
+  <div class="step-item"><div class="step-badge">1</div><div class="step-content"><strong>Tell your story</strong><span>Write what happened. No forms, no legal terms.</span></div></div>
+  <div class="step-item"><div class="step-badge">2</div><div class="step-content"><strong>Add your documents</strong><span>Contracts, invoices, messages, photos.</span></div></div>
+  <div class="step-item"><div class="step-badge">3</div><div class="step-content"><strong>Confirm the facts</strong><span>Review what was found. You decide what's correct.</span></div></div>
+  <div class="step-item"><div class="step-badge">4</div><div class="step-content"><strong>See your timeline</strong><span>Every event in order. Conflicts clearly flagged.</span></div></div>
+  <div class="step-item"><div class="step-badge">5</div><div class="step-content"><strong>Understand your options</strong><span>Negotiation, mediation, tribunal, court — all explained.</span></div></div>
+  <div class="step-item"><div class="step-badge">6</div><div class="step-content"><strong>Share when you're ready</strong><span>Secure, time-limited access for your lawyer or advisor.</span></div></div>
+  <div class="divider"></div>
+  <div class="does-not-box">
+    <div class="does-not-title">NyayOS does not</div>
+    <ul class="does-not-list">
+      <li>Give legal advice</li>
+      <li>Predict outcomes</li>
+      <li>File anything on your behalf</li>
+      <li>Share data without permission</li>
+      <li>Replace a lawyer</li>
+    </ul>
+  </div>
+</div>
+<div class="panel panel-4" style="display:flex;flex-direction:column;">
+  <div class="for-whom">
+    <h3>Who NyayOS is for</h3>
+    <ul>
+      <li>Small businesses with vendor or payment disputes</li>
+      <li>Service providers with contract disagreements</li>
+      <li>Anyone preparing to speak to a lawyer or mediator</li>
+      <li>Commercial parties who need to be organised before anything formal</li>
+    </ul>
+  </div>
+  <div class="divider"></div>
+  <div style="margin-bottom:5mm;">
+    <div class="panel-section-head" style="margin-bottom:2mm;">Your data, your control</div>
+    <p style="font-size:8.5px;color:var(--muted);line-height:1.6;">Everything stays private unless you choose to share it. You control who sees your file, for how long, and you can revoke access at any time. You can delete your dispute or your account at any time.</p>
+  </div>
+  <div class="contact-box">
+    <h4>Get early access</h4>
+    <span class="contact-url">nyayos.in</span>
+    <p>Currently available by invitation for commercial disputes. Contact us to participate in early access.</p>
+    <div class="qr-placeholder">QR<br>CODE</div>
+  </div>
+  <p class="legal">NyayOS is not a law firm and does not provide legal advice. This brochure is for information only.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — Government &amp; Officials Handout</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1C3D5A;--navy-mid:#2D6A8F;--amber:#E8A020;--text:#111827;--muted:#374151;--light:#F7F8FA;--white:#FFFFFF;--border:#E5E7EB;--green:#15803D;}
+  @page{size:A5 portrait;margin:0;}
+  body{width:148mm;min-height:210mm;font-family:'Noto Sans',sans-serif;color:var(--text);background:var(--white);-webkit-print-color-adjust:exact;print-color-adjust:exact;display:flex;flex-direction:column;}
+  .header{background:var(--navy);padding:6mm 9mm;display:flex;align-items:center;justify-content:space-between;}
+  .logo-row{display:flex;align-items:center;gap:6px;}
+  .logo-word{font-family:'Hind Siliguri',sans-serif;font-size:18px;font-weight:700;color:white;}
+  .for-tag{font-size:8px;color:var(--amber);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;text-align:right;}
+  .gov-band{background:var(--navy-mid);padding:3mm 9mm;display:flex;align-items:center;gap:4mm;}
+  .gov-emblem{width:16mm;height:16mm;border:1.5px solid rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .gov-context{font-size:8px;color:rgba(255,255,255,0.75);line-height:1.5;}
+  .gov-context strong{color:white;display:block;font-size:8.5px;}
+  .top-band{background:var(--light);border-bottom:3px solid var(--navy);padding:5mm 9mm;}
+  .top-band h1{font-family:'Hind Siliguri',sans-serif;font-size:14px;font-weight:700;color:var(--navy);line-height:1.3;}
+  .top-band p{font-size:9px;color:var(--muted);margin-top:2mm;line-height:1.5;}
+  .body{padding:5mm 9mm;flex:1;}
+  .section{margin-bottom:4mm;}
+  .section-head{font-family:'Hind Siliguri',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy-mid);margin-bottom:3mm;}
+  .relevance-grid{display:grid;grid-template-columns:1fr;gap:2.5mm;margin-bottom:4mm;}
+  .rel-item{background:var(--light);border-radius:4px;padding:3mm 4mm;display:flex;gap:3mm;align-items:flex-start;}
+  .rel-tag{font-family:'Hind Siliguri',sans-serif;font-size:7.5px;font-weight:700;color:var(--navy);background:rgba(28,61,90,0.08);padding:1mm 3mm;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:0.5mm;}
+  .rel-text{font-size:8.5px;color:var(--muted);line-height:1.5;}
+  .divider{border:none;border-top:1px solid var(--border);margin:3.5mm 0;}
+  .data-box{background:var(--navy);border-radius:5px;padding:4mm 5mm;margin-bottom:4mm;}
+  .data-box h4{font-family:'Hind Siliguri',sans-serif;font-size:9px;font-weight:700;color:var(--amber);margin-bottom:2mm;}
+  .data-box p{font-size:8.5px;color:rgba(255,255,255,0.8);line-height:1.5;}
+  .check-list{list-style:none;padding:0;}
+  .check-list li{font-size:9px;color:var(--muted);padding-left:14px;position:relative;line-height:1.6;}
+  .check-list li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700;}
+  .no-list li::before{content:'×';color:#B91C1C;}
+  .footer{background:var(--navy);padding:4.5mm 9mm;display:flex;align-items:center;justify-content:space-between;}
+  .footer-url{font-family:'Hind Siliguri',sans-serif;font-size:12px;font-weight:700;color:var(--amber);}
+  .footer-note{font-size:7px;color:rgba(255,255,255,0.5);max-width:70mm;line-height:1.4;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-row">
+    <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="#E8A020"/><line x1="18" y1="2" x2="18" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg>
+    <span class="logo-word">NyayOS</span>
+  </div>
+  <span class="for-tag">Government &amp;<br>Public Officials</span>
+</div>
+<div class="gov-band">
+  <div class="gov-emblem"><svg width="10" height="10" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.5 7.5H18L13.5 11L15 17L10 14L5 17L6.5 11L2 7.5H7.5L10 2Z" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+  <div class="gov-context"><strong>Relevant to:</strong> MSME Facilitation Councils · Consumer Commissions · District Court ADR Cells · Legal Services Authorities · ODR platforms</div>
+</div>
+<div class="top-band">
+  <h1>Helping parties arrive prepared — before any formal proceeding begins.</h1>
+  <p>NyayOS is a dispute readiness platform for Indian businesses. It helps parties organise their evidence, timeline, and facts before they approach any forum.</p>
+</div>
+<div class="body">
+  <div class="section">
+    <div class="section-head">Relevance to government mechanisms</div>
+    <div class="relevance-grid">
+      <div class="rel-item"><span class="rel-tag">MSME FC</span><span class="rel-text">MSME Facilitation Councils require structured dispute briefs before conciliation. NyayOS helps parties prepare the organised package required to participate effectively.</span></div>
+      <div class="rel-item"><span class="rel-tag">Consumer</span><span class="rel-text">Consumer Commission complainants benefit from structured timelines and linked evidence before filing — reducing procedural delays caused by incomplete submissions.</span></div>
+      <div class="rel-item"><span class="rel-tag">ODR / ADR</span><span class="rel-text">Online dispute resolution platforms require structured data inputs. NyayOS produces a shareable brief compatible with ODR intake formats.</span></div>
+      <div class="rel-item"><span class="rel-tag">DLSA</span><span class="rel-text">District Legal Services Authorities can direct parties to NyayOS before Lok Adalat hearings to improve case quality and throughput.</span></div>
+    </div>
+  </div>
+  <div class="data-box"><h4>Data sovereignty &amp; privacy</h4><p>NyayOS is controlled entirely by the party. No data is shared with any government body, court, or third party without explicit user consent. Parties retain the right to delete their file at any time.</p></div>
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-head">NyayOS does not</div>
+    <ul class="check-list no-list">
+      <li>Give legal advice or make legal determinations</li>
+      <li>File documents with any court or authority on behalf of a party</li>
+      <li>Represent parties in any proceeding</li>
+      <li>Share case content between parties without consent</li>
+      <li>Predict or influence outcomes</li>
+    </ul>
+  </div>
+</div>
+<div class="footer">
+  <div><div class="footer-url">nyayos.in</div><div class="footer-note">NyayOS is not a law firm. This handout is for information purposes only.</div></div>
+  <div style="width:14mm;height:14mm;background:rgba(255,255,255,0.1);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:6px;color:rgba(255,255,255,0.4);font-weight:600;text-align:center;">QR<br>CODE</div>
+</div>
+</body>
+</html>

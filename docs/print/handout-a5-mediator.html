@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — Mediator Handout</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1C3D5A;--navy-mid:#2D6A8F;--amber:#E8A020;--text:#111827;--muted:#374151;--light:#F7F8FA;--white:#FFFFFF;--border:#E5E7EB;--green:#15803D;}
+  @page{size:A5 portrait;margin:0;}
+  body{width:148mm;min-height:210mm;font-family:'Noto Sans',sans-serif;color:var(--text);background:var(--white);-webkit-print-color-adjust:exact;print-color-adjust:exact;display:flex;flex-direction:column;}
+  .header{background:var(--navy);padding:6mm 9mm;display:flex;align-items:center;justify-content:space-between;}
+  .logo-row{display:flex;align-items:center;gap:6px;}
+  .logo-word{font-family:'Hind Siliguri',sans-serif;font-size:18px;font-weight:700;color:white;}
+  .for-tag{font-size:8px;color:var(--amber);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
+  .amber-strip{background:var(--amber);height:3px;}
+  .top-band{background:var(--light);border-bottom:3px solid var(--navy-mid);padding:5mm 9mm;}
+  .top-band h1{font-family:'Hind Siliguri',sans-serif;font-size:14px;font-weight:700;color:var(--navy);line-height:1.3;}
+  .top-band p{font-size:9px;color:var(--muted);margin-top:2mm;line-height:1.5;}
+  .body{padding:5mm 9mm;flex:1;}
+  .section{margin-bottom:4mm;}
+  .section-head{font-family:'Hind Siliguri',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy-mid);margin-bottom:3mm;}
+  .brings-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5mm;margin-bottom:4mm;}
+  .bring-item{background:var(--light);border-radius:4px;padding:3mm 4mm;border-top:2px solid var(--navy-mid);}
+  .bring-item strong{font-size:8.5px;font-weight:700;color:var(--navy);display:block;margin-bottom:1mm;}
+  .bring-item span{font-size:8px;color:var(--muted);line-height:1.4;}
+  .divider{border:none;border-top:1px solid var(--border);margin:3.5mm 0;}
+  .flow-box{background:var(--navy);border-radius:5px;padding:4mm 5mm;margin-bottom:4mm;}
+  .flow-box h4{font-family:'Hind Siliguri',sans-serif;font-size:9px;font-weight:700;color:var(--amber);margin-bottom:2mm;}
+  .flow-box p{font-size:8.5px;color:rgba(255,255,255,0.8);line-height:1.5;}
+  .check-list{list-style:none;padding:0;}
+  .check-list li{font-size:9px;color:var(--muted);padding-left:14px;position:relative;line-height:1.6;}
+  .check-list li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700;}
+  .note-box{background:#FEF3C7;border:1px solid var(--amber);border-radius:4px;padding:3mm 4mm;margin-top:3mm;}
+  .note-box p{font-size:8px;color:#92400E;line-height:1.5;}
+  .note-box strong{color:#78350F;}
+  .footer{background:var(--navy);padding:4.5mm 9mm;display:flex;align-items:center;justify-content:space-between;}
+  .footer-url{font-family:'Hind Siliguri',sans-serif;font-size:12px;font-weight:700;color:var(--amber);}
+  .footer-note{font-size:7px;color:rgba(255,255,255,0.5);max-width:70mm;line-height:1.4;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-row">
+    <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="#E8A020"/><line x1="18" y1="2" x2="18" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg>
+    <span class="logo-word">NyayOS</span>
+  </div>
+  <span class="for-tag">For Mediators &amp; Arbitrators</span>
+</div>
+<div class="amber-strip"></div>
+<div class="top-band">
+  <h1>Parties can arrive with a structured record — not just a story.</h1>
+  <p>NyayOS helps parties organise their dispute before mediation or arbitration, so you spend less time reconstructing events and more time facilitating resolution.</p>
+</div>
+<div class="body">
+  <div class="section">
+    <div class="section-head">What a party brings from NyayOS</div>
+    <div class="brings-grid">
+      <div class="bring-item"><strong>Confirmed timeline</strong><span>Date-by-date events with source citations and certainty levels.</span></div>
+      <div class="bring-item"><strong>Structured evidence</strong><span>Documents categorised and linked to specific factual claims.</span></div>
+      <div class="bring-item"><strong>Flagged contradictions</strong><span>Conflicts between sources, noted with both versions preserved.</span></div>
+      <div class="bring-item"><strong>Gaps acknowledged</strong><span>Missing evidence identified and explained by the party themselves.</span></div>
+    </div>
+  </div>
+  <div class="flow-box"><h4>Sharing with the proceeding</h4><p>Each party controls their own NyayOS file independently. They may choose to share a structured brief with you as mediator/arbitrator. Sharing is voluntary, time-limited, and revocable. NyayOS does not share between parties without explicit consent from each.</p></div>
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-head">Assurances for proceedings</div>
+    <ul class="check-list">
+      <li>NyayOS does not make legal determinations or fact findings</li>
+      <li>AI inferences are always labelled — never presented as confirmed facts</li>
+      <li>Every confirmed fact required explicit user action to approve</li>
+      <li>Parties can correct or delete any information at any time</li>
+      <li>NyayOS does not communicate between parties</li>
+      <li>No data is shared with third parties without explicit consent</li>
+      <li>NyayOS does not create any privilege or confidentiality obligation</li>
+    </ul>
+  </div>
+  <div class="note-box"><p><strong>Note on AI labelling:</strong> All AI-extracted content in a NyayOS file is visually marked as an inference until the user confirms it. Amber-labelled items are unconfirmed AI extractions; green-labelled items have been explicitly confirmed by the party.</p></div>
+</div>
+<div class="footer">
+  <div><div class="footer-url">nyayos.in</div><div class="footer-note">NyayOS is not a law firm. This handout is for information only.</div></div>
+  <div style="width:14mm;height:14mm;background:rgba(255,255,255,0.1);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:6px;color:rgba(255,255,255,0.4);font-weight:600;text-align:center;">QR<br>CODE</div>
+</div>
+</body>
+</html>

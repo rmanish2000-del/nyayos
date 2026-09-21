@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — User Feedback Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --navy:#1C3D5A; --amber:#E8A020; --text:#111827; --muted:#374151; --light:#F7F8FA; --white:#FFFFFF; --border:#D1D5DB; }
+  @page { size: A4 portrait; margin: 0; }
+  body { width: 210mm; font-family: 'Noto Sans',sans-serif; color: var(--text); background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .header { background: var(--navy); padding: 7mm 14mm; display:flex; align-items:center; justify-content:space-between; }
+  .logo-row { display:flex; align-items:center; gap:8px; }
+  .logo-word { font-family:'Hind Siliguri',sans-serif; font-size:20px; font-weight:700; color:white; }
+  .header-right { text-align:right; }
+  .form-title { font-family:'Hind Siliguri',sans-serif; font-size:13px; font-weight:700; color:white; }
+  .form-sub { font-size:8px; color:rgba(255,255,255,0.6); }
+  .amber-strip { background: var(--amber); height: 3px; }
+  .meta-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:5mm; padding: 7mm 14mm; border-bottom: 1px solid var(--border); background: var(--light); }
+  .meta-field label { font-size:7.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); display:block; margin-bottom:2mm; }
+  .meta-field .line { border-bottom: 1px solid var(--border); height: 6mm; width:100%; }
+  .body { padding: 7mm 14mm; }
+  .section { margin-bottom: 7mm; }
+  .section-title { font-family:'Hind Siliguri',sans-serif; font-size:10px; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.08em; padding-bottom:2mm; border-bottom:2px solid var(--navy); margin-bottom:4mm; }
+  .category-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:3mm; }
+  .cat-option { border: 1.5px solid var(--border); border-radius:4px; padding:3mm; text-align:center; }
+  .cat-option .checkbox { width:10px; height:10px; border:1.5px solid var(--border); border-radius:2px; display:inline-block; margin-bottom:2mm; }
+  .cat-option span { font-size:8px; color:var(--muted); line-height:1.3; display:block; }
+  .text-field { border: 1px solid var(--border); border-radius:4px; padding:3mm; width:100%; }
+  .write-line { border-bottom: 1px solid #E9ECF0; height: 7mm; margin-bottom: 0; }
+  .rating-row { display:flex; gap:4mm; align-items:center; margin-bottom:3mm; }
+  .rating-label { font-size:9px; color:var(--muted); min-width:55mm; }
+  .stars { display:flex; gap:2mm; }
+  .star { width:8mm; height:8mm; border:1.5px solid var(--border); border-radius:50%; }
+  .check-list { display:grid; grid-template-columns:1fr 1fr; gap:2mm; }
+  .check-item { display:flex; align-items:center; gap:2mm; }
+  .check-box { width:10px; height:10px; border:1.5px solid var(--border); border-radius:2px; flex-shrink:0; }
+  .check-item span { font-size:8.5px; color:var(--muted); }
+  .consent-row { display:flex; gap:3mm; align-items:flex-start; background:var(--light); padding:4mm; border-radius:4px; }
+  .consent-cb { width:12px; height:12px; border:1.5px solid var(--border); border-radius:2px; flex-shrink:0; margin-top:1px; }
+  .consent-text { font-size:8.5px; color:var(--muted); line-height:1.5; }
+  .sign-row { display:grid; grid-template-columns:2fr 1fr; gap:8mm; margin-top:4mm; }
+  .sign-field label { font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); display:block; margin-bottom:2mm; }
+  .sign-field .line { border-bottom:1px solid var(--border); height:8mm; }
+  .footer { background:var(--navy); padding:5mm 14mm; display:flex; justify-content:space-between; align-items:center; margin-top:4mm; }
+  .footer-note { font-size:7.5px; color:rgba(255,255,255,0.55); max-width:130mm; line-height:1.4; }
+  .footer-id { font-size:8px; color:rgba(255,255,255,0.4); }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-row">
+    <svg width="24" height="24" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="#E8A020"/><line x1="18" y1="2" x2="18" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+    <span class="logo-word">NyayOS</span>
+  </div>
+  <div class="header-right"><div class="form-title">User Feedback Form</div><div class="form-sub">Your feedback helps improve NyayOS for everyone.</div></div>
+</div>
+<div class="amber-strip"></div>
+<div class="meta-row">
+  <div class="meta-field"><label>Participant ID</label><div class="line"></div></div>
+  <div class="meta-field"><label>Date</label><div class="line"></div></div>
+  <div class="meta-field"><label>Session / Location</label><div class="line"></div></div>
+</div>
+<div class="body">
+  <div class="section">
+    <div class="section-title">1. What kind of feedback is this?</div>
+    <div class="category-grid">
+      <div class="cat-option"><div class="checkbox"></div><span>Something is confusing</span></div>
+      <div class="cat-option"><div class="checkbox"></div><span>I found a bug</span></div>
+      <div class="cat-option"><div class="checkbox"></div><span>I have a suggestion</span></div>
+      <div class="cat-option"><div class="checkbox"></div><span>Content is wrong or unclear</span></div>
+      <div class="cat-option"><div class="checkbox"></div><span>Hard to use</span></div>
+      <div class="cat-option"><div class="checkbox"></div><span>Feature is missing</span></div>
+      <div class="cat-option"><div class="checkbox"></div><span>Other</span></div>
+      <div class="cat-option"><div class="checkbox"></div><span>General comment</span></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">2. Which screen or step does this relate to?</div>
+    <div class="check-list">
+      <div class="check-item"><div class="check-box"></div><span>Landing / Sign in</span></div>
+      <div class="check-item"><div class="check-box"></div><span>"What happened?" — narrative</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Guided questions (intake)</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Document upload</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Evidence locker</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Fact confirmation</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Parties &amp; entities</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Timeline</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Evidence–fact mapping</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Contradictions review</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Missing evidence</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Possible paths</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Action plan</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Sharing controls</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Export</span></div>
+      <div class="check-item"><div class="check-box"></div><span>Not sure / General</span></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">3. Tell us more</div>
+    <div class="text-field"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+    <p style="font-size:7.5px;color:#9CA3AF;margin-top:2mm;">⚠ Please do not include details about your dispute, other parties, or personal case information.</p>
+  </div>
+  <div class="section">
+    <div class="section-title">4. Rate your experience</div>
+    <div class="rating-row"><div class="rating-label">How useful was this screen for your task?</div><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div><span style="font-size:8px;color:#9CA3AF;margin-left:2mm;">1 = Not useful · 5 = Very useful</span></div>
+    <div class="rating-row"><div class="rating-label">How easy was NyayOS to understand?</div><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+    <div class="rating-row"><div class="rating-label">How much do you trust NyayOS with your information?</div><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title">5. Follow-up (optional)</div>
+    <div class="consent-row" style="margin-bottom:3mm;"><div class="consent-cb"></div><div class="consent-text">I am happy to be contacted about this feedback.</div></div>
+    <div class="sign-row">
+      <div class="sign-field"><label>Name (optional)</label><div class="line"></div></div>
+      <div class="sign-field"><label>Phone / Email (optional)</label><div class="line"></div></div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer-note">This form is for product feedback only. Do not include dispute details, evidence, or information about other parties. NyayOS will not share your feedback with anyone outside the product team.</div>
+  <div class="footer-id">Form v1.0 · NyayOS Research</div>
+</div>
+</body>
+</html>

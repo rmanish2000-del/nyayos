@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — Founder Pitch Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1C3D5A;--navy-mid:#2D6A8F;--amber:#E8A020;--text:#111827;--muted:#374151;--light:#F7F8FA;--white:#FFFFFF;--green:#15803D;--red:#B91C1C;--border:#E5E7EB;}
+  @page{size:254mm 143mm landscape;margin:0;}
+  body{font-family:'Noto Sans',sans-serif;background:#E8ECF0;padding:6mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .slide{width:254mm;height:143mm;background:var(--white);display:flex;flex-direction:column;overflow:hidden;position:relative;margin-bottom:6mm;page-break-after:always;border-radius:3px;box-shadow:0 2px 12px rgba(0,0,0,0.12);}
+  .slide:last-child{margin-bottom:0;page-break-after:avoid;}
+  .slide-num{position:absolute;bottom:4mm;right:5mm;font-size:7px;color:rgba(0,0,0,0.2);font-weight:600;font-family:'Hind Siliguri',sans-serif;z-index:10;}
+  .s1{background:var(--navy);color:white;}
+  .s1 .amber-line{height:4px;background:var(--amber);}
+  .s1 .inner{flex:1;display:flex;align-items:center;padding:10mm 16mm;}
+  .s1 .left{flex:1;}
+  .s1 .eyebrow{font-size:8.5px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber);margin-bottom:4mm;}
+  .s1 h1{font-family:'Hind Siliguri',sans-serif;font-size:30px;font-weight:700;line-height:1.15;margin-bottom:4mm;color:white;}
+  .s1 .sub{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.5;max-width:120mm;}
+  .s1 .right{display:flex;flex-direction:column;align-items:center;gap:5mm;margin-left:12mm;}
+  .s1 .logo-block{display:flex;align-items:center;gap:8px;}
+  .s1 .logo-word{font-family:'Hind Siliguri',sans-serif;font-size:22px;font-weight:700;color:white;}
+  .s1 .meta{font-size:8px;color:rgba(255,255,255,0.4);text-align:center;line-height:1.5;}
+  .s1 .confidential{font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:2mm;}
+  .slide-header{padding:6mm 12mm 0;display:flex;align-items:flex-start;justify-content:space-between;}
+  .slide-header .slide-title{font-family:'Hind Siliguri',sans-serif;font-size:13px;font-weight:700;color:var(--navy);line-height:1.2;}
+  .slide-header .slide-label{font-size:7.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--navy-mid);padding-top:1mm;}
+  .slide-body{padding:4mm 12mm 5mm;flex:1;display:flex;flex-direction:column;justify-content:center;}
+  .slide-footer-bar{height:3px;background:var(--amber);}
+  .s2-grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm;}
+  .s2-stat{background:var(--light);border-radius:5px;padding:4mm 5mm;border-top:2px solid var(--navy);}
+  .s2-stat .num{font-family:'Hind Siliguri',sans-serif;font-size:26px;font-weight:700;color:var(--navy);line-height:1;}
+  .s2-stat .label{font-size:9px;color:var(--muted);margin-top:1.5mm;line-height:1.4;}
+  .s2-quote{grid-column:1/-1;background:var(--navy);color:white;border-radius:5px;padding:4mm 5mm;}
+  .s2-quote p{font-family:'Hind Siliguri',sans-serif;font-size:12px;font-weight:600;line-height:1.4;font-style:italic;}
+  .s2-quote .attr{font-size:8px;color:rgba(255,255,255,0.5);margin-top:2mm;}
+  .s3-row{display:flex;gap:4mm;align-items:stretch;}
+  .s3-before,.s3-after{flex:1;padding:4mm 5mm;border-radius:5px;}
+  .s3-before{background:#FEE2E2;border-top:2px solid #B91C1C;}
+  .s3-after{background:#DCFCE7;border-top:2px solid #15803D;}
+  .s3-before h4{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#B91C1C;margin-bottom:3mm;}
+  .s3-after h4{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#15803D;margin-bottom:3mm;}
+  .s3-list{list-style:none;padding:0;}
+  .s3-list li{font-size:9px;color:var(--muted);line-height:1.6;padding-left:10px;position:relative;}
+  .s3-list li::before{position:absolute;left:0;font-weight:700;}
+  .s3-before .s3-list li::before{content:'×';color:#B91C1C;}
+  .s3-after .s3-list li::before{content:'✓';color:#15803D;}
+  .s3-arrow{display:flex;align-items:center;justify-content:center;flex:0 0 10mm;}
+  .s3-arrow svg{width:8mm;}
+  .s3-tagline{background:var(--navy);color:white;border-radius:5px;padding:3.5mm 6mm;margin-top:4mm;text-align:center;font-family:'Hind Siliguri',sans-serif;font-size:11px;font-weight:700;}
+  .s3-tagline span{color:var(--amber);}
+  .s4-steps{display:flex;gap:3mm;}
+  .s4-step{flex:1;background:var(--light);border-radius:5px;padding:4mm 3mm;text-align:center;border-bottom:2px solid var(--navy);}
+  .s4-num{font-family:'Hind Siliguri',sans-serif;font-size:18px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:2mm;}
+  .s4-title{font-size:8.5px;font-weight:700;color:var(--text);margin-bottom:1mm;line-height:1.3;}
+  .s4-desc{font-size:7.5px;color:var(--muted);line-height:1.4;}
+  .s4-principle{display:flex;gap:4mm;margin-top:4mm;}
+  .s4-pr{flex:1;padding:3mm 4mm;background:var(--light);border-radius:4px;border-left:2px solid var(--amber);}
+  .s4-pr h4{font-size:8px;font-weight:700;color:var(--navy);margin-bottom:1mm;}
+  .s4-pr p{font-size:7.5px;color:var(--muted);line-height:1.4;}
+  .s5-row{display:flex;gap:4mm;}
+  .s5-metric{flex:1;background:var(--navy);color:white;border-radius:6px;padding:5mm 5mm;text-align:center;}
+  .s5-metric .big{font-family:'Hind Siliguri',sans-serif;font-size:28px;font-weight:700;color:var(--amber);line-height:1;}
+  .s5-metric .label{font-size:8.5px;color:rgba(255,255,255,0.65);margin-top:2mm;line-height:1.4;}
+  .s5-insight{margin-top:4mm;background:var(--light);border-radius:5px;padding:4mm 5mm;}
+  .s5-insight h4{font-size:9px;font-weight:700;color:var(--navy);margin-bottom:2mm;}
+  .s5-insight ul{list-style:none;padding:0;}
+  .s5-insight ul li{font-size:8.5px;color:var(--muted);line-height:1.6;padding-left:10px;position:relative;}
+  .s5-insight ul li::before{content:'→';position:absolute;left:0;color:var(--navy-mid);font-weight:700;}
+  .s6-row{display:grid;grid-template-columns:1fr 1fr;gap:4mm;}
+  .s6-card{background:var(--light);border-radius:5px;padding:4mm 5mm;border-top:2px solid var(--navy-mid);}
+  .s6-card h4{font-size:8.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2mm;}
+  .s6-card p{font-size:8.5px;color:var(--muted);line-height:1.5;}
+  .s6-card .highlight{font-size:16px;font-weight:700;color:var(--navy);font-family:'Hind Siliguri',sans-serif;line-height:1;margin-bottom:1.5mm;}
+  .roadmap{margin-top:4mm;display:flex;gap:2mm;}
+  .rm-phase{flex:1;padding:2.5mm 3mm;border-radius:4px;border:1px solid var(--border);}
+  .rm-phase.done{border-color:var(--green);background:#DCFCE7;}
+  .rm-phase.current{border-color:var(--amber);background:#FEF3C7;}
+  .rm-phase h5{font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--navy);margin-bottom:1mm;}
+  .rm-phase p{font-size:7px;color:var(--muted);line-height:1.4;}
+  .s7-team{display:flex;gap:5mm;justify-content:center;}
+  .s7-member{text-align:center;flex:0 0 45mm;}
+  .s7-avatar{width:22mm;height:22mm;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;margin:0 auto 3mm;font-family:'Hind Siliguri',sans-serif;font-size:18px;font-weight:700;color:white;}
+  .s7-name{font-family:'Hind Siliguri',sans-serif;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:1mm;}
+  .s7-role{font-size:8.5px;font-weight:600;color:var(--navy-mid);margin-bottom:1.5mm;}
+  .s7-bio{font-size:8px;color:var(--muted);line-height:1.4;}
+  .s7-advisors{margin-top:5mm;padding:3mm 5mm;background:var(--light);border-radius:5px;}
+  .s7-advisors h4{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:2mm;}
+  .s7-advisors p{font-size:8.5px;color:var(--muted);line-height:1.5;}
+  .s8{background:var(--navy);color:white;}
+  .s8 .inner{flex:1;display:flex;padding:6mm 14mm;gap:12mm;align-items:center;}
+  .s8 .left{flex:1;}
+  .s8 h2{font-family:'Hind Siliguri',sans-serif;font-size:24px;font-weight:700;margin-bottom:5mm;color:white;line-height:1.2;}
+  .s8 .ask-row{display:flex;gap:3mm;margin-bottom:3mm;}
+  .s8 .ask-tag{background:var(--amber);color:var(--navy);font-family:'Hind Siliguri',sans-serif;font-size:10px;font-weight:700;padding:1.5mm 5mm;border-radius:20px;white-space:nowrap;}
+  .s8 .ask-text{font-size:9.5px;color:rgba(255,255,255,0.72);line-height:1.5;align-self:center;}
+  .s8 .right{display:flex;flex-direction:column;align-items:center;gap:5mm;}
+  .s8 .use-label{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--amber);margin-bottom:1mm;text-align:center;}
+  .s8 .contact-block{margin-top:3mm;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;padding:3mm 5mm;text-align:center;}
+  .s8 .contact-block p{font-size:8px;color:rgba(255,255,255,0.5);margin-bottom:1.5mm;}
+  .s8 .contact-block a{font-family:'Hind Siliguri',sans-serif;font-size:13px;font-weight:700;color:var(--amber);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="slide s1"><div class="amber-line"></div><div class="inner"><div class="left"><div class="eyebrow">Seed Round · Confidential</div><h1>The organised starting point<br>that every dispute depends on.</h1><div class="sub">NyayOS is the dispute readiness platform for Indian businesses — structured evidence, clear timelines, and secure sharing, before a lawyer is even called.</div></div><div class="right"><div class="logo-block"><svg width="32" height="32" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="#E8A020"/><line x1="18" y1="2" x2="18" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg><span class="logo-word">NyayOS</span></div><div class="meta">September 2026<br>nyayos.in</div><div class="confidential">Strictly Confidential</div></div></div><div class="slide-num" style="color:rgba(255,255,255,0.2);">1 / 8</div></div>
+<div class="slide"><div class="slide-header"><div class="slide-title">The problem is not the law. It's the chaos.</div><div class="slide-label">Problem</div></div><div class="slide-body"><div class="s2-grid"><div class="s2-stat"><div class="num">63M+</div><div class="label">MSMEs in India facing payment, contract, or delivery disputes annually</div></div><div class="s2-stat"><div class="num">~70%</div><div class="label">of commercial disputes abandoned before resolution — not unwinnable, just unorganised</div></div><div class="s2-stat"><div class="num">₹10K+</div><div class="label">typical first-hour lawyer cost just to explain the situation — before any legal advice is given</div></div><div class="s2-stat"><div class="num">3–6 wk</div><div class="label">average time between dispute arising and first coherent written account being prepared</div></div><div class="s2-quote"><p>"Documents are in three WhatsApp chats, two email threads, and a folder I can't find. I don't even know what's useful."</p><div class="attr">— Business owner, field interview, Pune 2026</div></div></div></div><div class="slide-footer-bar"></div><div class="slide-num">2 / 8</div></div>
+<div class="slide"><div class="slide-header"><div class="slide-title">NyayOS: the organised starting point</div><div class="slide-label">Solution</div></div><div class="slide-body"><div class="s3-row"><div class="s3-before"><h4>Without NyayOS</h4><ul class="s3-list"><li>Timeline reconstructed verbally, from memory</li><li>Documents scattered across devices and apps</li><li>Lawyer charges ₹10K+ to map the situation</li><li>Contradictions go unnoticed until court</li><li>Most parties give up before taking action</li></ul></div><div class="s3-arrow"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#1C3D5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="s3-after"><h4>With NyayOS</h4><ul class="s3-list"><li>Confirmed date-by-date timeline with sources</li><li>Evidence categorised and linked to facts</li><li>Lawyer receives a structured brief, not a story</li><li>Contradictions and gaps surfaced early</li><li>Informed decision on whether and how to proceed</li></ul></div></div><div class="s3-tagline">The organised starting point that <span>everything else depends on.</span></div></div><div class="slide-footer-bar"></div><div class="slide-num">3 / 8</div></div>
+<div class="slide"><div class="slide-header"><div class="slide-title">The Dispute Readiness Engine</div><div class="slide-label">Product</div></div><div class="slide-body"><div class="s4-steps"><div class="s4-step"><div class="s4-num">1</div><div class="s4-title">Narrative intake</div><div class="s4-desc">Plain-language story, guided questions</div></div><div class="s4-step"><div class="s4-num">2</div><div class="s4-title">Evidence locker</div><div class="s4-desc">Upload, categorise, link to facts</div></div><div class="s4-step"><div class="s4-num">3</div><div class="s4-title">Fact confirmation</div><div class="s4-desc">AI-extracted, human-approved only</div></div><div class="s4-step"><div class="s4-num">4</div><div class="s4-title">Timeline</div><div class="s4-desc">Date-by-date, contradictions flagged</div></div><div class="s4-step"><div class="s4-num">5</div><div class="s4-title">Options view</div><div class="s4-desc">Negotiate → Settle → Lawyer → Court</div></div><div class="s4-step"><div class="s4-num">6</div><div class="s4-title">Secure share</div><div class="s4-desc">Time-limited access, revocable</div></div></div><div class="s4-principle"><div class="s4-pr"><h4>Human authority</h4><p>AI extracts, labels, suggests. User confirms. No auto-confirmation.</p></div><div class="s4-pr"><h4>Evidence first</h4><p>Source required before any fact is marked confirmed.</p></div><div class="s4-pr"><h4>No legal advice</h4><p>NyayOS organises. Lawyers advise. Clear boundary always visible.</p></div><div class="s4-pr"><h4>Privacy by default</h4><p>Nothing shared without explicit user action. Delete anytime.</p></div></div></div><div class="slide-footer-bar"></div><div class="slide-num">4 / 8</div></div>
+<div class="slide"><div class="slide-header"><div class="slide-title">A large, underserved market</div><div class="slide-label">Market</div></div><div class="slide-body"><div class="s5-row"><div class="s5-metric"><div class="big">63M+</div><div class="label">MSMEs in India — primary addressable market</div></div><div class="s5-metric"><div class="big">₹32L Cr</div><div class="label">value locked in disputed B2B transactions annually (est.)</div></div><div class="s5-metric"><div class="big">1.5M+</div><div class="label">commercial cases pending in Indian district courts</div></div><div class="s5-metric"><div class="big">~2%</div><div class="label">of disputes currently reach any formal resolution mechanism</div></div></div><div class="s5-insight"><h4>Why now</h4><ul><li>MSME Facilitation Councils mandate pre-filing conciliation — parties need structured briefs to participate</li><li>WhatsApp penetration means evidence exists; the gap is organisation, not creation</li><li>ODR infrastructure maturing — IBBI, SEBI, RBI all piloting — but onboarding requires structured dispute packages</li><li>Legal tech remains lawyer-facing; the pre-lawyer layer is unserved</li></ul></div></div><div class="slide-footer-bar"></div><div class="slide-num">5 / 8</div></div>
+<div class="slide"><div class="slide-header"><div class="slide-title">Early traction &amp; roadmap</div><div class="slide-label">Traction</div></div><div class="slide-body"><div class="s6-row"><div class="s6-card"><h4>User research</h4><div class="highlight">40+</div><p>In-depth interviews across Pune, Mumbai, Ahmedabad. 8 focus sessions. Field observation complete.</p></div><div class="s6-card"><h4>Design system</h4><div class="highlight">Sprint 1</div><p>Foundation complete. Multilingual-ready (22 Indian languages). WCAG 2.2 AA target.</p></div><div class="s6-card"><h4>Early access interest</h4><div class="highlight">Waitlist</div><p>Legal aid organisations, MSME associations, and 3 commercial law firms in early conversation.</p></div><div class="s6-card"><h4>Revenue model</h4><div class="highlight">Freemium</div><p>Free: 1 active dispute. Pro (₹499/mo): unlimited. B2B: per-seat for firms. Government: API licensing.</p></div></div><div class="roadmap"><div class="rm-phase done"><h5>✓ Done</h5><p>Research · Design system · Print package</p></div><div class="rm-phase current"><h5>→ Now</h5><p>MVP build (12 sprints) · Early access cohort</p></div><div class="rm-phase"><h5>Q2 2027</h5><p>Public launch · MSME partnerships</p></div><div class="rm-phase"><h5>Q4 2027</h5><p>ODR integration · Government pilots</p></div></div></div><div class="slide-footer-bar"></div><div class="slide-num">6 / 8</div></div>
+<div class="slide"><div class="slide-header"><div class="slide-title">Team</div><div class="slide-label">Team</div></div><div class="slide-body"><div class="s7-team"><div class="s7-member"><div class="s7-avatar">[F]</div><div class="s7-name">[Founder Name]</div><div class="s7-role">CEO &amp; Co-founder</div><div class="s7-bio">Background in legal technology and MSME policy. Previously [Role] at [Organisation].</div></div><div class="s7-member"><div class="s7-avatar">[C]</div><div class="s7-name">[Co-founder Name]</div><div class="s7-role">CTO &amp; Co-founder</div><div class="s7-bio">Full-stack and AI/NLP. Previously [Role] at [Organisation]. [N] years product experience.</div></div><div class="s7-member"><div class="s7-avatar">[D]</div><div class="s7-name">[Designer Name]</div><div class="s7-role">Head of Design</div><div class="s7-bio">UX for complex, multilingual workflows. Previously [Role] at [Organisation].</div></div></div><div class="s7-advisors"><h4>Advisors &amp; Partners</h4><p>[Advisor 1] — [Role/Institution] &nbsp;·&nbsp; [Advisor 2] — [Role/Institution] &nbsp;·&nbsp; [Legal advisor] — [Firm]</p></div></div><div class="slide-footer-bar"></div><div class="slide-num">7 / 8</div></div>
+<div class="slide s8"><div class="inner"><div class="left"><h2>The ask</h2><div class="ask-row"><div class="ask-tag">₹[X] Cr</div><div class="ask-text">Seed round — 18-month runway to public launch and first revenue cohort</div></div><div class="ask-row"><div class="ask-tag" style="background:rgba(255,255,255,0.12);color:white;">Product</div><div class="ask-text">Complete 12-sprint MVP build, multilingual rollout, mobile-first</div></div><div class="ask-row"><div class="ask-tag" style="background:rgba(255,255,255,0.12);color:white;">GTM</div><div class="ask-text">MSME association partnerships, legal aid pilots, ODR integrations</div></div><div class="ask-row"><div class="ask-tag" style="background:rgba(255,255,255,0.12);color:white;">Team</div><div class="ask-text">3 engineering hires, 1 operations lead, 1 legal partnerships lead</div></div></div><div class="right"><div><div class="use-label">Use of funds</div><div style="background:rgba(255,255,255,0.06);border-radius:6px;padding:4mm;min-width:60mm;"><div style="display:flex;justify-content:space-between;font-size:8.5px;color:rgba(255,255,255,0.65);margin-bottom:2mm;"><span>Product &amp; Engineering</span><span>50%</span></div><div style="height:3mm;background:var(--amber);border-radius:2px;margin-bottom:3mm;width:100%;"></div><div style="display:flex;justify-content:space-between;font-size:8.5px;color:rgba(255,255,255,0.65);margin-bottom:2mm;"><span>GTM &amp; Partnerships</span><span>25%</span></div><div style="height:3mm;background:rgba(232,160,32,0.5);border-radius:2px;margin-bottom:3mm;width:50%;"></div><div style="display:flex;justify-content:space-between;font-size:8.5px;color:rgba(255,255,255,0.65);margin-bottom:2mm;"><span>Operations</span><span>15%</span></div><div style="height:3mm;background:rgba(232,160,32,0.3);border-radius:2px;margin-bottom:3mm;width:30%;"></div><div style="display:flex;justify-content:space-between;font-size:8.5px;color:rgba(255,255,255,0.65);margin-bottom:2mm;"><span>Reserve</span><span>10%</span></div><div style="height:3mm;background:rgba(255,255,255,0.1);border-radius:2px;width:20%;"></div></div></div><div class="contact-block"><p>To request the data room or schedule a call</p><a href="#">[founder@nyayos.in]</a></div></div></div><div class="slide-footer-bar"></div><div class="slide-num" style="color:rgba(255,255,255,0.2);">8 / 8</div></div>
+</body>
+</html>

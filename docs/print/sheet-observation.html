@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — Research Observation Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1C3D5A;--amber:#E8A020;--text:#111827;--muted:#374151;--light:#F7F8FA;--white:#FFFFFF;--border:#D1D5DB;--green:#15803D;}
+  @page{size:A4 portrait;margin:0;}
+  body{width:210mm;font-family:'Noto Sans',sans-serif;color:var(--text);background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .header{background:var(--navy);padding:5mm 12mm;display:flex;align-items:center;justify-content:space-between;}
+  .logo-row{display:flex;align-items:center;gap:7px;}
+  .logo-word{font-family:'Hind Siliguri',sans-serif;font-size:18px;font-weight:700;color:white;}
+  .form-meta{text-align:right;}
+  .form-meta h1{font-family:'Hind Siliguri',sans-serif;font-size:12px;font-weight:700;color:white;}
+  .form-meta p{font-size:7.5px;color:rgba(255,255,255,0.6);}
+  .amber-strip{background:var(--amber);height:2.5px;}
+  .meta-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm;padding:4mm 12mm;background:var(--light);border-bottom:1px solid var(--border);}
+  .mf label{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);display:block;margin-bottom:1.5mm;}
+  .mf .line{border-bottom:1px solid var(--border);height:5.5mm;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:5mm;padding:5mm 12mm;}
+  .section-head{background:var(--navy);color:white;padding:2mm 4mm;border-radius:3px;font-family:'Hind Siliguri',sans-serif;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3mm;}
+  .obs-block{margin-bottom:4mm;}
+  .obs-label{font-size:8px;font-weight:700;color:var(--navy);margin-bottom:1.5mm;}
+  .obs-sub{font-size:7.5px;color:var(--muted);font-style:italic;margin-bottom:1.5mm;line-height:1.4;}
+  .write-line{border-bottom:1px solid #E9ECF0;height:6.5mm;}
+  .check-row{display:flex;flex-wrap:wrap;gap:2mm 4mm;margin-bottom:1.5mm;}
+  .check-opt{display:flex;align-items:center;gap:1.5mm;}
+  .cb{width:9px;height:9px;border:1.5px solid var(--border);border-radius:2px;flex-shrink:0;}
+  .check-opt span{font-size:8px;color:var(--muted);}
+  .tally-row{display:grid;grid-template-columns:1fr 1fr;gap:2mm;margin-bottom:3mm;}
+  .tally-cell{border:1px solid var(--border);border-radius:3px;padding:2mm 3mm;}
+  .tally-cell label{font-size:7.5px;font-weight:700;color:var(--navy);display:block;margin-bottom:1mm;}
+  .tally-cell .count{border-bottom:1px solid var(--border);height:5mm;}
+  .severity-row{display:flex;gap:2mm;margin-bottom:2mm;}
+  .sev{border:1.5px solid var(--border);border-radius:3px;padding:1.5mm 3mm;text-align:center;flex:1;}
+  .sev span{font-size:7.5px;color:var(--muted);display:block;}
+  .sev .dot{width:8px;height:8px;border-radius:50%;margin:0 auto 1.5mm;}
+  .sev.crit .dot{background:#B91C1C;} .sev.maj .dot{background:#D97706;} .sev.min .dot{background:#15803D;} .sev.obs .dot{background:#6B7280;}
+  .time-col{display:flex;flex-direction:column;gap:0;}
+  .time-row{display:grid;grid-template-columns:16mm 1fr;border-bottom:1px solid #F3F4F6;min-height:8mm;}
+  .time-row .ts{font-size:7.5px;color:var(--muted);padding:2mm 2mm 2mm 0;border-right:1px solid #F3F4F6;}
+  .time-row .note{font-size:7.5px;color:var(--text);padding:2mm 0 2mm 2mm;}
+  .time-row.header-row .ts,.time-row.header-row .note{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);background:var(--light);}
+  .quote-lines{border:1px solid var(--border);border-radius:3px;padding:2mm;}
+  .quote-line{border-bottom:1px dashed #E9ECF0;height:7mm;}
+  .footer{background:var(--navy);padding:3.5mm 12mm;display:flex;justify-content:space-between;align-items:center;}
+  .footer-note{font-size:7px;color:rgba(255,255,255,0.5);max-width:140mm;line-height:1.4;}
+  .footer-ver{font-size:7px;color:rgba(255,255,255,0.35);}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-row">
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="#E8A020"/><line x1="18" y1="2" x2="18" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+    <span class="logo-word">NyayOS</span>
+  </div>
+  <div class="form-meta"><h1>Research Observation Sheet</h1><p>Observer use only · One sheet per session · Do not share with participant</p></div>
+</div>
+<div class="amber-strip"></div>
+<div class="meta-bar">
+  <div class="mf"><label>Session ID</label><div class="line"></div></div>
+  <div class="mf"><label>Date</label><div class="line"></div></div>
+  <div class="mf"><label>Observer</label><div class="line"></div></div>
+  <div class="mf"><label>Prototype version</label><div class="line"></div></div>
+  <div class="mf"><label>Device</label><div class="check-row" style="margin-top:1mm;"><div class="check-opt"><div class="cb"></div><span>Mobile</span></div><div class="check-opt"><div class="cb"></div><span>Tablet</span></div><div class="check-opt"><div class="cb"></div><span>Desktop</span></div></div></div>
+</div>
+<div class="two-col">
+  <div class="col">
+    <div class="section-head">A — Participant Profile</div>
+    <div class="obs-block">
+      <div class="obs-label">Role</div>
+      <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Business owner</span></div><div class="check-opt"><div class="cb"></div><span>Employee</span></div><div class="check-opt"><div class="cb"></div><span>Legal advisor</span></div><div class="check-opt"><div class="cb"></div><span>Other: ______</span></div></div>
+    </div>
+    <div class="obs-block">
+      <div class="obs-label">Tech comfort</div>
+      <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Low</span></div><div class="check-opt"><div class="cb"></div><span>Medium</span></div><div class="check-opt"><div class="cb"></div><span>High</span></div></div>
+    </div>
+    <div class="obs-block"><div class="obs-label">Primary language spoken</div><div class="write-line"></div></div>
+    <div class="section-head" style="margin-top:3mm;">B — Task Completion</div>
+    <div class="tally-row">
+      <div class="tally-cell"><label>Tasks completed (of 5)</label><div class="count"></div></div>
+      <div class="tally-cell"><label>Assists needed</label><div class="count"></div></div>
+      <div class="tally-cell"><label>Critical errors</label><div class="count"></div></div>
+      <div class="tally-cell"><label>Total time (min)</label><div class="count"></div></div>
+    </div>
+    <div class="obs-block">
+      <div class="obs-label">Tasks attempted — mark each</div>
+      <div style="font-size:8px;color:var(--muted);margin-bottom:2mm;">✓ = complete &nbsp; ✗ = failed &nbsp; — = skipped &nbsp; A = assisted</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2mm;">
+        <div style="display:flex;gap:2mm;align-items:center;"><div class="cb" style="width:12px;height:12px;"></div><span style="font-size:8px;color:var(--muted);">Narrative entry</span></div>
+        <div style="display:flex;gap:2mm;align-items:center;"><div class="cb" style="width:12px;height:12px;"></div><span style="font-size:8px;color:var(--muted);">Upload document</span></div>
+        <div style="display:flex;gap:2mm;align-items:center;"><div class="cb" style="width:12px;height:12px;"></div><span style="font-size:8px;color:var(--muted);">Confirm a fact</span></div>
+        <div style="display:flex;gap:2mm;align-items:center;"><div class="cb" style="width:12px;height:12px;"></div><span style="font-size:8px;color:var(--muted);">Review timeline</span></div>
+        <div style="display:flex;gap:2mm;align-items:center;"><div class="cb" style="width:12px;height:12px;"></div><span style="font-size:8px;color:var(--muted);">Use sharing controls</span></div>
+      </div>
+    </div>
+    <div class="section-head" style="margin-top:3mm;">C — Usability Issues</div>
+    <div class="obs-block">
+      <div class="obs-label">Severity scale</div>
+      <div class="severity-row"><div class="sev crit"><div class="dot"></div><span>Critical</span></div><div class="sev maj"><div class="dot"></div><span>Major</span></div><div class="sev min"><div class="dot"></div><span>Minor</span></div><div class="sev obs"><div class="dot"></div><span>Observation</span></div></div>
+    </div>
+    <div class="obs-block">
+      <div class="obs-label">Issue log (screen · severity · what happened)</div>
+      <div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div>
+    </div>
+    <div class="section-head" style="margin-top:3mm;">D — Trust &amp; Comprehension</div>
+    <div class="obs-block">
+      <div class="obs-label">Did the participant understand these?</div>
+      <div style="display:grid;grid-template-columns:1fr;gap:2mm;">
+        <div style="display:flex;align-items:center;gap:2mm;"><div class="cb"></div><span style="font-size:8px;color:var(--muted);">AI inference labels (amber = AI, not confirmed)</span></div>
+        <div style="display:flex;align-items:center;gap:2mm;"><div class="cb"></div><span style="font-size:8px;color:var(--muted);">Confirmation requirement (they must confirm)</span></div>
+        <div style="display:flex;align-items:center;gap:2mm;"><div class="cb"></div><span style="font-size:8px;color:var(--muted);">Sharing controls (they control who sees the file)</span></div>
+        <div style="display:flex;align-items:center;gap:2mm;"><div class="cb"></div><span style="font-size:8px;color:var(--muted);">NyayOS does not give legal advice</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="section-head">E — Timestamped Log</div>
+    <div class="time-col">
+      <div class="time-row header-row"><div class="ts">Time</div><div class="note">Event / Observation</div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+      <div class="time-row"><div class="ts"></div><div class="note"></div></div>
+    </div>
+    <div class="section-head" style="margin-top:3mm;">F — Verbatim Quotes</div>
+    <div class="obs-sub" style="margin-bottom:2mm;font-size:7.5px;color:var(--muted);font-style:italic;">Record exact words, not paraphrases. Note screen context in brackets.</div>
+    <div class="quote-lines"><div class="quote-line"></div><div class="quote-line"></div><div class="quote-line"></div><div class="quote-line"></div></div>
+    <div class="section-head" style="margin-top:3mm;">G — Body Language &amp; Affect</div>
+    <div class="obs-block">
+      <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Hesitation</span></div><div class="check-opt"><div class="cb"></div><span>Confusion</span></div><div class="check-opt"><div class="cb"></div><span>Frustration</span></div><div class="check-opt"><div class="cb"></div><span>Delight</span></div><div class="check-opt"><div class="cb"></div><span>Confidence</span></div><div class="check-opt"><div class="cb"></div><span>Anxiety</span></div></div>
+      <div class="write-line" style="margin-top:1.5mm;"></div>
+    </div>
+    <div class="section-head" style="margin-top:3mm;">H — Post-Session Summary</div>
+    <div class="obs-block"><div class="obs-label">Top finding from this session</div><div class="write-line"></div><div class="write-line"></div></div>
+    <div class="obs-block"><div class="obs-label">Biggest blocker observed</div><div class="write-line"></div></div>
+    <div class="obs-block"><div class="obs-label">One thing that worked well</div><div class="write-line"></div></div>
+    <div class="obs-block">
+      <div class="obs-label">Recommended severity for team debrief</div>
+      <div class="check-row"><div class="check-opt"><div class="cb"></div><span>P0 — block launch</span></div><div class="check-opt"><div class="cb"></div><span>P1 — fix before next test</span></div><div class="check-opt"><div class="cb"></div><span>P2 — monitor</span></div><div class="check-opt"><div class="cb"></div><span>No issues</span></div></div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer-note">Observer use only. Do not include dispute content, evidence, or case details. Store with session ID. Do not attach to participant records.</div>
+  <div class="footer-ver">NyayOS Observation v1.0</div>
+</div>
+</body>
+</html>

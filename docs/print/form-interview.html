@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — User Interview Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1C3D5A;--amber:#E8A020;--text:#111827;--muted:#374151;--light:#F7F8FA;--white:#FFFFFF;--border:#D1D5DB;}
+  @page{size:A4 portrait;margin:0;}
+  body{width:210mm;font-family:'Noto Sans',sans-serif;color:var(--text);background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .header{background:var(--navy);padding:6mm 12mm;display:flex;align-items:center;justify-content:space-between;}
+  .logo-row{display:flex;align-items:center;gap:7px;}
+  .logo-word{font-family:'Hind Siliguri',sans-serif;font-size:18px;font-weight:700;color:white;}
+  .form-meta{text-align:right;}
+  .form-meta h1{font-family:'Hind Siliguri',sans-serif;font-size:12px;font-weight:700;color:white;}
+  .form-meta p{font-size:7.5px;color:rgba(255,255,255,0.6);}
+  .amber-strip{background:var(--amber);height:2.5px;}
+  .meta-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;padding:5mm 12mm;background:var(--light);border-bottom:1px solid var(--border);}
+  .mf label{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);display:block;margin-bottom:1.5mm;}
+  .mf .line{border-bottom:1px solid var(--border);height:5.5mm;}
+  .body{padding:5mm 12mm;}
+  .q-block{margin-bottom:5mm;page-break-inside:avoid;}
+  .q-num{display:inline-block;background:var(--navy);color:white;font-size:8px;font-weight:700;width:16px;height:16px;border-radius:50%;text-align:center;line-height:16px;margin-right:3mm;flex-shrink:0;}
+  .q-header{display:flex;align-items:flex-start;gap:0;margin-bottom:2mm;}
+  .q-text{font-size:9.5px;font-weight:600;color:var(--navy);line-height:1.4;}
+  .q-probe{font-size:8px;color:var(--muted);font-style:italic;margin:1mm 0 2mm 19px;line-height:1.4;}
+  .answer-lines{margin-left:19px;}
+  .write-line{border-bottom:1px solid #E9ECF0;height:6.5mm;}
+  .section-divider{background:var(--navy);color:white;padding:2.5mm 5mm;border-radius:3px;margin:5mm 0 4mm;font-family:'Hind Siliguri',sans-serif;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
+  .check-row{display:flex;flex-wrap:wrap;gap:2mm 5mm;margin-left:19px;margin-bottom:2mm;}
+  .check-opt{display:flex;align-items:center;gap:2mm;}
+  .cb{width:10px;height:10px;border:1.5px solid var(--border);border-radius:2px;flex-shrink:0;}
+  .check-opt span{font-size:8.5px;color:var(--muted);}
+  .wtp-box{background:var(--light);border:1px solid var(--border);border-radius:4px;padding:4mm;margin-bottom:4mm;}
+  .wtp-box h4{font-size:9px;font-weight:700;color:var(--navy);margin-bottom:3mm;}
+  .wtp-row{display:flex;align-items:center;gap:3mm;margin-bottom:2.5mm;}
+  .wtp-row label{font-size:8.5px;color:var(--muted);min-width:75mm;}
+  .wtp-row .amt{border-bottom:1px solid var(--border);width:25mm;height:5.5mm;}
+  .footer{background:var(--navy);padding:4mm 12mm;display:flex;justify-content:space-between;align-items:center;margin-top:4mm;}
+  .footer-note{font-size:7px;color:rgba(255,255,255,0.5);max-width:130mm;line-height:1.4;}
+  .footer-ver{font-size:7px;color:rgba(255,255,255,0.35);}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-row">
+    <svg width="22" height="22" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="#E8A020"/><line x1="18" y1="2" x2="18" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+    <span class="logo-word">NyayOS</span>
+  </div>
+  <div class="form-meta"><h1>User Interview Sheet</h1><p>Researcher use only · Confidential · One sheet per participant</p></div>
+</div>
+<div class="amber-strip"></div>
+<div class="meta-bar">
+  <div class="mf"><label>Participant ID</label><div class="line"></div></div>
+  <div class="mf"><label>Date &amp; Time</label><div class="line"></div></div>
+  <div class="mf"><label>Location / Setting</label><div class="line"></div></div>
+  <div class="mf"><label>Interviewer</label><div class="line"></div></div>
+</div>
+<div class="body">
+  <div class="section-divider">Section A — Context &amp; Background</div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">1</span><div class="q-text">Tell me about your business — what do you do?</div></div>
+    <div class="q-probe">Note: type, size, years operating, primary customers/vendors</div>
+    <div class="answer-lines"><div class="write-line"></div><div class="write-line"></div></div>
+  </div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">2</span><div class="q-text">How often do you deal with other businesses for payments, orders, or services?</div></div>
+    <div class="answer-lines"><div class="write-line"></div></div>
+  </div>
+  <div class="section-divider">Section B — Dispute Experience</div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">3</span><div class="q-text">Have you ever had a situation where a payment wasn't made, goods weren't delivered, or a service wasn't as agreed?</div></div>
+    <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Yes</span></div><div class="check-opt"><div class="cb"></div><span>No</span></div><div class="check-opt"><div class="cb"></div><span>Not sure</span></div></div>
+    <div class="q-probe">If yes — how recent? How many in the last 2 years?</div>
+    <div class="answer-lines"><div class="write-line"></div></div>
+  </div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">4</span><div class="q-text">Tell me about the most recent one. What happened?</div></div>
+    <div class="q-probe">Let them speak freely. Note: parties, timeline, amount, outcome. Do NOT prompt with legal terms.</div>
+    <div class="answer-lines"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  </div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">5</span><div class="q-text">What did you do first when you realised something was wrong?</div></div>
+    <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Called them</span></div><div class="check-opt"><div class="cb"></div><span>Sent a message</span></div><div class="check-opt"><div class="cb"></div><span>Contacted lawyer</span></div><div class="check-opt"><div class="cb"></div><span>Told a friend/family</span></div><div class="check-opt"><div class="cb"></div><span>Did nothing</span></div><div class="check-opt"><div class="cb"></div><span>Other: ___________</span></div></div>
+  </div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">6</span><div class="q-text">How did you organise your information about the dispute?</div></div>
+    <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Paper folder</span></div><div class="check-opt"><div class="cb"></div><span>Phone photos</span></div><div class="check-opt"><div class="cb"></div><span>WhatsApp</span></div><div class="check-opt"><div class="cb"></div><span>Email folder</span></div><div class="check-opt"><div class="cb"></div><span>Spreadsheet</span></div><div class="check-opt"><div class="cb"></div><span>Nothing / in my head</span></div></div>
+    <div class="answer-lines" style="margin-top:2mm;"><div class="write-line"></div></div>
+  </div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">7</span><div class="q-text">How did it end?</div></div>
+    <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Resolved in my favour</span></div><div class="check-opt"><div class="cb"></div><span>Compromise</span></div><div class="check-opt"><div class="cb"></div><span>I gave up</span></div><div class="check-opt"><div class="cb"></div><span>Still ongoing</span></div><div class="check-opt"><div class="cb"></div><span>Against me</span></div></div>
+    <div class="q-probe">If they gave up: Why?</div>
+    <div class="answer-lines"><div class="write-line"></div></div>
+  </div>
+  <div class="section-divider">Section C — Readiness &amp; Willingness to Pay</div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">8</span><div class="q-text">If there was a tool that helped you organise a dispute before speaking to a lawyer, would that be useful?</div></div>
+    <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Definitely yes</span></div><div class="check-opt"><div class="cb"></div><span>Probably yes</span></div><div class="check-opt"><div class="cb"></div><span>Probably not</span></div><div class="check-opt"><div class="cb"></div><span>Definitely not</span></div></div>
+    <div class="q-probe">Note: hesitation, conditions, what would make it more useful</div>
+    <div class="answer-lines"><div class="write-line"></div></div>
+  </div>
+  <div class="wtp-box">
+    <h4>Q9 — Willingness to Pay (Van Westendorp — read aloud, record exact number)</h4>
+    <div class="wtp-row"><label>So cheap I'd wonder if it's any good:</label><div class="amt">₹</div></div>
+    <div class="wtp-row"><label>A bargain — I'd buy without thinking:</label><div class="amt">₹</div></div>
+    <div class="wtp-row"><label>Expensive but I'd consider it:</label><div class="amt">₹</div></div>
+    <div class="wtp-row"><label>Too expensive — wouldn't buy:</label><div class="amt">₹</div></div>
+    <div class="wtp-row"><label>Payment preference:</label><div class="check-row" style="margin-left:0;margin-bottom:0;"><div class="check-opt"><div class="cb"></div><span>Per dispute</span></div><div class="check-opt"><div class="cb"></div><span>Monthly</span></div><div class="check-opt"><div class="cb"></div><span>Free only</span></div><div class="check-opt"><div class="cb"></div><span>Wouldn't pay</span></div></div></div>
+  </div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">10</span><div class="q-text">Key insight from this session / follow-up action</div></div>
+    <div class="answer-lines"><div class="write-line"></div><div class="write-line"></div></div>
+  </div>
+  <div class="q-block">
+    <div class="q-header"><span class="q-num">✓</span><div class="q-text">Referral obtained?</div></div>
+    <div class="check-row"><div class="check-opt"><div class="cb"></div><span>Yes — Name: _________________ Phone: _________________</span></div><div class="check-opt"><div class="cb"></div><span>No</span></div></div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer-note">Confidential research instrument. Do not attach participant names to this form. Store by Participant ID only. Responses used for product improvement only.</div>
+  <div class="footer-ver">NyayOS Interview v1.0</div>
+</div>
+</body>
+</html>

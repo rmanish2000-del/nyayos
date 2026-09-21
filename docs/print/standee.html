@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — Roll-Up Standee 850×2000mm</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1C3D5A;--navy-mid:#2D6A8F;--amber:#E8A020;--white:#FFFFFF;--light:#F7F8FA;--muted:#374151;}
+  @page{size:850mm 2000mm;margin:0;}
+  body{width:850mm;min-height:2000mm;font-family:'Noto Sans',sans-serif;color:var(--white);-webkit-print-color-adjust:exact;print-color-adjust:exact;display:flex;flex-direction:column;transform-origin:top left;}
+  .top-zone{background:var(--navy);flex:0 0 auto;padding:60mm 70mm 40mm;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;}
+  .top-zone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:15mm;background:linear-gradient(to bottom,var(--navy),#162F48);}
+  .amber-top-band{height:8mm;background:var(--amber);width:100%;}
+  .logo-zone{display:flex;flex-direction:column;align-items:center;margin-bottom:35mm;}
+  .logo-group{display:flex;align-items:center;gap:14px;margin-bottom:8mm;}
+  .logo-word{font-family:'Hind Siliguri',sans-serif;font-size:64px;font-weight:700;color:white;letter-spacing:0.04em;}
+  .logo-tagline{font-size:22px;color:rgba(255,255,255,0.6);font-style:italic;letter-spacing:0.02em;}
+  .compass-hero{width:280mm;height:280mm;margin:0 auto 40mm;}
+  .main-hl{font-family:'Hind Siliguri',sans-serif;font-size:80px;font-weight:700;color:white;line-height:1.05;letter-spacing:-0.01em;margin-bottom:15mm;}
+  .main-hl .amber{color:var(--amber);}
+  .main-sub{font-size:28px;color:rgba(255,255,255,0.7);line-height:1.5;max-width:650mm;margin-bottom:40mm;}
+  .steps-zone{background:#162F48;padding:50mm 70mm;border-top:2px solid rgba(255,255,255,0.08);border-bottom:2px solid rgba(255,255,255,0.08);}
+  .steps-label{font-family:'Hind Siliguri',sans-serif;font-size:18px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber);margin-bottom:25mm;text-align:center;}
+  .step-list{display:flex;flex-direction:column;gap:18mm;}
+  .step-item{display:flex;gap:25mm;align-items:flex-start;}
+  .step-badge{width:60mm;height:60mm;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-badge span{font-family:'Hind Siliguri',sans-serif;font-size:38px;font-weight:700;color:var(--navy);}
+  .step-title{font-family:'Hind Siliguri',sans-serif;font-size:36px;font-weight:700;color:white;margin-bottom:6mm;line-height:1.2;}
+  .step-desc{font-size:22px;color:rgba(255,255,255,0.6);line-height:1.6;}
+  .step-divider{border:none;border-top:1px solid rgba(255,255,255,0.07);margin:0;}
+  .dn-zone{background:var(--navy);padding:40mm 70mm;text-align:center;}
+  .dn-title{font-family:'Hind Siliguri',sans-serif;font-size:16px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:15mm;}
+  .dn-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8mm;}
+  .dn-pill{border:1px solid rgba(255,255,255,0.12);border-radius:40px;padding:5mm 12mm;font-size:20px;color:rgba(255,255,255,0.45);}
+  .dn-pill::before{content:'× ';color:#F87171;}
+  .cta-zone{background:var(--navy);padding:50mm 70mm 55mm;display:flex;flex-direction:column;align-items:center;text-align:center;flex:1;}
+  .cta-headline{font-family:'Hind Siliguri',sans-serif;font-size:42px;font-weight:700;color:white;margin-bottom:20mm;}
+  .cta-block{background:var(--amber);border-radius:20mm;padding:18mm 40mm;display:flex;align-items:center;gap:20mm;margin-bottom:25mm;}
+  .cta-url{font-family:'Hind Siliguri',sans-serif;font-size:60px;font-weight:700;color:var(--navy);}
+  .cta-divider{width:2px;height:50mm;background:rgba(28,61,90,0.25);}
+  .qr-large{width:80mm;height:80mm;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--navy);font-weight:700;text-align:center;}
+  .bottom-bar{background:#0F2236;padding:15mm 70mm;display:flex;align-items:center;justify-content:space-between;}
+  .bottom-note{font-size:14px;color:rgba(255,255,255,0.3);max-width:500mm;line-height:1.6;}
+  .bottom-logo{display:flex;align-items:center;gap:8px;}
+  .bottom-logo-word{font-family:'Hind Siliguri',sans-serif;font-size:24px;font-weight:700;color:rgba(255,255,255,0.3);}
+  .bottom-amber-bar{height:5mm;background:var(--amber);width:100%;}
+</style>
+</head>
+<body>
+<div class="amber-top-band"></div>
+<div class="top-zone">
+  <div class="logo-zone">
+    <div class="logo-group">
+      <svg width="68" height="68" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="#E8A020"/><line x1="18" y1="2" x2="18" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg>
+      <span class="logo-word">NyayOS</span>
+    </div>
+    <div class="logo-tagline">Dispute Readiness Platform</div>
+  </div>
+  <div class="compass-hero">
+    <svg viewBox="0 0 280 280" fill="none" style="width:100%;height:100%;">
+      <circle cx="140" cy="140" r="132" stroke="rgba(255,255,255,0.04)" stroke-width="2"/>
+      <circle cx="140" cy="140" r="110" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"/>
+      <circle cx="140" cy="140" r="88" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+      <circle cx="140" cy="140" r="60" stroke="rgba(232,160,32,0.15)" stroke-width="2"/>
+      <line x1="140" y1="5" x2="140" y2="25" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="140" y1="255" x2="140" y2="275" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="5" y1="140" x2="25" y2="140" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="255" y1="140" x2="275" y2="140" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="231" y1="49" x2="219" y2="61" stroke="rgba(255,255,255,0.18)" stroke-width="2" stroke-linecap="round"/>
+      <line x1="49" y1="231" x2="61" y2="219" stroke="rgba(255,255,255,0.18)" stroke-width="2" stroke-linecap="round"/>
+      <line x1="49" y1="49" x2="61" y2="61" stroke="rgba(255,255,255,0.18)" stroke-width="2" stroke-linecap="round"/>
+      <line x1="231" y1="231" x2="219" y2="219" stroke="rgba(255,255,255,0.18)" stroke-width="2" stroke-linecap="round"/>
+      <line x1="140" y1="55" x2="140" y2="120" stroke="white" stroke-width="7" stroke-linecap="round"/>
+      <line x1="140" y1="160" x2="140" y2="225" stroke="white" stroke-width="7" stroke-linecap="round"/>
+      <line x1="55" y1="140" x2="120" y2="140" stroke="white" stroke-width="7" stroke-linecap="round"/>
+      <line x1="160" y1="140" x2="225" y2="140" stroke="white" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="140" cy="140" r="18" fill="#E8A020"/>
+      <circle cx="140" cy="140" r="8" fill="white"/>
+    </svg>
+  </div>
+  <h1 class="main-hl">Something went wrong.<br>Now you need<br>to be <span class="amber">ready.</span></h1>
+  <p class="main-sub">NyayOS organises your business dispute — timeline, evidence, facts — so you can speak to a lawyer or mediator from a position of clarity, not chaos.</p>
+</div>
+<div class="steps-zone">
+  <div class="steps-label">How it works</div>
+  <div class="step-list">
+    <div class="step-item"><div class="step-badge"><span>1</span></div><div class="step-body"><div class="step-title">Tell your story</div><div class="step-desc">Write what happened in your own words.<br>No legal terms or forms required.</div></div></div>
+    <hr class="step-divider">
+    <div class="step-item"><div class="step-badge"><span>2</span></div><div class="step-body"><div class="step-title">Add your documents</div><div class="step-desc">Contracts, invoices, messages, photos.<br>NyayOS categorises them automatically.</div></div></div>
+    <hr class="step-divider">
+    <div class="step-item"><div class="step-badge"><span>3</span></div><div class="step-body"><div class="step-title">Confirm the facts</div><div class="step-desc">Review what was found. Every fact<br>requires your approval — AI labels everything.</div></div></div>
+    <hr class="step-divider">
+    <div class="step-item"><div class="step-badge"><span>4</span></div><div class="step-body"><div class="step-title">See your options</div><div class="step-desc">Negotiation, mediation, tribunal, or court —<br>explained in plain language.</div></div></div>
+    <hr class="step-divider">
+    <div class="step-item"><div class="step-badge"><span>5</span></div><div class="step-body"><div class="step-title">Share when you're ready</div><div class="step-desc">Give your lawyer or advisor secure,<br>time-limited access. You control it.</div></div></div>
+  </div>
+</div>
+<div class="dn-zone">
+  <div class="dn-title">NyayOS does not</div>
+  <div class="dn-pills"><span class="dn-pill">Give legal advice</span><span class="dn-pill">Predict outcomes</span><span class="dn-pill">File anything on your behalf</span><span class="dn-pill">Share without permission</span><span class="dn-pill">Replace a lawyer</span></div>
+</div>
+<div class="cta-zone">
+  <div class="cta-headline">Get early access today.</div>
+  <div class="cta-block"><div class="cta-url">nyayos.in</div><div class="cta-divider"></div><div class="qr-large">QR<br>CODE<br>HERE</div></div>
+  <div style="font-size:20px;color:rgba(255,255,255,0.35);">Currently available by invitation for commercial disputes.</div>
+</div>
+<div class="bottom-bar">
+  <div class="bottom-note">NyayOS is not a law firm and does not provide legal advice. NyayOS organises information to help you prepare — it does not represent you or file documents on your behalf.</div>
+  <div class="bottom-logo"><svg width="22" height="22" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="rgba(232,160,32,0.5)"/><line x1="18" y1="2" x2="18" y2="14" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round"/></svg><span class="bottom-logo-word">NyayOS</span></div>
+</div>
+<div class="bottom-amber-bar"></div>
+</body>
+</html>
