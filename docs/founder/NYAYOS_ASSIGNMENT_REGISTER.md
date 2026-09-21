@@ -189,6 +189,23 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | P2 | **Code directory** | `app/` at repository root; `docs/` untouched | Keeps tier-1..7 documents physically separate from build artefacts; avoids root-level `package.json` making the repo *look* like the app |
 | P3 | **`.gitignore` carve-outs** | Allow `app/public/**` images and `app/**/*.svg`; keep `.env*` blocked (Lovable exports ship a `.env` with the Supabase anon key — it must be **excluded** and re-supplied via `.env.example`); screenshots to `docs/evaluation/sprint1-screenshots/` with an explicit allow | Current rules block `*.png`, `*.jpg`, `*.svg`, `*.zip` repo-wide and would silently drop Lovable's own assets |
 
+### A-018 — Sprint 1.1 State Completion
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-018 |
+| **Tool and exact mode** | Lovable — implementation and validation |
+| **Purpose** | Complete the additive pre–Fact Card foundation states required by A-014 before Sprint 2 |
+| **Input files** | A-011 Sprint 1 Foundation; A-014 Sprint 1 Foundation review; founder instruction, 21 Sep 2026 |
+| **Expected output** | `uncertain`, `not-relevant`, `corrected`, `unknown-date`, bounded confidence bands, user-correction provenance and accessible inline correction input; updated showcase and tests |
+| **Environment** | Lovable staging workspace; canonical repository `rmanish2000-del/nyayos` |
+| **Deployment allowed** | **Staging: ALLOWED (FA-001). Production: NOT ALLOWED.** No deployment performed |
+| **Status** | **CANONICAL — 21 September 2026** |
+| **Result** | Foundation code and showcase updated. `vitest` **PASS 15/15** · typecheck **PASS** · ESLint **PASS (0 errors; 7 existing Fast Refresh warnings)** · production build **PASS** · responsive rendering **PASS** at 390×844, 834×1100 and 1280×1000 with no console errors and 44×44 visible interactive targets |
+| **Evidence** | `app/` and `app/tests/foundation.test.tsx` in the canonical A-018 commit; generated status registry, dashboard and dependency graph |
+| **Limitations** | This closes only the seven additive state gaps. A-014's formal contrast and assistive-technology audits remain separate open risks. A-008 Fact Card design remains required before A-015 |
+| **Handoff back to M365 Copilot** | A-018 is CANONICAL. A-015 remains blocked only on A-008. Do not start production work; FA-002 is not granted |
+
 ### A-019 — Repository Automation Foundation
 
 | Field | Value |
@@ -217,8 +234,8 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-010 | **NyayOS Security + Data Architecture Review** (research/specification only) | Recommended in the Continuity Handoff. Inputs: Master Product Spec V1, Architecture Review, Risk Register V1, Real Case Evaluation Protocol | May run in parallel with A-008/A-009 |
 | A-011 | **Sprint 1 Foundation — Lovable staging build** | Lovable — staging build | ● **CANONICAL** (imported under A-017; gaps recorded in A-014 § 11.3) |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
-| A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ✅ **Authorized under FA-001.** Seven items in [A-014 § 11.4](../architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md). **Must precede A-015** |
-| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ✅ **GO (conditional)** per A-014 § 11.4 — after A-018. Fact Card **design** in Figma (A-008) may proceed now |
+| A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 |
+| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — A-018 is CANONICAL; still waiting on A-008 Fact Card design |
 | A-016 | **Typography decision → Decision Log** (D-019) | Founder | Open. Code now embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet say so |
 
 ---

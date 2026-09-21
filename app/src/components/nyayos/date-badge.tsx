@@ -1,9 +1,15 @@
-import { CalendarCheck, CalendarClock, CalendarSearch, CalendarX } from "lucide-react";
+import {
+  CalendarCheck,
+  CalendarClock,
+  CalendarMinus,
+  CalendarSearch,
+  CalendarX,
+} from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-export type DatePrecision = "exact" | "approximate" | "inferred" | "conflicting";
+export type DatePrecision = "exact" | "approximate" | "inferred" | "conflicting" | "unknown-date";
 
 const PRECISION: Record<
   DatePrecision,
@@ -29,6 +35,11 @@ const PRECISION: Record<
     classes: "bg-date-conflicting-surface text-date-conflicting border-date-conflicting/30",
     icon: CalendarX,
   },
+  "unknown-date": {
+    label: "Date unknown",
+    classes: "bg-date-unknown-surface text-date-unknown border-date-unknown/30 border-dashed",
+    icon: CalendarMinus,
+  },
 };
 
 /**
@@ -41,7 +52,7 @@ export function DateBadge({
   className,
 }: {
   precision: DatePrecision;
-  value: string;
+  value?: string;
   className?: string;
 }) {
   const config = PRECISION[precision];
@@ -57,12 +68,14 @@ export function DateBadge({
     >
       <Icon aria-hidden="true" className="size-3.5 shrink-0" />
       <span className={cn(precision === "exact" ? "font-semibold" : "font-normal italic")}>
-        {value}
+        {precision === "unknown-date" ? config.label : value}
       </span>
       <span className="sr-only">, {config.label}</span>
-      <span aria-hidden="true" className="opacity-80">
-        · {config.label}
-      </span>
+      {precision === "unknown-date" ? null : (
+        <span aria-hidden="true" className="opacity-80">
+          · {config.label}
+        </span>
+      )}
     </span>
   );
 }

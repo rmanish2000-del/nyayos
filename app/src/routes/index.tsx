@@ -3,8 +3,10 @@ import * as React from "react";
 
 import { AppShell, type ShellSection } from "@/components/nyayos/app-shell";
 import { Button } from "@/components/nyayos/button";
+import { ConfidenceBand } from "@/components/nyayos/confidence-band";
 import { DateBadge } from "@/components/nyayos/date-badge";
 import { InputField } from "@/components/nyayos/input-field";
+import { InlineCorrectionInput } from "@/components/nyayos/inline-correction-input";
 import { NotificationBanner } from "@/components/nyayos/notification-banner";
 import { ReadinessIndicator } from "@/components/nyayos/readiness-indicator";
 import { SourceBadge } from "@/components/nyayos/source-badge";
@@ -158,6 +160,7 @@ function TokensView() {
 
 function ComponentsView() {
   const [dismissed, setDismissed] = React.useState(false);
+  const [correctionMessage, setCorrectionMessage] = React.useState("");
 
   return (
     <>
@@ -238,6 +241,9 @@ function ComponentsView() {
           <StatusChip status="missing" />
           <StatusChip status="processing" />
           <StatusChip status="removed" />
+          <StatusChip status="uncertain" />
+          <StatusChip status="not-relevant" />
+          <StatusChip status="corrected" />
         </Panel>
       </Section>
 
@@ -252,6 +258,7 @@ function ComponentsView() {
           <SourceBadge source="ai-inference" />
           <SourceBadge source="verified-source" />
           <SourceBadge source="source-unavailable" />
+          <SourceBadge source="user-correction" detail="Corrected by you" />
         </Panel>
       </Section>
 
@@ -264,7 +271,70 @@ function ComponentsView() {
           <DateBadge precision="approximate" value="Mid July 2026" />
           <DateBadge precision="inferred" value="Before 20 July 2026" />
           <DateBadge precision="conflicting" value="14 or 17 July 2026" />
+          <DateBadge precision="unknown-date" />
         </Panel>
+      </Section>
+
+      <Section
+        title="Confidence band"
+        subtitle="Bounded extraction confidence only. It does not judge truth or predict an outcome."
+      >
+        <Panel label="All states">
+          <ConfidenceBand band="low" />
+          <ConfidenceBand band="medium" />
+          <ConfidenceBand band="high" />
+        </Panel>
+      </Section>
+
+      <Section
+        title="Inline correction input"
+        subtitle="Preserves the original value while recording a user correction and optional reason."
+      >
+        <div className="grid gap-4 lg:grid-cols-3">
+          <Panel label="Interactive">
+            <div className="w-full">
+              <InlineCorrectionInput
+                id="correction-live"
+                label="Corrected supplier name"
+                originalValue="Asha Trading Co."
+                onSave={(value) => setCorrectionMessage(`Saved correction: ${value}`)}
+                onCancel={() => setCorrectionMessage("Correction cancelled")}
+              />
+              <p className="mt-2 min-h-5 text-xs text-muted-foreground" aria-live="polite">
+                {correctionMessage}
+              </p>
+            </div>
+          </Panel>
+          <Panel label="Error">
+            <div className="w-full">
+              <InlineCorrectionInput
+                id="correction-error"
+                label="Corrected date"
+                originalValue="14 July 2026"
+                initialValue="32 July 2026"
+                error="Enter a valid date."
+              />
+            </div>
+          </Panel>
+          <Panel label="Disabled and saving">
+            <div className="grid w-full gap-5">
+              <InlineCorrectionInput
+                id="correction-disabled"
+                label="Corrected value"
+                originalValue="Original"
+                initialValue="Correction unavailable"
+                disabled
+              />
+              <InlineCorrectionInput
+                id="correction-saving"
+                label="Corrected value"
+                originalValue="Original"
+                initialValue="Saving correction"
+                saving
+              />
+            </div>
+          </Panel>
+        </div>
       </Section>
 
       <Section

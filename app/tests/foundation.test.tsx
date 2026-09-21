@@ -1,9 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 import { Button } from "@/components/nyayos/button";
+import { ConfidenceBand } from "@/components/nyayos/confidence-band";
 import { DateBadge } from "@/components/nyayos/date-badge";
+import { InlineCorrectionInput } from "@/components/nyayos/inline-correction-input";
 import { NotificationBanner } from "@/components/nyayos/notification-banner";
 import { ReadinessIndicator } from "@/components/nyayos/readiness-indicator";
 import { SourceBadge } from "@/components/nyayos/source-badge";
@@ -41,6 +43,9 @@ describe("Provenance and status", () => {
       "missing",
       "processing",
       "removed",
+      "uncertain",
+      "not-relevant",
+      "corrected",
     ] as const) {
       const { container, unmount } = render(<StatusChip status={kind} />);
       expect(container.textContent?.trim().length ?? 0).toBeGreaterThan(0);
@@ -56,6 +61,7 @@ describe("Provenance and status", () => {
       "ai-inference",
       "verified-source",
       "source-unavailable",
+      "user-correction",
     ] as const) {
       const { container, unmount } = render(<SourceBadge source={kind} />);
       expect(container.textContent?.trim().length ?? 0).toBeGreaterThan(0);
@@ -64,11 +70,65 @@ describe("Provenance and status", () => {
   });
 
   it("renders each date precision with visible text", () => {
-    for (const kind of ["exact", "approximate", "inferred", "conflicting"] as const) {
+    for (const kind of [
+      "exact",
+      "approximate",
+      "inferred",
+      "conflicting",
+      "unknown-date",
+    ] as const) {
       const { container, unmount } = render(<DateBadge precision={kind} value="14 July 2026" />);
-      expect(container.textContent).toContain("14 July 2026");
+      expect(container.textContent?.trim().length ?? 0).toBeGreaterThan(0);
       unmount();
     }
+  });
+});
+
+describe("Pre-Fact Card primitives", () => {
+  it("renders each extraction confidence band without numeric or predictive language", () => {
+    for (const band of ["low", "medium", "high"] as const) {
+      const { container, unmount } = render(<ConfidenceBand band={band} />);
+      const text = (container.textContent ?? "").toLowerCase();
+      expect(text).toContain("confidence");
+      for (const banned of ["%", "truth", "outcome", "probability", "rank"]) {
+        expect(text).not.toContain(banned);
+      }
+      unmount();
+    }
+  });
+
+  it("records a correction while preserving original-value context", () => {
+    let saved = "";
+    render(
+      <InlineCorrectionInput
+        id="correction"
+        label="Corrected value"
+        originalValue="Original value"
+        onSave={(value) => {
+          saved = value;
+        }}
+      />,
+    );
+    expect(screen.getAllByText("Original value")).toHaveLength(2);
+    fireEvent.change(screen.getByLabelText("Corrected value"), {
+      target: { value: "Updated value" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Save correction" }));
+    expect(saved).toBe("Updated value");
+  });
+
+  it("disables correction controls while saving", () => {
+    render(
+      <InlineCorrectionInput
+        id="saving-correction"
+        label="Corrected value"
+        originalValue="Original"
+        initialValue="Updated"
+        saving
+      />,
+    );
+    expect(screen.getByLabelText("Corrected value")).toBeDisabled();
+    expect(screen.getByRole("button", { name: /save correction/i })).toBeDisabled();
   });
 });
 
@@ -117,8 +177,14 @@ describe("Design tokens", () => {
     for (const token of [
       "--color-status-confirmed",
       "--color-status-contradiction",
+      "--color-status-uncertain",
+      "--color-status-not-relevant",
+      "--color-status-corrected",
       "--color-source-document",
+      "--color-source-correction",
       "--color-date-exact",
+      "--color-date-unknown",
+      "--color-confidence-low",
       "--color-warning",
     ]) {
       expect(styles).toContain(token);

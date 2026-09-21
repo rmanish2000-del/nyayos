@@ -316,10 +316,10 @@
       "gate": "FA-001",
       "inputs": [
         "A-011",
-        "A-014"
+        "A-014",
+        "A-018"
       ],
       "planned_inputs": [
-        "A-018",
         "A-008"
       ],
       "outputs": [
@@ -328,7 +328,7 @@
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "GO (conditional): may not start until A-018 is CANONICAL."
+      "notes": "GO remains conditional on A-008 Fact Card design; A-018 is CANONICAL."
     },
     {
       "id": "A-016",
@@ -376,8 +376,8 @@
       "id": "A-018",
       "title": "Sprint 1.1 — State Completion",
       "type": "build",
-      "status": "OPEN",
-      "owner": "Unassigned",
+      "status": "CANONICAL",
+      "owner": "Lovable",
       "tool": "Lovable — staging build",
       "gate": "FA-001",
       "inputs": [
@@ -388,10 +388,10 @@
       "outputs": [
         "app/"
       ],
-      "evidence": "",
+      "evidence": "app/tests/foundation.test.tsx",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "Seven items in A-014 § 11.4. Must precede A-015."
+      "notes": "CANONICAL after 15/15 tests, typecheck, lint (0 errors), production build, and responsive 390/834/1280 checks passed. Added uncertain, not-relevant, corrected, user-correction provenance, unknown-date, bounded confidence bands, and accessible inline correction states. No deployment performed."
     },
     {
       "id": "A-019",

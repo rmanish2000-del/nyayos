@@ -8,18 +8,19 @@ Canonical repository: https://github.com/rmanish2000-del/nyayos
 
 ## What is in this package
 
-| Area | Location |
-| --- | --- |
-| Design token system (colour, typography, spacing, radius, shadow, motion, breakpoints) | `src/styles.css` |
-| Foundation components | `src/components/nyayos/` |
-| Responsive navigation shell (mobile tabs / tablet rail / desktop sidebar) | `src/components/nyayos/app-shell.tsx` |
-| Foundation showcase (every component state, token gallery, a11y checklist) | `src/routes/index.tsx` |
-| Document head, font loading | `src/routes/__root.tsx` |
-| shadcn/Radix primitives (baseline, unmodified) | `src/components/ui/` |
-| Tests | `tests/` |
+| Area                                                                                   | Location                              |
+| -------------------------------------------------------------------------------------- | ------------------------------------- |
+| Design token system (colour, typography, spacing, radius, shadow, motion, breakpoints) | `src/styles.css`                      |
+| Foundation components                                                                  | `src/components/nyayos/`              |
+| Responsive navigation shell (mobile tabs / tablet rail / desktop sidebar)              | `src/components/nyayos/app-shell.tsx` |
+| Foundation showcase (every component state, token gallery, a11y checklist)             | `src/routes/index.tsx`                |
+| Document head, font loading                                                            | `src/routes/__root.tsx`               |
+| shadcn/Radix primitives (baseline, unmodified)                                         | `src/components/ui/`                  |
+| Tests                                                                                  | `tests/`                              |
 
 Foundation components: `Button`, `InputField`, `StatusChip`, `SourceBadge`,
-`DateBadge`, `NotificationBanner`, `ReadinessIndicator`, `AppShell`.
+`DateBadge`, `ConfidenceBand`, `InlineCorrectionInput`, `NotificationBanner`,
+`ReadinessIndicator`, `AppShell`.
 
 ## Stack
 
@@ -63,11 +64,11 @@ Extras: `bun run lint:fix`, `bun run format`, `bun run test:watch`,
 
 ## Responsive breakpoints
 
-| Form | Width | Navigation |
-| --- | --- | --- |
-| Mobile | < 48rem | bottom tab bar |
-| Tablet | 48–64rem | left rail, collapsed + expanded |
-| Desktop | ≥ 64rem | sidebar, collapsed + expanded |
+| Form    | Width    | Navigation                      |
+| ------- | -------- | ------------------------------- |
+| Mobile  | < 48rem  | bottom tab bar                  |
+| Tablet  | 48–64rem | left rail, collapsed + expanded |
+| Desktop | ≥ 64rem  | sidebar, collapsed + expanded   |
 
 One navigation model, three presentations. Current section is marked with
 `aria-current`; a skip-to-content link is the first focusable element.
@@ -82,6 +83,8 @@ Target: **WCAG 2.2 AA**.
   carried in text, never colour alone.
 - `prefers-reduced-motion` collapses all motion.
 - Banners announce via `aria-live`.
+- Inline corrections preserve the original value, use explicit labels, and expose
+  error, disabled and saving states without relying on colour alone.
 
 Not yet run: a formal contrast audit and a screen-reader pass (NVDA / VoiceOver).
 Both are tracked as open items.
@@ -93,6 +96,8 @@ Both are tracked as open items.
 - The progress indicator reports **readiness percentage only**. Scoring, ranking,
   strength, likelihood and probability language is prohibited and is guarded by a
   test.
+- Confidence bands describe extraction confidence as low, medium or high. They do
+  not express truth, outcome probability, rankings or percentages.
 - Out of scope for the product entirely: lawyer or judge portals, mediation or
   lawyer marketplaces, recommendation engines, success probability, truth scores,
   court operating systems, filing workflows.

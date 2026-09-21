@@ -1,4 +1,12 @@
-import { BadgeCheck, FileText, HelpCircle, MessageSquare, Sparkles, Users } from "lucide-react";
+import {
+  BadgeCheck,
+  FilePenLine,
+  FileText,
+  HelpCircle,
+  MessageSquare,
+  Sparkles,
+  Users,
+} from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -9,7 +17,8 @@ export type SourceKind =
   | "third-party"
   | "ai-inference"
   | "verified-source"
-  | "source-unavailable";
+  | "source-unavailable"
+  | "user-correction";
 
 const SOURCE: Record<
   SourceKind,
@@ -44,6 +53,11 @@ const SOURCE: Record<
     label: "Source unavailable",
     classes: "bg-source-unavailable-surface text-source-unavailable border-source-unavailable/30",
     icon: HelpCircle,
+  },
+  "user-correction": {
+    label: "User correction",
+    classes: "bg-source-correction-surface text-source-correction border-source-correction/30",
+    icon: FilePenLine,
   },
 };
 

@@ -94,6 +94,12 @@
   --color-status-processing-surface: var(--status-processing-surface);
   --color-status-removed: var(--status-removed);
   --color-status-removed-surface: var(--status-removed-surface);
+  --color-status-uncertain: var(--status-uncertain);
+  --color-status-uncertain-surface: var(--status-uncertain-surface);
+  --color-status-not-relevant: var(--status-not-relevant);
+  --color-status-not-relevant-surface: var(--status-not-relevant-surface);
+  --color-status-corrected: var(--status-corrected);
+  --color-status-corrected-surface: var(--status-corrected-surface);
 
   /* --- Provenance (where information came from) --- */
   --color-source-document: var(--source-document);
@@ -108,6 +114,8 @@
   --color-source-verified-surface: var(--source-verified-surface);
   --color-source-unavailable: var(--source-unavailable);
   --color-source-unavailable-surface: var(--source-unavailable-surface);
+  --color-source-correction: var(--source-correction);
+  --color-source-correction-surface: var(--source-correction-surface);
 
   /* --- Date precision --- */
   --color-date-exact: var(--date-exact);
@@ -118,6 +126,16 @@
   --color-date-inferred-surface: var(--date-inferred-surface);
   --color-date-conflicting: var(--date-conflicting);
   --color-date-conflicting-surface: var(--date-conflicting-surface);
+  --color-date-unknown: var(--date-unknown);
+  --color-date-unknown-surface: var(--date-unknown-surface);
+
+  /* --- Extraction confidence bands --- */
+  --color-confidence-low: var(--confidence-low);
+  --color-confidence-low-surface: var(--confidence-low-surface);
+  --color-confidence-medium: var(--confidence-medium);
+  --color-confidence-medium-surface: var(--confidence-medium-surface);
+  --color-confidence-high: var(--confidence-high);
+  --color-confidence-high-surface: var(--confidence-high-surface);
 
   /* --- Notification --- */
   --color-info: var(--info);
@@ -178,6 +196,12 @@
   --status-processing-surface: oklch(0.955 0.025 250);
   --status-removed: oklch(0.48 0.015 258);
   --status-removed-surface: oklch(0.93 0.006 250);
+  --status-uncertain: oklch(0.44 0.08 75);
+  --status-uncertain-surface: oklch(0.96 0.035 85);
+  --status-not-relevant: oklch(0.43 0.025 235);
+  --status-not-relevant-surface: oklch(0.95 0.012 235);
+  --status-corrected: oklch(0.4 0.1 195);
+  --status-corrected-surface: oklch(0.955 0.03 195);
 
   --source-document: oklch(0.4 0.1 250);
   --source-document-surface: oklch(0.955 0.025 250);
@@ -191,6 +215,8 @@
   --source-verified-surface: oklch(0.955 0.03 160);
   --source-unavailable: oklch(0.46 0.02 258);
   --source-unavailable-surface: oklch(0.94 0.006 250);
+  --source-correction: oklch(0.4 0.1 195);
+  --source-correction-surface: oklch(0.955 0.03 195);
 
   --date-exact: oklch(0.4 0.1 160);
   --date-exact-surface: oklch(0.955 0.03 160);
@@ -200,6 +226,15 @@
   --date-inferred-surface: oklch(0.96 0.02 300);
   --date-conflicting: oklch(0.45 0.16 30);
   --date-conflicting-surface: oklch(0.96 0.03 35);
+  --date-unknown: oklch(0.44 0.03 258);
+  --date-unknown-surface: oklch(0.955 0.008 250);
+
+  --confidence-low: oklch(0.45 0.16 30);
+  --confidence-low-surface: oklch(0.96 0.03 35);
+  --confidence-medium: oklch(0.44 0.1 75);
+  --confidence-medium-surface: oklch(0.96 0.04 85);
+  --confidence-high: oklch(0.4 0.1 160);
+  --confidence-high-surface: oklch(0.955 0.03 160);
 
   --info: oklch(0.42 0.1 250);
   --info-surface: oklch(0.96 0.025 250);
@@ -256,6 +291,12 @@
   --status-processing-surface: oklch(0.3 0.06 255);
   --status-removed: oklch(0.76 0.012 252);
   --status-removed-surface: oklch(0.26 0.012 255);
+  --status-uncertain: oklch(0.88 0.11 90);
+  --status-uncertain-surface: oklch(0.31 0.055 85);
+  --status-not-relevant: oklch(0.8 0.035 235);
+  --status-not-relevant-surface: oklch(0.28 0.025 235);
+  --status-corrected: oklch(0.84 0.1 195);
+  --status-corrected-surface: oklch(0.3 0.06 195);
 
   --source-document: oklch(0.85 0.1 250);
   --source-document-surface: oklch(0.3 0.06 255);
@@ -269,6 +310,8 @@
   --source-verified-surface: oklch(0.3 0.06 165);
   --source-unavailable: oklch(0.78 0.015 252);
   --source-unavailable-surface: oklch(0.27 0.015 255);
+  --source-correction: oklch(0.84 0.1 195);
+  --source-correction-surface: oklch(0.3 0.06 195);
 
   --date-exact: oklch(0.84 0.12 160);
   --date-exact-surface: oklch(0.3 0.06 165);
@@ -278,6 +321,15 @@
   --date-inferred-surface: oklch(0.3 0.05 300);
   --date-conflicting: oklch(0.82 0.13 35);
   --date-conflicting-surface: oklch(0.31 0.08 32);
+  --date-unknown: oklch(0.82 0.02 252);
+  --date-unknown-surface: oklch(0.28 0.02 255);
+
+  --confidence-low: oklch(0.82 0.13 35);
+  --confidence-low-surface: oklch(0.31 0.08 32);
+  --confidence-medium: oklch(0.88 0.12 90);
+  --confidence-medium-surface: oklch(0.31 0.06 85);
+  --confidence-high: oklch(0.84 0.12 160);
+  --confidence-high-surface: oklch(0.3 0.06 165);
 
   --info: oklch(0.85 0.1 250);
   --info-surface: oklch(0.29 0.06 255);

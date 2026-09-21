@@ -1,10 +1,28 @@
-import { AlertTriangle, Check, CircleDashed, Clock, Loader2, Trash2 } from "lucide-react";
+import {
+  AlertTriangle,
+  Check,
+  CircleDashed,
+  Clock,
+  HelpCircle,
+  Loader2,
+  MinusCircle,
+  PencilLine,
+  Trash2,
+} from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
 export type StatusKind =
-  "confirmed" | "to-review" | "contradiction" | "missing" | "processing" | "removed";
+  | "confirmed"
+  | "to-review"
+  | "contradiction"
+  | "missing"
+  | "processing"
+  | "removed"
+  | "uncertain"
+  | "not-relevant"
+  | "corrected";
 
 const STATUS: Record<
   StatusKind,
@@ -40,6 +58,22 @@ const STATUS: Record<
     label: "Removed",
     classes: "bg-status-removed-surface text-status-removed border-status-removed/30",
     icon: Trash2,
+  },
+  uncertain: {
+    label: "Uncertain",
+    classes: "bg-status-uncertain-surface text-status-uncertain border-status-uncertain/30",
+    icon: HelpCircle,
+  },
+  "not-relevant": {
+    label: "Not relevant",
+    classes:
+      "bg-status-not-relevant-surface text-status-not-relevant border-status-not-relevant/30",
+    icon: MinusCircle,
+  },
+  corrected: {
+    label: "Corrected",
+    classes: "bg-status-corrected-surface text-status-corrected border-status-corrected/30",
+    icon: PencilLine,
   },
 };
 

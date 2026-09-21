@@ -24,10 +24,10 @@ Legend: ○ OPEN · ◐ IN_PROGRESS · ◑ REVIEW · ● CANONICAL · ⊘ SUPERS
 | A-012 | Production build / deployment | ○ **OPEN** | Unassigned | TBD | FA-002 (not granted) | — | A-008, A-009, A-010, A-015 | — | 2026-09-21 |
 | A-013 | MVP Reconciliation V3, authorization record, authority hierarchy | ● **CANONICAL** | Claude Code | Claude Code — Repository and Product-Continuity Maintainer | — | A-006, A-007 | — | [docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) | 2026-09-21 |
 | A-014 | Sprint 1 Foundation architecture review | ● **CANONICAL** | Claude Code | Claude Code — Architecture Review | — | A-006, A-011 | — | [docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](../../docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) | 2026-09-21 |
-| A-015 | Sprint 2 — Fact Card System build | ○ **OPEN** | Unassigned | Lovable — staging build | FA-001 | A-011, A-014 | A-018, A-008 | — | 2026-09-21 |
+| A-015 | Sprint 2 — Fact Card System build | ○ **OPEN** | Unassigned | Lovable — staging build | FA-001 | A-011, A-014, A-018 | A-008 | — | 2026-09-21 |
 | A-016 | Typography decision → Decision Log (D-019) | ○ **OPEN** | Founder | Founder | — | A-014 | — | — | 2026-09-21 |
 | A-017 | Sprint 1 Foundation import into canonical repository | ● **CANONICAL** | Claude Code | Claude Code — Repository Integration | FA-001 | A-011, A-014 | — | [docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md](../../docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md) | 2026-09-21 |
-| A-018 | Sprint 1.1 — State Completion | ○ **OPEN** | Unassigned | Lovable — staging build | FA-001 | A-011, A-014 | — | — | 2026-09-21 |
+| A-018 | Sprint 1.1 — State Completion | ● **CANONICAL** | Lovable | Lovable — staging build | FA-001 | A-011, A-014 | — | [app/tests/foundation.test.tsx](../../app/tests/foundation.test.tsx) | 2026-09-21 |
 | A-019 | Repository Automation Foundation | ● **CANONICAL** | Claude Code | Claude Code — Repository Automation | — | A-007, A-013, A-017 | — | [docs/founder/NYAYOS_CHANGELOG.md](NYAYOS_CHANGELOG.md) | 2026-09-21 |
 
 ## Notes
@@ -44,8 +44,8 @@ Legend: ○ OPEN · ◐ IN_PROGRESS · ◑ REVIEW · ● CANONICAL · ⊘ SUPERS
 - **A-012** — NOT AUTHORIZED. Requires FA-002.
 - **A-013** — FA-001 recorded. Commit 1ff5383.
 - **A-014** — Executed § 11. GO (conditional) for Sprint 2 on A-018.
-- **A-015** — GO (conditional): may not start until A-018 is CANONICAL.
+- **A-015** — GO remains conditional on A-008 Fact Card design; A-018 is CANONICAL.
 - **A-016** — Code embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet record it.
 - **A-017** — Commit 62f649f. Staging URL not supplied — staging not verified.
-- **A-018** — Seven items in A-014 § 11.4. Must precede A-015.
+- **A-018** — CANONICAL after 15/15 tests, typecheck, lint (0 errors), production build, and responsive 390/834/1280 checks passed. Added uncertain, not-relevant, corrected, user-correction provenance, unknown-date, bounded confidence bands, and accessible inline correction states. No deployment performed.
 - **A-019** — CANONICAL 21 Sep 2026: task-gate run 35559156273 and dependency-check run 35559156205 green on main (commit bd31394); status-update exercised by this very transition. Run URLs in the changelog.
