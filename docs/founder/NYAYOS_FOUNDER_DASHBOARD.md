@@ -124,7 +124,7 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Status** | **BLOCKED — artefact not supplied.** Review instrument complete |
 | **Blocker** | Sprint 1 build exists only inside Lovable. Founder must connect Lovable → GitHub (private `nyayos-app`) or export the code — see [A-014 § 2](../architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) |
 | **Required evidence** | Executed § 4 checklist; zero Critical fails; typography decision recorded; FA-001 code-location closed |
-| **Next action** | Founder supplies artefact. In parallel: record typography decision (D-019 candidate); start Fact Card design in Figma |
+| **Next action** | Founder supplies artefact. **A-017 import attempt (21 Sep) also blocked — `nyayos-sprint1-foundation.zip` not present anywhere.** In parallel: record typography decision (D-019 candidate); start Fact Card design in Figma |
 
 ### F-4 — Repository and continuity initialization
 

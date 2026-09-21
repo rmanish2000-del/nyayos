@@ -7,6 +7,16 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
+## 2026-09-21 — Sprint 1 import attempted: BLOCKED, inputs not supplied (A-017)
+
+An instruction to import `nyayos-sprint1-foundation.zip` into the canonical repository and mark Sprint 1 CANONICAL was received. **The ZIP, screenshots, staging URL and expected checksum were not supplied** and are not present anywhere reachable. Only the governance commit SHA `1ff5383` was verifiable (correct — the FA-001 commit).
+
+**Nothing was imported. Sprint 1 is not canonical.** Toolchain pre-verified: Node 22.14, npm 10.9, `sha256sum`; no dedicated secret scanner installed.
+
+Three pre-decisions the import will force are recorded in the assignment register (A-017): the import closes the FA-001 code-location item as option (b); code goes under `app/`; `.gitignore` needs carve-outs and the Lovable `.env` must be excluded.
+
+---
+
 ## 2026-09-21 — Sprint 1 Foundation review: BLOCKED on artefact; NO-GO (conditional) for Sprint 2 (A-014)
 
 ### Reviewed

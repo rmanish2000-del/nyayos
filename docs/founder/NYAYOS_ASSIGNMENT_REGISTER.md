@@ -164,6 +164,31 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Architecture, accessibility and design-system ratings are **UNRATED** — the reviewer declined to rate code it has not seen. The EduOS repo `learning-start-nexus` was identified by README only and not inspected further |
 | **Handoff back to M365 Copilot** | Supply the artefact via review § 2 (recommended: Lovable → GitHub → private `nyayos-app`). Three actions can start now without it: record typography decision (D-019 candidate), close FA-001 code-location item, begin Fact Card design in Figma against § 3.1 / § 4.5 |
 
+### A-017 — Sprint 1 Foundation import into canonical repository
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-017 |
+| **Tool and exact mode** | Claude Code — Repository Integration |
+| **Purpose** | Import the Lovable Sprint 1 Foundation code into the canonical repository, verify checksum, scan for secrets and prohibited content, run build/test/lint, record results, and mark Sprint 1 CANONICAL |
+| **Input files** | Instruction names: `nyayos-sprint1-foundation.zip`, Sprint 1 screenshots, staging URL, governance commit `1ff538355e3a3379a1a54a42c95562959870242a`. **Only the commit SHA was verifiable — it exists and is the FA-001 commit. The ZIP, screenshots, staging URL and expected checksum were NOT supplied and are not present anywhere on the machine, in OneDrive, or on GitHub** |
+| **Expected output** | Code under version control; build/test/lint results; Sprint 1 recorded as canonical; registers, changelog, dashboard, continuity handoff updated |
+| **Environment** | Local workspace `C:\nyayos` → canonical repository, branch `main`. Node 22.14 / npm 10.9 available. `sha256sum` available. No dedicated secret scanner installed (gitleaks/trufflehog absent) — grep-based scan will be used and recorded as such |
+| **Deployment allowed** | **Staging: ALLOWED (FA-001). Production: NOT ALLOWED.** Import performs no deployment |
+| **Status** | **BLOCKED — inputs not supplied.** Toolchain and governance SHA pre-verified |
+| **Result** | Nothing imported. Nothing built. Sprint 1 is **not** canonical. Pre-decisions recorded below so the next attempt is not blocked on them |
+| **Evidence** | This entry; [NYAYOS_CHANGELOG.md](NYAYOS_CHANGELOG.md) 2026-09-21 A-017 entry |
+| **Limitations** | Checksum can only be **verified** against an expected value supplied by the founder or Lovable; without one, only the observed SHA-256 can be **recorded**. Secret scan will be pattern-based, not entropy-based |
+| **Handoff back to M365 Copilot** | Supply the four inputs. Confirm the three pre-decisions below |
+
+**Pre-decisions this import forces — founder confirmation requested, defaults stated:**
+
+| # | Decision | Default if not overridden | Why it matters |
+|---|---|---|---|
+| P1 | **This closes the FA-001 code-location item as option (b): code lives in the canonical repository.** The repository stops being documentation-only | Proceed as (b) — the instruction says so explicitly | README, CONTRIBUTING, `.gitignore` and the authority hierarchy all currently assert documentation-only; all must change in the same commit |
+| P2 | **Code directory** | `app/` at repository root; `docs/` untouched | Keeps tier-1..7 documents physically separate from build artefacts; avoids root-level `package.json` making the repo *look* like the app |
+| P3 | **`.gitignore` carve-outs** | Allow `app/public/**` images and `app/**/*.svg`; keep `.env*` blocked (Lovable exports ship a `.env` with the Supabase anon key — it must be **excluded** and re-supplied via `.env.example`); screenshots to `docs/evaluation/sprint1-screenshots/` with an explicit allow | Current rules block `*.png`, `*.jpg`, `*.svg`, `*.zip` repo-wide and would silently drop Lovable's own assets |
+
 ---
 
 ## Open assignments — not yet issued
