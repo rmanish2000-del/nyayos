@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NyayOS — A5 User Handout</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --navy: #1C3D5A; --amber: #E8A020; --text: #111827; --muted: #374151; --light: #F7F8FA; --white: #FFFFFF; --green: #15803D; --green-bg: #DCFCE7; }
+  @page { size: A5 portrait; margin: 0; }
+  body { width: 148mm; min-height: 210mm; font-family: 'Noto Sans', sans-serif; color: var(--text); background: var(--white); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .header { background: var(--navy); padding: 7mm 10mm 6mm; display: flex; align-items: center; justify-content: space-between; }
+  .logo-row { display: flex; align-items: center; gap: 7px; }
+  .logo-word { font-family: 'Hind Siliguri', sans-serif; font-size: 20px; font-weight: 700; color: white; }
+  .tagline { font-size: 9px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .amber-bar { background: var(--amber); padding: 4mm 10mm; }
+  .amber-bar p { font-family: 'Hind Siliguri', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); }
+  .body { padding: 7mm 10mm; }
+  .question-block { margin-bottom: 6mm; }
+  .question-block h2 { font-family: 'Hind Siliguri', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 2mm; }
+  .question-block p { font-size: 9.5px; line-height: 1.6; color: var(--muted); }
+  .divider { border: none; border-top: 1px solid #E5E7EB; margin: 5mm 0; }
+  .steps { margin-bottom: 6mm; }
+  .steps h3 { font-family: 'Hind Siliguri', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); margin-bottom: 4mm; }
+  .step-row { display: flex; align-items: flex-start; gap: 3mm; margin-bottom: 3mm; }
+  .step-n { width: 18px; height: 18px; border-radius: 50%; background: var(--navy); color: white; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-text strong { font-size: 9.5px; font-weight: 600; color: var(--text); display: block; }
+  .step-text span { font-size: 8.5px; color: var(--muted); line-height: 1.4; }
+  .promise-box { background: var(--green-bg); border-left: 3px solid var(--green); border-radius: 4px; padding: 4mm 5mm; margin-bottom: 6mm; }
+  .promise-box h4 { font-size: 9px; font-weight: 700; color: #15803D; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2mm; }
+  .promise-box ul { list-style: none; padding: 0; }
+  .promise-box ul li { font-size: 9px; color: var(--muted); padding-left: 12px; position: relative; line-height: 1.6; }
+  .promise-box ul li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .footer { background: var(--navy); padding: 5mm 10mm; display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+  .footer-url { font-family: 'Hind Siliguri', sans-serif; font-size: 12px; font-weight: 700; color: var(--amber); }
+  .footer-note { font-size: 7px; color: rgba(255,255,255,0.5); max-width: 70mm; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-row">
+    <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="3" fill="#E8A020"/><line x1="18" y1="2" x2="18" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="22" x2="18" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="18" x2="14" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="18" x2="34" y2="18" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+    <span class="logo-word">NyayOS</span>
+  </div>
+  <span class="tagline">Your guide through what happened.</span>
+</div>
+<div class="amber-bar"><p>Have you had a business dispute that felt impossible to sort out?</p></div>
+<div class="body">
+  <div class="question-block">
+    <h2>You're not alone — and you don't need a lawyer to get started.</h2>
+    <p>Most business disputes go unresolved because people don't know where to begin. NyayOS gives you a structured starting point — before you speak to anyone else.</p>
+  </div>
+  <hr class="divider">
+  <div class="steps">
+    <h3>How NyayOS works</h3>
+    <div class="step-row"><div class="step-n">1</div><div class="step-text"><strong>Tell us what happened</strong><span>In your own words. No legal terms. No forms.</span></div></div>
+    <div class="step-row"><div class="step-n">2</div><div class="step-text"><strong>Add your documents</strong><span>Contracts, invoices, messages, photos — anything you have.</span></div></div>
+    <div class="step-row"><div class="step-n">3</div><div class="step-text"><strong>Review what we found</strong><span>Key facts, dates, and gaps — you confirm what's correct.</span></div></div>
+    <div class="step-row"><div class="step-n">4</div><div class="step-text"><strong>Understand your options</strong><span>Negotiation, mediation, tribunal, or court — explained plainly.</span></div></div>
+    <div class="step-row"><div class="step-n">5</div><div class="step-text"><strong>Share when ready</strong><span>Give a lawyer or advisor secure, time-limited access.</span></div></div>
+  </div>
+  <div class="promise-box">
+    <h4>Our promise to you</h4>
+    <ul><li>Your information stays private unless you share it</li><li>Nothing is filed or sent without your permission</li><li>You can delete your data at any time</li><li>We do not predict outcomes or give legal advice</li></ul>
+  </div>
+</div>
+<div class="footer">
+  <div><div class="footer-url">nyayos.in</div><div class="footer-note">NyayOS is not a law firm. This is not legal advice.</div></div>
+  <div style="width:16mm;height:16mm;background:white;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:6px;color:#1C3D5A;font-weight:600;text-align:center;">QR<br>CODE</div>
+</div>
+</body>
+</html>
