@@ -7,6 +7,35 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
+## 2026-09-21 — Sprint 3 evidence conformance review: FAIL (conditional) (A-024)
+
+### Reviewed
+
+A-023 evidence components at `296fad81b5a122cb38c360919a14d145ac234c8b`, against Figma Brief § 4 / § 8, Product Spec § 7.4 / 7.5 / 10 / 11 / 17 and US-02. "S08/S09" are the implementer's labels — no canonical screen list exists. No Figma (A-008 OPEN).
+
+### Verdict — FAIL (conditional), narrower than A-021
+
+| Area | Result |
+|---|---|
+| Document Upload | PASS with fixes — no `accept` / size validation, no pasted-text entry, no drag-over feedback |
+| Evidence Locker | FAIL — missing page count, upload date, verification state; only *Remove* of five actions; no *view* |
+| Upload states | PASS |
+| Processing states | PASS with note — no security-scan state |
+| Error states | PARTIAL — Cancel routed to error + `role="alert"`; no *rejected* / *unsupported* |
+| Uncategorized states | FAIL — modelled as a lifecycle state; category is an attribute |
+| Accessibility | PASS with fixes — 40/43 contrast (three `SourceBadge` opacity failures 4.39 / 4.39 / 3.85); two `<h1>`s |
+| Mobile / Tablet / Desktop | PASS — 390 / 834 / 1280, both screens, no overflow, all targets ≥ 44 px |
+
+Also: documents are labelled with **fact** epistemic badges ("Read out by AI", "Stated in a document · \<own filename\>") — a category error against the § 11 provenance contract. Validation re-run: `tsc` · `eslint` 0 errors · `vitest` 34/34 · `vite build` PASS.
+
+### Decided
+
+- **A-024 CANONICAL** — evidence: `docs/design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md`.
+- **A-025 Sprint 3 evidence conformance fixes — OPEN**, inputs A-023 + A-024, FA-001. Items 1–3 change the document model and must precede Timeline / Evidence Mapping.
+- Recommendation repeated: **build outputs enter at REVIEW** (A-018, A-020, A-023 all self-declared CANONICAL). Decide A-008.
+
+---
+
 ## 2026-09-21 — [auto] Status registry changes
 
 ### New tasks

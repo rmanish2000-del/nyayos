@@ -127,6 +127,23 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Required evidence** | Delivered: § 11 checklist; 4/4 validations PASS; typography finding retracted against evidence |
 | **Next action** | **A-018 Sprint 1.1 State Completion** (7 items, A-014 § 11.4) → then A-015 Sprint 2 |
 
+### F-8 — Sprint 3 evidence conformance review  ● CANONICAL — verdict FAIL (conditional)
+
+| Field | Value |
+|---|---|
+| **Task** | Review A-023 (`296fad8`): Document Upload, Evidence Locker, lifecycle states, accessibility, responsive |
+| **Why** | Timeline and Evidence Mapping will consume the document model; a conflated model would propagate |
+| **Exact tool / mode** | Claude Code — Design Conformance Review |
+| **Owner** | Claude Code |
+| **Environment** | Local; Chromium at 390 / 834 / 1280 on both screens; four validation commands re-run |
+| **Deployment permission** | N/A — review |
+| **Start date** | 21 September 2026 |
+| **Target date** | 21 September 2026 |
+| **Status** | **Complete — FAIL (conditional), narrower than A-021.** Lifecycle/category conflated; documents labelled with fact badges; locker missing fields and *view*. Upload, processing, error states and responsive pass |
+| **Blocker** | None. **A-025** holds the fixes |
+| **Required evidence** | [A-024 review record](../design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md) |
+| **Next action** | Founder assigns **A-025** before Timeline / Evidence Mapping; adopts *build outputs enter at REVIEW* |
+
 ### F-7 — Fact Card design conformance review  ● CANONICAL — verdict FAIL (conditional)
 
 | Field | Value |
@@ -192,7 +209,8 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | User / WTP Validation | **Pending** |
 | Lovable Staging Build — Sprint 1 Foundation | **Complete — CANONICAL** |
 | Sprint 1.1 — State Completion | **Pending** (authorized) |
-| Sprint 2 — Fact Card System | **Provisional card built (A-020) — conformance FAIL (conditional), fixes in A-022** |
+| Sprint 2 — Fact Card System | **A-020 + A-022 (7/10 fixes) — closure (A-015) still gated on A-008** |
+| Sprint 3 — Evidence components | **Provisional (A-023) — conformance FAIL (conditional), fixes in A-025** |
 | Testing / UAT | **Not Started** |
 | Production | **Not Started — NOT AUTHORIZED** |
 
@@ -310,7 +328,8 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | 2 | **Lovable staging build** | ✅ **Authorized (FA-001).** Staging only, fixture data only |
 | 3 | **Figma V2** | — · feeds 2 |
 | 4 | **User interviews and WTP validation** | — · de-risks 2 |
-| 4a | **A-022 Fact Card conformance fixes** | ✅ Authorized (FA-001). **Must precede any further Sprint 2 surface.** Items 1–3 of A-021 § 4 blocking |
+| 4a | **A-025 Sprint 3 evidence conformance fixes** | ✅ Authorized (FA-001). **Must precede Timeline / Evidence Mapping.** Items 1–3 of A-024 § 4 change the document model |
+| 4a″ | A-021 items 4, 6, 8 (contradiction actions, source metadata, confidence hue) — not in A-022 | Follow-on assignment needed |
 | 4a′ | **Decide A-008 (Figma)** — assign, or SUPERSEDE by A-020 + A-022 | The registry carries it as a planned input to A-015 |
 | 4b | **Write D-019 — typography decision** into the Decision Log | Code already uses Noto stack; the log must say so |
 | 4c | **Supply staging URL** for verification | Not yet supplied |

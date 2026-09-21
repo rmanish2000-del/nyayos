@@ -53,7 +53,13 @@
 | `app/src/routeTree.gen.ts` | TanStack router plugin (generated during A-017 build) | A-017 | 21 Sep 2026 | Maintainer-reviewed | Accepted — committed so `tsc` passes cold | — | `app/src/` |
 | `nyayos-sprint1-foundation.zip` | Lovable export | A-011 | 21 Sep 2026 | Maintainer-reviewed | **Accepted — NOT committed** (gitignored). SHA-256 `8c407630616f171b33d2be60671213c4b07b5ceb65fce0a877954b17a3ea83ca` | Source of `app/` | Local workspace only |
 
-## Design conformance outputs — A-021
+## Design conformance outputs — A-021, A-024
+
+| Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |
+|---|---|---|---|---|---|---|---|
+| `NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md` | Claude Code — Design Conformance Review | A-024 | 21 Sep 2026 | Not reviewed | Pending founder review | **A-023 evidence components: FAIL (conditional).** Opens A-025; document model must be corrected before Timeline / Evidence Mapping | `docs/design/` |
+
+### A-021
 
 | Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |
 |---|---|---|---|---|---|---|---|

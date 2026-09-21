@@ -275,6 +275,23 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Screen-reader pass (NVDA / VoiceOver) still not run — owed since A-014. Contrast computed from rendered oklch tokens with the WCAG formula, not an external tool. The instruction labelled this A-008; A-008 (Figma) remains undone and is not closed by this review |
 | **Handoff back to M365 Copilot** | Assign **A-022** before any further Sprint 2 surface. Decide whether A-008 (Figma) is still wanted or should be SUPERSEDED by A-020 + A-022. Consider the rule clarification: build outputs enter at REVIEW |
 
+### A-024 — Sprint 3 evidence conformance review
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-024 |
+| **Tool and exact mode** | Claude Code — Design Conformance Review (read-only; dev server run locally for measurement) |
+| **Purpose** | Verify A-023 at `296fad81b5a122cb38c360919a14d145ac234c8b`: Document Upload, Evidence Locker, upload / processing / error / uncategorized states, accessibility, mobile/tablet/desktop |
+| **Input files** | Figma Brief V2 § 4, § 8; Product Spec § 7.4, § 7.5, § 10, § 11, § 17, US-02; A-021; A-023 commit. **"S08/S09" are the implementer's labels — no canonical screen list exists.** No Figma (A-008 OPEN) |
+| **Expected output** | PASS / FAIL, required fixes, review record |
+| **Environment** | Local checkout; Chromium at 390 × 844, 834 × 1100, 1280 × 1000, both screens; `tsc` / `eslint` / `vitest` / `vite build` re-run |
+| **Deployment allowed** | N/A — review. Nothing deployed |
+| **Status** | **CANONICAL — 21 September 2026** |
+| **Result** | **FAIL (conditional) — narrower than A-021.** High: lifecycle and category folded into one enum; documents wear *fact* epistemic badges ("Read out by AI", "Stated in a document · \<own filename\>"); locker card lacks page count / upload date / verification state and offers only *Remove* (no *view*). Medium: no scan/rejected state; Cancel routed to error + `role="alert"`; no `accept` / size validation / pasted text; three contrast failures (4.39, 4.39, 3.85) from `SourceBadge` `opacity-80`; two `<h1>`s. **PASS:** upload states, processing states, responsive at all three widths on both screens, all targets ≥ 44 px. Validation 34/34 / green. Ten fixes → **A-025** |
+| **Evidence** | [docs/design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md](../design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md) |
+| **Limitations** | NVDA / VoiceOver pass still not run (owed since A-014). Contrast computed from rendered oklch tokens, not an external tool. File-dialog and real drag-drop not exercised (fixture handlers verified in tests) |
+| **Handoff back to M365 Copilot** | Assign **A-025** before Timeline / Evidence Mapping (both consume the document model). Adopt *build outputs enter at REVIEW*. Decide A-008 |
+
 ---
 
 ## Open assignments — not yet issued
@@ -288,6 +305,7 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
 | A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 |
 | A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — A-022 is now CANONICAL; still waiting on A-008 (design) and a conformance re-review |
+| A-025 | **Sprint 3 evidence conformance fixes** | Lovable — staging build | ✅ **Authorized under FA-001; may start now** (inputs A-023, A-024 canonical). Ten items in [A-024 § 4](../design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md); 1–3 change the document model |
 | A-022 | **Fact Card conformance fixes** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. A-021 § 4 items 1–3, 5, 7, 9, 10 delivered; items 4, 6, 8 and the screen-reader pass still open |
 | A-020 | **Fact Card system — provisional staging implementation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 (design conformance unverified; A-008 absent) |
 | A-016 | **Typography decision → Decision Log** (D-019) | Founder | Open. Code now embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet say so |

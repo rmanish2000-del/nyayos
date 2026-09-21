@@ -107,6 +107,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | Document | Type | Status |
 |---|---|---|
 | [NYAYOS_FIGMA_BRIEF_V2.md](design/NYAYOS_FIGMA_BRIEF_V2.md) | Supplied — A-006 | Input to **A-008 Figma V2** — pending |
+| [NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md](design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md) | Maintainer — A-024 | **A-023 evidence components: FAIL (conditional).** Document-model findings, browser measurements, ten fixes (A-025) |
 | [NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md](design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md) | Maintainer — A-021 | **A-020 Fact Card conformance: FAIL (conditional).** Ranked findings, browser measurements, ten fixes (A-022) |
 
 ## `/docs/implementation`
