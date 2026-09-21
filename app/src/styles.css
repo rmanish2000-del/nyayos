@@ -142,6 +142,12 @@
   --color-confidence-unknown-surface: var(--confidence-unknown-surface);
 
   /* --- Evidence lifecycle --- */
+  --color-evidence-queued: var(--evidence-queued);
+  --color-evidence-queued-surface: var(--evidence-queued-surface);
+  --color-evidence-scanning: var(--evidence-scanning);
+  --color-evidence-scanning-surface: var(--evidence-scanning-surface);
+  --color-evidence-rejected: var(--evidence-rejected);
+  --color-evidence-rejected-surface: var(--evidence-rejected-surface);
   --color-evidence-uploading: var(--evidence-uploading);
   --color-evidence-uploading-surface: var(--evidence-uploading-surface);
   --color-evidence-processing: var(--evidence-processing);
@@ -256,6 +262,12 @@
   --confidence-unknown: oklch(0.42 0.02 258);
   --confidence-unknown-surface: oklch(0.95 0.008 250);
 
+  --evidence-queued: oklch(0.4 0.04 258);
+  --evidence-queued-surface: oklch(0.95 0.012 258);
+  --evidence-scanning: oklch(0.41 0.11 250);
+  --evidence-scanning-surface: oklch(0.955 0.025 250);
+  --evidence-rejected: oklch(0.42 0.14 20);
+  --evidence-rejected-surface: oklch(0.955 0.025 20);
   --evidence-uploading: oklch(0.42 0.1 250);
   --evidence-uploading-surface: oklch(0.955 0.025 250);
   --evidence-processing: oklch(0.44 0.08 285);
@@ -366,6 +378,12 @@
   --confidence-unknown: oklch(0.8 0.015 252);
   --confidence-unknown-surface: oklch(0.28 0.015 255);
 
+  --evidence-queued: oklch(0.84 0.03 258);
+  --evidence-queued-surface: oklch(0.29 0.02 258);
+  --evidence-scanning: oklch(0.86 0.1 250);
+  --evidence-scanning-surface: oklch(0.3 0.06 255);
+  --evidence-rejected: oklch(0.84 0.13 20);
+  --evidence-rejected-surface: oklch(0.3 0.07 20);
   --evidence-uploading: oklch(0.85 0.1 250);
   --evidence-uploading-surface: oklch(0.3 0.06 255);
   --evidence-processing: oklch(0.84 0.09 285);

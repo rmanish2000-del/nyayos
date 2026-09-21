@@ -305,7 +305,7 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
 | A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 |
 | A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — A-022 is now CANONICAL; still waiting on A-008 (design) and a conformance re-review |
-| A-025 | **Sprint 3 evidence conformance fixes** | Lovable — staging build | ✅ **Authorized under FA-001; may start now** (inputs A-023, A-024 canonical). Ten items in [A-024 § 4](../design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md); 1–3 change the document model |
+| A-025 | **Sprint 3 evidence conformance fixes — evidence model remediation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. A-024 § 4 blockers 1–7 delivered; locker page count / verification-state metadata and the screen-reader pass remain open |
 | A-022 | **Fact Card conformance fixes** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. A-021 § 4 items 1–3, 5, 7, 9, 10 delivered; items 4, 6, 8 and the screen-reader pass still open |
 | A-020 | **Fact Card system — provisional staging implementation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 (design conformance unverified; A-008 absent) |
 | A-016 | **Typography decision → Decision Log** (D-019) | Founder | Open. Code now embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet say so |
@@ -338,3 +338,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `app/src/components/nyayos/evidence-card.tsx`, `app/src/components/nyayos/evidence-workspace.tsx`, `app/src/styles.css`, `app/src/routes/index.tsx`, `app/tests/evidence.test.tsx` (7 tests) |
 | **Limitations** | Frontend staging fixtures only: files are not persisted or sent to storage; processing/extraction is simulated and no OCR, AI, API or backend workflow was added. Browser automation covered Chromium; NVDA / VoiceOver verification remains open. A-008 design artefact remains absent, so visual conformance is against canonical text and existing components |
 | **Handoff back to M365 Copilot** | A-023 is CANONICAL as a validated frontend implementation. No deployment occurred and no Sprint 4 work started |
+
+---
+
+### A-025 — Evidence model remediation
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-025 |
+| **Owner / tool** | Lovable — staging build |
+| **Purpose** | Fix the A-024 § 4 blockers in the Sprint 3 evidence model |
+| **Input files** | A-024 review `2bed9817aeae691a189715df28824cba747c72b6`; A-023 implementation `296fad81b5a122cb38c360919a14d145ac234c8b` |
+| **Gate** | FA-001 (staging only) |
+| **Deployment allowed** | **NOT ALLOWED for this assignment.** Nothing deployed; production remains prohibited without FA-002 |
+| **Status** | **CANONICAL — 21 September 2026.** 40/40 tests · typecheck · lint 0 errors (8 pre-existing react-refresh warnings) · build · responsive 390 / 834 / 1280 PASS with no console errors |
+| **Result** | 1. Document **lifecycle** (`queued`, `scanning`, `processing`, `extracted`, `rejected`, `error`) separated from document **category** (`contract`, `invoice`, `receipt`, `communication`, `uncategorized`, `other`); both are shown as distinct, labelled chips. 2. Document provenance added — uploaded by, upload date, document hash — replacing fact epistemic badges on the document itself. 3. All AI read-out moved into a dedicated **extraction summary** block that carries the source, locator, date precision and confidence band. 4. Actions added: **View, Rename, Confirm type, Correct type, Remove** (plus Retry for rejected/error). 5. **Cancel** stops the transfer and removes the queue item without creating an error state or `role="alert"`. 6. `accept` attribute (`.pdf,.png,.jpg,.jpeg,.txt`), 10 MB size validation with a refusal banner and rejected cards, and a validated **pasted-text** entry. 7. Contrast raised (badge `opacity-80` dropped, foreground/`border-strong` tokens used), duplicate `<h1>` removed (workspace heading is now `<h2>`), and drag-over feedback added to the drop target |
+| **Evidence** | `app/src/components/nyayos/evidence-card.tsx`, `app/src/components/nyayos/evidence-workspace.tsx`, `app/src/styles.css`, `app/tests/evidence.test.tsx` (13 tests), `app/README.md`, `app/roadmap.md` |
+| **Limitations** | Frontend staging fixtures only: nothing is persisted, and no OCR, AI, API or backend workflow was added. Locker cards still lack page count and a verification-state field. NVDA / VoiceOver verification remains open (owed since A-014); contrast was raised against semantic tokens rather than re-measured with an external tool. A-008 design artefact remains absent |
+| **Handoff back to M365 Copilot** | A-025 is CANONICAL as a validated staging implementation. No deployment occurred and no Sprint 4 work started. A conformance re-review of the new document model is recommended before Timeline and Evidence Mapping |

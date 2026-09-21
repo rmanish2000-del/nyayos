@@ -58,6 +58,7 @@
 | Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |
 |---|---|---|---|---|---|---|---|
 | `NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md` | Claude Code — Design Conformance Review | A-024 | 21 Sep 2026 | Not reviewed | Pending founder review | **A-023 evidence components: FAIL (conditional).** Opens A-025; document model must be corrected before Timeline / Evidence Mapping | `docs/design/` |
+| `app/` — A-025 Evidence Model Remediation (lifecycle/category split, document provenance, extraction summary, View · Rename · Confirm type · Correct type · Remove, non-error Cancel, accept + size validation, pasted-text entry, contrast / single-h1 / drag-over fixes) | Lovable — implementation and validation | A-025 | 21 Sep 2026 | **Validated** (`vitest` 40/40, typecheck, lint 0 errors, build, responsive 390/834/1280 PASS, no console errors) | **CANONICAL** — frontend staging implementation | Corrects the Sprint 3 document model per A-024 § 4; locker page count and verification-state metadata still open; no persistence, OCR, backend processing or deployment | `app/` |
 
 ### A-021
 

@@ -15,6 +15,14 @@ Canonical repository: https://github.com/rmanish2000-del/nyayos
 | Responsive navigation shell (mobile tabs / tablet rail / desktop sidebar)              | `src/components/nyayos/app-shell.tsx` |
 | Foundation showcase (every component state, token gallery, a11y checklist)             | `src/routes/index.tsx`                |
 | Evidence Card and S08/S09 evidence workspace                                            | `src/components/nyayos/evidence-*.tsx` |
+
+Evidence model (A-025): document **lifecycle** (`queued`, `scanning`, `processing`,
+`extracted`, `rejected`, `error`) is modelled separately from document **category**
+(`contract`, `invoice`, `receipt`, `communication`, `uncategorized`, `other`). Every
+document carries provenance (uploaded by, upload date, document hash); anything read
+out of a document appears only in the extraction summary block. Upload validates file
+type and size (10 MB), accepts pasted text, and cancelling a transfer never produces an
+error state.
 | Document head, font loading                                                            | `src/routes/__root.tsx`               |
 | shadcn/Radix primitives (baseline, unmodified)                                         | `src/components/ui/`                  |
 | Tests                                                                                  | `tests/`                              |

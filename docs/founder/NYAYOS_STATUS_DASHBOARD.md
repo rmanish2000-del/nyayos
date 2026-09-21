@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 7 | 0 | 0 | 18 | 0 | 25 |
+| 6 | 0 | 0 | 19 | 0 | 25 |
 
 ## In flight
 
@@ -22,7 +22,6 @@ _None._
 | A-009 | User interviews and WTP validation | ○ OPEN | Founder | — | 2026-09-21 |
 | A-010 | Security + data architecture review (specification only) | ○ OPEN | Unassigned | — | 2026-09-21 |
 | A-016 | Typography decision → Decision Log (D-019) | ○ OPEN | Founder | — | 2026-09-21 |
-| A-025 | Sprint 3 evidence conformance fixes | ○ OPEN | Unassigned | FA-001 | 2026-09-21 |
 
 ## Blocked — waiting on non-canonical inputs
 
@@ -53,12 +52,13 @@ _None._
 | A-022 | Fact Card conformance fixes | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-023 | Sprint 3 — Evidence Components | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-024 | Sprint 3 evidence conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
+| A-025 | Sprint 3 evidence conformance fixes — evidence model remediation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 
 ## Recently updated
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
-| A-025 | Sprint 3 evidence conformance fixes | ○ OPEN | Unassigned | FA-001 | 2026-09-21 |
+| A-025 | Sprint 3 evidence conformance fixes — evidence model remediation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-024 | Sprint 3 evidence conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-023 | Sprint 3 — Evidence Components | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-022 | Fact Card conformance fixes | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |

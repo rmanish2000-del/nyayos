@@ -535,10 +535,10 @@
     },
     {
       "id": "A-025",
-      "title": "Sprint 3 evidence conformance fixes",
+      "title": "Sprint 3 evidence conformance fixes — evidence model remediation",
       "type": "build",
-      "status": "OPEN",
-      "owner": "Unassigned",
+      "status": "CANONICAL",
+      "owner": "Lovable",
       "tool": "Lovable — staging build",
       "gate": "FA-001",
       "inputs": [
@@ -547,12 +547,17 @@
       ],
       "planned_inputs": [],
       "outputs": [
-        "app/"
+        "app/src/components/nyayos/evidence-card.tsx",
+        "app/src/components/nyayos/evidence-workspace.tsx",
+        "app/src/styles.css",
+        "app/tests/evidence.test.tsx",
+        "app/README.md",
+        "app/roadmap.md"
       ],
-      "evidence": "",
+      "evidence": "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "Ten items in A-024 § 4. Items 1–3 (split lifecycle/category axes; document provenance not fact badges; view/rename/confirm-type actions) change the document model and must precede Timeline and Evidence Mapping."
+      "notes": "Delivered A-024 § 4 blockers: document lifecycle (queued/scanning/processing/extracted/rejected/error) modelled separately from document category (contract/invoice/receipt/communication/uncategorized/other); document provenance (uploaded by, upload date, document hash) replaces fact epistemic badges on the document itself; AI read-out moved into a dedicated extraction summary block; View / Rename / Confirm type / Correct type / Remove actions added; Cancel now stops the transfer without creating an error state or alert; accept and 10 MB size validation plus pasted-text entry added; contrast raised by dropping badge opacity in favour of foreground tokens and border-strong; duplicate h1 removed (workspace heading is now h2); drag-over feedback added. Validation 40/40 tests, typecheck, lint 0 errors, build, responsive 390/834/1280 with no console errors. Still open: page count and verification-state metadata on locker cards, NVDA / VoiceOver pass (owed since A-014), and A-008 design artefact absent so visual conformance remains judged against canonical text. No deployment; production remains prohibited without FA-002."
     }
   ]
 }
