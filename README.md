@@ -11,8 +11,9 @@
 | | |
 |---|---|
 | **Repository contents** | **Documentation only.** No application code, no database schema, no migrations, no infrastructure |
-| **Deployment** | **NOT ALLOWED.** Nothing is deployed. Nothing may be deployed from this repository |
-| **Project stage** | Pre-build. Product Definition → Design Preparation |
+| **Staging build** | ✅ **ALLOWED** under [FA-001](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) — staging environment and fixture data only |
+| **Production** | ⛔ **NOT ALLOWED.** No production build, deployment, database, domain, public beta, or real case data in any environment |
+| **Project stage** | Design Preparation → Staging Build |
 | **Private data** | **Never commit case material.** See [CONTRIBUTING.md](CONTRIBUTING.md) § *Private-data rules* |
 
 **This repository is private** (set to private on 20 Sep 2026, before the first push, because it carries governance references to a private criminal matter). Keep it private unless a redaction review is completed and recorded as a decision.
@@ -24,7 +25,8 @@
 | If you want to… | Read |
 |---|---|
 | See current state, decisions, risks and next actions | **[Founder Dashboard](docs/founder/NYAYOS_FOUNDER_DASHBOARD.md)** |
-| Find any document | [docs/INDEX.md](docs/INDEX.md) |
+| **Know what you are allowed to do** | **[Founder Authorization Record](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** — tier 1, read before acting |
+| Find any document, or see which document wins a conflict | [docs/INDEX.md](docs/INDEX.md) — includes the [authority hierarchy](docs/INDEX.md#document-authority-hierarchy) |
 | Understand why decisions were made | [Decision Log](docs/founder/NYAYOS_DECISION_LOG_V1.md) |
 | Understand the full context in one document | [Master Context](docs/founder/NYAYOS_MASTER_CONTEXT_V1.md) |
 | Know what the product is | [Master Product Spec](docs/product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md) |
@@ -106,20 +108,21 @@ user claim   →   verified fact   →   AI inference
 | Architecture Reconciliation | Complete |
 | Figma V2 | **Pending** |
 | User / WTP Validation | **Pending** |
-| Lovable Staging Build | Not Started |
+| Lovable Staging Build | **Authorized — Not Started** |
 | Testing / UAT | Not Started |
-| Production | Not Started |
+| Production | **Not Started — NOT AUTHORIZED** |
 
-**Current objective:** complete Figma V2 and validate the commercial wedge before implementation.
+**Current objective:** stand up the staging build while completing Figma V2 and validating the commercial wedge.
 
 **North Star Metric:** completed usable dispute files per week — *not yet measurable, pre-launch.*
 
-### Immediate next actions
+### Immediate next actions — parallel
 
-1. Figma V2
-2. User interviews and WTP validation
-3. Founder go / no-go decision
-4. Lovable staging build — **only after authorization at step 3**
+1. Assign a build owner and record where staging code lives
+2. Lovable staging build — ✅ authorized (staging only, fixture data only)
+3. Figma V2
+4. User interviews and WTP validation
+5. Founder go / no-go **for production** — gated; requires 3, 4, security review, legal review and staging UAT
 
 ---
 
@@ -131,12 +134,13 @@ CONTRIBUTING.md            Contribution and private-data rules
 .gitignore                 Private-data and credential exclusions
 docs/
   INDEX.md                 Full document map
-  founder/                 Dashboard, registers, changelog, context, decisions, risks
+  founder/                 Authorization record, dashboard, registers, changelog,
+                           context, decisions, risks
   product/                 Master product specification
   architecture/            Architecture review
   research/                Red team, benchmark, justice map, MVP selection
   design/                  Figma brief
-  implementation/          Build brief (held — not authorized)
+  implementation/          Build brief (released — staging only, FA-001)
   evaluation/              Validation plan, real-case evaluation protocol
   handoffs/                Continuity handoff, V1 deliverables manifest
 ```
@@ -146,7 +150,8 @@ docs/
 ## Conventions
 
 - **Canonical name is `NyayOS`** for all new work. Legacy research files use `NYAYAOS_*` and keep those names deliberately, for provenance.
-- The **[Decision Log](docs/founder/NYAYOS_DECISION_LOG_V1.md)** and **[Risk Register](docs/founder/NYAYOS_RISK_REGISTER_V1.md)** are authoritative. The Founder Dashboard is a view over them — if they disagree, the source document wins.
+- **Documents have tiers.** The [authority hierarchy](docs/INDEX.md#document-authority-hierarchy) decides which wins a conflict. Gates are answered **only** by the [Founder Authorization Record](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md); decisions and risks by the V1 records; the Dashboard is a view with no independent authority.
+- **A build brief is not authorization.** Research is evidence, never a decision.
 - Every assignment is recorded in the **[Assignment Register](docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md)** before work starts.
 - Every artefact is recorded in the **[Output Register](docs/founder/NYAYOS_OUTPUT_REGISTER.md)** when work ends.
 

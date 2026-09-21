@@ -129,6 +129,24 @@
 | **Limitations** | Supplied documents were **not** edited, so pre-existing internal inconsistencies persist (see A-006 limitations). The private matter is referenced by name in four supplied documents in governance context; redaction would alter supplied content and was not performed unilaterally |
 | **Handoff back to M365 Copilot** | See [NYAYOS_CONTINUITY_HANDOFF_V1.md](../handoffs/NYAYOS_CONTINUITY_HANDOFF_V1.md) and the handoff section of this register below |
 
+### A-013 — MVP Reconciliation V3, authorization record and authority hierarchy
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-013 |
+| **Tool and exact mode** | Claude Code — Repository and Product-Continuity Maintainer |
+| **Purpose** | Record the founder gate change (staging build allowed, production not allowed); consolidate the MVP position at V3; establish an explicit document authority hierarchy |
+| **Input files** | Founder instruction, 21 Sep 2026. All tier 1-6 documents already in the repository. **No new source document was supplied** |
+| **Expected output** | `NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md` (FA-001), `NYAYOS_MVP_RECONCILIATION_V3.md`, authority hierarchy in `docs/INDEX.md`, updates to Dashboard, README, CONTRIBUTING, both registers, changelog |
+| **Environment** | Local workspace `C:
+yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
+| **Deployment allowed** | **Staging: ALLOWED (FA-001). Production: NOT ALLOWED.** This repository remains documentation only |
+| **Status** | **Complete** — 21 September 2026 |
+| **Result** | FA-001 recorded as tier 1 authority. Gate posture changed from *Build Not Allowed* to *Staging Allowed / Production Not Allowed* across all affected documents. A-011 unblocked; A-012 created and gated on FA-002 |
+| **Evidence** | [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) · [NYAYOS_MVP_RECONCILIATION_V3.md](../product/NYAYOS_MVP_RECONCILIATION_V3.md) · [docs/INDEX.md](../INDEX.md) |
+| **Limitations** | **No `MVP_RECONCILIATION_V3` source document was supplied** — none exists in the workspace, Downloads or the repository, and there is no V1 or V2 of that document to succeed. The V3 document was therefore written as a **consolidation of positions already recorded elsewhere**, introducing **no new product decisions**. If the founder holds a separate V3, it supersedes this one. Authorization was granted while A-008 and A-009 remain Pending — risk recorded in FA-001, not resolved |
+| **Handoff back to M365 Copilot** | Gate change is live. Verify every gate against FA-001 (tier 1) before acting |
+
 ---
 
 ## Open assignments — not yet issued
@@ -138,7 +156,8 @@
 | A-008 | **Figma V2** | Figma — design mode | Founder assigns owner |
 | A-009 | **User interviews + WTP validation** | Founder-led field research | Founder defines exact category boundary |
 | A-010 | **NyayOS Security + Data Architecture Review** (research/specification only) | Recommended in the Continuity Handoff. Inputs: Master Product Spec V1, Architecture Review, Risk Register V1, Real Case Evaluation Protocol | May run in parallel with A-008/A-009 |
-| A-011 | **Lovable staging build** | Lovable | **BLOCKED** — requires recorded founder go decision |
+| A-011 | **Lovable staging build** | Lovable — staging build | ✅ **AUTHORIZED (FA-001, 21 Sep 2026).** Staging only, fixture data only. Blocked on: build owner unassigned, staging code location not recorded |
+| A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
 
 ---
 
@@ -150,5 +169,5 @@
 1. The canonical repository is now initialized and is the **single source of truth**. Read from it; do not re-derive context from chat history.
 2. Entry points: [README.md](../../README.md) → [docs/INDEX.md](../INDEX.md) → [NYAYOS_FOUNDER_DASHBOARD.md](NYAYOS_FOUNDER_DASHBOARD.md).
 3. **Open items requiring founder input**, all recorded above: tool/mode for A-002 to A-006; the MVP report filename discrepancy (A-004); the locked-vs-provisional status of the commercial wedge; whether the private matter name should be redacted from committed documents.
-4. **Deployment remains NOT ALLOWED.** A-011 is blocked pending a recorded go decision.
+4. **Gate status changed 21 Sep 2026 (FA-001):** A-011 Lovable **staging** build is **authorized** — staging environment and fixture data only. **Production remains NOT AUTHORIZED** (A-012 / FA-002). Always verify a gate against [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md), tier 1.
 5. Every new assignment must be added to this register **before** work begins, and its output added to [NYAYOS_OUTPUT_REGISTER.md](NYAYOS_OUTPUT_REGISTER.md) on completion.

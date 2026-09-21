@@ -7,6 +7,45 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
+## 2026-09-21 — Staging build authorized; authority hierarchy established (A-013)
+
+### Decided — FA-001
+
+Gate posture changed by founder instruction:
+
+| | Old | New |
+|---|---|---|
+| Staging build | **Not allowed** | ✅ **ALLOWED** |
+| Production | Not allowed | ⛔ **NOT ALLOWED** *(unchanged)* |
+
+Recorded as **FA-001** in the new Founder Authorization Record. Assignment **A-011** (Lovable staging build) is unblocked for **staging only, fixture data only**. New assignment **A-012** (production) created and gated on **FA-002**, which is not granted.
+
+The previously recorded sequence placed the build *after* Figma V2 and WTP validation. Those remain **Pending** — the build now runs in parallel with them. Elevated risks **R25, R13, R14, R24, R12** are recorded in FA-001 § *Risk note*, with a mitigation that does not require reversing the authorization.
+
+### Added
+
+- `docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md` — **tier 1 authority for all gates.** Append-only; supersede with a new FA entry, never edit a past one.
+- `docs/product/NYAYOS_MVP_RECONCILIATION_V3.md` — tier 7 consolidation of the MVP position at V3.
+- **Document authority hierarchy** (tiers 1–7) in `docs/INDEX.md`, with the three rules that follow from it.
+
+### Changed
+
+- **Dashboard** — new gate-status banner; phase → *Design Preparation → Staging Build*; objective revised; new active-work item **F-3 Lovable staging build (authorized)**; stage progress; § K next actions now **parallel, not sequential**; § L deployment status.
+- **README** — staging/production split in the *Read this first* table; stage table; next actions; conventions now point at the authority hierarchy.
+- **CONTRIBUTING** — hard rules now say *No production* rather than *No deployment*; § 8 gates table rewritten with five explicit gates.
+- **INDEX** — header gate line; authority hierarchy; build brief marked **RELEASED (staging only)**; next actions.
+- **Assignment register** — A-011 unblocked; A-012 added; A-013 recorded; M365 Copilot handoff item 4 updated.
+- **Output register** — build brief **HELD → RELEASED**; two new artefacts recorded.
+
+### Notes — open items requiring founder input
+
+1. **No `MVP_RECONCILIATION_V3` source document was supplied.** None exists in the workspace, Downloads or the repository, and there is no V1 or V2 to succeed. The V3 file was written as a consolidation of already-recorded positions, introducing **no new product decisions**. A founder-held V3 supersedes it.
+2. **Where does staging code live?** Product code must **not** be committed to this repository until this is recorded. Default until then: Lovable's own repository; this repository stays documentation-only.
+3. **Who owns the staging build?** A-011 has no assigned owner.
+4. Items 1–4 from the 2026-09-20 entry remain open.
+
+---
+
 ## 2026-09-20 — Repository initialization (A-007)
 
 ### Added — repository scaffolding

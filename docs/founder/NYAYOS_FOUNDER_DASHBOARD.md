@@ -3,11 +3,11 @@
 **Canonical project name:** NyayOS
 **Status date:** 20 September 2026
 **Maintained by:** Repository and Product-Continuity Maintainer (Claude Code)
-**Authority:** This dashboard is a *view*. The authoritative records are
-[NYAYOS_DECISION_LOG_V1.md](NYAYOS_DECISION_LOG_V1.md),
-[NYAYOS_RISK_REGISTER_V1.md](NYAYOS_RISK_REGISTER_V1.md) and
-[NYAYOS_MASTER_CONTEXT_V1.md](NYAYOS_MASTER_CONTEXT_V1.md).
-Where this dashboard and a source document disagree, **the source document wins.**
+**Authority:** This dashboard is a *view*. It has no independent authority.
+For gates, [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) governs.
+For decisions, risks and context, the V1 records govern.
+See the [authority hierarchy](../INDEX.md#document-authority-hierarchy).
+Where this dashboard and a higher-tier document disagree, **the higher-tier document wins.**
 
 ---
 
@@ -28,11 +28,31 @@ No product exists, no users exist, no dispute files have been produced. This met
 
 ## D. Current phase
 
-> **Product Definition → Design Preparation**
+> **Design Preparation → Staging Build**
+
+Changed 21 Sep 2026. The staging build is authorized under **FA-001** and runs *in parallel with* design and validation, which remain incomplete.
 
 ## E. Current objective
 
-> **Complete Figma V2 and validate the commercial wedge before implementation.**
+> **Stand up the staging build while completing Figma V2 and validating the commercial wedge.**
+
+**Changed 21 Sep 2026 (FA-001).** The prior objective was *"Complete Figma V2 and validate the commercial wedge **before** implementation."* The founder has authorized the staging build to proceed ahead of that sequence. Design and validation are **not** cancelled — they now run concurrently, and the staging build should be used as an instrument to accelerate them. See the risk note in [FA-001](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md).
+
+---
+
+## Gate status — FA-001
+
+| Gate | Status |
+|---|---|
+| **Lovable staging build** | ✅ **ALLOWED** |
+| **Production build / deployment** | ⛔ **NOT ALLOWED** |
+| Public launch / public beta | ⛔ NOT ALLOWED |
+| Real user or client case data — any environment | ⛔ NOT ALLOWED — fixture data only |
+| Private criminal matter in any build environment | ⛔ NOT ALLOWED — D-005 / D-017 |
+
+Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) · granted 21 Sep 2026.
+
+**Open item:** product code must **not** be committed to this repository until the founder records where staging code lives. Default until then: Lovable's own repository; this repository stays documentation-only.
 
 ---
 
@@ -72,7 +92,24 @@ No product exists, no users exist, no dispute files have been produced. This met
 | **Required evidence** | 15–20 interviews (per D-003 revisit trigger); WTP responses against a tested paid offer; category-frequency evidence for the exact target segment |
 | **Next action** | Founder defines the exact category boundary, then recruits the interview sample |
 
-### F-3 — Repository and continuity initialization
+### F-3 — Lovable staging build  ✅ AUTHORIZED
+
+| Field | Value |
+|---|---|
+| **Task** | Stand up the NyayOS Dispute Readiness Engine in a **staging environment** per the Lovable build brief, as constrained by the architecture reconciliation table |
+| **Why** | Authorized by the founder under **FA-001** (21 Sep 2026). Used as a validation instrument to test the workflow and the wedge faster — not as a release candidate |
+| **Exact tool / mode** | Lovable — staging build |
+| **Owner** | Unassigned — founder to assign |
+| **Environment** | **Staging only.** Fixture data only. No production database, no production domain, no public URL |
+| **Deployment permission** | **Staging: ALLOWED. Production: NOT ALLOWED** |
+| **Start date** | Not started |
+| **Target date** | Not set by founder |
+| **Status** | **Authorized — not started** |
+| **Blocker** | No build owner assigned. Code location not yet recorded (see FA-001 open item) |
+| **Required evidence** | Staging URL (non-public); schema + RLS policies; tenant-isolation test result (R02, R20); provenance model demonstrated end-to-end (D-012); confirmation that no real case data was used |
+| **Next action** | Founder assigns a build owner and records where staging code lives |
+
+### F-4 — Repository and continuity initialization
 
 | Field | Value |
 |---|---|
@@ -101,9 +138,9 @@ No product exists, no users exist, no dispute files have been produced. This met
 | Architecture Reconciliation | **Complete** |
 | Figma V2 | **Pending** |
 | User / WTP Validation | **Pending** |
-| Lovable Staging Build | **Not Started** |
+| Lovable Staging Build | **Authorized — Not Started** |
 | Testing / UAT | **Not Started** |
-| Production | **Not Started** |
+| Production | **Not Started — NOT AUTHORIZED** |
 
 > No completion percentages are recorded. Stage status is categorical only, by instruction — a percentage here would be invented precision.
 
@@ -211,14 +248,17 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 
 ## K. Immediate next actions
 
+**Revised 21 Sep 2026 under FA-001.** These now run in **parallel**, not in sequence.
+
 | # | Action | Gate |
 |---|---|---|
-| 1 | **Figma V2** | — |
-| 2 | **User interviews and WTP validation** | — |
-| 3 | **Founder go / no-go decision** | Requires 1 and 2 |
-| 4 | **Lovable staging build** | **Only after founder authorization at step 3.** Not before |
+| 1 | **Assign a build owner and record where staging code lives** | Blocks 2 |
+| 2 | **Lovable staging build** | ✅ **Authorized (FA-001).** Staging only, fixture data only |
+| 3 | **Figma V2** | — · feeds 2 |
+| 4 | **User interviews and WTP validation** | — · de-risks 2 |
+| 5 | **Founder go / no-go for production** | **Requires 3, 4, A-010 security review, legal/privacy review and staging UAT.** See FA-001 § *Conditions for the next gate* |
 
-> Step 4 is explicitly gated. No build, no schema, no deployment may begin until the founder records a go decision — as a new entry in [NYAYOS_DECISION_LOG_V1.md](NYAYOS_DECISION_LOG_V1.md) and a row in [NYAYOS_ASSIGNMENT_REGISTER.md](NYAYOS_ASSIGNMENT_REGISTER.md).
+> **Production remains NOT AUTHORIZED.** No production build, deployment, database, domain, public beta or real user data — in any environment — until a new entry (**FA-002**) is recorded in [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md).
 
 ---
 
@@ -231,8 +271,8 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | **Branch** | `main` |
 | **Latest commit SHA** | `516ba15` — `516ba153470c9e30144e58f1f67dbfea95b76841` (initialization commit; see § *Note*) |
 | **Working-tree status** | Clean at time of writing |
-| **Deployment status** | **NOT DEPLOYED — deployment NOT ALLOWED** |
-| **Repository contents** | **Documentation only.** No application code, no schema, no migrations, no infrastructure, no database resources |
+| **Deployment status** | **NOT DEPLOYED.** Staging build authorized (FA-001) but not started. **Production deployment NOT ALLOWED** |
+| **Repository contents** | **Documentation only.** No application code, no schema, no migrations, no infrastructure, no database resources. FA-001 does **not** change this — see its open item on staging code location |
 | **Private data in repository** | **None.** See § *Security posture* below |
 
 **Note on the SHA.** This field records the SHA of the initialization commit. It is updated by a follow-up commit and therefore always trails `HEAD` by one commit. For the live value run:

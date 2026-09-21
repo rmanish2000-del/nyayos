@@ -11,7 +11,8 @@ It is **documentation only**.
 | Rule | Detail |
 |---|---|
 | **No product code** | No application code, schema, migrations, seeds, infrastructure-as-code or database resources |
-| **No deployment** | Nothing here deploys. Deployment is **NOT ALLOWED** and is gated on a recorded founder decision |
+| **No production** | **Production build, deployment, database, domain and public beta are NOT ALLOWED.** Staging build is allowed under [FA-001](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) |
+| **Check tier 1 before acting** | Gates are answered only by the [Founder Authorization Record](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md). A build brief is not authorization |
 | **No private case material** | See § 3. This is the rule that matters most |
 | **No secrets** | No credentials, tokens, API keys, service-account files or `.env` files |
 | **Canonical name is `NyayOS`** | Never change it. Legacy `NYAYAOS_*` research filenames are retained deliberately |
@@ -168,8 +169,11 @@ Moves Figma V2 stage from Pending to Complete.
 
 | Gate | Blocked until |
 |---|---|
-| **Lovable staging build** (A-011) | Founder go decision recorded in the decision log **and** the assignment register |
-| **Any deployment** | Not authorized. Out of scope for this repository |
+| **Lovable staging build** (A-011) | ✅ **OPEN — authorized by FA-001, 21 Sep 2026.** Staging environment and fixture data only |
+| **Committing product code to this repository** | Founder must first record the staging code location (FA-001 open item). Default until then: **do not** — code lives in Lovable's own repository |
+| **Production build, deployment, database, domain** | ⛔ **FA-002 — not granted.** Requires Figma V2, WTP validation, A-010 security review, legal/privacy review and staging UAT |
+| **Public launch / public beta** | ⛔ Not authorized |
+| **Real user, client or pilot case data — any environment, including staging** | ⛔ Not authorized. Fixture data only |
 | **Consumer launch** | Phase 2. Sandbox only for now (D-004); risk **R23** flags early scope expansion as High likelihood |
 | **Private-case training** | D-017 — requires separate explicit authorization and legal review |
 | **Any external write action, court integration, or ODR marketplace** | Deferred per master context § 8 |

@@ -36,7 +36,7 @@
 | `NYAYOS_90_DAY_VALIDATION_PLAN_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | Governs the validation sequence gating the build decision | `docs/evaluation/` |
 | `NYAYOS_CONTINUITY_HANDOFF_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | Architecture reconciliation table; recommends A-010 security review as next assignment | `docs/handoffs/` |
 | `NYAYOS_FIGMA_BRIEF_V2.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | Input to A-008 (Figma V2) | `docs/design/` |
-| `NYAYOS_LOVABLE_BUILD_BRIEF_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | **Accepted — HELD** | Input to A-011. **Build is blocked** pending founder go decision | `docs/implementation/` |
+| `NYAYOS_LOVABLE_BUILD_BRIEF_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | **Accepted — RELEASED 21 Sep 2026** | Input to A-011, **authorized for staging only** under FA-001 | `docs/implementation/` |
 | `NYAYOS_REAL_CASE_EVALUATION_PROTOCOL_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | Governs private-matter evaluation; enforces D-005 and D-017; controls R09, R29 | `docs/evaluation/` |
 | `README.md` (V1 bundle manifest) | *Not recorded* | A-006 | 20 Sep 2026 | Maintainer-reviewed | **Accepted — renamed** to `NYAYOS_V1_DELIVERABLES_README.md` to avoid collision with the repository root README. **Content unchanged** | Records the V1 reconciliation rationale | `docs/handoffs/` |
 
@@ -52,6 +52,8 @@
 | `NYAYOS_ASSIGNMENT_REGISTER.md` | Claude Code | A-007 | 20 Sep 2026 | Not reviewed | Pending founder review | Assignment record A-001 to A-007; open assignments A-008 to A-011 | `docs/founder/` |
 | `NYAYOS_OUTPUT_REGISTER.md` | Claude Code | A-007 | 20 Sep 2026 | Not reviewed | Pending founder review | This document | `docs/founder/` |
 | `NYAYOS_CHANGELOG.md` | Claude Code | A-007 | 20 Sep 2026 | Not reviewed | Pending founder review | Chronological change record | `docs/founder/` |
+| `NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md` | Claude Code — Repository and Product-Continuity Maintainer | A-013 | 21 Sep 2026 | Not reviewed | Pending founder review | **Tier 1 authority for all gates.** Records FA-001: staging build allowed, production not allowed | `docs/founder/` |
+| `NYAYOS_MVP_RECONCILIATION_V3.md` | Claude Code — Repository and Product-Continuity Maintainer | A-013 | 21 Sep 2026 | Not reviewed | **Pending founder review — see note** | Consolidates the MVP position at V3 under FA-001. Introduces **no new product decisions** | `docs/product/` |
 
 ---
 

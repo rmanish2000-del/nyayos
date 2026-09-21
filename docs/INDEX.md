@@ -1,9 +1,34 @@
 # NyayOS — Document Index
 
 Complete map of the canonical knowledge base.
-**Project:** NyayOS · **Stage:** Pre-build · **Deployment:** NOT ALLOWED
+**Project:** NyayOS · **Stage:** Design Preparation → Staging Build
+**Staging build:** ✅ ALLOWED (FA-001) · **Production:** ⛔ NOT ALLOWED
 
 ← [Repository root](../README.md) · [Contributing](../CONTRIBUTING.md)
+
+---
+
+## Document authority hierarchy
+
+When two documents disagree, **the higher tier wins.** Do not resolve a conflict by editing the lower-tier document — record it and escalate.
+
+| Tier | Document | Authoritative for | Mutability |
+|---:|---|---|---|
+| **1** | **[Founder Authorization Record](founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** | **Gates** — what may be built, deployed, launched, or done with data, *right now* | **Append-only.** Supersede with a new FA entry; never edit a past one |
+| **2** | [Decision Log V1](founder/NYAYOS_DECISION_LOG_V1.md) | Product and technical decisions D-001 → D-018; locked vs provisional | Append a new decision; never rewrite an existing one |
+| **2** | [Risk Register V1](founder/NYAYOS_RISK_REGISTER_V1.md) | Risks R01 → R30; controls; the risk-acceptance boundary | Append; never rewrite |
+| **3** | [Master Context V1](founder/NYAYOS_MASTER_CONTEXT_V1.md) | Canonical identity, evidence posture, architecture posture | Supplied — do not edit substance |
+| **3** | [Master Product Spec V1](product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md) | What the product is | Supplied — do not edit substance |
+| **4** | [Continuity Handoff V1](handoffs/NYAYOS_CONTINUITY_HANDOFF_V1.md) | Architecture reconciliation table — **constrains** the Architecture Review | Supplied — do not edit substance |
+| **5** | [Architecture Review](architecture/ARCHITECTURE_REVIEW.md), briefs, protocols, plans | Implementation detail, **as constrained by tier 4** | Supplied — do not edit substance |
+| **6** | [Research](#docsresearch--evidence-base) | Evidence only. **Never** a decision | Supplied — do not edit substance |
+| **7** | [Founder Dashboard](founder/NYAYOS_FOUNDER_DASHBOARD.md), [Assignment Register](founder/NYAYOS_ASSIGNMENT_REGISTER.md), [Output Register](founder/NYAYOS_OUTPUT_REGISTER.md), [Changelog](founder/NYAYOS_CHANGELOG.md), [INDEX](INDEX.md), README, CONTRIBUTING | **Views and records.** No independent authority | Maintainer-updated every time a higher tier changes |
+
+### The three rules that follow from this
+
+1. **A gate question is answered only by tier 1.** If a tier 5 build brief exists, that is not authorization. If a tier 7 dashboard says "allowed", verify against tier 1.
+2. **Research never decides anything.** The red team argues *against* the project by design; it was accepted as input, not as a verdict (see A-001).
+3. **Never read the Architecture Review alone.** Tier 4 modified, deferred or rejected five of its decisions.
 
 ---
 
@@ -11,6 +36,7 @@ Complete map of the canonical knowledge base.
 
 | # | Document | Why |
 |---|---|---|
+| 0 | **[Founder Authorization Record](founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** | **What you are allowed to do.** Read before acting |
 | 1 | [Founder Dashboard](founder/NYAYOS_FOUNDER_DASHBOARD.md) | Current state on one screen |
 | 2 | [Master Context](founder/NYAYOS_MASTER_CONTEXT_V1.md) | Full context in one document |
 | 3 | [Decision Log](founder/NYAYOS_DECISION_LOG_V1.md) | Why each decision was made |
@@ -24,6 +50,7 @@ Complete map of the canonical knowledge base.
 
 | Document | Type | Authority |
 |---|---|---|
+| [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) | Authorization | **Tier 1 — authoritative for all gates.** Append-only |
 | [NYAYOS_FOUNDER_DASHBOARD.md](founder/NYAYOS_FOUNDER_DASHBOARD.md) | Dashboard | **View** — derived from the sources below |
 | [NYAYOS_ASSIGNMENT_REGISTER.md](founder/NYAYOS_ASSIGNMENT_REGISTER.md) | Register | Authoritative for assignments A-001 → A-011 |
 | [NYAYOS_OUTPUT_REGISTER.md](founder/NYAYOS_OUTPUT_REGISTER.md) | Register | Authoritative for artefacts and acceptance |
@@ -32,13 +59,14 @@ Complete map of the canonical knowledge base.
 | [NYAYOS_DECISION_LOG_V1.md](founder/NYAYOS_DECISION_LOG_V1.md) | Supplied — A-006 | **Authoritative** for decisions D-001 → D-018 |
 | [NYAYOS_RISK_REGISTER_V1.md](founder/NYAYOS_RISK_REGISTER_V1.md) | Supplied — A-006 | **Authoritative** for risks R01 → R30 |
 
-> Where the Dashboard and a source document disagree, **the source document wins.**
+> Where the Dashboard and a source document disagree, **the source document wins.** For gates, only the Founder Authorization Record is decisive.
 
 ## `/docs/product` — what is being built
 
 | Document | Type | Contents |
 |---|---|---|
 | [NYAYOS_MASTER_PRODUCT_SPEC_V1.md](product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md) | Supplied — A-006 | Canonical specification for the Dispute Readiness Engine |
+| [NYAYOS_MVP_RECONCILIATION_V3.md](product/NYAYOS_MVP_RECONCILIATION_V3.md) | Maintainer — A-013 | **Tier 7 view.** Consolidates the MVP position at V3 under FA-001. No new product decisions. Superseded by any founder-held V3 |
 
 ## `/docs/architecture` — how it would be built
 
@@ -71,9 +99,9 @@ Complete map of the canonical knowledge base.
 
 | Document | Type | Status |
 |---|---|---|
-| [NYAYOS_LOVABLE_BUILD_BRIEF_V1.md](implementation/NYAYOS_LOVABLE_BUILD_BRIEF_V1.md) | Supplied — A-006 | **HELD.** Input to **A-011** — blocked pending founder go decision |
+| [NYAYOS_LOVABLE_BUILD_BRIEF_V1.md](implementation/NYAYOS_LOVABLE_BUILD_BRIEF_V1.md) | Supplied — A-006 | **RELEASED.** Input to **A-011**, authorized for **staging only** under FA-001 |
 
-> ⚠ The presence of a build brief is **not** build authorization.
+> ⚠ The presence of a build brief is **not** build authorization. FA-001 is. It authorizes **staging only** — production remains ⛔ NOT ALLOWED, and no real case data may be used in any environment.
 
 ## `/docs/evaluation`
 
@@ -105,9 +133,9 @@ Exact commercial wedge boundary · pricing · retention period · OCR provider �
 
 1. Unsupported claims · 2. Sensitive-data leakage · 3. Epistemic confusion · 4. Prompt injection · 5. Commercial validation failure
 
-### Next actions
+### Next actions — parallel, revised under FA-001
 
-1. Figma V2 → 2. User interviews + WTP → 3. Founder go/no-go → 4. Lovable staging build *(gated)*
+1. Assign build owner + record staging code location → 2. Lovable staging build *(authorized)* → 3. Figma V2 → 4. User interviews + WTP → 5. Founder go/no-go **for production** *(gated — FA-002 not granted)*
 
 ---
 
@@ -117,5 +145,5 @@ Exact commercial wedge boundary · pricing · retention period · OCR provider �
 |---|---|
 | Private case files (FIR, bail, chargesheet, correspondence, chat exports) | Private evaluation only. Blocked by [`.gitignore`](../.gitignore); never staged |
 | Credentials, tokens, `.env` files | Never committed |
-| Product code, schema, migrations, infrastructure | Repository is documentation only |
+| Product code, schema, migrations, infrastructure | Repository is documentation only. **FA-001 does not change this** — staging code location is an open founder item |
 | `NYAYOS_V1_REVISED_DELIVERABLES.zip` | Redundant — its contents are committed individually |
