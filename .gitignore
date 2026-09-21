@@ -57,6 +57,13 @@ Manish_Patel_Foodgod_Chat_Context_Export.pdf
 *.tar
 *.tar.gz
 
+# --- Print collateral exports (A-026) --------------------------------------
+# Generated from the tracked HTML in docs/print/ by headless Chrome. Marketing and
+# research-form material only — no case data. This is the ONLY place a PDF or PNG may
+# be tracked; the blanket *.pdf / *.png rules above still apply everywhere else.
+!docs/print/exports/pdf/*.pdf
+!docs/print/exports/png/*.png
+
 # --- Structured data exports (may carry PII) ------------------------------
 *.csv
 *.tsv

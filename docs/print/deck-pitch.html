@@ -7,10 +7,15 @@
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   :root{--navy:#1C3D5A;--navy-mid:#2D6A8F;--amber:#E8A020;--text:#111827;--muted:#374151;--light:#F7F8FA;--white:#FFFFFF;--green:#15803D;--red:#B91C1C;--border:#E5E7EB;}
-  @page{size:254mm 143mm landscape;margin:0;}
+  /* A-026: explicit lengths may not be combined with the landscape keyword — Chrome discarded the
+     whole rule and printed Letter portrait. 254×143 is already landscape by its dimensions. */
+  @page{size:254mm 143mm;margin:0;}
   body{font-family:'Noto Sans',sans-serif;background:#E8ECF0;padding:6mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   .slide{width:254mm;height:143mm;background:var(--white);display:flex;flex-direction:column;overflow:hidden;position:relative;margin-bottom:6mm;page-break-after:always;border-radius:3px;box-shadow:0 2px 12px rgba(0,0,0,0.12);}
   .slide:last-child{margin-bottom:0;page-break-after:avoid;}
+  /* A-026: on paper each slide must occupy exactly one 254×143 page. The screen-only gap, shadow
+     and rounding pushed slides 1 and 8 over the page edge and produced blank pages 2 and 10. */
+  @media print{body{padding:0;background:none;}.slide{height:142.6mm;margin-bottom:0;box-shadow:none;border-radius:0;}}
   .slide-num{position:absolute;bottom:4mm;right:5mm;font-size:7px;color:rgba(0,0,0,0.2);font-weight:600;font-family:'Hind Siliguri',sans-serif;z-index:10;}
   .s1{background:var(--navy);color:white;}
   .s1 .amber-line{height:4px;background:var(--amber);}

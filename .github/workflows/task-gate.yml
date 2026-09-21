@@ -59,7 +59,9 @@ jobs:
           set -e
           fail=0
           if git ls-files | grep -iE '(^|/)\.env($|\.)' | grep -v '\.env\.example$'; then echo "::error::.env file tracked"; fail=1; fi
-          if git ls-files | grep -iE '\.(pdf|docx|zip|eml|msg)$'; then echo "::error::document/archive file tracked — case material is never committed"; fail=1; fi
+          # docs/print/exports/ holds PDFs generated from the tracked HTML print pack (A-026); it is
+          # the one sanctioned location. Anything else with these extensions is treated as case material.
+          if git ls-files | grep -iE '\.(pdf|docx|zip|eml|msg)$' | grep -vE '^docs/print/exports/pdf/[^/]+\.pdf$'; then echo "::error::document/archive file tracked outside docs/print/exports — case material is never committed"; fail=1; fi
           if git grep -nIiE 'Manish_Patel_Foodgod|FIR No\.|CNR ?No|Aadhaar ?(No|Number)[:# ]*[0-9]' -- ':!docs/founder/NYAYOS_OUTPUT_REGISTER.md' ':!docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md' ':!docs/founder/NYAYOS_CHANGELOG.md' ':!CONTRIBUTING.md' ':!.gitignore' ':!.github/workflows/task-gate.yml'; then echo "::error::possible private case identifier in tracked content"; fail=1; fi
           if git grep -nIE '(sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|gho_[A-Za-z0-9]{20,}|AKIA[A-Z0-9]{16}|-----BEGIN [A-Z ]*PRIVATE KEY)' -- ':!.github/workflows/task-gate.yml'; then echo "::error::credential pattern in tracked content"; fail=1; fi
           exit $fail

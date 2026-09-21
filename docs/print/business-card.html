@@ -10,7 +10,9 @@
   @page{size:A4 portrait;margin:15mm;}
   body{font-family:'Noto Sans',sans-serif;background:#f0f0f0;padding:20px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   .page-title{font-size:11px;color:#666;margin-bottom:20px;font-style:italic;}
-  .cards-grid{display:grid;grid-template-columns:repeat(3,90mm);gap:8mm;justify-content:center;}
+  /* A-026: three 90mm cards side by side (286mm) exceed A4's 180mm printable width and the left
+     card was clipped in the PDF. Stacked, 3×55mm + gaps fits the 267mm printable height. */
+  .cards-grid{display:grid;grid-template-columns:90mm;gap:8mm;justify-content:center;}
   .card{width:90mm;height:55mm;border-radius:4px;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
   .card-front{background:var(--navy);padding:5mm 6mm;display:flex;flex-direction:column;height:100%;}
   .cf-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm;}
