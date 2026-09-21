@@ -53,6 +53,7 @@
 | `NYAYOS_OUTPUT_REGISTER.md` | Claude Code | A-007 | 20 Sep 2026 | Not reviewed | Pending founder review | This document | `docs/founder/` |
 | `NYAYOS_CHANGELOG.md` | Claude Code | A-007 | 20 Sep 2026 | Not reviewed | Pending founder review | Chronological change record | `docs/founder/` |
 | `NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md` | Claude Code — Repository and Product-Continuity Maintainer | A-013 | 21 Sep 2026 | Not reviewed | Pending founder review | **Tier 1 authority for all gates.** Records FA-001: staging build allowed, production not allowed | `docs/founder/` |
+| `NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md` | Claude Code — Architecture Review | A-014 | 21 Sep 2026 | Not reviewed | **Pending founder review — review BLOCKED on artefact** | NO-GO (conditional) for Sprint 2; typography decision required (D-019 candidate); FA-001 code-location item must close | `docs/architecture/` |
 | `NYAYOS_MVP_RECONCILIATION_V3.md` | Claude Code — Repository and Product-Continuity Maintainer | A-013 | 21 Sep 2026 | Not reviewed | **Pending founder review — see note** | Consolidates the MVP position at V3 under FA-001. Introduces **no new product decisions** | `docs/product/` |
 
 ---

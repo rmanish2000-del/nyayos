@@ -147,6 +147,23 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | **No `MVP_RECONCILIATION_V3` source document was supplied** — none exists in the workspace, Downloads or the repository, and there is no V1 or V2 of that document to succeed. The V3 document was therefore written as a **consolidation of positions already recorded elsewhere**, introducing **no new product decisions**. If the founder holds a separate V3, it supersedes this one. Authorization was granted while A-008 and A-009 remain Pending — risk recorded in FA-001, not resolved |
 | **Handoff back to M365 Copilot** | Gate change is live. Verify every gate against FA-001 (tier 1) before acting |
 
+### A-014 — Sprint 1 Foundation architecture review (pre-Sprint 2 gate)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-014 |
+| **Tool and exact mode** | Claude Code — Architecture Review (staging review only) |
+| **Purpose** | Deep technical review of the Lovable Sprint 1 Foundation (tokens, buttons, inputs, chips, badges, banners, progress, navigation, accessibility baseline) before Sprint 2 Fact Card System begins |
+| **Input files** | Review instruction, 21 Sep 2026. Canonical spec baseline: Product Spec V1 § 7.6–7.10, § 10, § 11; Figma Brief V2 § 5, 6, 9, 18; Lovable Build Brief V1. **Sprint 1 artefact: NOT SUPPLIED — not found in canonical repo, workspace, Downloads, or any GitHub repo on the account** |
+| **Expected output** | Findings, severities, evidence, Go/No-Go for Sprint 2, three risk ratings |
+| **Environment** | Read-only review. No code modified, nothing deployed, nothing implemented |
+| **Deployment allowed** | **Staging: ALLOWED (FA-001). Production: NOT ALLOWED.** Review itself performs no deployment |
+| **Status** | **BLOCKED — awaiting artefact.** Review instrument complete; execution pending |
+| **Result** | **NO-GO (conditional) for Sprint 2** until the artefact is supplied and the § 4 checklist passes. Three findings made from the repository alone: typography undocumented + reported drift (High); "completed" sprint has no artefact in the canonical system (Critical, process); state taxonomy fully specified (favourable). Canonical font reference "Hind Siliguri" flagged as a possible Bengali/Devanagari naming slip |
+| **Evidence** | [docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](../architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) |
+| **Limitations** | Architecture, accessibility and design-system ratings are **UNRATED** — the reviewer declined to rate code it has not seen. The EduOS repo `learning-start-nexus` was identified by README only and not inspected further |
+| **Handoff back to M365 Copilot** | Supply the artefact via review § 2 (recommended: Lovable → GitHub → private `nyayos-app`). Three actions can start now without it: record typography decision (D-019 candidate), close FA-001 code-location item, begin Fact Card design in Figma against § 3.1 / § 4.5 |
+
 ---
 
 ## Open assignments — not yet issued
@@ -158,6 +175,8 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-010 | **NyayOS Security + Data Architecture Review** (research/specification only) | Recommended in the Continuity Handoff. Inputs: Master Product Spec V1, Architecture Review, Risk Register V1, Real Case Evaluation Protocol | May run in parallel with A-008/A-009 |
 | A-011 | **Lovable staging build** | Lovable — staging build | ✅ **AUTHORIZED (FA-001, 21 Sep 2026).** Staging only, fixture data only. Blocked on: build owner unassigned, staging code location not recorded |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
+| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **NO-GO (conditional)** per A-014 § 9. Fact Card **design** in Figma (A-008) may proceed now |
+| A-016 | **Typography / design-token decision** (D-019 candidate) | Founder + design | Open. Must land at token layer **before** A-015 |
 
 ---
 

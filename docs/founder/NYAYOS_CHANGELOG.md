@@ -7,6 +7,39 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
+## 2026-09-21 — Sprint 1 Foundation review: BLOCKED on artefact; NO-GO (conditional) for Sprint 2 (A-014)
+
+### Reviewed
+
+Lovable reported Sprint 1 Foundation complete (tokens, buttons, inputs, chips, badges, banners, progress, navigation, accessibility baseline). A pre-Sprint-2 architecture review was requested.
+
+**The artefact could not be located** — not in the canonical repo (documentation only, by design), the workspace, Downloads, or any of the 50 repos on the GitHub account. The FA-001 open item *"where does staging code live?"* was never closed; Sprint 1 was completed anyway.
+
+### Added
+
+- `docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md` — review record with: what is needed to run the review (§ 2); the load Sprint 1 must bear, cited to the canonical spec (§ 3); a 50-point acceptance checklist across architecture, design system, WCAG 2.2 AA, state sufficiency and Fact Card readiness (§ 4); findings available from the repository alone (§ 5).
+
+### Findings without the artefact
+
+1. **Typography is undocumented** in every canonical doc; the reported Libre Baskerville + IBM Plex is Lovable's default filling an unrecorded decision. Libre Baskerville has no Devanagari. **High.** Must be fixed at the token layer before Fact Cards.
+2. The canonical reference **"Hind Siliguri" is the Bengali member of the Hind family**; Devanagari coverage is *Hind* or *Noto Sans Devanagari*. Flagged for founder confirmation before it becomes a token.
+3. A gated deliverable is invisible to the source of truth. **Critical (process).**
+4. The state taxonomy (8 epistemic types, 5 date precisions, 5 evidence relations, 4 confidence bands) is fully enumerated in the Product Spec — the review has a fixed target. Favourable.
+
+### Decided
+
+- **Sprint 2 build: NO-GO (conditional).** Four conditions to convert to GO in review § 9. Sprint 2 **design** in Figma may proceed now.
+- Ratings for architecture, accessibility and design system: **UNRATED** — no artefact. Process/continuity: **CRITICAL**.
+
+### Open items requiring founder input
+
+1. Supply the Sprint 1 artefact — recommended: Lovable → GitHub sync → private `nyayos-app`.
+2. Record the typography decision (D-019 candidate) — Indic face, Latin face, fallback, minimum sizes.
+3. Confirm Hind Siliguri vs Hind / Noto Sans Devanagari.
+4. Close the FA-001 code-location item.
+
+---
+
 ## 2026-09-21 — Staging build authorized; authority hierarchy established (A-013)
 
 ### Decided — FA-001

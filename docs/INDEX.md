@@ -72,6 +72,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 | Document | Type | Contents |
 |---|---|---|
+| [NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) | Maintainer — A-014 | **Sprint 1 review — BLOCKED on artefact.** Acceptance checklist against the canonical spec; NO-GO (conditional) for Sprint 2; typography and code-location findings |
 | [ARCHITECTURE_REVIEW.md](architecture/ARCHITECTURE_REVIEW.md) | Supplied — A-005 | TanStack Start / React 19 / Vite 7 on edge runtime; Supabase Postgres + Auth + Storage + RLS; pgvector; server-side AI gateway; append-only audit; closed tool catalog |
 
 > **Do not read the architecture review alone.** Five of its decisions were modified, made provisional, deferred or rejected during reconciliation. Read it alongside the reconciliation table in the [Continuity Handoff](handoffs/NYAYOS_CONTINUITY_HANDOFF_V1.md).

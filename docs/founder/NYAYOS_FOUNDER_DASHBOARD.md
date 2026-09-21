@@ -104,10 +104,27 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Deployment permission** | **Staging: ALLOWED. Production: NOT ALLOWED** |
 | **Start date** | Not started |
 | **Target date** | Not set by founder |
-| **Status** | **Authorized — not started** |
-| **Blocker** | No build owner assigned. Code location not yet recorded (see FA-001 open item) |
+| **Status** | **Sprint 1 reported complete by Lovable — UNVERIFIED.** No artefact reachable from the canonical system |
+| **Blocker** | Code location never recorded (FA-001 open item) — so the Sprint 1 deliverable cannot be reviewed. See A-014 |
 | **Required evidence** | Staging URL (non-public); schema + RLS policies; tenant-isolation test result (R02, R20); provenance model demonstrated end-to-end (D-012); confirmation that no real case data was used |
 | **Next action** | Founder assigns a build owner and records where staging code lives |
+
+### F-5 — Sprint 1 Foundation review  ⛔ BLOCKED
+
+| Field | Value |
+|---|---|
+| **Task** | Pre-Sprint-2 architecture, accessibility and design-system review of the Sprint 1 Foundation |
+| **Why** | Fact Cards (Sprint 2) hard-wire on top of Sprint 1 tokens, chips, badges and type scale. Defects there compound in every later sprint |
+| **Exact tool / mode** | Claude Code — Architecture Review, read-only |
+| **Owner** | Claude Code |
+| **Environment** | Review only. No code, no deployment |
+| **Deployment permission** | N/A — review |
+| **Start date** | 21 September 2026 |
+| **Target date** | Same day the artefact is supplied |
+| **Status** | **BLOCKED — artefact not supplied.** Review instrument complete |
+| **Blocker** | Sprint 1 build exists only inside Lovable. Founder must connect Lovable → GitHub (private `nyayos-app`) or export the code — see [A-014 § 2](../architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) |
+| **Required evidence** | Executed § 4 checklist; zero Critical fails; typography decision recorded; FA-001 code-location closed |
+| **Next action** | Founder supplies artefact. In parallel: record typography decision (D-019 candidate); start Fact Card design in Figma |
 
 ### F-4 — Repository and continuity initialization
 
@@ -256,6 +273,8 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | 2 | **Lovable staging build** | ✅ **Authorized (FA-001).** Staging only, fixture data only |
 | 3 | **Figma V2** | — · feeds 2 |
 | 4 | **User interviews and WTP validation** | — · de-risks 2 |
+| 4a | **Supply Sprint 1 artefact → execute A-014 review** | ⛔ **Sprint 2 build is NO-GO (conditional) until this passes.** Sprint 2 *design* may proceed |
+| 4b | **Record typography / token decision (D-019 candidate)** | Must land before Sprint 2 build |
 | 5 | **Founder go / no-go for production** | **Requires 3, 4, A-010 security review, legal/privacy review and staging UAT.** See FA-001 § *Conditions for the next gate* |
 
 > **Production remains NOT AUTHORIZED.** No production build, deployment, database, domain, public beta or real user data — in any environment — until a new entry (**FA-002**) is recorded in [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md).
