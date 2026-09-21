@@ -2,7 +2,7 @@
 
 This repository is the **canonical knowledge and continuity source** for NyayOS. Its job is to make sure founder decisions, assignments, risks, progress, evidence and handoffs stay synchronized without repeated work or lost context.
 
-It is **documentation only**.
+It holds **governance documentation (`docs/`) and the Sprint 1 Foundation code (`app/`)**. Code is tier 8 in the [authority hierarchy](docs/INDEX.md#document-authority-hierarchy): it is governed by the documents, never the other way round.
 
 ---
 
@@ -10,7 +10,8 @@ It is **documentation only**.
 
 | Rule | Detail |
 |---|---|
-| **No product code** | No application code, schema, migrations, seeds, infrastructure-as-code or database resources |
+| **Code only under `app/`, within authorized scope** | Frontend foundation and authorized sprints only. **No schema, migrations, seeds, infrastructure-as-code or database resources** until authorized. Never `nitro deploy` |
+| **Code must pass the four checks** | `npm run typecheck && npm run lint && npm run test && npm run build` in `app/` before any commit touching `app/` |
 | **No production** | **Production build, deployment, database, domain and public beta are NOT ALLOWED.** Staging build is allowed under [FA-001](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) |
 | **Check tier 1 before acting** | Gates are answered only by the [Founder Authorization Record](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md). A build brief is not authorization |
 | **No private case material** | See § 3. This is the rule that matters most |
@@ -170,7 +171,7 @@ Moves Figma V2 stage from Pending to Complete.
 | Gate | Blocked until |
 |---|---|
 | **Lovable staging build** (A-011) | ✅ **OPEN — authorized by FA-001, 21 Sep 2026.** Staging environment and fixture data only |
-| **Committing product code to this repository** | Founder must first record the staging code location (FA-001 open item). Default until then: **do not** — code lives in Lovable's own repository |
+| **Committing product code to this repository** | ✅ **Resolved (FA-001 addendum, 21 Sep 2026):** code lives at `app/`. Only within authorized sprint scope; four checks must pass |
 | **Production build, deployment, database, domain** | ⛔ **FA-002 — not granted.** Requires Figma V2, WTP validation, A-010 security review, legal/privacy review and staging UAT |
 | **Public launch / public beta** | ⛔ Not authorized |
 | **Real user, client or pilot case data — any environment, including staging** | ⛔ Not authorized. Fixture data only |

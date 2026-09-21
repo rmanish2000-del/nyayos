@@ -1,8 +1,8 @@
 # NyayOS — Document Index
 
 Complete map of the canonical knowledge base.
-**Project:** NyayOS · **Stage:** Design Preparation → Staging Build
-**Staging build:** ✅ ALLOWED (FA-001) · **Production:** ⛔ NOT ALLOWED
+**Project:** NyayOS · **Stage:** Staging Build — Sprint 1 canonical
+**Staging build:** ✅ ALLOWED (FA-001) · **Production:** ⛔ NOT ALLOWED · **Sprint 2:** GO (conditional)
 
 ← [Repository root](../README.md) · [Contributing](../CONTRIBUTING.md)
 
@@ -23,6 +23,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | **5** | [Architecture Review](architecture/ARCHITECTURE_REVIEW.md), briefs, protocols, plans | Implementation detail, **as constrained by tier 4** | Supplied — do not edit substance |
 | **6** | [Research](#docsresearch--evidence-base) | Evidence only. **Never** a decision | Supplied — do not edit substance |
 | **7** | [Founder Dashboard](founder/NYAYOS_FOUNDER_DASHBOARD.md), [Assignment Register](founder/NYAYOS_ASSIGNMENT_REGISTER.md), [Output Register](founder/NYAYOS_OUTPUT_REGISTER.md), [Changelog](founder/NYAYOS_CHANGELOG.md), [INDEX](INDEX.md), README, CONTRIBUTING | **Views and records.** No independent authority | Maintainer-updated every time a higher tier changes |
+| **8** | [`app/`](../app/README.md) — Sprint 1 Foundation code | **Implementation.** Governed by tiers 1–5; **never a source of product truth.** If code and spec disagree, the code is wrong until a tier-2 decision says otherwise | Changes only within an authorized sprint; four checks must pass |
 
 ### The three rules that follow from this
 
@@ -72,7 +73,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 | Document | Type | Contents |
 |---|---|---|
-| [NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) | Maintainer — A-014 | **Sprint 1 review — BLOCKED on artefact.** Acceptance checklist against the canonical spec; NO-GO (conditional) for Sprint 2; typography and code-location findings |
+| [NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) | Maintainer — A-014 | **Sprint 1 review — EXECUTED (§ 11).** GO (conditional) for Sprint 2 on Sprint 1.1 State Completion; typography finding retracted; ranked findings |
 | [ARCHITECTURE_REVIEW.md](architecture/ARCHITECTURE_REVIEW.md) | Supplied — A-005 | TanStack Start / React 19 / Vite 7 on edge runtime; Supabase Postgres + Auth + Storage + RLS; pgvector; server-side AI gateway; append-only audit; closed tool catalog |
 
 > **Do not read the architecture review alone.** Five of its decisions were modified, made provisional, deferred or rejected during reconciliation. Read it alongside the reconciliation table in the [Continuity Handoff](handoffs/NYAYOS_CONTINUITY_HANDOFF_V1.md).
@@ -115,7 +116,8 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 | Document | Type | Contents |
 |---|---|---|
-| [NYAYOS_CONTINUITY_HANDOFF_V1.md](handoffs/NYAYOS_CONTINUITY_HANDOFF_V1.md) | Supplied — A-006 | Project state, locked feature, architecture reconciliation table, evidence gaps, recommended next assignment |
+| [NYAYOS_CONTINUITY_HANDOFF_V2.md](handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md) | Maintainer — A-017 | **Current project state** after Sprint 1 import; validation record; Sprint 1 gaps; carried risks. Supersedes V1 for state only |
+| [NYAYOS_CONTINUITY_HANDOFF_V1.md](handoffs/NYAYOS_CONTINUITY_HANDOFF_V1.md) | Supplied — A-006 | **Architecture reconciliation table (still authoritative)**; original project state (superseded by V2) |
 | [NYAYOS_V1_DELIVERABLES_README.md](handoffs/NYAYOS_V1_DELIVERABLES_README.md) | Supplied — A-006 | Original V1 bundle manifest. Renamed to avoid collision with the root README; **content unchanged** |
 
 ---
@@ -146,5 +148,6 @@ Exact commercial wedge boundary · pricing · retention period · OCR provider �
 |---|---|
 | Private case files (FIR, bail, chargesheet, correspondence, chat exports) | Private evaluation only. Blocked by [`.gitignore`](../.gitignore); never staged |
 | Credentials, tokens, `.env` files | Never committed |
-| Product code, schema, migrations, infrastructure | Repository is documentation only. **FA-001 does not change this** — staging code location is an open founder item |
+| Schema, migrations, database resources, backend, infrastructure | Not yet authorized. Only the Sprint 1 frontend foundation is in `app/` |
+| `nyayos-sprint1-foundation.zip`, `app/node_modules`, `app/.output`, `app/.wrangler`, `app/package-lock.json` | Gitignored. Lockfile of record is `app/bun.lock` |
 | `NYAYOS_V1_REVISED_DELIVERABLES.zip` | Redundant — its contents are committed individually |

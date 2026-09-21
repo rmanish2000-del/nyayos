@@ -28,9 +28,9 @@ No product exists, no users exist, no dispute files have been produced. This met
 
 ## D. Current phase
 
-> **Design Preparation → Staging Build**
+> **Staging Build — Sprint 1 canonical → Sprint 1.1 / Sprint 2**
 
-Changed 21 Sep 2026. The staging build is authorized under **FA-001** and runs *in parallel with* design and validation, which remain incomplete.
+Changed 21 Sep 2026. Sprint 1 Foundation is **imported and canonical** (A-017). Design and validation remain incomplete and run in parallel.
 
 ## E. Current objective
 
@@ -52,7 +52,7 @@ Changed 21 Sep 2026. The staging build is authorized under **FA-001** and runs *
 
 Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) · granted 21 Sep 2026.
 
-**Open item:** product code must **not** be committed to this repository until the founder records where staging code lives. Default until then: Lovable's own repository; this repository stays documentation-only.
+**Resolved 21 Sep 2026 (FA-001 addendum):** staging code lives in **this repository at `app/`** — option (b). The repository is documentation **+ code**.
 
 ---
 
@@ -104,8 +104,8 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Deployment permission** | **Staging: ALLOWED. Production: NOT ALLOWED** |
 | **Start date** | Not started |
 | **Target date** | Not set by founder |
-| **Status** | **Sprint 1 reported complete by Lovable — UNVERIFIED.** No artefact reachable from the canonical system |
-| **Blocker** | Code location never recorded (FA-001 open item) — so the Sprint 1 deliverable cannot be reviewed. See A-014 |
+| **Status** | **Sprint 1 CANONICAL** — imported to `app/`, validated (`tsc`/`eslint`/`vitest`/`vite build` PASS), reviewed (A-014 § 11). **Sprint 1.1 State Completion is next** (A-018), then Sprint 2 |
+| **Blocker** | Staging URL not supplied — staging not verified. Build owner still unassigned |
 | **Required evidence** | Staging URL (non-public); schema + RLS policies; tenant-isolation test result (R02, R20); provenance model demonstrated end-to-end (D-012); confirmation that no real case data was used |
 | **Next action** | Founder assigns a build owner and records where staging code lives |
 
@@ -121,10 +121,10 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Deployment permission** | N/A — review |
 | **Start date** | 21 September 2026 |
 | **Target date** | Same day the artefact is supplied |
-| **Status** | **BLOCKED — artefact not supplied.** Review instrument complete |
-| **Blocker** | Sprint 1 build exists only inside Lovable. Founder must connect Lovable → GitHub (private `nyayos-app`) or export the code — see [A-014 § 2](../architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) |
-| **Required evidence** | Executed § 4 checklist; zero Critical fails; typography decision recorded; FA-001 code-location closed |
-| **Next action** | Founder supplies artefact. **A-017 import attempt (21 Sep) also blocked — `nyayos-sprint1-foundation.zip` not present anywhere.** In parallel: record typography decision (D-019 candidate); start Fact Card design in Figma |
+| **Status** | **COMPLETE — executed 21 Sep 2026.** Verdict revised: **GO (conditional) for Sprint 2** — see [A-014 § 11](../architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) |
+| **Blocker** | None. Browser-based checks (contrast, zoom) and SR pass remain open items inside Sprint 1.1 |
+| **Required evidence** | Delivered: § 11 checklist; 4/4 validations PASS; typography finding retracted against evidence |
+| **Next action** | **A-018 Sprint 1.1 State Completion** (7 items, A-014 § 11.4) → then A-015 Sprint 2 |
 
 ### F-4 — Repository and continuity initialization
 
@@ -155,7 +155,9 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | Architecture Reconciliation | **Complete** |
 | Figma V2 | **Pending** |
 | User / WTP Validation | **Pending** |
-| Lovable Staging Build | **Authorized — Not Started** |
+| Lovable Staging Build — Sprint 1 Foundation | **Complete — CANONICAL** |
+| Sprint 1.1 — State Completion | **Pending** (authorized) |
+| Sprint 2 — Fact Card System | **GO (conditional) — after Sprint 1.1** |
 | Testing / UAT | **Not Started** |
 | Production | **Not Started — NOT AUTHORIZED** |
 
@@ -273,8 +275,9 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | 2 | **Lovable staging build** | ✅ **Authorized (FA-001).** Staging only, fixture data only |
 | 3 | **Figma V2** | — · feeds 2 |
 | 4 | **User interviews and WTP validation** | — · de-risks 2 |
-| 4a | **Supply Sprint 1 artefact → execute A-014 review** | ⛔ **Sprint 2 build is NO-GO (conditional) until this passes.** Sprint 2 *design* may proceed |
-| 4b | **Record typography / token decision (D-019 candidate)** | Must land before Sprint 2 build |
+| 4a | **Sprint 1.1 State Completion** (A-018) | ✅ Authorized. **Must precede Sprint 2 build** |
+| 4b | **Write D-019 — typography decision** into the Decision Log | Code already uses Noto stack; the log must say so |
+| 4c | **Supply staging URL** for verification | Not yet supplied |
 | 5 | **Founder go / no-go for production** | **Requires 3, 4, A-010 security review, legal/privacy review and staging UAT.** See FA-001 § *Conditions for the next gate* |
 
 > **Production remains NOT AUTHORIZED.** No production build, deployment, database, domain, public beta or real user data — in any environment — until a new entry (**FA-002**) is recorded in [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md).
@@ -290,8 +293,8 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | **Branch** | `main` |
 | **Latest commit SHA** | `516ba15` — `516ba153470c9e30144e58f1f67dbfea95b76841` (initialization commit; see § *Note*) |
 | **Working-tree status** | Clean at time of writing |
-| **Deployment status** | **NOT DEPLOYED.** Staging build authorized (FA-001) but not started. **Production deployment NOT ALLOWED** |
-| **Repository contents** | **Documentation only.** No application code, no schema, no migrations, no infrastructure, no database resources. FA-001 does **not** change this — see its open item on staging code location |
+| **Deployment status** | **NOT DEPLOYED.** Sprint 1 built and validated locally; Cloudflare config emitted by build tool but `nitro deploy` **not run**. Staging URL not supplied. **Production deployment NOT ALLOWED** |
+| **Repository contents** | **Documentation (`docs/`) + Sprint 1 Foundation code (`app/`).** Frontend only — no schema, no migrations, no database resources, no backend. Code location resolved as option (b) — FA-001 addendum |
 | **Private data in repository** | **None.** See § *Security posture* below |
 
 **Note on the SHA.** This field records the SHA of the initialization commit. It is updated by a follow-up commit and therefore always trails `HEAD` by one commit. For the live value run:

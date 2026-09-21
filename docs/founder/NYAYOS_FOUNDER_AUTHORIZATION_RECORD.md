@@ -114,3 +114,14 @@ This repository is currently **documentation only**, and FA-001 does not change 
 - **(b)** code is mirrored into this repository, which then stops being documentation-only and needs a revised `.gitignore`, secret-scanning and branch policy before the first code commit.
 
 **Until this is recorded, option (a) applies and no product code may be committed to this repository.**
+
+---
+
+## FA-001 — Addendum, 21 September 2026: open item resolved
+
+**Open item:** *Where does the staging build's code live?*
+**Resolution:** **Option (b).** Founder instruction (A-017): *"Import Sprint 1 Foundation into the canonical repository and make it canonical."* Code lives at `app/` in `rmanish2000-del/nyayos`. The repository is no longer documentation-only.
+
+**Unchanged by this addendum:** every limit in FA-001. Staging only. Production ⛔ NOT ALLOWED. No real case data in any environment. Private matter never enters the build environment.
+
+**Consequence recorded:** the build toolchain (Nitro) emits Cloudflare Workers deploy configuration on every `vite build`. Emitting configuration is not deploying. `nitro deploy` must not be run until **FA-002** exists.

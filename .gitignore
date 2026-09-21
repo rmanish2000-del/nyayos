@@ -115,3 +115,20 @@ __pycache__/
 /temp/
 *.tmp
 NYAYOS_V1_REVISED_DELIVERABLES/
+
+# --- app/ (Sprint 1 Foundation, imported 21 Sep 2026 under A-017) -------------
+# Lockfile of record is app/bun.lock (Lovable). npm's lockfile is not committed.
+app/node_modules/
+app/dist/
+app/dist-ssr/
+app/.output/
+app/.vinxi/
+app/.tanstack/
+app/.nitro/
+app/.wrangler/
+app/.dev.vars
+app/package-lock.json
+app/*.local
+app/.env
+app/.env.*
+!app/.env.example

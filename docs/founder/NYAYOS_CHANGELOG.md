@@ -7,13 +7,42 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
-## 2026-09-21 — Sprint 1 import attempted: BLOCKED, inputs not supplied (A-017)
+## 2026-09-21 — Sprint 1 Foundation imported and CANONICAL; A-014 executed; GO (conditional) for Sprint 2 (A-017)
 
-An instruction to import `nyayos-sprint1-foundation.zip` into the canonical repository and mark Sprint 1 CANONICAL was received. **The ZIP, screenshots, staging URL and expected checksum were not supplied** and are not present anywhere reachable. Only the governance commit SHA `1ff5383` was verifiable (correct — the FA-001 commit).
+### Imported
 
-**Nothing was imported. Sprint 1 is not canonical.** Toolchain pre-verified: Node 22.14, npm 10.9, `sha256sum`; no dedicated secret scanner installed.
+`nyayos-sprint1-foundation.zip` (supplied after an initial blocked attempt the same day) → `app/`. 83 files. ZIP SHA-256 `8c407630616f171b33d2be60671213c4b07b5ceb65fce0a877954b17a3ea83ca` — **recorded, not verified** (no expected value supplied). Integrity test clean; no path traversal; no `.env`; no `node_modules`.
 
-Three pre-decisions the import will force are recorded in the assignment register (A-017): the import closes the FA-001 code-location item as option (b); code goes under `app/`; `.gitignore` needs carve-outs and the Lovable `.env` must be excluded.
+### Scanned — PASS
+
+Secrets (pattern-based) · private-matter / PII · EduOS cross-contamination · banned copy (also guarded by test). One external endpoint: Google Fonts.
+
+### Validated — 4/4 PASS
+
+`tsc --noEmit` (after `routeTree.gen.ts` generation — omitted from export, now committed) · `eslint .` 0 errors / 7 benign warnings · `vitest run` 12/12 · `vite build` 1,942 modules. **Nothing deployed** — build emits Cloudflare config; `nitro deploy` not run.
+
+### Reviewed — A-014 § 11 executed against source
+
+- **Typography-drift finding RETRACTED.** Artefact uses Noto Sans / Noto Sans Devanagari / Noto Sans Mono, tokenised and test-guarded. Hind Siliguri deliberately unused.
+- **High:** state enums incomplete vs Product Spec — no `uncertain` / `not-relevant` / `corrected` status; `document_fact` conflated with `ai_extraction`; no `unverified_claim`; no `unknown` date precision; no confidence-band component; no inline-correction input. All additive.
+- **High until run:** contrast audit and screen-reader pass.
+- **Medium:** provenance and status share hue families; Google Fonts CDN privacy; unused dependency surface incl. `chart.tsx`.
+- Strong: semantic tokens, enum-driven primitives, a11y baseline, complete dark mode, banned-language test.
+
+### Decided
+
+- **Sprint 1 is CANONICAL** — with recorded gaps.
+- **Sprint 2: GO (conditional)** on **Sprint 1.1 — State Completion** (A-018, seven items) landing first. Supersedes the NO-GO of the blind review.
+- **FA-001 code-location item closed as option (b)** — code lives in this repository at `app/`. Repository is documentation + code. Addendum appended to the Founder Authorization Record (append-only).
+- `app/bun.lock` is the lockfile of record; npm's lockfile gitignored.
+
+### Added / changed
+
+- `app/` · `app/src/routeTree.gen.ts` · `.gitignore` app section · `docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md` · A-014 § 11 · FA-001 addendum · authority hierarchy **tier 8 (code)** · README, CONTRIBUTING, INDEX, Dashboard, both registers.
+
+### Not supplied — still open
+
+Staging URL (**staging not verified**) · Sprint 1 screenshots · expected checksum · build owner · D-019 typography decision in the Decision Log.
 
 ---
 

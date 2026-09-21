@@ -34,11 +34,20 @@
 | `NYAYOS_DECISION_LOG_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted with open items | **Authoritative decision record** D-001 to D-018 | `docs/founder/` |
 | `NYAYOS_RISK_REGISTER_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | **Authoritative risk record** R01 to R30; sets the risk-acceptance boundary | `docs/founder/` |
 | `NYAYOS_90_DAY_VALIDATION_PLAN_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | Governs the validation sequence gating the build decision | `docs/evaluation/` |
-| `NYAYOS_CONTINUITY_HANDOFF_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | Architecture reconciliation table; recommends A-010 security review as next assignment | `docs/handoffs/` |
+| `NYAYOS_CONTINUITY_HANDOFF_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | **Accepted — project-state sections SUPERSEDED by V2 (21 Sep). Architecture reconciliation table remains authoritative** | Architecture reconciliation table; recommends A-010 security review | `docs/handoffs/` |
+| `NYAYOS_CONTINUITY_HANDOFF_V2.md` | Claude Code — Repository Integration | A-017 | 21 Sep 2026 | Not reviewed | Pending founder review | Project state after Sprint 1 import; validation record; Sprint 1 gaps; carried risks | `docs/handoffs/` |
 | `NYAYOS_FIGMA_BRIEF_V2.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | Input to A-008 (Figma V2) | `docs/design/` |
 | `NYAYOS_LOVABLE_BUILD_BRIEF_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | **Accepted — RELEASED 21 Sep 2026** | Input to A-011, **authorized for staging only** under FA-001 | `docs/implementation/` |
 | `NYAYOS_REAL_CASE_EVALUATION_PROTOCOL_V1.md` | *Not recorded* | A-006 | 20 Sep 2026 | Founder-reviewed | Accepted | Governs private-matter evaluation; enforces D-005 and D-017; controls R09, R29 | `docs/evaluation/` |
 | `README.md` (V1 bundle manifest) | *Not recorded* | A-006 | 20 Sep 2026 | Maintainer-reviewed | **Accepted — renamed** to `NYAYOS_V1_DELIVERABLES_README.md` to avoid collision with the repository root README. **Content unchanged** | Records the V1 reconciliation rationale | `docs/handoffs/` |
+
+## Code outputs — Sprint 1 Foundation
+
+| Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |
+|---|---|---|---|---|---|---|---|
+| `app/` — Sprint 1 Foundation (tokens, 8 components, shell, a11y baseline, 12 tests) | Lovable — staging build | A-011 | 21 Sep 2026 | **Maintainer-reviewed** (A-014 executed; `tsc`/`eslint`/`vitest`/`vite build` PASS) | **CANONICAL** — with recorded gaps (A-014 § 11.3) | Foundation for Sprint 2; Sprint 1.1 State Completion required first | `app/` |
+| `app/src/routeTree.gen.ts` | TanStack router plugin (generated during A-017 build) | A-017 | 21 Sep 2026 | Maintainer-reviewed | Accepted — committed so `tsc` passes cold | — | `app/src/` |
+| `nyayos-sprint1-foundation.zip` | Lovable export | A-011 | 21 Sep 2026 | Maintainer-reviewed | **Accepted — NOT committed** (gitignored). SHA-256 `8c407630616f171b33d2be60671213c4b07b5ceb65fce0a877954b17a3ea83ca` | Source of `app/` | Local workspace only |
 
 ## Repository and continuity outputs
 

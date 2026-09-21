@@ -1,0 +1,7 @@
+# Normalize line endings: LF in the repository, regardless of OS.
+# Lovable exports LF; this checkout is Windows. Prevents whole-file diffs on every round-trip.
+* text=auto eol=lf
+*.ico binary
+*.png binary
+*.jpg binary
+*.woff2 binary

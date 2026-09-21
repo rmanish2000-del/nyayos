@@ -10,7 +10,7 @@
 
 | | |
 |---|---|
-| **Repository contents** | **Documentation only.** No application code, no database schema, no migrations, no infrastructure |
+| **Repository contents** | **Documentation (`docs/`) + Sprint 1 Foundation code (`app/`).** Frontend foundation only — no database schema, no migrations, no backend, no infrastructure |
 | **Staging build** | ✅ **ALLOWED** under [FA-001](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) — staging environment and fixture data only |
 | **Production** | ⛔ **NOT ALLOWED.** No production build, deployment, database, domain, public beta, or real case data in any environment |
 | **Project stage** | Design Preparation → Staging Build |
@@ -108,7 +108,9 @@ user claim   →   verified fact   →   AI inference
 | Architecture Reconciliation | Complete |
 | Figma V2 | **Pending** |
 | User / WTP Validation | **Pending** |
-| Lovable Staging Build | **Authorized — Not Started** |
+| Sprint 1 Foundation (staging) | **Complete — CANONICAL** |
+| Sprint 1.1 State Completion | **Pending** — authorized |
+| Sprint 2 Fact Card System | **GO (conditional)** — after Sprint 1.1 |
 | Testing / UAT | Not Started |
 | Production | **Not Started — NOT AUTHORIZED** |
 
@@ -118,17 +120,27 @@ user claim   →   verified fact   →   AI inference
 
 ### Immediate next actions — parallel
 
-1. Assign a build owner and record where staging code lives
-2. Lovable staging build — ✅ authorized (staging only, fixture data only)
-3. Figma V2
-4. User interviews and WTP validation
-5. Founder go / no-go **for production** — gated; requires 3, 4, security review, legal review and staging UAT
+1. **Sprint 1.1 — State Completion** (A-018; seven items in [A-014 § 11.4](docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md))
+2. Sprint 2 — Fact Card System (A-015) — after 1
+3. Figma V2 (A-008) — Fact Card design may start now
+4. User interviews and WTP validation (A-009)
+5. Write D-019 typography decision; supply staging URL
+6. Founder go / no-go **for production** — gated; FA-002 not granted
 
 ---
+
+## Working with the code
+
+```bash
+cd app && npm install && npm run typecheck && npm run lint && npm run test && npm run build
+```
+
+Lockfile of record is `app/bun.lock` (Lovable). Sprint 1 needs no environment values. **Never commit `.env`.** Details: [`app/README.md`](app/README.md).
 
 ## Repository structure
 
 ```
+app/                       Sprint 1 Foundation — TanStack Start · React 19 · Tailwind v4 · Vitest
 README.md                  Entry point
 CONTRIBUTING.md            Contribution and private-data rules
 .gitignore                 Private-data and credential exclusions

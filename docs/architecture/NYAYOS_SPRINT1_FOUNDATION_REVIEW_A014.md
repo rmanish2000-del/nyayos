@@ -7,9 +7,13 @@
 
 ---
 
+> ### ⚡ STATUS — 21 Sep 2026, later the same day: ARTEFACT RECEIVED, REVIEW EXECUTED
+> Sections 1–10 below record the **blind** state (artefact unavailable) and are retained as history.
+> **The executed review, retraction of the typography finding, ranked findings and the revised verdict — GO (conditional) for Sprint 2 — are in [§ 11](#11-execution--21-september-2026-artefact-received).** Read § 11 first.
+
 ## 1. Executive summary
 
-**The review could not be executed. The Sprint 1 artefact does not exist anywhere the reviewer can reach.**
+**[Historical — superseded by § 11.]** The review could not be executed. The Sprint 1 artefact did not exist anywhere the reviewer could reach at the time of writing.
 
 | Location searched | Result |
 |---|---|
@@ -262,3 +266,152 @@ Unusually for a pre-Sprint-2 project, the epistemic types, verification statuses
 5. **Sprint 2 build should not start until the four GO conditions in § 9 are met.** Sprint 2 *design* may.
 
 **Rules honoured:** no code modified, nothing deployed, nothing implemented. Review record only.
+
+---
+---
+
+# 11. EXECUTION — 21 September 2026 (artefact received)
+
+**Artefact:** `nyayos-sprint1-foundation.zip` · SHA-256 `8c407630616f171b33d2be60671213c4b07b5ceb65fce0a877954b17a3ea83ca` · 93 files · imported to `app/` under A-017.
+**Method:** full source read of `src/styles.css`, all 8 `src/components/nyayos/*`, `src/routes/__root.tsx`, `tests/`, `package.json`; `tsc`, `eslint`, `vitest`, `vite build` executed. **Browser-based checks (contrast, zoom, focus-obscured) were not run** — rows marked OPEN.
+
+## 11.0 Retraction — typography finding § 5.1
+
+**§ 5.1 was built on a false premise and is withdrawn.** The review instruction said Sprint 1 "reportedly uses Libre Baskerville / IBM Plex". The artefact uses **Noto Sans + Noto Sans Devanagari + Noto Sans Mono**, loaded in `__root.tsx`, tokenised in `styles.css`, and guarded by a test that fails if `Hind Siliguri`, `Libre Baskerville` or `IBM Plex` appear. The README states Hind Siliguri is deliberately not used — consistent with § 5.1's own note that Hind Siliguri is the Bengali face.
+
+What survives from § 5.1: the typography decision is **still not recorded in the Decision Log** (D-019 candidate). The code now embodies a decision nobody has written down. That governance gap stands.
+
+## 11.1 Validation
+
+| Check | Result |
+|---|---|
+| `tsc --noEmit` | **PASS** — after `routeTree.gen.ts` generation (file omitted from export; now committed) |
+| `eslint .` | **PASS** — 0 errors, 7 `react-refresh/only-export-components` warnings (benign; 6 in unmodified shadcn `ui/`) |
+| `vitest run` | **PASS** — 12/12 |
+| `vite build` | **PASS** — 1,942 modules, 1.8 MB `.output/`; emits Cloudflare worker config; **not deployed** |
+
+## 11.2 Checklist results
+
+Legend: ✅ pass · ⚠ partial · ❌ fail · ◌ open (needs browser/AT) · — n/a now
+
+### Architecture
+
+| # | Result | Evidence |
+|---|---|---|
+| A1 | ✅ | `StatusKind`, `SourceKind`, `DatePrecision`, `BannerTone` are closed string-literal unions; config records keyed by enum; no free-text variant props |
+| A2 | ❌ **High** | Enums incomplete vs spec — see § 11.3 |
+| A3 | ✅ | `components/nyayos/*` import only `lucide-react`, `react`, `cn`; no data or business logic; `ui/` is unmodified shadcn |
+| A4 | ✅ | No composite yet (correct for Sprint 1); primitives compose — `Button size="compact"` exists |
+| A5 | ◌ | No comparison primitive; 360 px behaviour unverified |
+| A6 | ⚠ | 4 states visually distinct — `inferred` = dashed border + italic + normal weight vs `exact` semibold. **`unknown` missing** |
+| A7 | ❌ Low | No print stylesheet; `fixed` bottom nav will print over content |
+| A8 | ✅ | One `NAV` model rendered three ways; `aria-current="page"`; skip link |
+| A9 | ✅ | `info` tone is `role="status"`; contradiction chip label is "Information to review" (Figma Brief § 9 verbatim) |
+| A10 | ⚠ | Percentage readiness, not a resumable stepper; acceptable for foundation |
+| A11 | ✅ | grep clean; banned-language test guards `ReadinessIndicator` |
+
+### Design system
+
+| # | Result | Evidence |
+|---|---|---|
+| D1 | ✅ **strong** | All colour via semantic tokens (`--color-status-*`, `--color-source-*`, `--color-date-*`); `@theme inline`; no hardcoded colours in `nyayos/` |
+| D2 | ⚠ **Medium** | Icon + text always present ✅. **But hue collisions:** amber = `source-inference` = `status-review` = `date-approximate` = `warning`; green = `source-verified` = `status-confirmed` = `date-exact` = `success`; blue = `source-document` = `status-processing` = `info`. Provenance and status are different axes sharing one palette |
+| D3 | ⚠ | Badges are `text-xs font-medium` — smaller than body. No type-scale token makes source outrank AI wording. Fact Card must solve via layout |
+| D4 | ⚠ | Body 14 px, badge 12 px ✅. No explicit type-scale or Devanagari line-height tokens |
+| D5 | ✅ | Tailwind spacing scale; `touch-target` utility; no raw px in `nyayos/` |
+| D6 | ✅ | Noto Sans / Noto Sans Devanagari / Noto Sans Mono; `display=swap`; shared metrics. ⚠ Google Fonts CDN (privacy, offline); `--font-serif` is a vestigial alias for the same sans stack |
+| D7 | ⚠ | No percentage-confidence component ✅. **No confidence-band component either** — Fact Card needs one |
+| D8 | ✅ | Primitives + shell only |
+| D9 | ✅ | Complete `.dark` re-map of every semantic token |
+
+### Accessibility — WCAG 2.2 AA
+
+| # | Result | Evidence |
+|---|---|---|
+| X1 | ✅ by inspection | Native `<button>`/`<input>`; skip link first; no custom key handling to break |
+| X2 | ✅ / ◌ | Global `:focus-visible` 2 px `--ring` + 2 px offset. Ring contrast unmeasured. 2.4.11: `main` has `pb-24` under fixed bottom bar — likely OK, **verify in browser** |
+| X3 | ✅ | `sr-only` "Status:" / "Source:" prefixes; date label in text; icons `aria-hidden` |
+| X4 | ✅ | `role="status"`/`"alert"` by tone; `aria-live` polite/assertive. Caveat: a live region must exist before content changes to announce reliably |
+| X5 | ✅ | `role="progressbar"` with `valuenow/min/max` and label |
+| X6 | ✅ | Global `prefers-reduced-motion` collapse; spinners collapse too |
+| X7 | ✅ **exceeds** | `touch-target` 44×44 on buttons, inputs, nav items, dismiss |
+| X8 | ◌ **High until run** | Contrast audit not performed (README admits). Light: text L≈0.40–0.46 on surface L≈0.955 → likely > 7:1. Dark: L≈0.82–0.88 on L≈0.30. **Measure** |
+| X9 | — | |
+| X10 | ⚠ | `<html lang="en">`; showcase Devanagari sample carries one `lang` attribute; no rule for mixed-script content |
+| X11 | ✅ | Bottom tab bar, not a drawer — no trap needed |
+| X12 | ◌ | Zoom 200/400 % unverified |
+| X13 | ✅ | `label htmlFor`; `aria-describedby` hint + error; `aria-invalid`; error as text **and** border |
+| X14 | ⚠ | rem-based type; `touch-target` in px (acceptable) |
+
+### State sufficiency
+
+| # | Result | Evidence |
+|---|---|---|
+| S1 | ✅ | `user-statement` — "Your statement" |
+| S2 | ❌ **High** | `document_fact` and `ai_extraction` **conflated** into one `document-extracted`. The spec's provenance contract separates *what the document says* from *what the model extracted from it* |
+| S3 | ✅ | `ai-inference` — but shares amber with warning/review |
+| S4 | ✅ | `third-party` — neutral label |
+| S5 | ✅ | contradiction chip; neutral copy; no truth score anywhere |
+| S6 | ⚠ | `verified-source` exists; `detail` is one string — no slot for publisher / jurisdiction / version / last-verified |
+| S7 | ⚠ | `missing` ✅. **`unverified_claim` absent** (`source-unavailable` means retrieval failed — a different state) |
+| S8 | ❌ | **`unknown` precision missing**; range (`date_from`/`date_to`) not modelled — `value` is free text, acceptable |
+
+### Fact Card readiness
+
+| # | Result | Evidence |
+|---|---|---|
+| F1 | ✅ | `size="compact"` |
+| F2 | ✅ plausible | 12 px badges, gap tokens |
+| F3 | ⚠ | Not demonstrated — see D3 |
+| F4 | ❌ **High** | `InputField` has no inline-edit / original-value-preserved pattern (US-03: "correction supersedes display but original extraction remains auditable") |
+| F5 | ❌ **High** | No `uncertain`, `not-relevant`, `corrected` status — **3 of the 4 Fact Card actions produce a state the foundation cannot show** |
+| F6 | ✅ | `DateBadge` fits card |
+| F7 | ◌ | |
+| F8 | ✅ plausible | Reading order value → source → status → actions is achievable with current markup |
+
+## 11.3 Findings — ranked
+
+| # | Finding | Severity | Fix cost |
+|---|---|---|---|
+| 1 | **State enums incomplete vs Product Spec** — `StatusKind` lacks `uncertain`, `not-relevant`, `corrected`; `SourceKind` conflates document fact with AI extraction and lacks `unverified-claim`; `DatePrecision` lacks `unknown`; no confidence-band component | **High** | Small — additive enum values + tokens + one component. Not a redesign |
+| 2 | **No inline-correction input pattern** (US-03) | High | Small–medium |
+| 3 | **Contrast audit and SR pass not run** | High until run | Audit only |
+| 4 | Provenance and status **share hue families** | Medium | Token re-map; no component change |
+| 5 | Google Fonts CDN — IP exposure on every load; offline fragility | Medium | Self-host 3 families |
+| 6 | Unused dependency surface (`recharts`, `embla`, `day-picker`, `cmdk`, `vaul`, `input-otp`, `resizable-panels`); `chart.tsx` present | Medium | Prune or record as accepted baseline |
+| 7 | `routeTree.gen.ts` omitted from export → `tsc` fails cold | Low | Committed now |
+| 8 | Build emits Cloudflare deploy config | Low | Not deployed; gitignored; note for FA-002 |
+| 9 | Lovable editor telemetry hooks in `lib/` | Low | Remove before pilot |
+| 10 | Typography decision not in Decision Log | Low (governance) | Write D-019 |
+
+**What is good — and it is genuinely good:** semantic-token discipline (D1), enum-driven presentational primitives (A1/A3), accessibility baked in rather than bolted on (X3, X7, X13, X6), banned-language and font tests, correct Indic type stack, neutral contradiction copy taken verbatim from the brief, complete dark mode. This is a foundation that *respects the spec's intent* and falls short only on *enumerating the spec's states completely*.
+
+## 11.4 Revised Go / No-Go for Sprint 2
+
+### **GO — conditional.** § 9's NO-GO is superseded.
+
+The blocking condition is a single, bounded work item:
+
+> **Sprint 1.1 — State Completion** (first item of Sprint 2, before any Fact Card composite):
+> 1. `StatusKind` += `uncertain` · `not-relevant` · `corrected`
+> 2. `SourceKind`: split `document-extracted` → `document-fact` + `ai-extraction`; += `unverified-claim`
+> 3. `DatePrecision` += `unknown`
+> 4. New `ConfidenceBand` component — High / Medium / Low / Unknown, text + icon, no numbers
+> 5. `InputField` inline-correct pattern: original value preserved and visible
+> 6. Distinct hue families for provenance vs status tokens
+> 7. Contrast audit across every variant, light and dark; record results
+
+Items 1–5 are what Fact Cards are built *from*; doing them first costs a day and prevents six weeks of retrofit.
+
+**Sprint 1 is CANONICAL.** Canonical means "the foundation Sprint 2 builds on", not "complete for Fact Cards". The gaps above are recorded, bounded and additive.
+
+## 11.5 Revised risk ratings
+
+| Dimension | Rating | Basis |
+|---|---|---|
+| **Architecture** | **Low–Medium** | Clean primitives; enum gaps are additive |
+| **Accessibility** | **Medium** | Strong baseline by inspection; contrast + SR audits outstanding |
+| **Design system** | **Medium** | Token discipline excellent; hue-family overload and missing type-scale tokens |
+| **Process / continuity** | **Low** (was Critical) | Artefact now in the canonical system; code-location item closed |
+
+**Rules honoured:** review only; no source file in `app/src` was modified. `routeTree.gen.ts` was *generated* by the build tool, not authored.
