@@ -64,10 +64,12 @@ jobs:
       - name: Assert nothing was deployed
         run: |
           # The build tool emits Cloudflare config. Emitting is not deploying. Fail loudly if
-          # anyone ever wires a deploy step into this job.
-          if grep -qiE 'nitro deploy|wrangler deploy' ../.github/workflows/dependency-check.yml; then
-            echo "::error::deploy command found in dependency-check workflow — production is NOT ALLOWED (FA-001)"; exit 1; fi
-          echo "no deploy step present"
+          # anyone ever wires a deploy step into any workflow. Matches an actual invocation
+          # at the start of a command line (optionally via npx/npm/bun), so this check's own
+          # pattern and comment lines do not self-match.
+          if grep -nE '^\s*(npx |npm run |bun run |bunx )?(nitro|wrangler) +deploy\b' ../.github/workflows/*.yml; then
+            echo "::error::deploy command found in a workflow — production is NOT ALLOWED (FA-001)"; exit 1; fi
+          echo "no deploy step present in any workflow"
 
       - name: Vulnerability audit (advisory — does not fail the job)
         continue-on-error: true
