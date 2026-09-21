@@ -142,7 +142,7 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Status** | **CANONICAL** — `task-gate` + `dependency-check` green at `bd31394`; `status-update` exercised by this transition |
 | **Blocker** | None |
 | **Required evidence** | Green run URLs for `task-gate`, `dependency-check`, `status-update`; branch protection verified via API |
-| **Next action** | Founder: merge the auto PR from `governance/status-update`; enable `enforce_admins` (4d) |
+| **Next action** | Founder: **merge [PR #1](https://github.com/rmanish2000-del/nyayos/pull/1)** (auto changelog; use *Update branch* first) · enable `enforce_admins` (4d) |
 
 ### F-4 — Repository and continuity initialization
 

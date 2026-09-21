@@ -43,6 +43,22 @@ Not required by the rule. One human works this repository today; a required revi
 
 The `status-update` workflow **cannot push to `main`** (it is not an admin) and does not try. It pushes derived documents to `governance/status-update` and opens a pull request, which then passes through `task-gate` like any other change. This is the intended shape: automation proposes, protection gates, the founder merges.
 
+**Repository setting required for this — applied 21 Sep 2026:** *Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests"* = **on**. Default is off, and the first real `status-update` run failed at `gh pr create` because of it (run 35559734656 attempt 1; attempt 2 succeeded and opened PR #1). Workflow token permissions stay at the default **read**; `status-update` requests `contents: write` and `pull-requests: write` explicitly in its own file.
+
+```bash
+gh api -X PUT repos/rmanish2000-del/nyayos/actions/permissions/workflow \
+  -f default_workflow_permissions=read -F can_approve_pull_request_reviews=true
+```
+
+Note the setting's name is broader than its use here: it also permits Actions to *approve* PRs. No workflow in this repository approves anything, and `task-gate` would fail any that tried to add one without an A-nnn reference — but the founder should know the permission exists.
+
+**Two more things required checks need in order to actually report on a bot PR — both fixed 21 Sep 2026 after PR #1 opened `BLOCKED` with "no checks reported":**
+
+1. **Pushes and PRs made with `GITHUB_TOKEN` do not fire `pull_request` workflows.** `workflow_dispatch` is the one event the token *may* trigger, so `status-update` now dispatches `task-gate` and `dependency-check` onto its own branch head after opening or refreshing the PR. Check runs attach to the commit SHA, so they satisfy the required-check rule.
+2. **A required check must not be path-filtered.** `dependency-check` originally ran only on `app/**`; on a docs-only PR it would be "expected" forever and never report. It now runs on every push and PR, detects whether `app/` changed, and short-circuits the install/typecheck/lint/test/build steps when it did not — still reporting success.
+
+Because `strict: true` requires the PR branch to include the latest `main`, a bot PR that has fallen behind needs **Update branch** (or `gh pr update-branch <n>`) before merge; that update commit is made with the founder's token and fires the checks normally.
+
 ## 6. Re-apply / audit commands
 
 Verify current state:

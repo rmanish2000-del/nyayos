@@ -22,6 +22,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write   # to dispatch the required checks onto the PR branch (see final step)
 
 concurrency:
   group: status-update
@@ -103,6 +104,13 @@ jobs:
           else
             gh pr create --base main --head "$BR" --title "$PR_TITLE" --body "$PR_BODY"
           fi
+          # Pushes and PRs made with GITHUB_TOKEN do not fire pull_request workflows, so the
+          # required checks would never report and the PR would stay blocked. workflow_dispatch
+          # is the one event GITHUB_TOKEN may trigger: dispatch both required checks onto the
+          # branch head so they report against this PR.
+          gh workflow run task-gate.yml        --ref "$BR"
+          gh workflow run dependency-check.yml --ref "$BR"
+          echo "dispatched task-gate and dependency-check on $BR"
 
       - name: Summary
         if: always()

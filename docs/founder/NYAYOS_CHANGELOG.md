@@ -35,7 +35,9 @@ Newest first. One entry per commit or per material decision.
 | `status-update` | `8063e19` | [35558895220](https://github.com/rmanish2000-del/nyayos/actions/runs/35558895220) | ❌ workflow parse error — column-0 lines terminated a `run: \|` block |
 | `task-gate` | `bd31394` | [35559156273](https://github.com/rmanish2000-del/nyayos/actions/runs/35559156273) | ✅ success |
 | `dependency-check` | `bd31394` | [35559156205](https://github.com/rmanish2000-del/nyayos/actions/runs/35559156205) | ✅ success — fix: assertion matches command invocations only |
-| `status-update` | this commit | see PR from `governance/status-update` | exercised by A-019 REVIEW → CANONICAL |
+| `status-update` | `bd31394` (manual dispatch) | [35559678977](https://github.com/rmanish2000-del/nyayos/actions/runs/35559678977) | ✅ success — derived docs already in sync, no PR (correct) |
+| `status-update` | `449d94e` (A-019 → CANONICAL) | [35559734656](https://github.com/rmanish2000-del/nyayos/actions/runs/35559734656) | attempt 1 ❌ `gh pr create` refused — repo setting *Allow Actions to create PRs* was off · **attempt 2 ✅** after enabling it → **[PR #1](https://github.com/rmanish2000-del/nyayos/pull/1)** opened by `github-actions` with the first `[auto]` changelog entry (one file, +12 lines) |
+| `task-gate` | `449d94e` | [35559734638](https://github.com/rmanish2000-del/nyayos/actions/runs/35559734638) | ✅ success |
 
 Branch protection observed working on every push: `remote: Bypassed rule violations for refs/heads/main: 2 of 2 required status checks are expected` — admin bypass as designed; **enable `enforce_admins` next** (NYAYOS_BRANCH_PROTECTION.md § 3).
 
