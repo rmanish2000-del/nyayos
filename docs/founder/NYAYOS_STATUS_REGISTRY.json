@@ -558,6 +558,37 @@
       "updated": "2026-09-21",
       "superseded_by": null,
       "notes": "Delivered A-024 § 4 blockers: document lifecycle (queued/scanning/processing/extracted/rejected/error) modelled separately from document category (contract/invoice/receipt/communication/uncategorized/other); document provenance (uploaded by, upload date, document hash) replaces fact epistemic badges on the document itself; AI read-out moved into a dedicated extraction summary block; View / Rename / Confirm type / Correct type / Remove actions added; Cancel now stops the transfer without creating an error state or alert; accept and 10 MB size validation plus pasted-text entry added; contrast raised by dropping badge opacity in favour of foreground tokens and border-strong; duplicate h1 removed (workspace heading is now h2); drag-over feedback added. Validation 40/40 tests, typecheck, lint 0 errors, build, responsive 390/834/1280 with no console errors. Still open: page count and verification-state metadata on locker cards, NVDA / VoiceOver pass (owed since A-014), and A-008 design artefact absent so visual conformance remains judged against canonical text. No deployment; production remains prohibited without FA-002."
+    },
+    {
+      "id": "A-026",
+      "title": "Sprint 4 — Parties & Entities (S11) and Timeline (S12)",
+      "type": "build",
+      "status": "CANONICAL",
+      "owner": "Lovable",
+      "tool": "Lovable — staging build",
+      "gate": "FA-001",
+      "inputs": [
+        "A-018",
+        "A-020",
+        "A-022",
+        "A-023",
+        "A-025"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "app/src/components/nyayos/party-card.tsx",
+        "app/src/components/nyayos/timeline-event-card.tsx",
+        "app/src/components/nyayos/parties-timeline-workspace.tsx",
+        "app/src/components/nyayos/app-shell.tsx",
+        "app/src/routes/index.tsx",
+        "app/tests/parties-timeline.test.tsx",
+        "app/README.md",
+        "app/roadmap.md"
+      ],
+      "evidence": "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+      "updated": "2026-09-21",
+      "superseded_by": null,
+      "notes": "S11 Parties & Entities: Party Card with name, role, relationship, always-visible provenance and confirmation state; Add / Confirm / Edit / Remove actions; multi-party support; editing a party returns it to review and records a user-correction source. S12 Timeline: event cards covering all five date precisions (exact, approximate, inferred, conflicting, unknown-date), a source reference on every event, an explicit conflict indicator when two sources disagree, add / edit / remove event, and filters by date certainty or conflicts only; the date field is disabled and not required when the date is unknown. Validation 53/53 tests, typecheck, lint 0 errors (11 pre-existing react-refresh warnings), build, responsive 390/834/1280 with no console errors and a single h1. Still open: A-021 items 4/6/8, locker page count and verification-state metadata, NVDA / VoiceOver pass (owed since A-014), no formal contrast audit, and A-008 design artefact absent so visual conformance remains judged against canonical text. Frontend staging fixtures only — no persistence, backend, OCR or AI. No deployment; production remains prohibited without FA-002."
     }
   ]
 }

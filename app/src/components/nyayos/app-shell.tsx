@@ -7,13 +7,14 @@ import {
   PanelLeftOpen,
   Palette,
   Navigation,
+  Users,
 } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
 export type ShellSection =
-  "tokens" | "components" | "facts" | "evidence" | "navigation" | "accessibility";
+  "tokens" | "components" | "facts" | "evidence" | "parties" | "navigation" | "accessibility";
 
 const NAV: {
   id: ShellSection;
@@ -24,6 +25,7 @@ const NAV: {
   { id: "components", label: "Components", icon: LayoutGrid },
   { id: "facts", label: "Facts", icon: FileCheck2 },
   { id: "evidence", label: "Evidence", icon: Archive },
+  { id: "parties", label: "Parties", icon: Users },
   { id: "navigation", label: "Navigation", icon: Navigation },
   { id: "accessibility", label: "Access", icon: Accessibility },
 ];

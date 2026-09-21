@@ -305,6 +305,7 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
 | A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 |
 | A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — A-022 is now CANONICAL; still waiting on A-008 (design) and a conformance re-review |
+| A-026 | **Sprint 4 — Parties & Entities (S11) and Timeline (S12)** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. Party Card and Timeline built on the canonical state model; conformance re-review recommended |
 | A-025 | **Sprint 3 evidence conformance fixes — evidence model remediation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. A-024 § 4 blockers 1–7 delivered; locker page count / verification-state metadata and the screen-reader pass remain open |
 | A-022 | **Fact Card conformance fixes** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. A-021 § 4 items 1–3, 5, 7, 9, 10 delivered; items 4, 6, 8 and the screen-reader pass still open |
 | A-020 | **Fact Card system — provisional staging implementation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 (design conformance unverified; A-008 absent) |
@@ -356,3 +357,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `app/src/components/nyayos/evidence-card.tsx`, `app/src/components/nyayos/evidence-workspace.tsx`, `app/src/styles.css`, `app/tests/evidence.test.tsx` (13 tests), `app/README.md`, `app/roadmap.md` |
 | **Limitations** | Frontend staging fixtures only: nothing is persisted, and no OCR, AI, API or backend workflow was added. Locker cards still lack page count and a verification-state field. NVDA / VoiceOver verification remains open (owed since A-014); contrast was raised against semantic tokens rather than re-measured with an external tool. A-008 design artefact remains absent |
 | **Handoff back to M365 Copilot** | A-025 is CANONICAL as a validated staging implementation. No deployment occurred and no Sprint 4 work started. A conformance re-review of the new document model is recommended before Timeline and Evidence Mapping |
+
+---
+
+### A-026 — Sprint 4 Parties & Entities and Timeline
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-026 |
+| **Owner / tool** | Lovable — staging build |
+| **Purpose** | Build S11 Parties & Entities and S12 Timeline on the canonical Sprint 1.1 state model |
+| **Input files** | A-025 implementation `d1fe9150363db898fac607286b0790607a95dfd7` (instruction cites `bfa2db7ae1d9feac3849efaad47016c2b3279a2d`); A-018 state model; A-020 / A-022 Fact Cards; A-023 / A-025 evidence model |
+| **Gate** | FA-001 (staging only) |
+| **Deployment allowed** | **NOT ALLOWED for this assignment.** Nothing deployed; production remains prohibited without FA-002 |
+| **Status** | **CANONICAL — 21 September 2026.** 53/53 tests · typecheck · lint 0 errors (11 pre-existing react-refresh warnings) · build · responsive 390 / 834 / 1280 PASS with no console errors |
+| **Result** | **S11:** `PartyCard` shows name, role, relationship, an always-visible provenance strip and a confirmed / to-review chip, with **Confirm · Edit · Remove** actions and an **Add party** form; multiple parties are supported and editing a party returns it to review with a user-correction source. **S12:** `TimelineEventCard` renders all five date precisions (exact, approximate, inferred, conflicting, unknown-date), a source reference on every event, and an explicit "dates disagree" conflict indicator; the timeline supports **add / edit / remove event** and **filters** by date certainty or conflicts only, and the date field is disabled and not required when the date is unknown. Both screens share one responsive shell section |
+| **Evidence** | `app/src/components/nyayos/party-card.tsx`, `app/src/components/nyayos/timeline-event-card.tsx`, `app/src/components/nyayos/parties-timeline-workspace.tsx`, `app/src/components/nyayos/app-shell.tsx`, `app/src/routes/index.tsx`, `app/tests/parties-timeline.test.tsx` (13 tests), `app/README.md`, `app/roadmap.md` |
+| **Limitations** | Frontend staging fixtures only: parties and events are not persisted and no backend, OCR or AI was added. Conflict resolution is indicated, not resolved — no merge or adjudication flow exists. NVDA / VoiceOver verification remains open (owed since A-014); no formal contrast audit. A-008 design artefact remains absent, so visual conformance is judged against canonical text and existing components |
+| **Handoff back to M365 Copilot** | A-026 is CANONICAL as a validated staging implementation. No deployment occurred and no Sprint 5 work started. A design conformance review of S11 / S12 is recommended before Evidence Mapping |

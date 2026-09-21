@@ -6,6 +6,7 @@ import { Button } from "@/components/nyayos/button";
 import { ConfidenceBand } from "@/components/nyayos/confidence-band";
 import { DateBadge } from "@/components/nyayos/date-badge";
 import { EvidenceWorkspace } from "@/components/nyayos/evidence-workspace";
+import { PartiesTimelineWorkspace } from "@/components/nyayos/parties-timeline-workspace";
 import { FactCard } from "@/components/nyayos/fact-card";
 import { SourcePanel, type FactSource } from "@/components/nyayos/source-panel";
 import { InputField } from "@/components/nyayos/input-field";
@@ -708,7 +709,7 @@ function FoundationShowcase() {
     <AppShell current={section} onNavigate={setSection}>
       <header className="border-b border-border bg-surface-raised px-4 py-6 sm:px-8">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Staging · Foundation + fact cards + evidence
+          Staging · Foundation + fact cards + evidence + parties and timeline
         </p>
         <h1 className="mt-1 font-serif text-2xl text-foreground sm:text-3xl">
           NyayOS foundation library
@@ -723,6 +724,7 @@ function FoundationShowcase() {
       {section === "components" ? <ComponentsView /> : null}
       {section === "facts" ? <FactsView /> : null}
       {section === "evidence" ? <EvidenceWorkspace /> : null}
+      {section === "parties" ? <PartiesTimelineWorkspace /> : null}
       {section === "navigation" ? <NavigationView /> : null}
       {section === "accessibility" ? <AccessibilityView /> : null}
     </AppShell>

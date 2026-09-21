@@ -15,6 +15,10 @@ Canonical repository: https://github.com/rmanish2000-del/nyayos
 | Responsive navigation shell (mobile tabs / tablet rail / desktop sidebar)              | `src/components/nyayos/app-shell.tsx` |
 | Foundation showcase (every component state, token gallery, a11y checklist)             | `src/routes/index.tsx`                |
 | Evidence Card and S08/S09 evidence workspace                                            | `src/components/nyayos/evidence-*.tsx` |
+| Party Card, Timeline Event Card and S11/S12 workspace                                   | `src/components/nyayos/party-card.tsx`, `timeline-event-card.tsx`, `parties-timeline-workspace.tsx` |
+| Document head, font loading                                                            | `src/routes/__root.tsx`               |
+| shadcn/Radix primitives (baseline, unmodified)                                         | `src/components/ui/`                  |
+| Tests                                                                                  | `tests/`                              |
 
 Evidence model (A-025): document **lifecycle** (`queued`, `scanning`, `processing`,
 `extracted`, `rejected`, `error`) is modelled separately from document **category**
@@ -23,13 +27,19 @@ document carries provenance (uploaded by, upload date, document hash); anything 
 out of a document appears only in the extraction summary block. Upload validates file
 type and size (10 MB), accepts pasted text, and cancelling a transfer never produces an
 error state.
-| Document head, font loading                                                            | `src/routes/__root.tsx`               |
-| shadcn/Radix primitives (baseline, unmodified)                                         | `src/components/ui/`                  |
-| Tests                                                                                  | `tests/`                              |
+
+Parties and timeline (A-026, Sprint 4): S11 lists every party with name, role,
+relationship, provenance and confirmation state, and supports Add / Confirm / Edit /
+Remove across multiple parties; editing a party returns it to review with a user
+correction source. S12 renders events with all five date precisions (exact,
+approximate, inferred, conflicting, unknown), a source reference on every event, an
+explicit indicator when two sources disagree, add/edit/remove, and filters by date
+certainty or conflicts only. No ranking, scoring or outcome language anywhere.
 
 Foundation components: `Button`, `InputField`, `StatusChip`, `SourceBadge`,
 `DateBadge`, `ConfidenceBand`, `InlineCorrectionInput`, `NotificationBanner`,
-`ReadinessIndicator`, `EvidenceCard`, `EvidenceWorkspace`, `AppShell`.
+`ReadinessIndicator`, `EvidenceCard`, `EvidenceWorkspace`, `PartyCard`,
+`TimelineEventCard`, `PartiesTimelineWorkspace`, `AppShell`.
 
 ## Stack
 

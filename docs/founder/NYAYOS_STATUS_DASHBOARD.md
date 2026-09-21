@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 6 | 0 | 0 | 19 | 0 | 25 |
+| 6 | 0 | 0 | 20 | 0 | 26 |
 
 ## In flight
 
@@ -53,11 +53,13 @@ _None._
 | A-023 | Sprint 3 — Evidence Components | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-024 | Sprint 3 evidence conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-025 | Sprint 3 evidence conformance fixes — evidence model remediation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
+| A-026 | Sprint 4 — Parties & Entities (S11) and Timeline (S12) | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 
 ## Recently updated
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-026 | Sprint 4 — Parties & Entities (S11) and Timeline (S12) | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-025 | Sprint 3 evidence conformance fixes — evidence model remediation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-024 | Sprint 3 evidence conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-023 | Sprint 3 — Evidence Components | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
@@ -65,7 +67,6 @@ _None._
 | A-021 | Fact Card design conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-020 | Fact Card system — provisional staging implementation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-019 | Repository Automation Foundation | ● CANONICAL | Claude Code | — | 2026-09-21 |
-| A-018 | Sprint 1.1 — State Completion | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)
