@@ -304,3 +304,19 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 3. **Open items requiring founder input**, all recorded above: tool/mode for A-002 to A-006; the MVP report filename discrepancy (A-004); the locked-vs-provisional status of the commercial wedge; whether the private matter name should be redacted from committed documents.
 4. **Gate status (FA-001 + addendum, 21 Sep 2026):** staging build **authorized**; **Sprint 1 imported and CANONICAL** at `app/`; **production remains NOT AUTHORIZED** (A-012 / FA-002). Always verify a gate against [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md), tier 1.
 5. Every new assignment must be added to this register **before** work begins, and its output added to [NYAYOS_OUTPUT_REGISTER.md](NYAYOS_OUTPUT_REGISTER.md) on completion.
+
+### A-023 — Sprint 3 Evidence Components
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-023 |
+| **Owner / tool** | Lovable — staging build |
+| **Purpose** | Build the Sprint 3 evidence foundation: Evidence Card lifecycle states, S08 Document Upload and S09 Evidence Locker |
+| **Input files** | A-018 Sprint 1.1 state model; A-020 Fact Card system; A-022 Fact Card remediation; founder instruction, 21 Sep 2026 |
+| **Gate** | FA-001 (staging only) |
+| **Deployment allowed** | **NOT ALLOWED for this assignment.** Nothing deployed; production remains prohibited without FA-002 |
+| **Status** | **CANONICAL — 21 September 2026.** 34/34 tests · typecheck · lint 0 errors · build · responsive 390 / 834 / 1280 PASS with no console errors |
+| **Result** | Added `EvidenceCard` with uploading, processing, extracted, error and uncategorized states; accessible upload progress and lifecycle actions; always-visible provenance/date/confidence metadata; S08 file chooser/drop target and upload queue; S09 searchable/filterable Evidence Locker; responsive shell navigation and semantic evidence tokens |
+| **Evidence** | `app/src/components/nyayos/evidence-card.tsx`, `app/src/components/nyayos/evidence-workspace.tsx`, `app/src/styles.css`, `app/src/routes/index.tsx`, `app/tests/evidence.test.tsx` (7 tests) |
+| **Limitations** | Frontend staging fixtures only: files are not persisted or sent to storage; processing/extraction is simulated and no OCR, AI, API or backend workflow was added. Browser automation covered Chromium; NVDA / VoiceOver verification remains open. A-008 design artefact remains absent, so visual conformance is against canonical text and existing components |
+| **Handoff back to M365 Copilot** | A-023 is CANONICAL as a validated frontend implementation. No deployment occurred and no Sprint 4 work started |

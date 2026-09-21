@@ -5,6 +5,7 @@ import { AppShell, type ShellSection } from "@/components/nyayos/app-shell";
 import { Button } from "@/components/nyayos/button";
 import { ConfidenceBand } from "@/components/nyayos/confidence-band";
 import { DateBadge } from "@/components/nyayos/date-badge";
+import { EvidenceWorkspace } from "@/components/nyayos/evidence-workspace";
 import { FactCard } from "@/components/nyayos/fact-card";
 import { SourcePanel, type FactSource } from "@/components/nyayos/source-panel";
 import { InputField } from "@/components/nyayos/input-field";
@@ -707,20 +708,21 @@ function FoundationShowcase() {
     <AppShell current={section} onNavigate={setSection}>
       <header className="border-b border-border bg-surface-raised px-4 py-6 sm:px-8">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Staging · Sprint 1 foundation + Sprint 2 fact card system
+          Staging · Foundation + fact cards + evidence
         </p>
         <h1 className="mt-1 font-serif text-2xl text-foreground sm:text-3xl">
           NyayOS foundation library
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Design tokens, provenance-first components, the responsive navigation shell and the fact
-          card system: every fact carries its confirmation state, its source and its date precision.
+          Provenance-first components for facts and evidence, with responsive navigation and
+          accessible document states from upload through extraction.
         </p>
       </header>
 
       {section === "tokens" ? <TokensView /> : null}
       {section === "components" ? <ComponentsView /> : null}
       {section === "facts" ? <FactsView /> : null}
+      {section === "evidence" ? <EvidenceWorkspace /> : null}
       {section === "navigation" ? <NavigationView /> : null}
       {section === "accessibility" ? <AccessibilityView /> : null}
     </AppShell>

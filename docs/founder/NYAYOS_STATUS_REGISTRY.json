@@ -488,6 +488,28 @@
       "updated": "2026-09-21",
       "superseded_by": null,
       "notes": "A-021 § 4 blocking items 1-3 delivered: Confirm / Uncertain / Not relevant actions on the Fact Card (aria-pressed, compact, 44x44); always-visible \"Where this came from\" provenance strip with the source detail panel demoted to page references and excerpts; document-fact / ai-extraction / unverified-claim split with their own tokens and badges. Also items 5 (ConfidenceBand unknown), 7 (opacity dimming replaced with muted colour tokens), 9 (panel rendered with hidden so aria-controls always resolves) and 10 (correction reason shown after save; user-correction source appended). Validation 27/27 tests, typecheck, lint 0 errors, build, responsive 390/834/1280 PASS, no console errors. NOT delivered: item 4 (contradiction-specific actions), item 6 (extended FactSource metadata), item 8 (separate confidence hue family), and the NVDA / VoiceOver pass owed since A-014."
+    },
+    {
+      "id": "A-023",
+      "title": "Sprint 3 — Evidence Components",
+      "type": "build",
+      "status": "CANONICAL",
+      "owner": "Lovable",
+      "tool": "Lovable — staging build",
+      "gate": "FA-001",
+      "inputs": [
+        "A-018",
+        "A-020",
+        "A-022"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "app/"
+      ],
+      "evidence": "app/tests/evidence.test.tsx",
+      "updated": "2026-09-21",
+      "superseded_by": null,
+      "notes": "Evidence Card and lifecycle states (uploading, processing, extracted, error, uncategorized), S08 Document Upload, and S09 Evidence Locker implemented. Validation: vitest 34/34, typecheck, lint 0 errors (7 existing Fast Refresh warnings), build, and responsive 390/834/1280 checks PASS with no console errors. Frontend staging fixture only: no persistence, storage upload, OCR/extraction service, backend processing, or deployment. A-008 remains absent; NVDA/VoiceOver verification remains open."
     }
   ]
 }

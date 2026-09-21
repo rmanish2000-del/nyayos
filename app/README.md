@@ -1,8 +1,8 @@
-# NyayOS — Sprint 1 Foundation
+# NyayOS — Foundation, Fact Cards and Evidence Components
 
 Design system, accessibility baseline and provenance-first UI architecture for the
-NyayOS MVP. **Sprint 1 only.** No intake, evidence, fact-confirmation or analysis
-screens. No backend, database, AI or agent code.
+NyayOS MVP through Sprint 3 evidence components. S08 Document Upload and S09 Evidence
+Locker are interactive staging demonstrations only; no backend, database, OCR, AI or agent code.
 
 Canonical repository: https://github.com/rmanish2000-del/nyayos
 
@@ -14,13 +14,14 @@ Canonical repository: https://github.com/rmanish2000-del/nyayos
 | Foundation components                                                                  | `src/components/nyayos/`              |
 | Responsive navigation shell (mobile tabs / tablet rail / desktop sidebar)              | `src/components/nyayos/app-shell.tsx` |
 | Foundation showcase (every component state, token gallery, a11y checklist)             | `src/routes/index.tsx`                |
+| Evidence Card and S08/S09 evidence workspace                                            | `src/components/nyayos/evidence-*.tsx` |
 | Document head, font loading                                                            | `src/routes/__root.tsx`               |
 | shadcn/Radix primitives (baseline, unmodified)                                         | `src/components/ui/`                  |
 | Tests                                                                                  | `tests/`                              |
 
 Foundation components: `Button`, `InputField`, `StatusChip`, `SourceBadge`,
 `DateBadge`, `ConfidenceBand`, `InlineCorrectionInput`, `NotificationBanner`,
-`ReadinessIndicator`, `AppShell`.
+`ReadinessIndicator`, `EvidenceCard`, `EvidenceWorkspace`, `AppShell`.
 
 ## Stack
 
@@ -44,7 +45,7 @@ anywhere. Latin and Devanagari share one type scale so mixed-script screens alig
 git clone https://github.com/rmanish2000-del/nyayos.git
 cd nyayos
 bun install            # or: npm install
-cp .env.example .env    # no values are required to run Sprint 1
+cp .env.example .env    # no values are required to run the current frontend demo
 bun run dev             # http://localhost:8080
 ```
 
@@ -104,7 +105,7 @@ Both are tracked as open items.
 
 ## Environment variables
 
-See `.env.example` — names only, never values. Sprint 1 needs none of them to run.
+See `.env.example` — names only, never values. The current staging demonstration needs none of them to run.
 Never commit a `.env` file; `.gitignore` excludes them.
 
 ## Deployment
