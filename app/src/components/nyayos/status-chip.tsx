@@ -30,49 +30,48 @@ const STATUS: Record<
 > = {
   confirmed: {
     label: "Confirmed",
-    classes: "bg-status-confirmed-surface text-status-confirmed border-status-confirmed/30",
+    classes: "bg-status-confirmed-surface text-status-confirmed border-status-confirmed",
     icon: Check,
   },
   "to-review": {
     label: "To review",
-    classes: "bg-status-review-surface text-status-review border-status-review/30",
+    classes: "bg-status-review-surface text-status-review border-status-review",
     icon: Clock,
   },
   contradiction: {
     label: "Information to review",
     classes:
-      "bg-status-contradiction-surface text-status-contradiction border-status-contradiction/30",
+      "bg-status-contradiction-surface text-status-contradiction border-status-contradiction",
     icon: AlertTriangle,
   },
   missing: {
     label: "Missing",
-    classes: "bg-status-missing-surface text-status-missing border-status-missing/30",
+    classes: "bg-status-missing-surface text-status-missing border-status-missing",
     icon: CircleDashed,
   },
   processing: {
     label: "Processing",
-    classes: "bg-status-processing-surface text-status-processing border-status-processing/30",
+    classes: "bg-status-processing-surface text-status-processing border-status-processing",
     icon: Loader2,
   },
   removed: {
     label: "Removed",
-    classes: "bg-status-removed-surface text-status-removed border-status-removed/30",
+    classes: "bg-status-removed-surface text-status-removed border-status-removed",
     icon: Trash2,
   },
   uncertain: {
     label: "Uncertain",
-    classes: "bg-status-uncertain-surface text-status-uncertain border-status-uncertain/30",
+    classes: "bg-status-uncertain-surface text-status-uncertain border-status-uncertain",
     icon: HelpCircle,
   },
   "not-relevant": {
     label: "Not relevant",
-    classes:
-      "bg-status-not-relevant-surface text-status-not-relevant border-status-not-relevant/30",
+    classes: "bg-status-not-relevant-surface text-status-not-relevant border-status-not-relevant",
     icon: MinusCircle,
   },
   corrected: {
     label: "Corrected",
-    classes: "bg-status-corrected-surface text-status-corrected border-status-corrected/30",
+    classes: "bg-status-corrected-surface text-status-corrected border-status-corrected",
     icon: PencilLine,
   },
 };

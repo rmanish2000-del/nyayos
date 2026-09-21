@@ -12,7 +12,7 @@ import { InlineCorrectionInput } from "@/components/nyayos/inline-correction-inp
 import { NotificationBanner } from "@/components/nyayos/notification-banner";
 import { ReadinessIndicator } from "@/components/nyayos/readiness-indicator";
 import { SourceBadge } from "@/components/nyayos/source-badge";
-import { StatusChip } from "@/components/nyayos/status-chip";
+import { StatusChip, type StatusKind } from "@/components/nyayos/status-chip";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -254,6 +254,9 @@ function ComponentsView() {
         subtitle="Provenance stays attached to information: a statement, a verified fact and an AI inference never look alike."
       >
         <Panel label="All states">
+          <SourceBadge source="document-fact" detail="Invoice · page 2" />
+          <SourceBadge source="ai-extraction" detail="Invoice · page 1" />
+          <SourceBadge source="unverified-claim" detail="Said, not yet supported" />
           <SourceBadge source="document-extracted" detail="Invoice · page 2" />
           <SourceBadge source="user-statement" />
           <SourceBadge source="third-party" />
@@ -262,6 +265,10 @@ function ComponentsView() {
           <SourceBadge source="source-unavailable" />
           <SourceBadge source="user-correction" detail="Corrected by you" />
         </Panel>
+        <p className="mt-3 max-w-2xl text-xs text-muted-foreground">
+          The three split states separate what a document actually says, what AI read out of a
+          document, and what has been claimed but not yet supported by anything.
+        </p>
       </Section>
 
       <Section
@@ -285,6 +292,7 @@ function ComponentsView() {
           <ConfidenceBand band="low" />
           <ConfidenceBand band="medium" />
           <ConfidenceBand band="high" />
+          <ConfidenceBand band="unknown" />
         </Panel>
       </Section>
 
@@ -398,31 +406,48 @@ const STATEMENT_SOURCE: FactSource = {
 function FactsView() {
   const [deliveryValue, setDeliveryValue] = React.useState("14 July 2026");
   const [previousValue, setPreviousValue] = React.useState<string | undefined>(undefined);
-  const [corrected, setCorrected] = React.useState(false);
+  const [reason, setReason] = React.useState<string | undefined>(undefined);
+  const [deliveryStatus, setDeliveryStatus] = React.useState<StatusKind>("to-review");
+  const [valueStatus, setValueStatus] = React.useState<StatusKind>("uncertain");
   const [announcement, setAnnouncement] = React.useState("");
+  const [deliverySources, setDeliverySources] = React.useState<FactSource[]>([DOC_SOURCE]);
 
   return (
     <>
       <Section
         title="Fact card"
-        subtitle="One piece of information with its confirmation state, provenance and date precision always visible. Open the sources to see where it came from; correct it inline if it is wrong."
+        subtitle="One piece of information with its confirmation state, its provenance and its date precision always visible. Record confirm, uncertain or not relevant directly on the card, or correct the value inline."
       >
         <div className="grid gap-4 xl:grid-cols-2">
           <FactCard
             id="fact-delivery"
             label="Date of delivery"
             value={deliveryValue}
-            status={corrected ? "corrected" : "confirmed"}
+            status={deliveryStatus}
             date={{ precision: "exact", value: deliveryValue }}
             confidence="high"
-            sources={[DOC_SOURCE]}
+            sources={deliverySources}
             {...(previousValue ? { previousValue } : {})}
-            onCorrect={(value, reason) => {
+            {...(reason ? { correctionReason: reason } : {})}
+            onAction={(action) => {
+              setDeliveryStatus(action);
+              setAnnouncement(`Recorded for date of delivery: ${action.replace("-", " ")}`);
+            }}
+            onCorrect={(value, correctionReason) => {
               setPreviousValue(deliveryValue);
               setDeliveryValue(value);
-              setCorrected(true);
+              setDeliveryStatus("corrected");
+              setReason(correctionReason || undefined);
+              setDeliverySources((current) => [
+                ...current,
+                {
+                  kind: "user-correction",
+                  origin: "Correction you recorded",
+                  ...(correctionReason ? { excerpt: correctionReason } : {}),
+                },
+              ]);
               setAnnouncement(
-                reason
+                correctionReason
                   ? `Correction recorded with a reason: ${value}`
                   : `Correction recorded: ${value}`,
               );
@@ -436,16 +461,17 @@ function FactsView() {
             id="fact-uncertain"
             label="Value of the goods"
             value="Approximately ₹1,80,000"
-            status="uncertain"
-            confidence="low"
+            status={valueStatus}
+            confidence="unknown"
             sources={[
               {
-                kind: "ai-inference",
-                origin: "Read from a partially legible invoice total",
+                kind: "ai-extraction",
+                origin: "Read out of a partially legible invoice total",
                 locator: "page 1",
-                confidence: "low",
+                confidence: "unknown",
               },
             ]}
+            onAction={setValueStatus}
           />
 
           <FactCard
@@ -462,6 +488,8 @@ function FactsView() {
                 { value: "17 July 2026", source: STATEMENT_SOURCE },
               ],
             }}
+            onAction={() => setAnnouncement("State recorded for the received date")}
+            onCorrect={() => setAnnouncement("Correction recorded for the received date")}
           />
 
           <FactCard
@@ -483,11 +511,26 @@ function FactsView() {
           />
 
           <FactCard
+            id="fact-corrected"
+            label="Supplier name"
+            value="Asha Trading Company"
+            status="corrected"
+            previousValue="Asha Trading Co."
+            correctionReason="The registration record spells the name in full."
+            confidence="high"
+            sources={[
+              { kind: "user-correction", origin: "Correction you recorded" },
+              { kind: "document-fact", origin: "Company registration record", locator: "clause 1" },
+            ]}
+          />
+
+          <FactCard
             id="fact-not-relevant"
             label="Packaging condition"
             value="Cartons were taped"
             status="not-relevant"
-            sources={[{ kind: "user-statement", origin: "Your description of what happened" }]}
+            confidence="unknown"
+            sources={[{ kind: "unverified-claim", origin: "Your description of what happened" }]}
           />
 
           <FactCard
@@ -521,15 +564,29 @@ function FactsView() {
       </Section>
 
       <Section
-        title="Responsive behaviour"
+        title="Responsive behaviour and accessibility"
         subtitle="Fact cards stack in one column on mobile, keep a single column on tablet for readability, and pair up from extra-large widths. Contradiction versions sit side by side from tablet upwards."
       >
-        <p className="max-w-2xl text-sm text-muted-foreground">
-          Every control inside a card — show sources, correct this, save and cancel — is a 44×44
-          target, reachable by keyboard, with the source panel linked through{" "}
-          <code className="font-mono">aria-controls</code> and{" "}
-          <code className="font-mono">aria-expanded</code>.
-        </p>
+        <ul className="max-w-2xl list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+          <li>
+            Provenance is never hidden: the “Where this came from” strip is always on screen, and
+            the source detail panel only adds page references and verbatim excerpts.
+          </li>
+          <li>
+            Every control — Confirm, Uncertain, Not relevant, Correct, show source detail, save and
+            cancel — is a 44×44 target and reachable by keyboard.
+          </li>
+          <li>
+            The source detail panel stays in the page and is hidden with the <code>hidden</code>
+            attribute, so <code className="font-mono">aria-controls</code> always points at a real
+            element alongside <code className="font-mono">aria-expanded</code>.
+          </li>
+          <li>
+            The three action buttons use <code className="font-mono">aria-pressed</code> so the
+            state currently recorded is announced.
+          </li>
+          <li>Reason given for a correction stays visible on the card after saving.</li>
+        </ul>
       </Section>
     </>
   );

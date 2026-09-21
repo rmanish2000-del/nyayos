@@ -116,6 +116,8 @@
   --color-source-unavailable-surface: var(--source-unavailable-surface);
   --color-source-correction: var(--source-correction);
   --color-source-correction-surface: var(--source-correction-surface);
+  --color-source-unverified: var(--source-unverified);
+  --color-source-unverified-surface: var(--source-unverified-surface);
 
   /* --- Date precision --- */
   --color-date-exact: var(--date-exact);
@@ -136,6 +138,8 @@
   --color-confidence-medium-surface: var(--confidence-medium-surface);
   --color-confidence-high: var(--confidence-high);
   --color-confidence-high-surface: var(--confidence-high-surface);
+  --color-confidence-unknown: var(--confidence-unknown);
+  --color-confidence-unknown-surface: var(--confidence-unknown-surface);
 
   /* --- Notification --- */
   --color-info: var(--info);
@@ -217,6 +221,8 @@
   --source-unavailable-surface: oklch(0.94 0.006 250);
   --source-correction: oklch(0.4 0.1 195);
   --source-correction-surface: oklch(0.955 0.03 195);
+  --source-unverified: oklch(0.44 0.13 15);
+  --source-unverified-surface: oklch(0.96 0.03 18);
 
   --date-exact: oklch(0.4 0.1 160);
   --date-exact-surface: oklch(0.955 0.03 160);
@@ -235,6 +241,8 @@
   --confidence-medium-surface: oklch(0.96 0.04 85);
   --confidence-high: oklch(0.4 0.1 160);
   --confidence-high-surface: oklch(0.955 0.03 160);
+  --confidence-unknown: oklch(0.42 0.02 258);
+  --confidence-unknown-surface: oklch(0.95 0.008 250);
 
   --info: oklch(0.42 0.1 250);
   --info-surface: oklch(0.96 0.025 250);
@@ -312,6 +320,8 @@
   --source-unavailable-surface: oklch(0.27 0.015 255);
   --source-correction: oklch(0.84 0.1 195);
   --source-correction-surface: oklch(0.3 0.06 195);
+  --source-unverified: oklch(0.84 0.12 18);
+  --source-unverified-surface: oklch(0.31 0.07 18);
 
   --date-exact: oklch(0.84 0.12 160);
   --date-exact-surface: oklch(0.3 0.06 165);
@@ -330,6 +340,8 @@
   --confidence-medium-surface: oklch(0.31 0.06 85);
   --confidence-high: oklch(0.84 0.12 160);
   --confidence-high-surface: oklch(0.3 0.06 165);
+  --confidence-unknown: oklch(0.8 0.015 252);
+  --confidence-unknown-surface: oklch(0.28 0.015 255);
 
   --info: oklch(0.85 0.1 250);
   --info-surface: oklch(0.29 0.06 255);

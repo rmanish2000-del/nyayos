@@ -17,27 +17,27 @@ const PRECISION: Record<
 > = {
   exact: {
     label: "Exact date",
-    classes: "bg-date-exact-surface text-date-exact border-date-exact/30",
+    classes: "bg-date-exact-surface text-date-exact border-date-exact",
     icon: CalendarCheck,
   },
   approximate: {
     label: "Approximate date",
-    classes: "bg-date-approximate-surface text-date-approximate border-date-approximate/30",
+    classes: "bg-date-approximate-surface text-date-approximate border-date-approximate",
     icon: CalendarClock,
   },
   inferred: {
     label: "Inferred date",
-    classes: "bg-date-inferred-surface text-date-inferred border-date-inferred/30 border-dashed",
+    classes: "bg-date-inferred-surface text-date-inferred border-date-inferred border-dashed",
     icon: CalendarSearch,
   },
   conflicting: {
     label: "Conflicting dates",
-    classes: "bg-date-conflicting-surface text-date-conflicting border-date-conflicting/30",
+    classes: "bg-date-conflicting-surface text-date-conflicting border-date-conflicting",
     icon: CalendarX,
   },
   "unknown-date": {
     label: "Date unknown",
-    classes: "bg-date-unknown-surface text-date-unknown border-date-unknown/30 border-dashed",
+    classes: "bg-date-unknown-surface text-date-unknown border-date-unknown border-dashed",
     icon: CalendarMinus,
   },
 };

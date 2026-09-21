@@ -1,9 +1,12 @@
 import {
   BadgeCheck,
+  CircleAlert,
+  FileCheck2,
   FilePenLine,
   FileText,
   HelpCircle,
   MessageSquare,
+  ScanText,
   Sparkles,
   Users,
 } from "lucide-react";
@@ -13,6 +16,9 @@ import { cn } from "@/lib/utils";
 
 export type SourceKind =
   | "document-extracted"
+  | "document-fact"
+  | "ai-extraction"
+  | "unverified-claim"
   | "user-statement"
   | "third-party"
   | "ai-inference"
@@ -26,37 +32,52 @@ const SOURCE: Record<
 > = {
   "document-extracted": {
     label: "From document",
-    classes: "bg-source-document-surface text-source-document border-source-document/30",
+    classes: "bg-source-document-surface text-source-document border-source-document",
     icon: FileText,
+  },
+  "document-fact": {
+    label: "Stated in a document",
+    classes: "bg-source-document-surface text-source-document border-source-document",
+    icon: FileCheck2,
+  },
+  "ai-extraction": {
+    label: "Read out by AI",
+    classes: "bg-source-inference-surface text-source-inference border-source-inference",
+    icon: ScanText,
+  },
+  "unverified-claim": {
+    label: "Unverified claim",
+    classes: "bg-source-unverified-surface text-source-unverified border-source-unverified",
+    icon: CircleAlert,
   },
   "user-statement": {
     label: "Your statement",
-    classes: "bg-source-statement-surface text-source-statement border-source-statement/30",
+    classes: "bg-source-statement-surface text-source-statement border-source-statement",
     icon: MessageSquare,
   },
   "third-party": {
     label: "Third party",
-    classes: "bg-source-third-party-surface text-source-third-party border-source-third-party/30",
+    classes: "bg-source-third-party-surface text-source-third-party border-source-third-party",
     icon: Users,
   },
   "ai-inference": {
     label: "AI inference",
-    classes: "bg-source-inference-surface text-source-inference border-source-inference/30",
+    classes: "bg-source-inference-surface text-source-inference border-source-inference",
     icon: Sparkles,
   },
   "verified-source": {
     label: "Verified source",
-    classes: "bg-source-verified-surface text-source-verified border-source-verified/30",
+    classes: "bg-source-verified-surface text-source-verified border-source-verified",
     icon: BadgeCheck,
   },
   "source-unavailable": {
     label: "Source unavailable",
-    classes: "bg-source-unavailable-surface text-source-unavailable border-source-unavailable/30",
+    classes: "bg-source-unavailable-surface text-source-unavailable border-source-unavailable",
     icon: HelpCircle,
   },
   "user-correction": {
     label: "User correction",
-    classes: "bg-source-correction-surface text-source-correction border-source-correction/30",
+    classes: "bg-source-correction-surface text-source-correction border-source-correction",
     icon: FilePenLine,
   },
 };

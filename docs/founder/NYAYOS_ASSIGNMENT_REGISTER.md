@@ -240,6 +240,24 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Repository setting *Allow GitHub Actions to create and approve pull requests* was turned **on** so `status-update` can open PRs (first real run failed without it; recorded in NYAYOS_BRANCH_PROTECTION.md § 5). **PR #1 is open and awaiting founder merge** — it will show "branch out of date" because `main` moved after it opened; use *Update branch*, then merge. `enforce_admins` is **off** until the founder enables it (both required checks are now green on `main`) — closing command in NYAYOS_BRANCH_PROTECTION.md § 3. Auto-changelog begins with the **next** registry change (no prior registry in history to diff). Secret/private-data guard in `task-gate` is pattern-based. The hand-written registers still carry the *why*; the JSON is the status source of truth — keeping them consistent is a human duty the validator cannot fully check |
 | **Handoff back to M365 Copilot** | Every future assignment: add a row to `NYAYOS_STATUS_REGISTRY.json` **first**, run `node scripts/governance/registry.mjs all`, then open a PR citing the A-nnn. A task cannot be used as an input until it is CANONICAL — the gate will refuse |
 
+### A-022 — Fact Card conformance fixes
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-022 |
+| **Owner / tool** | Lovable — staging build |
+| **Purpose** | Convert the A-021 FAIL (conditional) into a conforming Fact Card: add the missing confirmation actions, put provenance permanently on the card, and split the conflated provenance kinds |
+| **Input files** | A-021 review commit `abe91fa176fe20a7be48ec9195e4f4f8a7d62360`, A-020 implementation commit `bbacbb481a0e8188b2753b68f089f258104ba1c1` |
+| **Gate** | FA-001 (staging only) |
+| **Deployment allowed** | **NOT ALLOWED.** Nothing deployed; FA-002 not granted |
+| **Status** | **CANONICAL — 21 September 2026.** 27/27 tests · typecheck · lint 0 errors · build · responsive 390 / 834 / 1280 PASS with no console errors |
+| **Result** | **Blocking items 1–3 delivered.** (1) `Confirm` · `Uncertain` · `Not relevant` action group plus `Correct` on every card, `compact` size, 44×44 targets, `aria-pressed` reflecting the recorded state, grouped under an accessible name. (2) Always-visible **“Where this came from”** provenance strip carrying every source badge with its origin, the date badge and the confidence band; the disclosure is demoted to *Show source detail* (page references and verbatim excerpts only). (3) `document-fact`, `ai-extraction` and `unverified-claim` split out as distinct provenance kinds with their own icons, labels and tokens (`--source-unverified` added light + dark). **Also delivered:** item 5 `ConfidenceBand` `unknown` (own token family, dashed border, “Confidence unknown”); item 7 opacity dimming replaced with muted colour tokens and badge borders raised from 30 % to full token strength; item 9 the source panel is always in the DOM and hidden with the `hidden` attribute so `aria-controls` always resolves; item 10 the correction reason stays visible on the card after saving and a `user-correction` source is appended |
+| **Evidence** | `app/src/components/nyayos/fact-card.tsx`, `app/src/components/nyayos/source-badge.tsx`, `app/src/components/nyayos/confidence-band.tsx`, `app/src/styles.css`, `app/src/routes/index.tsx`, `app/tests/fact-card.test.tsx` (12 tests) in this commit |
+| **Limitations** | **Not delivered:** A-021 item 4 (contradiction-specific *Confirm difference* / *Resolve* / *Leave unresolved* actions — the card-level actions apply instead), item 6 (extended `FactSource` metadata: publisher, jurisdiction, version, link, lastVerified), item 8 (a separate hue family for confidence). The **NVDA / VoiceOver pass is still owed** since A-014. Contrast improved by construction (full-strength token borders, `text-muted-foreground` for muted values) but **not re-measured** with an external tool. A-008 Figma still does not exist, so design conformance remains judged against canonical text |
+| **Handoff back to M365 Copilot** | Re-review scope from A-021: items 1–3 by inspection + test, item 7 by re-measurement, then the screen-reader pass. Decide items 4, 6, 8 as a follow-on assignment, and whether A-008 is still wanted or should be SUPERSEDED |
+
+---
+
 ### A-021 — Fact Card design conformance review
 
 | Field | Value |
@@ -269,8 +287,8 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-011 | **Sprint 1 Foundation — Lovable staging build** | Lovable — staging build | ● **CANONICAL** (imported under A-017; gaps recorded in A-014 § 11.3) |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
 | A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 |
-| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — waiting on A-008 (design) **and A-022 (conformance fixes)**; A-020 is the provisional implementation, A-021 found it FAIL (conditional) |
-| A-022 | **Fact Card conformance fixes** | Lovable — staging build | ✅ **Authorized under FA-001; may start now** (inputs A-020, A-021 both canonical). Ten items in [A-021 § 4](../design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md); items 1–3 blocking |
+| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — A-022 is now CANONICAL; still waiting on A-008 (design) and a conformance re-review |
+| A-022 | **Fact Card conformance fixes** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. A-021 § 4 items 1–3, 5, 7, 9, 10 delivered; items 4, 6, 8 and the screen-reader pass still open |
 | A-020 | **Fact Card system — provisional staging implementation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 (design conformance unverified; A-008 absent) |
 | A-016 | **Typography decision → Decision Log** (D-019) | Founder | Open. Code now embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet say so |
 

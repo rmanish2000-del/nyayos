@@ -1,9 +1,9 @@
-import { AlertCircle, CheckCircle2, CircleDotDashed } from "lucide-react";
+import { AlertCircle, CheckCircle2, CircleDotDashed, CircleHelp } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-export type ConfidenceBandKind = "low" | "medium" | "high";
+export type ConfidenceBandKind = "low" | "medium" | "high" | "unknown";
 
 const CONFIDENCE: Record<
   ConfidenceBandKind,
@@ -11,18 +11,24 @@ const CONFIDENCE: Record<
 > = {
   low: {
     label: "Low confidence",
-    classes: "bg-confidence-low-surface text-confidence-low border-confidence-low/30",
+    classes: "bg-confidence-low-surface text-confidence-low border-confidence-low",
     icon: AlertCircle,
   },
   medium: {
     label: "Medium confidence",
-    classes: "bg-confidence-medium-surface text-confidence-medium border-confidence-medium/30",
+    classes: "bg-confidence-medium-surface text-confidence-medium border-confidence-medium",
     icon: CircleDotDashed,
   },
   high: {
     label: "High confidence",
-    classes: "bg-confidence-high-surface text-confidence-high border-confidence-high/30",
+    classes: "bg-confidence-high-surface text-confidence-high border-confidence-high",
     icon: CheckCircle2,
+  },
+  unknown: {
+    label: "Confidence unknown",
+    classes:
+      "bg-confidence-unknown-surface text-confidence-unknown border-confidence-unknown border-dashed",
+    icon: CircleHelp,
   },
 };
 
@@ -47,7 +53,9 @@ export function ConfidenceBand({
     >
       <Icon aria-hidden="true" className="size-3.5 shrink-0" />
       {config.label}
-      <span className="sr-only"> for extraction</span>
+      <span className="sr-only">
+        {band === "unknown" ? " — extraction confidence was not recorded" : " for extraction"}
+      </span>
     </span>
   );
 }

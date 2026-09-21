@@ -1,4 +1,4 @@
-import { ChevronDown, PencilLine } from "lucide-react";
+import { Check, ChevronDown, HelpCircle, MinusCircle, PencilLine } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/nyayos/button";
@@ -6,9 +6,13 @@ import { ConfidenceBand, type ConfidenceBandKind } from "@/components/nyayos/con
 import { DateBadge, type DatePrecision } from "@/components/nyayos/date-badge";
 import { InlineCorrectionInput } from "@/components/nyayos/inline-correction-input";
 import { NotificationBanner } from "@/components/nyayos/notification-banner";
+import { SourceBadge } from "@/components/nyayos/source-badge";
 import { SourcePanel, type FactSource } from "@/components/nyayos/source-panel";
 import { StatusChip, type StatusKind } from "@/components/nyayos/status-chip";
 import { cn } from "@/lib/utils";
+
+/** The three states a person can set directly on a fact, plus correction. */
+export type FactAction = "confirmed" | "uncertain" | "not-relevant";
 
 export interface FactCardProps {
   id: string;
@@ -25,9 +29,19 @@ export interface FactCardProps {
   contradiction?: { note: string; versions: { value: string; source: FactSource }[] };
   /** The value before a user correction, kept visible when status is "corrected". */
   previousValue?: string;
+  /** Reason the user gave for the last correction; always visible once recorded. */
+  correctionReason?: string;
+  /** Set the confirmation state from the card's action row. */
+  onAction?: (action: FactAction) => void;
   onCorrect?: (value: string, reason: string) => void;
   className?: string;
 }
+
+const ACTIONS: { action: FactAction; label: string; icon: typeof Check }[] = [
+  { action: "confirmed", label: "Confirm", icon: Check },
+  { action: "uncertain", label: "Uncertain", icon: HelpCircle },
+  { action: "not-relevant", label: "Not relevant", icon: MinusCircle },
+];
 
 /**
  * Fact Card — one piece of information with its confirmation state, its
@@ -44,6 +58,8 @@ export function FactCard({
   confidence,
   contradiction,
   previousValue,
+  correctionReason,
+  onAction,
   onCorrect,
   className,
 }: FactCardProps) {
@@ -58,8 +74,8 @@ export function FactCard({
       aria-labelledby={`${id}-label`}
       className={cn(
         "rounded-lg border border-border bg-card p-4 shadow-[var(--shadow-token-sm)]",
-        status === "contradiction" && "border-status-contradiction/40",
-        muted && "opacity-75",
+        status === "contradiction" && "border-status-contradiction",
+        muted && "bg-surface-sunken",
         className,
       )}
     >
@@ -73,8 +89,8 @@ export function FactCard({
           </p>
           <p
             className={cn(
-              "mt-1 font-serif text-lg text-foreground",
-              muted && "line-through decoration-1",
+              "mt-1 font-serif text-lg",
+              muted ? "text-muted-foreground line-through decoration-1" : "text-foreground",
             )}
           >
             {value}
@@ -89,10 +105,37 @@ export function FactCard({
         <StatusChip status={status} />
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        {date ? <DateBadge precision={date.precision} value={date.value} /> : null}
-        {confidence ? <ConfidenceBand band={confidence} /> : null}
+      {/* Provenance strip — where this came from is always on screen, never
+          behind a disclosure. */}
+      <div className="mt-3 border-t border-border pt-3">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Where this came from
+        </p>
+        <ul className="mt-2 flex flex-wrap items-center gap-2">
+          {sources.map((source, index) => (
+            <li key={`${id}-strip-${source.kind}-${index}`}>
+              <SourceBadge source={source.kind} detail={source.origin} />
+            </li>
+          ))}
+          {date ? (
+            <li>
+              <DateBadge precision={date.precision} value={date.value} />
+            </li>
+          ) : null}
+          {confidence ? (
+            <li>
+              <ConfidenceBand band={confidence} />
+            </li>
+          ) : null}
+        </ul>
       </div>
+
+      {correctionReason ? (
+        <p className="mt-3 rounded-md border border-source-correction bg-source-correction-surface px-3 py-2 text-xs text-source-correction">
+          <span className="font-semibold">Reason given for the correction: </span>
+          {correctionReason}
+        </p>
+      ) : null}
 
       {contradiction ? (
         <div className="mt-4 grid gap-3">
@@ -115,9 +158,49 @@ export function FactCard({
         </div>
       ) : null}
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      {onAction || onCorrect ? (
+        <div className="mt-4 border-t border-border pt-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            What would you like to record?
+          </p>
+          <div
+            role="group"
+            aria-label={`Record a state for ${label}`}
+            className="mt-2 flex flex-wrap gap-2"
+          >
+            {onAction
+              ? ACTIONS.map(({ action, label: actionLabel, icon: Icon }) => (
+                  <Button
+                    key={action}
+                    variant={status === action ? "primary" : "secondary"}
+                    size="compact"
+                    aria-pressed={status === action}
+                    onClick={() => onAction(action)}
+                  >
+                    <Icon aria-hidden="true" className="size-4" />
+                    {actionLabel}
+                  </Button>
+                ))
+              : null}
+            {onCorrect ? (
+              <Button
+                variant="secondary"
+                size="compact"
+                aria-expanded={correcting}
+                onClick={() => setCorrecting((open) => !open)}
+              >
+                <PencilLine aria-hidden="true" className="size-4" />
+                {correcting ? "Cancel correction" : "Correct"}
+              </Button>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
+
+      <div className="mt-4">
         <Button
-          variant="secondary"
+          variant="ghost"
+          size="compact"
           aria-expanded={sourcesOpen}
           aria-controls={panelId}
           onClick={() => setSourcesOpen((open) => !open)}
@@ -126,21 +209,13 @@ export function FactCard({
             aria-hidden="true"
             className={cn("size-4 transition-transform", sourcesOpen && "rotate-180")}
           />
-          {sourcesOpen ? "Hide sources" : "Show sources"}
+          {sourcesOpen ? "Hide source detail" : "Show source detail"}
         </Button>
-        {onCorrect ? (
-          <Button variant="ghost" onClick={() => setCorrecting((open) => !open)}>
-            <PencilLine aria-hidden="true" className="size-4" />
-            {correcting ? "Cancel correction" : "Correct this"}
-          </Button>
-        ) : null}
-      </div>
-
-      {sourcesOpen ? (
-        <div className="mt-4">
-          <SourcePanel id={panelId} sources={sources} />
+        {/* Always in the DOM so aria-controls always resolves to a real element. */}
+        <div id={panelId} hidden={!sourcesOpen} className={cn(!sourcesOpen && "hidden", "mt-4")}>
+          <SourcePanel sources={sources} />
         </div>
-      ) : null}
+      </div>
 
       {correcting && onCorrect ? (
         <div className="mt-4 rounded-md border border-border bg-surface-sunken p-3">

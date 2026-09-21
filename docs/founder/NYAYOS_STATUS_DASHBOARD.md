@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 7 | 0 | 0 | 15 | 0 | 22 |
+| 6 | 0 | 0 | 16 | 0 | 22 |
 
 ## In flight
 
@@ -22,14 +22,13 @@ _None._
 | A-009 | User interviews and WTP validation | ○ OPEN | Founder | — | 2026-09-21 |
 | A-010 | Security + data architecture review (specification only) | ○ OPEN | Unassigned | — | 2026-09-21 |
 | A-016 | Typography decision → Decision Log (D-019) | ○ OPEN | Founder | — | 2026-09-21 |
-| A-022 | Fact Card conformance fixes | ○ OPEN | Unassigned | FA-001 | 2026-09-21 |
 
 ## Blocked — waiting on non-canonical inputs
 
 | ID | Title | Waiting on | Owner |
 |---|---|---|---|
 | A-012 | Production build / deployment | A-008, A-009, A-010, A-015 | Unassigned |
-| A-015 | Sprint 2 — Fact Card System build | A-008, A-022 | Unassigned |
+| A-015 | Sprint 2 — Fact Card System build | A-008 | Unassigned |
 
 ## Canonical
 
@@ -50,12 +49,13 @@ _None._
 | A-019 | Repository Automation Foundation | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-020 | Fact Card system — provisional staging implementation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-021 | Fact Card design conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
+| A-022 | Fact Card conformance fixes | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 
 ## Recently updated
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
-| A-022 | Fact Card conformance fixes | ○ OPEN | Unassigned | FA-001 | 2026-09-21 |
+| A-022 | Fact Card conformance fixes | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-021 | Fact Card design conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-020 | Fact Card system — provisional staging implementation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-019 | Repository Automation Foundation | ● CANONICAL | Claude Code | — | 2026-09-21 |
