@@ -118,6 +118,14 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 > ⚠ The presence of a build brief is **not** build authorization. FA-001 is. It authorizes **staging only** — production remains ⛔ NOT ALLOWED, and no real case data may be used in any environment.
 
+## `/docs/print` — outreach and research collateral
+
+| Item | Type | Contents |
+|---|---|---|
+| `docs/print/*.html` (13) | Founder-supplied sources | Flyer, 4 A5 handouts, tri-fold, business card, A3 poster, standee, pitch deck, feedback form, interview sheet, observation sheet |
+| [`exports/NYAYOS_PRINT_EXPORT_MANIFEST.md`](print/exports/NYAYOS_PRINT_EXPORT_MANIFEST.md) | Maintainer — A-027 | Verification record and SHA-256 for all 26 exports; print-quality notes |
+| `exports/pdf/` · `exports/png/` | Generated — A-027 | **The only place PDFs/PNGs may be tracked** (`.gitignore` + `task-gate` carve-out). Everything else with those extensions is treated as case material |
+
 ## `/docs/evaluation`
 
 | Document | Type | Contents |

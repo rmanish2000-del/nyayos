@@ -292,6 +292,23 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | NVDA / VoiceOver pass still not run (owed since A-014). Contrast computed from rendered oklch tokens, not an external tool. File-dialog and real drag-drop not exercised (fixture handlers verified in tests) |
 | **Handoff back to M365 Copilot** | Assign **A-025** before Timeline / Evidence Mapping (both consume the document model). Adopt *build outputs enter at REVIEW*. Decide A-008 |
 
+### A-027 — Print export completion
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-027 |
+| **Tool and exact mode** | Claude Code — Print Export: headless Chrome (installed binary) driven by puppeteer-core 24 from a scratch directory; pypdf for verification. Nothing installed into the repository |
+| **Purpose** | Generate final printable exports (13 PDF, 13 PNG) from all 13 HTML sources in `docs/print/` (commits `08a00eb`, `d1fe915`) and verify print quality |
+| **Input files** | `docs/print/*.html` (13) |
+| **Expected output** | `docs/print/exports/pdf/*.pdf` (13) · `docs/print/exports/png/*.png` (13) · manifest with checksums |
+| **Environment** | Local; Google Fonts fetched at render time (Hind Siliguri, Noto Sans) |
+| **Deployment allowed** | N/A — documentation artefacts. Nothing deployed |
+| **Status** | **CANONICAL — 21 September 2026** |
+| **Result** | 26 files rendered. **Verified:** all 13 PDFs opened — page count, MediaBox vs declared `@page` (all within 0.3 mm), embedded font subsets, extracted text, blank-page scan, opened in Chromium's viewer; all 13 PNGs opened — dimensions vs page width and visual inspection. **Two source defects found and corrected in-line** (`deck-pitch.html`: invalid `@page … landscape` printed Letter portrait, and screen-only padding produced 10 pages with 2 blank — now 8 pages at 254×143; `business-card.html`: 3-up row exceeded A4 printable width and clipped the left card — now stacked, one page). **Five layout notes left for the author** → A-028. **ID note:** first prepared as A-026; that ID was taken by the concurrently pushed Sprint 4 build, so this is recorded as A-027 |
+| **Evidence** | [docs/print/exports/NYAYOS_PRINT_EXPORT_MANIFEST.md](../print/exports/NYAYOS_PRINT_EXPORT_MANIFEST.md) |
+| **Limitations** | PNGs are full-page rasters under print media at 2× (192 dpi-equivalent) — proofing quality, not press plates. Brochure, both A5 handouts (mediator, government), observation sheet and feedback form are delivered as rendered with their overrun/fit issues documented, not redesigned. Symbol glyphs (✓ ✗ → ₹) fall back to Arial / Segoe UI Symbol. Repository rules changed: `.gitignore` and `task-gate` now permit PDF/PNG **only** under `docs/print/exports/`. The export commit `f957a43` shipped a stale manifest because of a scripting fault; corrected in the following commit |
+| **Handoff back to M365 Copilot** | Exports are canonical. Assign **A-028** for the five source notes and placeholders, then re-run the export. **Sprint 4 (A-026) landed without a conformance review — schedule one before Sprint 5** |
+
 ---
 
 ## Open assignments — not yet issued
@@ -306,6 +323,7 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 |
 | A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — A-022 is now CANONICAL; still waiting on A-008 (design) and a conformance re-review |
 | A-026 | **Sprint 4 — Parties & Entities (S11) and Timeline (S12)** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. Party Card and Timeline built on the canonical state model; conformance re-review recommended |
+| A-028 | **Print source corrections** | Founder — HTML edit | Open. Five layout notes + placeholders in the [export manifest](../print/exports/NYAYOS_PRINT_EXPORT_MANIFEST.md); re-run export after |
 | A-025 | **Sprint 3 evidence conformance fixes — evidence model remediation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. A-024 § 4 blockers 1–7 delivered; locker page count / verification-state metadata and the screen-reader pass remain open |
 | A-022 | **Fact Card conformance fixes** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026. A-021 § 4 items 1–3, 5, 7, 9, 10 delivered; items 4, 6, 8 and the screen-reader pass still open |
 | A-020 | **Fact Card system — provisional staging implementation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 (design conformance unverified; A-008 absent) |

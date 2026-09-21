@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 6 | 0 | 0 | 20 | 0 | 26 |
+| 7 | 0 | 0 | 21 | 0 | 28 |
 
 ## In flight
 
@@ -22,6 +22,7 @@ _None._
 | A-009 | User interviews and WTP validation | ○ OPEN | Founder | — | 2026-09-21 |
 | A-010 | Security + data architecture review (specification only) | ○ OPEN | Unassigned | — | 2026-09-21 |
 | A-016 | Typography decision → Decision Log (D-019) | ○ OPEN | Founder | — | 2026-09-21 |
+| A-028 | Print source corrections | ○ OPEN | Founder | — | 2026-09-21 |
 
 ## Blocked — waiting on non-canonical inputs
 
@@ -54,19 +55,20 @@ _None._
 | A-024 | Sprint 3 evidence conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-025 | Sprint 3 evidence conformance fixes — evidence model remediation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-026 | Sprint 4 — Parties & Entities (S11) and Timeline (S12) | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
+| A-027 | Print export completion — 13 PDF + 13 PNG from docs/print | ● CANONICAL | Claude Code | — | 2026-09-21 |
 
 ## Recently updated
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-028 | Print source corrections | ○ OPEN | Founder | — | 2026-09-21 |
+| A-027 | Print export completion — 13 PDF + 13 PNG from docs/print | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-026 | Sprint 4 — Parties & Entities (S11) and Timeline (S12) | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-025 | Sprint 3 evidence conformance fixes — evidence model remediation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-024 | Sprint 3 evidence conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-023 | Sprint 3 — Evidence Components | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-022 | Fact Card conformance fixes | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-021 | Fact Card design conformance review | ● CANONICAL | Claude Code | — | 2026-09-21 |
-| A-020 | Fact Card system — provisional staging implementation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
-| A-019 | Repository Automation Foundation | ● CANONICAL | Claude Code | — | 2026-09-21 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)

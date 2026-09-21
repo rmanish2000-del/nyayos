@@ -53,6 +53,14 @@
 | `app/src/routeTree.gen.ts` | TanStack router plugin (generated during A-017 build) | A-017 | 21 Sep 2026 | Maintainer-reviewed | Accepted — committed so `tsc` passes cold | — | `app/src/` |
 | `nyayos-sprint1-foundation.zip` | Lovable export | A-011 | 21 Sep 2026 | Maintainer-reviewed | **Accepted — NOT committed** (gitignored). SHA-256 `8c407630616f171b33d2be60671213c4b07b5ceb65fce0a877954b17a3ea83ca` | Source of `app/` | Local workspace only |
 
+## Print collateral outputs — A-027
+
+| Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |
+|---|---|---|---|---|---|---|---|
+| `docs/print/*.html` (13 sources) | Founder (commits `08a00eb`, `d1fe915`) + 2 in-line corrections under A-027 | — | 21 Sep 2026 | Maintainer-reviewed (render + fit) | Accepted; 5 layout notes → A-028 | Outreach, research and field material | `docs/print/` |
+| `docs/print/exports/pdf/*.pdf` (13) · `docs/print/exports/png/*.png` (13) | Claude Code — headless Chrome | A-027 | 21 Sep 2026 | **Maintainer-verified** (every file opened; sizes, fonts, blanks, visual) | **CANONICAL** | Printable deliverables; checksums in manifest | `docs/print/exports/` |
+| `NYAYOS_PRINT_EXPORT_MANIFEST.md` | A-027 finalize script | A-027 | 21 Sep 2026 | Maintainer-reviewed | Accepted | Verification record + SHA-256 for all 26 files | `docs/print/exports/` |
+
 ## Design conformance outputs — A-021, A-024
 
 | Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |

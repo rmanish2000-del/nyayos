@@ -7,6 +7,37 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
+## 2026-09-21 — Print export completion: 13 PDF + 13 PNG verified (A-027)
+
+### Generated
+
+`docs/print/exports/pdf/*.pdf` and `docs/print/exports/png/*.png` from the 13 HTML sources (`08a00eb`, `d1fe915`) with headless Chrome. Manifest with SHA-256 for all 26 files: `docs/print/exports/NYAYOS_PRINT_EXPORT_MANIFEST.md`.
+
+### Verified
+
+Every PDF opened: page count, MediaBox vs `@page` (all 13 within 0.3 mm), embedded font subsets (Hind Siliguri, Noto Sans), text extraction, blank-page scan, Chromium viewer. Every PNG opened: dimensions vs page width, visual inspection.
+
+### Fixed in source (mechanical, single correct fix)
+
+- `deck-pitch.html` — `@page{size:254mm 143mm landscape}` is invalid CSS; Chrome discarded it and printed **Letter portrait**. Keyword removed. Screen-only `body{padding:6mm}` and slide margins then produced 10 pages with blanks at 2 and 10; a print rule removes them. **Now 8 pages at 254×143.**
+- `business-card.html` — three 90 mm cards in a row (286 mm) exceeded A4's 180 mm printable width; the left card was clipped. Cards now stack; one page.
+
+### Left for the author → A-028
+
+Brochure: 4 panels on an A4-landscape "tri-fold" — Chrome shrinks to ~75 %. Mediator and government A5 handouts overrun to a blank/near-blank page 2. Observation sheet breaks mid-section. QR / name / phone placeholders throughout; deck market figures unsourced.
+
+### Repository rules changed
+
+`.gitignore` and `task-gate` now permit `*.pdf` / `*.png` **only** under `docs/print/exports/`; the blanket bans stand everywhere else.
+
+### Process notes
+
+- This work was first prepared as **A-026**; Sprint 4 (parties & timeline) was pushed concurrently under that ID, so the export is **A-027**. Task IDs must be claimed in the registry before work starts to avoid this.
+- Commit `f957a43` shipped the exports with a stale manifest because a finalize script failed mid-run; this commit corrects it.
+- **Sprint 4 (A-026) is CANONICAL without a conformance review.** A review is owed before Sprint 5.
+
+---
+
 ## 2026-09-21 — [auto] Status registry changes
 
 ### New tasks

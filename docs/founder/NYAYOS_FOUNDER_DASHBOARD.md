@@ -127,6 +127,23 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Required evidence** | Delivered: § 11 checklist; 4/4 validations PASS; typography finding retracted against evidence |
 | **Next action** | **A-018 Sprint 1.1 State Completion** (7 items, A-014 § 11.4) → then A-015 Sprint 2 |
 
+### F-9 — Print export completion  ● CANONICAL
+
+| Field | Value |
+|---|---|
+| **Task** | Render and verify 13 PDF + 13 PNG from the `docs/print/` HTML pack |
+| **Why** | Outreach, pilot-recruitment and field-research material must exist as fixed, checksummed print files, not only as HTML |
+| **Exact tool / mode** | Claude Code — Print Export (headless Chrome via puppeteer-core) |
+| **Owner** | Claude Code |
+| **Environment** | Local; fonts from Google Fonts at render time |
+| **Deployment permission** | N/A |
+| **Start date** | 21 September 2026 |
+| **Target date** | 21 September 2026 |
+| **Status** | **Complete.** 26 files, all opened and verified. Two source defects fixed in-line (deck page size + pagination; business-card clipping) |
+| **Blocker** | None. Five author-side layout notes → **A-028** |
+| **Required evidence** | [Export manifest](../print/exports/NYAYOS_PRINT_EXPORT_MANIFEST.md) |
+| **Next action** | Founder: A-028 (brochure panel count, A5 overruns, placeholders); re-run export. **Sprint 4 (A-026) needs a conformance review before Sprint 5** |
+
 ### F-8 — Sprint 3 evidence conformance review  ● CANONICAL — verdict FAIL (conditional)
 
 | Field | Value |
