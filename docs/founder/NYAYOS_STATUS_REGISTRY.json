@@ -16,7 +16,7 @@
       "type": "research",
       "status": "CANONICAL",
       "owner": "Claude Code",
-      "tool": "Claude Code \u2014 Research Lead",
+      "tool": "Claude Code — Research Lead",
       "gate": null,
       "inputs": [],
       "planned_inputs": [],
@@ -142,7 +142,7 @@
       "type": "governance",
       "status": "CANONICAL",
       "owner": "Claude Code",
-      "tool": "Claude Code \u2014 Repository and Product-Continuity Maintainer",
+      "tool": "Claude Code — Repository and Product-Continuity Maintainer",
       "gate": null,
       "inputs": [
         "A-006"
@@ -161,11 +161,11 @@
     },
     {
       "id": "A-008",
-      "title": "Figma V2 \u2014 Fact Card and journey design",
+      "title": "Figma V2 — Fact Card and journey design",
       "type": "design",
       "status": "OPEN",
       "owner": "Unassigned",
-      "tool": "Figma \u2014 design mode",
+      "tool": "Figma — design mode",
       "gate": null,
       "inputs": [
         "A-006",
@@ -178,7 +178,7 @@
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "Fact Card design may start now against A-014 \u00a7 3.1 / \u00a7 4.5."
+      "notes": "Fact Card design may start now against A-014 § 3.1 / § 4.5."
     },
     {
       "id": "A-009",
@@ -198,7 +198,7 @@
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "D-003 revisit trigger: 15\u201320 interviews."
+      "notes": "D-003 revisit trigger: 15–20 interviews."
     },
     {
       "id": "A-010",
@@ -206,7 +206,7 @@
       "type": "architecture",
       "status": "OPEN",
       "owner": "Unassigned",
-      "tool": "TBD \u2014 research/specification only",
+      "tool": "TBD — research/specification only",
       "gate": null,
       "inputs": [
         "A-005",
@@ -223,11 +223,11 @@
     },
     {
       "id": "A-011",
-      "title": "Sprint 1 Foundation \u2014 Lovable staging build",
+      "title": "Sprint 1 Foundation — Lovable staging build",
       "type": "build",
       "status": "CANONICAL",
       "owner": "Lovable",
-      "tool": "Lovable \u2014 staging build",
+      "tool": "Lovable — staging build",
       "gate": "FA-001",
       "inputs": [
         "A-005",
@@ -240,7 +240,7 @@
       "evidence": "docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "Canonical with recorded gaps (A-014 \u00a7 11.3). Imported under A-017."
+      "notes": "Canonical with recorded gaps (A-014 § 11.3). Imported under A-017."
     },
     {
       "id": "A-012",
@@ -269,7 +269,7 @@
       "type": "governance",
       "status": "CANONICAL",
       "owner": "Claude Code",
-      "tool": "Claude Code \u2014 Repository and Product-Continuity Maintainer",
+      "tool": "Claude Code — Repository and Product-Continuity Maintainer",
       "gate": null,
       "inputs": [
         "A-006",
@@ -291,7 +291,7 @@
       "type": "review",
       "status": "CANONICAL",
       "owner": "Claude Code",
-      "tool": "Claude Code \u2014 Architecture Review",
+      "tool": "Claude Code — Architecture Review",
       "gate": null,
       "inputs": [
         "A-006",
@@ -304,15 +304,15 @@
       "evidence": "docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "Executed \u00a7 11. GO (conditional) for Sprint 2 on A-018."
+      "notes": "Executed § 11. GO (conditional) for Sprint 2 on A-018."
     },
     {
       "id": "A-015",
-      "title": "Sprint 2 \u2014 Fact Card System build",
+      "title": "Sprint 2 — Fact Card System build",
       "type": "build",
       "status": "OPEN",
       "owner": "Unassigned",
-      "tool": "Lovable \u2014 staging build",
+      "tool": "Lovable — staging build",
       "gate": "FA-001",
       "inputs": [
         "A-011",
@@ -320,7 +320,8 @@
         "A-018"
       ],
       "planned_inputs": [
-        "A-008"
+        "A-008",
+        "A-022"
       ],
       "outputs": [
         "app/"
@@ -328,11 +329,11 @@
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "Still gated by A-008 Fact Card design. A-020 delivers a provisional Fact Card implementation on the A-018 state model; A-015 closes only after A-008 design conformance is checked."
+      "notes": "Still gated by A-008 Fact Card design and now A-022 conformance fixes. A-020 is the provisional implementation; A-021 found it FAIL (conditional)."
     },
     {
       "id": "A-016",
-      "title": "Typography decision \u2192 Decision Log (D-019)",
+      "title": "Typography decision → Decision Log (D-019)",
       "type": "decision",
       "status": "OPEN",
       "owner": "Founder",
@@ -356,7 +357,7 @@
       "type": "governance",
       "status": "CANONICAL",
       "owner": "Claude Code",
-      "tool": "Claude Code \u2014 Repository Integration",
+      "tool": "Claude Code — Repository Integration",
       "gate": "FA-001",
       "inputs": [
         "A-011",
@@ -370,15 +371,15 @@
       "evidence": "docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "Commit 62f649f. Staging URL not supplied \u2014 staging not verified."
+      "notes": "Commit 62f649f. Staging URL not supplied — staging not verified."
     },
     {
       "id": "A-018",
-      "title": "Sprint 1.1 \u2014 State Completion",
+      "title": "Sprint 1.1 — State Completion",
       "type": "build",
       "status": "CANONICAL",
       "owner": "Lovable",
-      "tool": "Lovable \u2014 staging build",
+      "tool": "Lovable — staging build",
       "gate": "FA-001",
       "inputs": [
         "A-011",
@@ -399,7 +400,7 @@
       "type": "governance",
       "status": "CANONICAL",
       "owner": "Claude Code",
-      "tool": "Claude Code \u2014 Repository Automation",
+      "tool": "Claude Code — Repository Automation",
       "gate": null,
       "inputs": [
         "A-007",
@@ -425,11 +426,11 @@
     },
     {
       "id": "A-020",
-      "title": "Fact Card system \u2014 provisional staging implementation",
+      "title": "Fact Card system — provisional staging implementation",
       "type": "build",
       "status": "CANONICAL",
       "owner": "Lovable",
-      "tool": "Lovable \u2014 staging build",
+      "tool": "Lovable — staging build",
       "gate": "FA-001",
       "inputs": [
         "A-011",
@@ -443,7 +444,50 @@
       "evidence": "app/tests/fact-card.test.tsx",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "Fact Card, Source Panel, provenance, date precision, contradiction, confidence band and inline correction flow built on the A-018 state model. vitest 23/23, typecheck, lint 0 errors, build, responsive 390/834/1280 PASS. Visual design derived from the Master Product Spec text because A-008 does not exist; design conformance is unverified and A-015 stays OPEN."
+      "notes": "Fact Card, Source Panel, provenance, date precision, contradiction, confidence band and inline correction flow built on the A-018 state model. vitest 23/23, typecheck, lint 0 errors, build, responsive 390/834/1280 PASS. Visual design derived from the Master Product Spec text because A-008 does not exist; design conformance is unverified and A-015 stays OPEN. A-021 conformance review (21 Sep): FAIL (conditional) — fixes tracked as A-022."
+    },
+    {
+      "id": "A-021",
+      "title": "Fact Card design conformance review",
+      "type": "review",
+      "status": "CANONICAL",
+      "owner": "Claude Code",
+      "tool": "Claude Code — Design Conformance Review",
+      "gate": null,
+      "inputs": [
+        "A-006",
+        "A-014",
+        "A-020"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md"
+      ],
+      "evidence": "docs/design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md",
+      "updated": "2026-09-21",
+      "superseded_by": null,
+      "notes": "Reviewed bbacbb4 against Figma Brief V2 / Product Spec / A-014 (no Figma exists — A-008 OPEN). Verdict FAIL (conditional): confirmation actions missing, provenance hidden by default, document_fact/ai_extraction still conflated. Dates, corrections, responsive PASS; a11y PASS with two opacity-contrast fixes. 23/23 tests, build green."
+    },
+    {
+      "id": "A-022",
+      "title": "Fact Card conformance fixes",
+      "type": "build",
+      "status": "OPEN",
+      "owner": "Unassigned",
+      "tool": "Lovable — staging build",
+      "gate": "FA-001",
+      "inputs": [
+        "A-020",
+        "A-021"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "app/"
+      ],
+      "evidence": "",
+      "updated": "2026-09-21",
+      "superseded_by": null,
+      "notes": "Ten items in A-021 § 4. Items 1–3 (Confirm/Uncertain/Not relevant actions; provenance strip always visible; split document-fact vs ai-extraction + unverified-claim) are blocking. Must precede further Sprint 2 surfaces."
     }
   ]
 }

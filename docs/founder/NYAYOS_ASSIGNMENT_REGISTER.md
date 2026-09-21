@@ -240,6 +240,23 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Repository setting *Allow GitHub Actions to create and approve pull requests* was turned **on** so `status-update` can open PRs (first real run failed without it; recorded in NYAYOS_BRANCH_PROTECTION.md § 5). **PR #1 is open and awaiting founder merge** — it will show "branch out of date" because `main` moved after it opened; use *Update branch*, then merge. `enforce_admins` is **off** until the founder enables it (both required checks are now green on `main`) — closing command in NYAYOS_BRANCH_PROTECTION.md § 3. Auto-changelog begins with the **next** registry change (no prior registry in history to diff). Secret/private-data guard in `task-gate` is pattern-based. The hand-written registers still carry the *why*; the JSON is the status source of truth — keeping them consistent is a human duty the validator cannot fully check |
 | **Handoff back to M365 Copilot** | Every future assignment: add a row to `NYAYOS_STATUS_REGISTRY.json` **first**, run `node scripts/governance/registry.mjs all`, then open a PR citing the A-nnn. A task cannot be used as an input until it is CANONICAL — the gate will refuse |
 
+### A-021 — Fact Card design conformance review
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-021 |
+| **Tool and exact mode** | Claude Code — Design Conformance Review (read-only; dev server run locally for measurement) |
+| **Purpose** | Verify the A-020 Fact Card implementation at `bbacbb4` for states, provenance, date precision, contradictions, confidence bands, inline corrections, accessibility and mobile/tablet/desktop behaviour |
+| **Input files** | A-006 (Figma Brief V2, Product Spec), A-014 (§ 3, § 4.5, § 11.4), A-020 commit `bbacbb481a0e8188b2753b68f089f258104ba1c1`. **No Figma design exists (A-008 OPEN)** — conformance is against the canonical text |
+| **Expected output** | PASS / FAIL, required fixes, review record |
+| **Environment** | Local checkout; Chromium at 390 × 844, 834 × 1100, 1280 × 1000; `tsc` / `eslint` / `vitest` / `vite build` re-run |
+| **Deployment allowed** | N/A — review. Nothing deployed |
+| **Status** | **CANONICAL — 21 September 2026** |
+| **Result** | **FAIL (conditional).** States render but the Confirm / Uncertain / Not relevant actions do not exist; provenance is hidden behind "Show sources" against Spec § 7.6 and the hierarchy rule; `document_fact` / `ai_extraction` still conflated and `unverified_claim` absent (A-014 § 11.4 item 2 not delivered by A-018). Date precision PASS · inline corrections PASS · responsive PASS at all three widths · accessibility PASS with two opacity-caused contrast failures (4.39, 3.97) and a dangling `aria-controls`. Validation 23/23 / green. Ten fixes → **A-022** |
+| **Evidence** | [docs/design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md](../design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md) |
+| **Limitations** | Screen-reader pass (NVDA / VoiceOver) still not run — owed since A-014. Contrast computed from rendered oklch tokens with the WCAG formula, not an external tool. The instruction labelled this A-008; A-008 (Figma) remains undone and is not closed by this review |
+| **Handoff back to M365 Copilot** | Assign **A-022** before any further Sprint 2 surface. Decide whether A-008 (Figma) is still wanted or should be SUPERSEDED by A-020 + A-022. Consider the rule clarification: build outputs enter at REVIEW |
+
 ---
 
 ## Open assignments — not yet issued
@@ -252,7 +269,8 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-011 | **Sprint 1 Foundation — Lovable staging build** | Lovable — staging build | ● **CANONICAL** (imported under A-017; gaps recorded in A-014 § 11.3) |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
 | A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 |
-| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — still waiting on A-008 Fact Card design; A-020 provides the provisional implementation |
+| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — waiting on A-008 (design) **and A-022 (conformance fixes)**; A-020 is the provisional implementation, A-021 found it FAIL (conditional) |
+| A-022 | **Fact Card conformance fixes** | Lovable — staging build | ✅ **Authorized under FA-001; may start now** (inputs A-020, A-021 both canonical). Ten items in [A-021 § 4](../design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md); items 1–3 blocking |
 | A-020 | **Fact Card system — provisional staging implementation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 (design conformance unverified; A-008 absent) |
 | A-016 | **Typography decision → Decision Log** (D-019) | Founder | Open. Code now embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet say so |
 

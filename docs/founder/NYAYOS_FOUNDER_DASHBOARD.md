@@ -127,6 +127,23 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Required evidence** | Delivered: § 11 checklist; 4/4 validations PASS; typography finding retracted against evidence |
 | **Next action** | **A-018 Sprint 1.1 State Completion** (7 items, A-014 § 11.4) → then A-015 Sprint 2 |
 
+### F-7 — Fact Card design conformance review  ● CANONICAL — verdict FAIL (conditional)
+
+| Field | Value |
+|---|---|
+| **Task** | Review the A-020 Fact Card implementation (`bbacbb4`) for conformance to the canonical spec and brief |
+| **Why** | A-020 declared its own design conformance unverified; Sprint 2 cannot build further surfaces on an unverified card |
+| **Exact tool / mode** | Claude Code — Design Conformance Review |
+| **Owner** | Claude Code |
+| **Environment** | Local; Chromium at 390 / 834 / 1280; four validation commands re-run |
+| **Deployment permission** | N/A — review |
+| **Start date** | 21 September 2026 |
+| **Target date** | 21 September 2026 |
+| **Status** | **Complete — FAIL (conditional).** Confirmation actions missing; provenance hidden by default; document-fact / AI-extraction still conflated. Dates, corrections, responsive, a11y otherwise pass |
+| **Blocker** | None for the review. **A-022** holds the fixes |
+| **Required evidence** | [A-021 review record](../design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md) |
+| **Next action** | Founder assigns **A-022**; decides A-008's fate (assign or supersede) |
+
 ### F-6 — Repository Automation Foundation  ● CANONICAL
 
 | Field | Value |
@@ -175,7 +192,7 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | User / WTP Validation | **Pending** |
 | Lovable Staging Build — Sprint 1 Foundation | **Complete — CANONICAL** |
 | Sprint 1.1 — State Completion | **Pending** (authorized) |
-| Sprint 2 — Fact Card System | **GO (conditional) — after Sprint 1.1** |
+| Sprint 2 — Fact Card System | **Provisional card built (A-020) — conformance FAIL (conditional), fixes in A-022** |
 | Testing / UAT | **Not Started** |
 | Production | **Not Started — NOT AUTHORIZED** |
 
@@ -293,7 +310,8 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | 2 | **Lovable staging build** | ✅ **Authorized (FA-001).** Staging only, fixture data only |
 | 3 | **Figma V2** | — · feeds 2 |
 | 4 | **User interviews and WTP validation** | — · de-risks 2 |
-| 4a | **Sprint 1.1 State Completion** (A-018) | ✅ Authorized. **Must precede Sprint 2 build** |
+| 4a | **A-022 Fact Card conformance fixes** | ✅ Authorized (FA-001). **Must precede any further Sprint 2 surface.** Items 1–3 of A-021 § 4 blocking |
+| 4a′ | **Decide A-008 (Figma)** — assign, or SUPERSEDE by A-020 + A-022 | The registry carries it as a planned input to A-015 |
 | 4b | **Write D-019 — typography decision** into the Decision Log | Code already uses Noto stack; the log must say so |
 | 4c | **Supply staging URL** for verification | Not yet supplied |
 | 4d | **Enable `enforce_admins`** once both required checks are green on `main` | Command in [NYAYOS_BRANCH_PROTECTION.md § 3](NYAYOS_BRANCH_PROTECTION.md) |

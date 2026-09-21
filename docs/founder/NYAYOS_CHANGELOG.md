@@ -7,6 +7,39 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
+## 2026-09-21 — Fact Card design conformance review: FAIL (conditional) (A-021)
+
+### Reviewed
+
+A-020 Fact Card implementation at `bbacbb481a0e8188b2753b68f089f258104ba1c1`, against Figma Brief V2 § 5/6/9, Product Spec § 7.6–7.10/10/11 and A-014 § 3/4.5/11.4. **No Figma design exists** — A-008 remains OPEN; the instruction's "A-008 review" label was corrected to A-021.
+
+### Verdict — FAIL (conditional)
+
+| Area | Result |
+|---|---|
+| Fact Card states | FAIL — Confirm / Uncertain / Not relevant **actions** do not exist; only *Correct this* |
+| Source provenance | FAIL — hidden behind "Show sources"; value is the dominant text (Spec § 7.6; Brief § 5 hierarchy rule) |
+| Date precision | PASS |
+| Contradictions | PARTIAL — side-by-side, neutral, unresolved ✓; no confirm/resolve/leave actions; copy promises them |
+| Confidence bands | PARTIAL — `Unknown` missing |
+| Inline corrections | PASS |
+| Accessibility | PASS with fixes — contrast 25/27 (two opacity failures: 4.39, 3.97); dangling `aria-controls` when collapsed; NVDA pass still owed |
+| Mobile / Tablet / Desktop | PASS — 390 / 834 / 1280, no overflow, contradictions stack on mobile, all targets ≥ 44 px |
+
+Validation re-run: `tsc` PASS · `eslint` 0 errors · `vitest` 23/23 · `vite build` PASS.
+
+### Also found
+
+A-014 § 11.4 item 2 (split `document-extracted` → document-fact + ai-extraction; add `unverified-claim`) was **not delivered by A-018**, though A-018 is CANONICAL. Confidence-band hues reuse status/provenance hues, extending the A-014 hue-overload finding rather than fixing it.
+
+### Decided
+
+- **A-021 CANONICAL** — evidence: `docs/design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md`.
+- **A-022 Fact Card conformance fixes — OPEN**, inputs A-020 + A-021, authorized under FA-001, may start now. Ten items; 1–3 blocking.
+- **A-015** now planned on A-008 **and** A-022.
+- Recommended rule clarification: build outputs enter at **REVIEW**; a conformance review promotes them.
+
+---
 ## 2026-09-21 — [auto] Status registry changes
 
 ### New tasks
