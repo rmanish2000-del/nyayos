@@ -1,5 +1,6 @@
 import {
   Accessibility,
+  FileCheck2,
   LayoutGrid,
   PanelLeftClose,
   PanelLeftOpen,
@@ -10,7 +11,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-export type ShellSection = "tokens" | "components" | "navigation" | "accessibility";
+export type ShellSection = "tokens" | "components" | "facts" | "navigation" | "accessibility";
 
 const NAV: {
   id: ShellSection;
@@ -19,6 +20,7 @@ const NAV: {
 }[] = [
   { id: "tokens", label: "Tokens", icon: Palette },
   { id: "components", label: "Components", icon: LayoutGrid },
+  { id: "facts", label: "Facts", icon: FileCheck2 },
   { id: "navigation", label: "Navigation", icon: Navigation },
   { id: "accessibility", label: "Access", icon: Accessibility },
 ];

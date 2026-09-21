@@ -72,7 +72,7 @@ export function SourceBadge({
   className,
 }: {
   source: SourceKind;
-  detail?: string;
+  detail?: string | undefined;
   className?: string;
 }) {
   const config = SOURCE[source];

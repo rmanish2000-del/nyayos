@@ -5,6 +5,8 @@ import { AppShell, type ShellSection } from "@/components/nyayos/app-shell";
 import { Button } from "@/components/nyayos/button";
 import { ConfidenceBand } from "@/components/nyayos/confidence-band";
 import { DateBadge } from "@/components/nyayos/date-badge";
+import { FactCard } from "@/components/nyayos/fact-card";
+import { SourcePanel, type FactSource } from "@/components/nyayos/source-panel";
 import { InputField } from "@/components/nyayos/input-field";
 import { InlineCorrectionInput } from "@/components/nyayos/inline-correction-input";
 import { NotificationBanner } from "@/components/nyayos/notification-banner";
@@ -376,6 +378,163 @@ function ComponentsView() {
   );
 }
 
+const DOC_SOURCE: FactSource = {
+  kind: "document-extracted",
+  origin: "Invoice AT-4471.pdf",
+  locator: "page 2",
+  excerpt: "Goods delivered on 14 July 2026 at the Andheri warehouse.",
+  confidence: "high",
+  date: { precision: "exact", value: "14 July 2026" },
+};
+
+const STATEMENT_SOURCE: FactSource = {
+  kind: "user-statement",
+  origin: "Your description of what happened",
+  excerpt: "The delivery arrived around the middle of July, I think the 17th.",
+  confidence: "medium",
+  date: { precision: "approximate", value: "Mid July 2026" },
+};
+
+function FactsView() {
+  const [deliveryValue, setDeliveryValue] = React.useState("14 July 2026");
+  const [previousValue, setPreviousValue] = React.useState<string | undefined>(undefined);
+  const [corrected, setCorrected] = React.useState(false);
+  const [announcement, setAnnouncement] = React.useState("");
+
+  return (
+    <>
+      <Section
+        title="Fact card"
+        subtitle="One piece of information with its confirmation state, provenance and date precision always visible. Open the sources to see where it came from; correct it inline if it is wrong."
+      >
+        <div className="grid gap-4 xl:grid-cols-2">
+          <FactCard
+            id="fact-delivery"
+            label="Date of delivery"
+            value={deliveryValue}
+            status={corrected ? "corrected" : "confirmed"}
+            date={{ precision: "exact", value: deliveryValue }}
+            confidence="high"
+            sources={[DOC_SOURCE]}
+            {...(previousValue ? { previousValue } : {})}
+            onCorrect={(value, reason) => {
+              setPreviousValue(deliveryValue);
+              setDeliveryValue(value);
+              setCorrected(true);
+              setAnnouncement(
+                reason
+                  ? `Correction recorded with a reason: ${value}`
+                  : `Correction recorded: ${value}`,
+              );
+            }}
+          />
+          <p className="sr-only" aria-live="polite">
+            {announcement}
+          </p>
+
+          <FactCard
+            id="fact-uncertain"
+            label="Value of the goods"
+            value="Approximately ₹1,80,000"
+            status="uncertain"
+            confidence="low"
+            sources={[
+              {
+                kind: "ai-inference",
+                origin: "Read from a partially legible invoice total",
+                locator: "page 1",
+                confidence: "low",
+              },
+            ]}
+          />
+
+          <FactCard
+            id="fact-contradiction"
+            label="Date the goods were received"
+            value="Two different dates are recorded"
+            status="contradiction"
+            date={{ precision: "conflicting", value: "14 or 17 July 2026" }}
+            sources={[DOC_SOURCE, STATEMENT_SOURCE]}
+            contradiction={{
+              note: "The invoice and your description give different dates. NyayOS is not deciding which one is correct — you can confirm or correct either.",
+              versions: [
+                { value: "14 July 2026", source: DOC_SOURCE },
+                { value: "17 July 2026", source: STATEMENT_SOURCE },
+              ],
+            }}
+          />
+
+          <FactCard
+            id="fact-verified"
+            label="Registered address of the supplier"
+            value="Unit 4, Andheri East, Mumbai 400069"
+            status="confirmed"
+            date={{ precision: "unknown-date" }}
+            confidence="high"
+            sources={[
+              {
+                kind: "verified-source",
+                origin: "Company registration record",
+                locator: "clause 3",
+                confidence: "high",
+              },
+              { kind: "third-party", origin: "Transport receipt issued by the courier" },
+            ]}
+          />
+
+          <FactCard
+            id="fact-not-relevant"
+            label="Packaging condition"
+            value="Cartons were taped"
+            status="not-relevant"
+            sources={[{ kind: "user-statement", origin: "Your description of what happened" }]}
+          />
+
+          <FactCard
+            id="fact-unavailable"
+            label="Payment reference"
+            value="Not recorded anywhere yet"
+            status="missing"
+            sources={[{ kind: "source-unavailable", origin: "No document supplied for this item" }]}
+          />
+        </div>
+      </Section>
+
+      <Section
+        title="Source panel"
+        subtitle="The full provenance record behind a fact: origin, page reference, a verbatim excerpt, the date precision and the extraction confidence. Sources are listed, never ranked."
+      >
+        <div className="max-w-2xl">
+          <SourcePanel
+            sources={[
+              DOC_SOURCE,
+              STATEMENT_SOURCE,
+              {
+                kind: "user-correction",
+                origin: "Correction you recorded",
+                excerpt: "Corrected the supplier name spelling.",
+                date: { precision: "inferred", value: "Before 20 July 2026" },
+              },
+            ]}
+          />
+        </div>
+      </Section>
+
+      <Section
+        title="Responsive behaviour"
+        subtitle="Fact cards stack in one column on mobile, keep a single column on tablet for readability, and pair up from extra-large widths. Contradiction versions sit side by side from tablet upwards."
+      >
+        <p className="max-w-2xl text-sm text-muted-foreground">
+          Every control inside a card — show sources, correct this, save and cancel — is a 44×44
+          target, reachable by keyboard, with the source panel linked through{" "}
+          <code className="font-mono">aria-controls</code> and{" "}
+          <code className="font-mono">aria-expanded</code>.
+        </p>
+      </Section>
+    </>
+  );
+}
+
 function NavigationView() {
   return (
     <Section
@@ -491,19 +650,20 @@ function FoundationShowcase() {
     <AppShell current={section} onNavigate={setSection}>
       <header className="border-b border-border bg-surface-raised px-4 py-6 sm:px-8">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Staging · Sprint 1 foundation
+          Staging · Sprint 1 foundation + Sprint 2 fact card system
         </p>
         <h1 className="mt-1 font-serif text-2xl text-foreground sm:text-3xl">
           NyayOS foundation library
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Design tokens, provenance-first components and the responsive navigation shell that every
-          later screen will be built from. No product workflow is included.
+          Design tokens, provenance-first components, the responsive navigation shell and the fact
+          card system: every fact carries its confirmation state, its source and its date precision.
         </p>
       </header>
 
       {section === "tokens" ? <TokensView /> : null}
       {section === "components" ? <ComponentsView /> : null}
+      {section === "facts" ? <FactsView /> : null}
       {section === "navigation" ? <NavigationView /> : null}
       {section === "accessibility" ? <AccessibilityView /> : null}
     </AppShell>

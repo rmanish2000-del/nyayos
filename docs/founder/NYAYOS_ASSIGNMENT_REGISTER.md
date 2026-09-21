@@ -206,6 +206,23 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | This closes only the seven additive state gaps. A-014's formal contrast and assistive-technology audits remain separate open risks. A-008 Fact Card design remains required before A-015 |
 | **Handoff back to M365 Copilot** | A-018 is CANONICAL. A-015 remains blocked only on A-008. Do not start production work; FA-002 is not granted |
 
+### A-020 — Fact Card system (provisional staging implementation)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-020 |
+| **Tool and exact mode** | Lovable — implementation and validation |
+| **Purpose** | Build the Fact Card system on the canonical A-018 state model: Fact Card, Source Panel, source provenance, date precision, contradiction state, confidence band and inline correction flow |
+| **Input files** | A-011 Sprint 1 Foundation; A-014 Sprint 1 Foundation review; A-018 Sprint 1.1 State Completion; founder instruction, 21 Sep 2026 |
+| **Expected output** | Fact Card and Source Panel components covering `confirmed`, `uncertain`, `corrected`, `not-relevant`, `contradiction`, `user-statement`, `document-extracted`, `ai-inference` and `verified-source`, on mobile, tablet and desktop |
+| **Environment** | Lovable staging workspace; canonical repository `rmanish2000-del/nyayos` |
+| **Deployment allowed** | **Staging: ALLOWED (FA-001). Production: NOT ALLOWED.** No deployment performed |
+| **Status** | **CANONICAL — 21 September 2026** (implementation and validation only) |
+| **Result** | `vitest` **PASS 23/23** (15 foundation + 8 Fact Card) · typecheck **PASS** · ESLint **PASS (0 errors; 7 existing Fast Refresh warnings)** · production build **PASS** · responsive rendering **PASS** at 390×844, 834×1100 and 1280×1000 with six Fact Cards, no console errors and 44×44 visible interactive targets |
+| **Evidence** | `app/src/components/nyayos/fact-card.tsx`, `app/src/components/nyayos/source-panel.tsx`, `app/tests/fact-card.test.tsx` in the canonical A-020 commit; generated status registry, dashboard and dependency graph |
+| **Limitations** | The Fact Card visual design is derived from the Master Product Spec text because **A-008 does not exist**; design conformance is unverified. Contradictions are displayed side by side and never ranked or resolved. A-014's formal contrast and assistive-technology audits remain open. No backend, persistence or analysis logic |
+| **Handoff back to M365 Copilot** | A-020 is CANONICAL as implementation. **A-015 Sprint 2 stays OPEN** until A-008 design conformance is checked against this implementation. No Sprint 3 work started; FA-002 is not granted |
+
 ### A-019 — Repository Automation Foundation
 
 | Field | Value |
@@ -235,7 +252,8 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-011 | **Sprint 1 Foundation — Lovable staging build** | Lovable — staging build | ● **CANONICAL** (imported under A-017; gaps recorded in A-014 § 11.3) |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
 | A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 |
-| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — A-018 is CANONICAL; still waiting on A-008 Fact Card design |
+| A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ⛔ **OPEN** — still waiting on A-008 Fact Card design; A-020 provides the provisional implementation |
+| A-020 | **Fact Card system — provisional staging implementation** | Lovable — staging build | ● **CANONICAL** — validated 21 Sep 2026 (design conformance unverified; A-008 absent) |
 | A-016 | **Typography decision → Decision Log** (D-019) | Founder | Open. Code now embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet say so |
 
 ---

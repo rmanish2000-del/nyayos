@@ -52,7 +52,7 @@ export function DateBadge({
   className,
 }: {
   precision: DatePrecision;
-  value?: string;
+  value?: string | undefined;
   className?: string;
 }) {
   const config = PRECISION[precision];

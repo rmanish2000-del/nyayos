@@ -29,6 +29,7 @@ Legend: ○ OPEN · ◐ IN_PROGRESS · ◑ REVIEW · ● CANONICAL · ⊘ SUPERS
 | A-017 | Sprint 1 Foundation import into canonical repository | ● **CANONICAL** | Claude Code | Claude Code — Repository Integration | FA-001 | A-011, A-014 | — | [docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md](../../docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md) | 2026-09-21 |
 | A-018 | Sprint 1.1 — State Completion | ● **CANONICAL** | Lovable | Lovable — staging build | FA-001 | A-011, A-014 | — | [app/tests/foundation.test.tsx](../../app/tests/foundation.test.tsx) | 2026-09-21 |
 | A-019 | Repository Automation Foundation | ● **CANONICAL** | Claude Code | Claude Code — Repository Automation | — | A-007, A-013, A-017 | — | [docs/founder/NYAYOS_CHANGELOG.md](NYAYOS_CHANGELOG.md) | 2026-09-21 |
+| A-020 | Fact Card system — provisional staging implementation | ● **CANONICAL** | Lovable | Lovable — staging build | FA-001 | A-011, A-014, A-018 | — | [app/tests/fact-card.test.tsx](../../app/tests/fact-card.test.tsx) | 2026-09-21 |
 
 ## Notes
 
@@ -44,8 +45,9 @@ Legend: ○ OPEN · ◐ IN_PROGRESS · ◑ REVIEW · ● CANONICAL · ⊘ SUPERS
 - **A-012** — NOT AUTHORIZED. Requires FA-002.
 - **A-013** — FA-001 recorded. Commit 1ff5383.
 - **A-014** — Executed § 11. GO (conditional) for Sprint 2 on A-018.
-- **A-015** — GO remains conditional on A-008 Fact Card design; A-018 is CANONICAL.
+- **A-015** — Still gated by A-008 Fact Card design. A-020 delivers a provisional Fact Card implementation on the A-018 state model; A-015 closes only after A-008 design conformance is checked.
 - **A-016** — Code embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet record it.
 - **A-017** — Commit 62f649f. Staging URL not supplied — staging not verified.
 - **A-018** — CANONICAL after 15/15 tests, typecheck, lint (0 errors), production build, and responsive 390/834/1280 checks passed. Added uncertain, not-relevant, corrected, user-correction provenance, unknown-date, bounded confidence bands, and accessible inline correction states. No deployment performed.
 - **A-019** — CANONICAL 21 Sep 2026: task-gate run 35559156273 and dependency-check run 35559156205 green on main (commit bd31394); status-update exercised by this very transition. Run URLs in the changelog.
+- **A-020** — Fact Card, Source Panel, provenance, date precision, contradiction, confidence band and inline correction flow built on the A-018 state model. vitest 23/23, typecheck, lint 0 errors, build, responsive 390/834/1280 PASS. Visual design derived from the Master Product Spec text because A-008 does not exist; design conformance is unverified and A-015 stays OPEN.

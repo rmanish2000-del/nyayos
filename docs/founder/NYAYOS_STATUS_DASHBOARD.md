@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 6 | 0 | 0 | 13 | 0 | 19 |
+| 6 | 0 | 0 | 14 | 0 | 20 |
 
 ## In flight
 
@@ -47,11 +47,13 @@ _None._
 | A-017 | Sprint 1 Foundation import into canonical repository | ● CANONICAL | Claude Code | FA-001 | 2026-09-21 |
 | A-018 | Sprint 1.1 — State Completion | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-019 | Repository Automation Foundation | ● CANONICAL | Claude Code | — | 2026-09-21 |
+| A-020 | Fact Card system — provisional staging implementation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 
 ## Recently updated
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-020 | Fact Card system — provisional staging implementation | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-019 | Repository Automation Foundation | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-018 | Sprint 1.1 — State Completion | ● CANONICAL | Lovable | FA-001 | 2026-09-21 |
 | A-017 | Sprint 1 Foundation import into canonical repository | ● CANONICAL | Claude Code | FA-001 | 2026-09-21 |
@@ -59,7 +61,6 @@ _None._
 | A-015 | Sprint 2 — Fact Card System build | ○ OPEN | Unassigned | FA-001 | 2026-09-21 |
 | A-014 | Sprint 1 Foundation architecture review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-013 | MVP Reconciliation V3, authorization record, authority hierarchy | ● CANONICAL | Claude Code | — | 2026-09-21 |
-| A-012 | Production build / deployment | ○ OPEN | Unassigned | FA-002 (not granted) | 2026-09-21 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)
