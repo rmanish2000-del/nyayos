@@ -26,6 +26,7 @@
 |---|---|
 | See current state, decisions, risks and next actions | **[Founder Dashboard](docs/founder/NYAYOS_FOUNDER_DASHBOARD.md)** |
 | **Know what you are allowed to do** | **[Founder Authorization Record](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** — tier 1, read before acting |
+| See task status, what is blocked, what is ready | [Status Dashboard](docs/founder/NYAYOS_STATUS_DASHBOARD.md) (auto) · [Dependency Graph](docs/founder/NYAYOS_DEPENDENCY_GRAPH.md) · [Status Rules](docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md) |
 | Find any document, or see which document wins a conflict | [docs/INDEX.md](docs/INDEX.md) — includes the [authority hierarchy](docs/INDEX.md#document-authority-hierarchy) |
 | Understand why decisions were made | [Decision Log](docs/founder/NYAYOS_DECISION_LOG_V1.md) |
 | Understand the full context in one document | [Master Context](docs/founder/NYAYOS_MASTER_CONTEXT_V1.md) |
@@ -141,6 +142,8 @@ Lockfile of record is `app/bun.lock` (Lovable). Sprint 1 needs no environment va
 
 ```
 app/                       Sprint 1 Foundation — TanStack Start · React 19 · Tailwind v4 · Vitest
+.github/workflows/         task-gate · dependency-check · status-update
+scripts/governance/        registry.mjs — validate / generate / changelog
 README.md                  Entry point
 CONTRIBUTING.md            Contribution and private-data rules
 .gitignore                 Private-data and credential exclusions
@@ -164,6 +167,7 @@ docs/
 - **Canonical name is `NyayOS`** for all new work. Legacy research files use `NYAYAOS_*` and keep those names deliberately, for provenance.
 - **Documents have tiers.** The [authority hierarchy](docs/INDEX.md#document-authority-hierarchy) decides which wins a conflict. Gates are answered **only** by the [Founder Authorization Record](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md); decisions and risks by the V1 records; the Dashboard is a view with no independent authority.
 - **A build brief is not authorization.** Research is evidence, never a decision.
+- **Status is machine-checked.** `OPEN → IN_PROGRESS → REVIEW → CANONICAL → SUPERSEDED`, in [`NYAYOS_STATUS_REGISTRY.json`](docs/founder/NYAYOS_STATUS_REGISTRY.json). A task can be another task's input **only when CANONICAL** — `task-gate` enforces it on every push and PR.
 - Every assignment is recorded in the **[Assignment Register](docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md)** before work starts.
 - Every artefact is recorded in the **[Output Register](docs/founder/NYAYOS_OUTPUT_REGISTER.md)** when work ends.
 

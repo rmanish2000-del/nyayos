@@ -7,6 +7,31 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
+## 2026-09-21 — Repository Automation Foundation (A-019)
+
+### Added
+
+- **`docs/founder/NYAYOS_STATUS_REGISTRY.json`** — machine source of truth for task status and dependencies; 19 tasks seeded from the registers (A-001 → A-019).
+- **`scripts/governance/registry.mjs`** — zero-dependency validator and generator: `validate` · `generate [--check]` · `changelog --previous` · `all`.
+- **Generated:** `NYAYOS_STATUS_REGISTRY.md`, `NYAYOS_DEPENDENCY_GRAPH.md` (Mermaid; solid = canonical inputs, dashed = planned), `NYAYOS_STATUS_DASHBOARD.md`.
+- **`NYAYOS_CANONICAL_STATUS_RULES.md`** — tier 2. Flow `OPEN → IN_PROGRESS → REVIEW → CANONICAL → SUPERSEDED`; rule: only CANONICAL tasks may be `inputs`; `planned_inputs` pin a task at OPEN.
+- **Workflows:** `task-gate` (validate registry, refuse stale derived docs, require A-nnn in PRs, private-data guard) · `dependency-check` (typecheck/lint/test/build on `app/`, advisory audit and unused-dependency watch, asserts no deploy step) · `status-update` (on registry change: regenerate + auto changelog entry, delivered as a **PR** because `main` is protected).
+- **`.github/pull_request_template.md`** — assignment ID, gate, status rules, private-data check, registers, evidence.
+- **`NYAYOS_BRANCH_PROTECTION.md`** — protection **applied**: required checks `task-gate` + `dependency-check` (strict), no force-push, no deletion; ruleset **#23748706** (deletion, non-fast-forward). `enforce_admins` off until first green runs — closing command recorded.
+
+### Changed
+
+- Assignment register: A-014 status corrected to COMPLETE; A-011 row corrected to CANONICAL; A-019 recorded (REVIEW).
+- Authority hierarchy: status rules + registry added at **tier 2**.
+- CONTRIBUTING § 5 and § 7: status flow, registry-first procedure, protected-branch PR process.
+- Founder Dashboard: links to the machine view; F-6; next action 4d.
+
+### Auto-generated changelog entries
+
+From this point, status transitions in the registry are appended here automatically by `status-update` as `[auto]` entries, delivered by PR. The first such entry will appear on the next registry change.
+
+---
+
 ## 2026-09-21 — Sprint 1 Foundation imported and CANONICAL; A-014 executed; GO (conditional) for Sprint 2 (A-017)
 
 ### Imported

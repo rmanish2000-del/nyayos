@@ -3,6 +3,7 @@
 **Canonical project name:** NyayOS
 **Status date:** 20 September 2026
 **Maintained by:** Repository and Product-Continuity Maintainer (Claude Code)
+**Machine view:** [NYAYOS_STATUS_DASHBOARD.md](NYAYOS_STATUS_DASHBOARD.md) (auto-generated from the [status registry](NYAYOS_STATUS_REGISTRY.json)) · [dependency graph](NYAYOS_DEPENDENCY_GRAPH.md) · [status rules](NYAYOS_CANONICAL_STATUS_RULES.md)
 **Authority:** This dashboard is a *view*. It has no independent authority.
 For gates, [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) governs.
 For decisions, risks and context, the V1 records govern.
@@ -125,6 +126,23 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Blocker** | None. Browser-based checks (contrast, zoom) and SR pass remain open items inside Sprint 1.1 |
 | **Required evidence** | Delivered: § 11 checklist; 4/4 validations PASS; typography finding retracted against evidence |
 | **Next action** | **A-018 Sprint 1.1 State Completion** (7 items, A-014 § 11.4) → then A-015 Sprint 2 |
+
+### F-6 — Repository Automation Foundation  ◑ REVIEW
+
+| Field | Value |
+|---|---|
+| **Task** | CI enforcement of the canonical status rules; generated dependency graph, status dashboard and changelog entries; branch protection; PR template |
+| **Why** | Status, dependencies and gates were only in prose. A machine-readable registry plus `task-gate` makes *"no task is an input unless CANONICAL"* a failing check instead of a sentence |
+| **Exact tool / mode** | Claude Code — Repository Automation |
+| **Owner** | Claude Code |
+| **Environment** | Canonical repository; GitHub Actions |
+| **Deployment permission** | N/A — governance tooling. `dependency-check` self-asserts no deploy command |
+| **Start date** | 21 September 2026 |
+| **Target date** | 21 September 2026 |
+| **Status** | **REVIEW** — CANONICAL when all three workflows have run green on `main` |
+| **Blocker** | None |
+| **Required evidence** | Green run URLs for `task-gate`, `dependency-check`, `status-update`; branch protection verified via API |
+| **Next action** | Push → observe runs → flip A-019 to CANONICAL in the registry (which itself exercises `status-update`) |
 
 ### F-4 — Repository and continuity initialization
 
@@ -278,6 +296,7 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | 4a | **Sprint 1.1 State Completion** (A-018) | ✅ Authorized. **Must precede Sprint 2 build** |
 | 4b | **Write D-019 — typography decision** into the Decision Log | Code already uses Noto stack; the log must say so |
 | 4c | **Supply staging URL** for verification | Not yet supplied |
+| 4d | **Enable `enforce_admins`** once both required checks are green on `main` | Command in [NYAYOS_BRANCH_PROTECTION.md § 3](NYAYOS_BRANCH_PROTECTION.md) |
 | 5 | **Founder go / no-go for production** | **Requires 3, 4, A-010 security review, legal/privacy review and staging UAT.** See FA-001 § *Conditions for the next gate* |
 
 > **Production remains NOT AUTHORIZED.** No production build, deployment, database, domain, public beta or real user data — in any environment — until a new entry (**FA-002**) is recorded in [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md).

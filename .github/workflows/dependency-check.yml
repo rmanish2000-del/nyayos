@@ -1,0 +1,98 @@
+# NyayOS — dependency check
+#
+# Runs the four validation commands on app/ and an advisory vulnerability audit.
+# Required status check on `main` (branch protection). Job name must stay `dependency-check`.
+#
+# Lockfile of record is app/bun.lock (Lovable). This job resolves with npm, so it is a
+# fresh resolve rather than bun's exact tree — recorded as a known limitation in
+# docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md.
+#
+# Deployment is NOT part of this workflow and is NOT ALLOWED (FA-001). Nothing here
+# runs `nitro deploy` or touches any environment.
+
+name: dependency-check
+
+on:
+  pull_request:
+    paths:
+      - "app/**"
+      - ".github/workflows/dependency-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - ".github/workflows/dependency-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dependency-check:
+    name: dependency-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install (npm resolve; bun.lock is the lockfile of record)
+        run: npm install --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+      - name: Build (no deploy)
+        run: npm run build
+
+      - name: Assert nothing was deployed
+        run: |
+          # The build tool emits Cloudflare config. Emitting is not deploying. Fail loudly if
+          # anyone ever wires a deploy step into this job.
+          if grep -qiE 'nitro deploy|wrangler deploy' ../.github/workflows/dependency-check.yml; then
+            echo "::error::deploy command found in dependency-check workflow — production is NOT ALLOWED (FA-001)"; exit 1; fi
+          echo "no deploy step present"
+
+      - name: Vulnerability audit (advisory — does not fail the job)
+        continue-on-error: true
+        run: |
+          npm audit --audit-level=high --json > audit.json || true
+          node -e '
+            const a = JSON.parse(require("fs").readFileSync("audit.json","utf8"));
+            const v = a.metadata?.vulnerabilities ?? {};
+            const line = `critical ${v.critical??0} · high ${v.high??0} · moderate ${v.moderate??0} · low ${v.low??0}`;
+            console.log("npm audit:", line);
+            require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## dependency-check\n\n- npm audit: ${line}\n- audit is advisory in this job; high/critical findings are tracked in the risk register, not auto-failed\n`);
+          '
+
+      - name: Unused-dependency watch (advisory)
+        continue-on-error: true
+        run: |
+          # Packages present in package.json but not imported anywhere under src/ or tests/.
+          # A-014 § 11.3 finding 6. Advisory until the founder decides prune vs accept.
+          node -e '
+            const fs=require("fs"),path=require("path");
+            const pkg=JSON.parse(fs.readFileSync("package.json","utf8"));
+            const deps=Object.keys(pkg.dependencies||{});
+            const files=[];(function walk(d){for(const f of fs.readdirSync(d)){const p=path.join(d,f);fs.statSync(p).isDirectory()?walk(p):/\.(tsx?|css|mjs|js)$/.test(f)&&files.push(p)}})("src");
+            const src=files.map(f=>fs.readFileSync(f,"utf8")).join("\n");
+            const unused=deps.filter(d=>!src.includes(`"${d}`)&&!src.includes(`'"'"'${d}`)&&!src.includes(d+"/"));
+            console.log("possibly unused dependencies:", unused.join(", ")||"none");
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `- possibly unused dependencies: ${unused.join(", ")||"none"}\n`);
+          '

@@ -109,9 +109,19 @@ Known artefacts deliberately left unfixed — `citeturn…` citation markers, th
 
 Every piece of delegated work follows the same loop.
 
+### Status flow — and the one rule CI enforces
+
+```
+OPEN → IN_PROGRESS → REVIEW → CANONICAL → SUPERSEDED
+```
+
+**A task may be listed as an `input` to another task only when it is CANONICAL.** Not-yet-canonical dependencies go under `planned_inputs`, and a task with any planned input cannot leave OPEN. `task-gate` fails the push or PR otherwise. Full rules: [`NYAYOS_CANONICAL_STATUS_RULES.md`](docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md).
+
 ### Before starting
 
-Add a row to [`NYAYOS_ASSIGNMENT_REGISTER.md`](docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md) with all of:
+1. Add the task to [`NYAYOS_STATUS_REGISTRY.json`](docs/founder/NYAYOS_STATUS_REGISTRY.json) — id, title, status `OPEN`, owner, tool, gate, `inputs` (canonical only), `planned_inputs`.
+2. Run `node scripts/governance/registry.mjs all` and commit the regenerated docs with it.
+3. Add a row to [`NYAYOS_ASSIGNMENT_REGISTER.md`](docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md) with all of:
 
 Assignment ID · Tool and **exact mode** · Purpose · Input files · Expected output · Environment · Deployment allowed/not allowed · Status · Result · Evidence · Limitations · Handoff back to M365 Copilot
 
@@ -148,9 +158,11 @@ Then update the **Locked** or **Provisional** list, and reflect it in the Founde
 
 ---
 
-## 7. Commits
+## 7. Commits and pull requests
 
-- Prefix: `docs:` · `chore:` · `fix:` — this is a docs repository, so `docs:` covers most changes.
+- `main` is **protected**: required checks `task-gate` and `dependency-check`; no force-push; no deletion. See [`NYAYOS_BRANCH_PROTECTION.md`](docs/founder/NYAYOS_BRANCH_PROTECTION.md).
+- Open a pull request using the template; **cite the assignment ID (A-nnn)** in the title or body — `task-gate` refuses PRs that do not.
+- Prefix: `docs:` · `feat(app):` · `fix(app):` · `chore:` · `docs(auto):` for bot-generated regeneration.
 - Subject in the imperative, under ~72 characters.
 - Reference assignment or decision IDs where relevant: `docs: record A-008 Figma V2 output`.
 - Commit related changes together — a document plus its register and changelog entries belong in one commit.

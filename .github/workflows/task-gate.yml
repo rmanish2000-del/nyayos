@@ -1,0 +1,76 @@
+# NyayOS — task gate
+#
+# Enforces the canonical status rules on every push and pull request:
+#   1. the status registry validates (only CANONICAL tasks may be inputs; no cycles;
+#      CANONICAL tasks have evidence; started tasks have no unresolved planned inputs);
+#   2. the generated governance documents are in sync with the registry;
+#   3. a pull request references at least one assignment ID (A-nnn) in its body.
+#
+# Required status check on `main` (branch protection). Job name must stay `task-gate`.
+# Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md
+
+name: task-gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: task-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  task-gate:
+    name: task-gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate status registry against canonical rules
+        run: node scripts/governance/registry.mjs validate
+
+      - name: Generated governance documents are in sync with the registry
+        run: node scripts/governance/registry.mjs generate --check
+
+      - name: Pull request references an assignment ID
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if printf '%s\n%s' "$PR_TITLE" "$PR_BODY" | grep -qE 'A-[0-9]{3}'; then
+            echo "assignment reference found"
+          else
+            echo "::error::Pull request must reference an assignment ID (A-nnn) in its title or body. See .github/pull_request_template.md"
+            exit 1
+          fi
+
+      - name: Private-data guard — no case material, no secrets, no env files
+        run: |
+          set -e
+          fail=0
+          if git ls-files | grep -iE '(^|/)\.env($|\.)' | grep -v '\.env\.example$'; then echo "::error::.env file tracked"; fail=1; fi
+          if git ls-files | grep -iE '\.(pdf|docx|zip|eml|msg)$'; then echo "::error::document/archive file tracked — case material is never committed"; fail=1; fi
+          if git grep -nIiE 'Manish_Patel_Foodgod|FIR No\.|CNR ?No|Aadhaar ?(No|Number)[:# ]*[0-9]' -- ':!docs/founder/NYAYOS_OUTPUT_REGISTER.md' ':!docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md' ':!docs/founder/NYAYOS_CHANGELOG.md' ':!CONTRIBUTING.md' ':!.gitignore' ':!.github/workflows/task-gate.yml'; then echo "::error::possible private case identifier in tracked content"; fail=1; fi
+          if git grep -nIE '(sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|gho_[A-Za-z0-9]{20,}|AKIA[A-Z0-9]{16}|-----BEGIN [A-Z ]*PRIVATE KEY)' -- ':!.github/workflows/task-gate.yml'; then echo "::error::credential pattern in tracked content"; fail=1; fi
+          exit $fail
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## task-gate"
+            echo
+            echo "- registry: \`docs/founder/NYAYOS_STATUS_REGISTRY.json\`"
+            echo "- rules: \`docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md\`"
+            echo "- event: \`${{ github.event_name }}\` on \`${{ github.ref_name }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

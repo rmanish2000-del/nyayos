@@ -17,6 +17,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | **1** | **[Founder Authorization Record](founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** | **Gates** — what may be built, deployed, launched, or done with data, *right now* | **Append-only.** Supersede with a new FA entry; never edit a past one |
 | **2** | [Decision Log V1](founder/NYAYOS_DECISION_LOG_V1.md) | Product and technical decisions D-001 → D-018; locked vs provisional | Append a new decision; never rewrite an existing one |
 | **2** | [Risk Register V1](founder/NYAYOS_RISK_REGISTER_V1.md) | Risks R01 → R30; controls; the risk-acceptance boundary | Append; never rewrite |
+| **2** | [Canonical Status Rules](founder/NYAYOS_CANONICAL_STATUS_RULES.md) + [Status Registry (JSON)](founder/NYAYOS_STATUS_REGISTRY.json) | **Task status and dependencies** — `OPEN → IN_PROGRESS → REVIEW → CANONICAL → SUPERSEDED`; only CANONICAL tasks may be inputs. Enforced by `task-gate` | Edit the JSON; regenerate derived docs; CI refuses violations |
 | **3** | [Master Context V1](founder/NYAYOS_MASTER_CONTEXT_V1.md) | Canonical identity, evidence posture, architecture posture | Supplied — do not edit substance |
 | **3** | [Master Product Spec V1](product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md) | What the product is | Supplied — do not edit substance |
 | **4** | [Continuity Handoff V1](handoffs/NYAYOS_CONTINUITY_HANDOFF_V1.md) | Architecture reconciliation table — **constrains** the Architecture Review | Supplied — do not edit substance |
@@ -24,6 +25,10 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | **6** | [Research](#docsresearch--evidence-base) | Evidence only. **Never** a decision | Supplied — do not edit substance |
 | **7** | [Founder Dashboard](founder/NYAYOS_FOUNDER_DASHBOARD.md), [Assignment Register](founder/NYAYOS_ASSIGNMENT_REGISTER.md), [Output Register](founder/NYAYOS_OUTPUT_REGISTER.md), [Changelog](founder/NYAYOS_CHANGELOG.md), [INDEX](INDEX.md), README, CONTRIBUTING | **Views and records.** No independent authority | Maintainer-updated every time a higher tier changes |
 | **8** | [`app/`](../app/README.md) — Sprint 1 Foundation code | **Implementation.** Governed by tiers 1–5; **never a source of product truth.** If code and spec disagree, the code is wrong until a tier-2 decision says otherwise | Changes only within an authorized sprint; four checks must pass |
+
+### Automation
+
+`task-gate` (every push/PR) validates the registry and refuses stale derived docs · `dependency-check` (app/ changes) runs typecheck/lint/test/build · `status-update` (registry change on main) regenerates the views and opens a PR. Details: [Canonical Status Rules § 6](founder/NYAYOS_CANONICAL_STATUS_RULES.md), [Branch Protection](founder/NYAYOS_BRANCH_PROTECTION.md).
 
 ### The three rules that follow from this
 
@@ -52,6 +57,12 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | Document | Type | Authority |
 |---|---|---|
 | [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) | Authorization | **Tier 1 — authoritative for all gates.** Append-only |
+| [NYAYOS_STATUS_REGISTRY.json](founder/NYAYOS_STATUS_REGISTRY.json) | Registry (machine) | **Tier 2 — source of truth for task status and dependencies** |
+| [NYAYOS_CANONICAL_STATUS_RULES.md](founder/NYAYOS_CANONICAL_STATUS_RULES.md) | Rules | Tier 2 — the status flow and the canonical-input rule |
+| [NYAYOS_STATUS_REGISTRY.md](founder/NYAYOS_STATUS_REGISTRY.md) | Generated view | Do not edit — regenerate |
+| [NYAYOS_STATUS_DASHBOARD.md](founder/NYAYOS_STATUS_DASHBOARD.md) | Generated view | Auto status dashboard — counts, in-flight, ready, blocked |
+| [NYAYOS_DEPENDENCY_GRAPH.md](founder/NYAYOS_DEPENDENCY_GRAPH.md) | Generated view | Mermaid graph: solid = canonical inputs, dashed = planned |
+| [NYAYOS_BRANCH_PROTECTION.md](founder/NYAYOS_BRANCH_PROTECTION.md) | Record | Applied protection + ruleset; re-apply commands |
 | [NYAYOS_FOUNDER_DASHBOARD.md](founder/NYAYOS_FOUNDER_DASHBOARD.md) | Dashboard | **View** — derived from the sources below |
 | [NYAYOS_ASSIGNMENT_REGISTER.md](founder/NYAYOS_ASSIGNMENT_REGISTER.md) | Register | Authoritative for assignments A-001 → A-011 |
 | [NYAYOS_OUTPUT_REGISTER.md](founder/NYAYOS_OUTPUT_REGISTER.md) | Register | Authoritative for artefacts and acceptance |

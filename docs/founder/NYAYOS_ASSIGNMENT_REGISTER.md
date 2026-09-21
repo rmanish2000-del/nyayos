@@ -158,10 +158,10 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Expected output** | Findings, severities, evidence, Go/No-Go for Sprint 2, three risk ratings |
 | **Environment** | Read-only review. No code modified, nothing deployed, nothing implemented |
 | **Deployment allowed** | **Staging: ALLOWED (FA-001). Production: NOT ALLOWED.** Review itself performs no deployment |
-| **Status** | **BLOCKED — awaiting artefact.** Review instrument complete; execution pending |
-| **Result** | **NO-GO (conditional) for Sprint 2** until the artefact is supplied and the § 4 checklist passes. Three findings made from the repository alone: typography undocumented + reported drift (High); "completed" sprint has no artefact in the canonical system (Critical, process); state taxonomy fully specified (favourable). Canonical font reference "Hind Siliguri" flagged as a possible Bengali/Devanagari naming slip |
+| **Status** | **COMPLETE — executed 21 September 2026** (blind phase earlier the same day; artefact received under A-017) |
+| **Result** | **GO (conditional) for Sprint 2** on Sprint 1.1 State Completion (A-018). Typography-drift finding **retracted** against evidence (Noto stack). High: state enums incomplete vs Product Spec; no inline-correct input; contrast/SR audits not run. Medium: hue-family overload; Google Fonts CDN; unused deps. See § 11 |
 | **Evidence** | [docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](../architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) |
-| **Limitations** | Architecture, accessibility and design-system ratings are **UNRATED** — the reviewer declined to rate code it has not seen. The EduOS repo `learning-start-nexus` was identified by README only and not inspected further |
+| **Limitations** | Browser-based checks (contrast, zoom to 400 %, focus-obscured) and a screen-reader pass were **not** run — carried into A-018. Blind-phase ratings (§ 10) superseded by § 11.5 |
 | **Handoff back to M365 Copilot** | Supply the artefact via review § 2 (recommended: Lovable → GitHub → private `nyayos-app`). Three actions can start now without it: record typography decision (D-019 candidate), close FA-001 code-location item, begin Fact Card design in Figma against § 3.1 / § 4.5 |
 
 ### A-017 — Sprint 1 Foundation import into canonical repository
@@ -189,6 +189,23 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | P2 | **Code directory** | `app/` at repository root; `docs/` untouched | Keeps tier-1..7 documents physically separate from build artefacts; avoids root-level `package.json` making the repo *look* like the app |
 | P3 | **`.gitignore` carve-outs** | Allow `app/public/**` images and `app/**/*.svg`; keep `.env*` blocked (Lovable exports ship a `.env` with the Supabase anon key — it must be **excluded** and re-supplied via `.env.example`); screenshots to `docs/evaluation/sprint1-screenshots/` with an explicit allow | Current rules block `*.png`, `*.jpg`, `*.svg`, `*.zip` repo-wide and would silently drop Lovable's own assets |
 
+### A-019 — Repository Automation Foundation
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-019 |
+| **Tool and exact mode** | Claude Code — Repository Automation |
+| **Purpose** | Automated workflow governance: enforce the canonical status rules in CI, generate the dependency graph, status dashboard and changelog entries from a single machine-readable registry, protect `main`, template pull requests |
+| **Input files** | A-007, A-013, A-017 (all CANONICAL). Founder instruction 21 Sep 2026 |
+| **Expected output** | `.github/workflows/{task-gate,dependency-check,status-update}.yml` · `.github/pull_request_template.md` · `scripts/governance/registry.mjs` · `docs/founder/NYAYOS_STATUS_REGISTRY.json` (+ generated `.md`, `NYAYOS_DEPENDENCY_GRAPH.md`, `NYAYOS_STATUS_DASHBOARD.md`) · `NYAYOS_CANONICAL_STATUS_RULES.md` · `NYAYOS_BRANCH_PROTECTION.md` |
+| **Environment** | Canonical repository, `main`. GitHub Actions (ubuntu-latest, Node 22). No product code touched |
+| **Deployment allowed** | **NOT ALLOWED.** `dependency-check` asserts that no deploy command exists in its own workflow |
+| **Status** | **REVIEW** → CANONICAL once all three workflows have run green on `main` (evidence: run URLs) |
+| **Result** | Status flow `OPEN → IN_PROGRESS → REVIEW → CANONICAL → SUPERSEDED` encoded in `NYAYOS_STATUS_REGISTRY.json`; the rule *"no task may be an input unless CANONICAL"* enforced by `registry.mjs validate` in `task-gate` on every push/PR (`inputs` = canonical only; `planned_inputs` = declared future deps that pin a task at OPEN). Graph, registry view and status dashboard generated from the registry; `--check` mode makes stale derived docs a CI failure. `status-update` regenerates on registry change and **opens a PR** (main is protected; bots cannot push). **Branch protection applied** (required checks `task-gate` + `dependency-check`, strict; force-push/deletion blocked) **and ruleset #23748706** |
+| **Evidence** | [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md) · [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · [NYAYOS_STATUS_DASHBOARD.md](NYAYOS_STATUS_DASHBOARD.md) · [NYAYOS_BRANCH_PROTECTION.md](NYAYOS_BRANCH_PROTECTION.md) · workflow run URLs recorded in the changelog once green |
+| **Limitations** | `enforce_admins` is **off** until both required checks have run once on `main` (the checks did not exist when protection was applied) — closing command in NYAYOS_BRANCH_PROTECTION.md § 3. Auto-changelog begins with the **next** registry change (no prior registry in history to diff). Secret/private-data guard in `task-gate` is pattern-based. The hand-written registers still carry the *why*; the JSON is the status source of truth — keeping them consistent is a human duty the validator cannot fully check |
+| **Handoff back to M365 Copilot** | Every future assignment: add a row to `NYAYOS_STATUS_REGISTRY.json` **first**, run `node scripts/governance/registry.mjs all`, then open a PR citing the A-nnn. A task cannot be used as an input until it is CANONICAL — the gate will refuse |
+
 ---
 
 ## Open assignments — not yet issued
@@ -198,7 +215,7 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | A-008 | **Figma V2** | Figma — design mode | Founder assigns owner |
 | A-009 | **User interviews + WTP validation** | Founder-led field research | Founder defines exact category boundary |
 | A-010 | **NyayOS Security + Data Architecture Review** (research/specification only) | Recommended in the Continuity Handoff. Inputs: Master Product Spec V1, Architecture Review, Risk Register V1, Real Case Evaluation Protocol | May run in parallel with A-008/A-009 |
-| A-011 | **Lovable staging build** | Lovable — staging build | ✅ **AUTHORIZED (FA-001, 21 Sep 2026).** Staging only, fixture data only. Blocked on: build owner unassigned, staging code location not recorded |
+| A-011 | **Sprint 1 Foundation — Lovable staging build** | Lovable — staging build | ● **CANONICAL** (imported under A-017; gaps recorded in A-014 § 11.3) |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |
 | A-018 | **Sprint 1.1 — State Completion** | Lovable — staging build | ✅ **Authorized under FA-001.** Seven items in [A-014 § 11.4](../architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md). **Must precede A-015** |
 | A-015 | **Sprint 2 — Fact Card System build** | Lovable — staging build | ✅ **GO (conditional)** per A-014 § 11.4 — after A-018. Fact Card **design** in Figma (A-008) may proceed now |

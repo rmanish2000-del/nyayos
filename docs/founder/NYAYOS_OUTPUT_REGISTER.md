@@ -49,6 +49,18 @@
 | `app/src/routeTree.gen.ts` | TanStack router plugin (generated during A-017 build) | A-017 | 21 Sep 2026 | Maintainer-reviewed | Accepted — committed so `tsc` passes cold | — | `app/src/` |
 | `nyayos-sprint1-foundation.zip` | Lovable export | A-011 | 21 Sep 2026 | Maintainer-reviewed | **Accepted — NOT committed** (gitignored). SHA-256 `8c407630616f171b33d2be60671213c4b07b5ceb65fce0a877954b17a3ea83ca` | Source of `app/` | Local workspace only |
 
+## Automation and governance-tooling outputs — A-019
+
+| Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |
+|---|---|---|---|---|---|---|---|
+| `NYAYOS_STATUS_REGISTRY.json` | Claude Code — Repository Automation | A-019 | 21 Sep 2026 | Not reviewed | Pending founder review | **Machine source of truth for task status and dependencies** | `docs/founder/` |
+| `NYAYOS_STATUS_REGISTRY.md` · `NYAYOS_DEPENDENCY_GRAPH.md` · `NYAYOS_STATUS_DASHBOARD.md` | `scripts/governance/registry.mjs` (generated) | A-019 | 21 Sep 2026 | Maintainer-reviewed | Accepted — **do not edit by hand**; regenerate | Derived views; stale copies fail `task-gate` | `docs/founder/` |
+| `NYAYOS_CANONICAL_STATUS_RULES.md` | Claude Code | A-019 | 21 Sep 2026 | Not reviewed | Pending founder review | **Tier 2 rule set** — status flow and the canonical-input rule | `docs/founder/` |
+| `NYAYOS_BRANCH_PROTECTION.md` | Claude Code | A-019 | 21 Sep 2026 | Not reviewed | Pending founder review | Documents the **applied** protection + ruleset; follow-up to enable `enforce_admins` | `docs/founder/` |
+| `scripts/governance/registry.mjs` | Claude Code | A-019 | 21 Sep 2026 | Not reviewed | Pending founder review | Validator + generator; zero dependencies | `scripts/governance/` |
+| `.github/workflows/task-gate.yml` · `dependency-check.yml` · `status-update.yml` | Claude Code | A-019 | 21 Sep 2026 | Not reviewed | Pending founder review — **CANONICAL on first green run** | CI enforcement of rules, four app checks, auto-regeneration via PR | `.github/workflows/` |
+| `.github/pull_request_template.md` | Claude Code | A-019 | 21 Sep 2026 | Not reviewed | Pending founder review | Every PR must cite A-nnn, gate, private-data check | `.github/` |
+
 ## Repository and continuity outputs
 
 | Output file | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |
