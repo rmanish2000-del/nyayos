@@ -2,7 +2,13 @@
   "$comment": "NyayOS canonical status registry. MACHINE SOURCE OF TRUTH for task status and dependencies. Edited by hand or by the maintainer; validated and rendered by scripts/governance/registry.mjs. Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md.",
   "version": 1,
   "updated": "2026-09-21",
-  "statuses": ["OPEN", "IN_PROGRESS", "REVIEW", "CANONICAL", "SUPERSEDED"],
+  "statuses": [
+    "OPEN",
+    "IN_PROGRESS",
+    "REVIEW",
+    "CANONICAL",
+    "SUPERSEDED"
+  ],
   "tasks": [
     {
       "id": "A-001",
@@ -14,7 +20,9 @@
       "gate": null,
       "inputs": [],
       "planned_inputs": [],
-      "outputs": ["docs/research/NYAYAOS_RED_TEAM_REPORT.md"],
+      "outputs": [
+        "docs/research/NYAYAOS_RED_TEAM_REPORT.md"
+      ],
       "evidence": "docs/research/NYAYAOS_RED_TEAM_REPORT.md",
       "updated": "2026-09-20",
       "superseded_by": null,
@@ -30,7 +38,9 @@
       "gate": null,
       "inputs": [],
       "planned_inputs": [],
-      "outputs": ["docs/research/NYAYAOS_GLOBAL_BENCHMARK_REPORT.md"],
+      "outputs": [
+        "docs/research/NYAYAOS_GLOBAL_BENCHMARK_REPORT.md"
+      ],
       "evidence": "docs/research/NYAYAOS_GLOBAL_BENCHMARK_REPORT.md",
       "updated": "2026-09-20",
       "superseded_by": null,
@@ -46,7 +56,9 @@
       "gate": null,
       "inputs": [],
       "planned_inputs": [],
-      "outputs": ["docs/research/NYAYAOS_INDIAN_JUSTICE_MAP.md.md"],
+      "outputs": [
+        "docs/research/NYAYAOS_INDIAN_JUSTICE_MAP.md.md"
+      ],
       "evidence": "docs/research/NYAYAOS_INDIAN_JUSTICE_MAP.md.md",
       "updated": "2026-09-20",
       "superseded_by": null,
@@ -60,9 +72,15 @@
       "owner": "Founder",
       "tool": "Not recorded",
       "gate": null,
-      "inputs": ["A-001", "A-002", "A-003"],
+      "inputs": [
+        "A-001",
+        "A-002",
+        "A-003"
+      ],
       "planned_inputs": [],
-      "outputs": ["docs/research/NYAYAOS_MVP_SELECTION_REPORT.md"],
+      "outputs": [
+        "docs/research/NYAYAOS_MVP_SELECTION_REPORT.md"
+      ],
       "evidence": "docs/research/NYAYAOS_MVP_SELECTION_REPORT.md",
       "updated": "2026-09-20",
       "superseded_by": null,
@@ -78,7 +96,9 @@
       "gate": null,
       "inputs": [],
       "planned_inputs": [],
-      "outputs": ["docs/architecture/ARCHITECTURE_REVIEW.md"],
+      "outputs": [
+        "docs/architecture/ARCHITECTURE_REVIEW.md"
+      ],
       "evidence": "docs/architecture/ARCHITECTURE_REVIEW.md",
       "updated": "2026-09-20",
       "superseded_by": null,
@@ -92,7 +112,13 @@
       "owner": "Founder",
       "tool": "Not recorded",
       "gate": null,
-      "inputs": ["A-001", "A-002", "A-003", "A-004", "A-005"],
+      "inputs": [
+        "A-001",
+        "A-002",
+        "A-003",
+        "A-004",
+        "A-005"
+      ],
       "planned_inputs": [],
       "outputs": [
         "docs/product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md",
@@ -118,9 +144,16 @@
       "owner": "Claude Code",
       "tool": "Claude Code — Repository and Product-Continuity Maintainer",
       "gate": null,
-      "inputs": ["A-006"],
+      "inputs": [
+        "A-006"
+      ],
       "planned_inputs": [],
-      "outputs": ["README.md", "CONTRIBUTING.md", "docs/INDEX.md", "docs/founder/NYAYOS_FOUNDER_DASHBOARD.md"],
+      "outputs": [
+        "README.md",
+        "CONTRIBUTING.md",
+        "docs/INDEX.md",
+        "docs/founder/NYAYOS_FOUNDER_DASHBOARD.md"
+      ],
       "evidence": "docs/founder/NYAYOS_CHANGELOG.md",
       "updated": "2026-09-20",
       "superseded_by": null,
@@ -134,9 +167,14 @@
       "owner": "Unassigned",
       "tool": "Figma — design mode",
       "gate": null,
-      "inputs": ["A-006", "A-014"],
+      "inputs": [
+        "A-006",
+        "A-014"
+      ],
       "planned_inputs": [],
-      "outputs": ["external:figma"],
+      "outputs": [
+        "external:figma"
+      ],
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -150,9 +188,13 @@
       "owner": "Founder",
       "tool": "Founder-led field research",
       "gate": null,
-      "inputs": ["A-006"],
+      "inputs": [
+        "A-006"
+      ],
       "planned_inputs": [],
-      "outputs": ["external:interviews"],
+      "outputs": [
+        "external:interviews"
+      ],
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -166,9 +208,14 @@
       "owner": "Unassigned",
       "tool": "TBD — research/specification only",
       "gate": null,
-      "inputs": ["A-005", "A-006"],
+      "inputs": [
+        "A-005",
+        "A-006"
+      ],
       "planned_inputs": [],
-      "outputs": ["docs/architecture/NYAYOS_SECURITY_DATA_REVIEW_V1.md"],
+      "outputs": [
+        "docs/architecture/NYAYOS_SECURITY_DATA_REVIEW_V1.md"
+      ],
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -182,9 +229,14 @@
       "owner": "Lovable",
       "tool": "Lovable — staging build",
       "gate": "FA-001",
-      "inputs": ["A-005", "A-006"],
+      "inputs": [
+        "A-005",
+        "A-006"
+      ],
       "planned_inputs": [],
-      "outputs": ["app/"],
+      "outputs": [
+        "app/"
+      ],
       "evidence": "docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -199,7 +251,12 @@
       "tool": "TBD",
       "gate": "FA-002 (not granted)",
       "inputs": [],
-      "planned_inputs": ["A-008", "A-009", "A-010", "A-015"],
+      "planned_inputs": [
+        "A-008",
+        "A-009",
+        "A-010",
+        "A-015"
+      ],
       "outputs": [],
       "evidence": "",
       "updated": "2026-09-21",
@@ -214,9 +271,15 @@
       "owner": "Claude Code",
       "tool": "Claude Code — Repository and Product-Continuity Maintainer",
       "gate": null,
-      "inputs": ["A-006", "A-007"],
+      "inputs": [
+        "A-006",
+        "A-007"
+      ],
       "planned_inputs": [],
-      "outputs": ["docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md", "docs/product/NYAYOS_MVP_RECONCILIATION_V3.md"],
+      "outputs": [
+        "docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md",
+        "docs/product/NYAYOS_MVP_RECONCILIATION_V3.md"
+      ],
       "evidence": "docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -230,9 +293,14 @@
       "owner": "Claude Code",
       "tool": "Claude Code — Architecture Review",
       "gate": null,
-      "inputs": ["A-006", "A-011"],
+      "inputs": [
+        "A-006",
+        "A-011"
+      ],
       "planned_inputs": [],
-      "outputs": ["docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md"],
+      "outputs": [
+        "docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md"
+      ],
       "evidence": "docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -246,9 +314,17 @@
       "owner": "Unassigned",
       "tool": "Lovable — staging build",
       "gate": "FA-001",
-      "inputs": ["A-011", "A-014"],
-      "planned_inputs": ["A-018", "A-008"],
-      "outputs": ["app/"],
+      "inputs": [
+        "A-011",
+        "A-014"
+      ],
+      "planned_inputs": [
+        "A-018",
+        "A-008"
+      ],
+      "outputs": [
+        "app/"
+      ],
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -262,9 +338,13 @@
       "owner": "Founder",
       "tool": "Founder",
       "gate": null,
-      "inputs": ["A-014"],
+      "inputs": [
+        "A-014"
+      ],
       "planned_inputs": [],
-      "outputs": ["docs/founder/NYAYOS_DECISION_LOG_V1.md"],
+      "outputs": [
+        "docs/founder/NYAYOS_DECISION_LOG_V1.md"
+      ],
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -278,9 +358,15 @@
       "owner": "Claude Code",
       "tool": "Claude Code — Repository Integration",
       "gate": "FA-001",
-      "inputs": ["A-011", "A-014"],
+      "inputs": [
+        "A-011",
+        "A-014"
+      ],
       "planned_inputs": [],
-      "outputs": ["app/", "docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md"],
+      "outputs": [
+        "app/",
+        "docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md"
+      ],
       "evidence": "docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -294,9 +380,14 @@
       "owner": "Unassigned",
       "tool": "Lovable — staging build",
       "gate": "FA-001",
-      "inputs": ["A-011", "A-014"],
+      "inputs": [
+        "A-011",
+        "A-014"
+      ],
       "planned_inputs": [],
-      "outputs": ["app/"],
+      "outputs": [
+        "app/"
+      ],
       "evidence": "",
       "updated": "2026-09-21",
       "superseded_by": null,
@@ -306,11 +397,15 @@
       "id": "A-019",
       "title": "Repository Automation Foundation",
       "type": "governance",
-      "status": "REVIEW",
+      "status": "CANONICAL",
       "owner": "Claude Code",
       "tool": "Claude Code — Repository Automation",
       "gate": null,
-      "inputs": ["A-007", "A-013", "A-017"],
+      "inputs": [
+        "A-007",
+        "A-013",
+        "A-017"
+      ],
       "planned_inputs": [],
       "outputs": [
         ".github/workflows/dependency-check.yml",
@@ -323,10 +418,10 @@
         "docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md",
         "docs/founder/NYAYOS_BRANCH_PROTECTION.md"
       ],
-      "evidence": "",
+      "evidence": "docs/founder/NYAYOS_CHANGELOG.md",
       "updated": "2026-09-21",
       "superseded_by": null,
-      "notes": "REVIEW until the three workflows have run green on main; then CANONICAL with run URLs as evidence."
+      "notes": "CANONICAL 21 Sep 2026: task-gate run 35559156273 and dependency-check run 35559156205 green on main (commit bd31394); status-update exercised by this very transition. Run URLs in the changelog."
     }
   ]
 }

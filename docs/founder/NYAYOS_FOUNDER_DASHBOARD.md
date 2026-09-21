@@ -127,7 +127,7 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Required evidence** | Delivered: § 11 checklist; 4/4 validations PASS; typography finding retracted against evidence |
 | **Next action** | **A-018 Sprint 1.1 State Completion** (7 items, A-014 § 11.4) → then A-015 Sprint 2 |
 
-### F-6 — Repository Automation Foundation  ◑ REVIEW
+### F-6 — Repository Automation Foundation  ● CANONICAL
 
 | Field | Value |
 |---|---|
@@ -139,10 +139,10 @@ Authority: [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION
 | **Deployment permission** | N/A — governance tooling. `dependency-check` self-asserts no deploy command |
 | **Start date** | 21 September 2026 |
 | **Target date** | 21 September 2026 |
-| **Status** | **REVIEW** — CANONICAL when all three workflows have run green on `main` |
+| **Status** | **CANONICAL** — `task-gate` + `dependency-check` green at `bd31394`; `status-update` exercised by this transition |
 | **Blocker** | None |
 | **Required evidence** | Green run URLs for `task-gate`, `dependency-check`, `status-update`; branch protection verified via API |
-| **Next action** | Push → observe runs → flip A-019 to CANONICAL in the registry (which itself exercises `status-update`) |
+| **Next action** | Founder: merge the auto PR from `governance/status-update`; enable `enforce_admins` (4d) |
 
 ### F-4 — Repository and continuity initialization
 

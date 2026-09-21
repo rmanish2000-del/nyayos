@@ -8,13 +8,11 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 7 | 0 | 1 | 11 | 0 | 19 |
+| 7 | 0 | 0 | 12 | 0 | 19 |
 
 ## In flight
 
-| ID | Title | Status | Owner | Gate | Updated |
-|---|---|---|---|---|---|
-| A-019 | Repository Automation Foundation | ◑ REVIEW | Claude Code | — | 2026-09-21 |
+_None._
 
 ## Ready to start — all inputs canonical, nothing planned outstanding
 
@@ -48,12 +46,13 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-013 | MVP Reconciliation V3, authorization record, authority hierarchy | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-014 | Sprint 1 Foundation architecture review | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-017 | Sprint 1 Foundation import into canonical repository | ● CANONICAL | Claude Code | FA-001 | 2026-09-21 |
+| A-019 | Repository Automation Foundation | ● CANONICAL | Claude Code | — | 2026-09-21 |
 
 ## Recently updated
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
-| A-019 | Repository Automation Foundation | ◑ REVIEW | Claude Code | — | 2026-09-21 |
+| A-019 | Repository Automation Foundation | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-018 | Sprint 1.1 — State Completion | ○ OPEN | Unassigned | FA-001 | 2026-09-21 |
 | A-017 | Sprint 1 Foundation import into canonical repository | ● CANONICAL | Claude Code | FA-001 | 2026-09-21 |
 | A-016 | Typography decision → Decision Log (D-019) | ○ OPEN | Founder | — | 2026-09-21 |

@@ -26,9 +26,22 @@ Newest first. One entry per commit or per material decision.
 - CONTRIBUTING § 5 and § 7: status flow, registry-first procedure, protected-branch PR process.
 - Founder Dashboard: links to the machine view; F-6; next action 4d.
 
+### Workflow evidence
+
+| Workflow | Commit | Run | Result |
+|---|---|---|---|
+| `task-gate` | `8063e19` | [35558897611](https://github.com/rmanish2000-del/nyayos/actions/runs/35558897611) | ✅ success — first run |
+| `dependency-check` | `8063e19` | [35558897628](https://github.com/rmanish2000-del/nyayos/actions/runs/35558897628) | ❌ typecheck/lint/test/build **passed**; failed at its own "no deploy" assertion, which self-matched |
+| `status-update` | `8063e19` | [35558895220](https://github.com/rmanish2000-del/nyayos/actions/runs/35558895220) | ❌ workflow parse error — column-0 lines terminated a `run: \|` block |
+| `task-gate` | `bd31394` | [35559156273](https://github.com/rmanish2000-del/nyayos/actions/runs/35559156273) | ✅ success |
+| `dependency-check` | `bd31394` | [35559156205](https://github.com/rmanish2000-del/nyayos/actions/runs/35559156205) | ✅ success — fix: assertion matches command invocations only |
+| `status-update` | this commit | see PR from `governance/status-update` | exercised by A-019 REVIEW → CANONICAL |
+
+Branch protection observed working on every push: `remote: Bypassed rule violations for refs/heads/main: 2 of 2 required status checks are expected` — admin bypass as designed; **enable `enforce_admins` next** (NYAYOS_BRANCH_PROTECTION.md § 3).
+
 ### Auto-generated changelog entries
 
-From this point, status transitions in the registry are appended here automatically by `status-update` as `[auto]` entries, delivered by PR. The first such entry will appear on the next registry change.
+From this point, status transitions in the registry are appended here automatically by `status-update` as `[auto]` entries, delivered by PR. The first is triggered by this commit (A-019 REVIEW → CANONICAL).
 
 ---
 

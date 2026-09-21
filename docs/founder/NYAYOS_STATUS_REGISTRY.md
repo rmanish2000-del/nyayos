@@ -28,7 +28,7 @@ Legend: ○ OPEN · ◐ IN_PROGRESS · ◑ REVIEW · ● CANONICAL · ⊘ SUPERS
 | A-016 | Typography decision → Decision Log (D-019) | ○ **OPEN** | Founder | Founder | — | A-014 | — | — | 2026-09-21 |
 | A-017 | Sprint 1 Foundation import into canonical repository | ● **CANONICAL** | Claude Code | Claude Code — Repository Integration | FA-001 | A-011, A-014 | — | [docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md](../../docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md) | 2026-09-21 |
 | A-018 | Sprint 1.1 — State Completion | ○ **OPEN** | Unassigned | Lovable — staging build | FA-001 | A-011, A-014 | — | — | 2026-09-21 |
-| A-019 | Repository Automation Foundation | ◑ **REVIEW** | Claude Code | Claude Code — Repository Automation | — | A-007, A-013, A-017 | — | — | 2026-09-21 |
+| A-019 | Repository Automation Foundation | ● **CANONICAL** | Claude Code | Claude Code — Repository Automation | — | A-007, A-013, A-017 | — | [docs/founder/NYAYOS_CHANGELOG.md](NYAYOS_CHANGELOG.md) | 2026-09-21 |
 
 ## Notes
 
@@ -48,4 +48,4 @@ Legend: ○ OPEN · ◐ IN_PROGRESS · ◑ REVIEW · ● CANONICAL · ⊘ SUPERS
 - **A-016** — Code embodies Noto Sans / Noto Sans Devanagari / Noto Sans Mono; the Decision Log does not yet record it.
 - **A-017** — Commit 62f649f. Staging URL not supplied — staging not verified.
 - **A-018** — Seven items in A-014 § 11.4. Must precede A-015.
-- **A-019** — REVIEW until the three workflows have run green on main; then CANONICAL with run URLs as evidence.
+- **A-019** — CANONICAL 21 Sep 2026: task-gate run 35559156273 and dependency-check run 35559156205 green on main (commit bd31394); status-update exercised by this very transition. Run URLs in the changelog.
