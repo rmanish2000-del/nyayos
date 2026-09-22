@@ -53,6 +53,15 @@
 | `app/src/routeTree.gen.ts` | TanStack router plugin (generated during A-017 build) | A-017 | 21 Sep 2026 | Maintainer-reviewed | Accepted — committed so `tsc` passes cold | — | `app/src/` |
 | `nyayos-sprint1-foundation.zip` | Lovable export | A-011 | 21 Sep 2026 | Maintainer-reviewed | **Accepted — NOT committed** (gitignored). SHA-256 `8c407630616f171b33d2be60671213c4b07b5ceb65fce0a877954b17a3ea83ca` | Source of `app/` | Local workspace only |
 
+## Operating system and status outputs — A-029
+
+| Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |
+|---|---|---|---|---|---|---|---|
+| `NYAYOS_OPERATING_SYSTEM.md` | Claude Code — Repository Alignment Auditor | A-029 | 22 Sep 2026 | Not reviewed | Pending founder review | **Tier 2 consolidated operating directive**; supersedes Master Context V1 § 9 for decision state | repo root |
+| `NYAYOS_STATUS.json` | Claude Code | A-029 | 22 Sep 2026 | Not reviewed | Pending founder review | Machine-readable state; defines next assignment A-010 | repo root |
+| `NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md` | Claude Chat (Opus, extended thinking) — supplied by founder | imported under A-029 | 22 Sep 2026 | Maintainer-reviewed (contamination scan; content unchanged; sha256 `4bd3b5d1…`) | **Accepted as research/strategy input** — its L1–L10 enter only via founder-ratified Decision Log entries | Source for D-019–D-030 | `docs/architecture/` |
+| Decision Log V1 — appended section "Decisions added 22 September 2026" (D-019–D-030) | Claude Code | A-029 | 22 Sep 2026 | Not reviewed | Pending founder review | Locks the reconciled product definition and permanent rejections | `docs/founder/` |
+
 ## Print collateral outputs — A-027
 
 | Output | Producing tool | Assignment | Date | Review status | Acceptance | Decision impact | Canonical location |

@@ -17,6 +17,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | **1** | **[Founder Authorization Record](founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** | **Gates** — what may be built, deployed, launched, or done with data, *right now* | **Append-only.** Supersede with a new FA entry; never edit a past one |
 | **2** | [Decision Log V1](founder/NYAYOS_DECISION_LOG_V1.md) | Product and technical decisions D-001 → D-018; locked vs provisional | Append a new decision; never rewrite an existing one |
 | **2** | [Risk Register V1](founder/NYAYOS_RISK_REGISTER_V1.md) | Risks R01 → R30; controls; the risk-acceptance boundary | Append; never rewrite |
+| **2** | [Operating System](../NYAYOS_OPERATING_SYSTEM.md) + [`NYAYOS_STATUS.json`](../NYAYOS_STATUS.json) | **Consolidated operating directive and machine state** — mission, verified product definition, revised MVP, permanent rejections, gates summary, gap register, next assignment. Defers to tier 1 on gates and to the Decision Log on decisions; supersedes Master Context V1 § 9 | Maintainer-updated on every audit; every claim labelled VERIFIED / REPORTED / UNVERIFIED / NOT IMPLEMENTED / NOT APPLICABLE |
 | **2** | [Canonical Status Rules](founder/NYAYOS_CANONICAL_STATUS_RULES.md) + [Status Registry (JSON)](founder/NYAYOS_STATUS_REGISTRY.json) | **Task status and dependencies** — `OPEN → IN_PROGRESS → REVIEW → CANONICAL → SUPERSEDED`; only CANONICAL tasks may be inputs. Enforced by `task-gate` | Edit the JSON; regenerate derived docs; CI refuses violations |
 | **3** | [Master Context V1](founder/NYAYOS_MASTER_CONTEXT_V1.md) | Canonical identity, evidence posture, architecture posture | Supplied — do not edit substance |
 | **3** | [Master Product Spec V1](product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md) | What the product is | Supplied — do not edit substance |
@@ -42,6 +43,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 | # | Document | Why |
 |---|---|---|
+| 0 | **[Operating System](../NYAYOS_OPERATING_SYSTEM.md)** | **The whole picture, with every claim labelled.** Read first |
 | 0 | **[Founder Authorization Record](founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** | **What you are allowed to do.** Read before acting |
 | 1 | [Founder Dashboard](founder/NYAYOS_FOUNDER_DASHBOARD.md) | Current state on one screen |
 | 2 | [Master Context](founder/NYAYOS_MASTER_CONTEXT_V1.md) | Full context in one document |
@@ -84,6 +86,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 | Document | Type | Contents |
 |---|---|---|
+| [NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md](architecture/NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md) | Supplied — Claude Chat, 22 Sep 2026 (imported under A-029) | **Strategy review:** Dispute File platform with professional-review layer; four MVP additions; permanent rejections; revenue, legal-conduct, privacy, domain architecture, nyayos.global, phased roadmap. Its L1–L10 enter only through founder-ratified Decision Log entries (D-019–D-030) |
 | [NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) | Maintainer — A-014 | **Sprint 1 review — EXECUTED (§ 11).** GO (conditional) for Sprint 2 on Sprint 1.1 State Completion; typography finding retracted; ranked findings |
 | [ARCHITECTURE_REVIEW.md](architecture/ARCHITECTURE_REVIEW.md) | Supplied — A-005 | TanStack Start / React 19 / Vite 7 on edge runtime; Supabase Postgres + Auth + Storage + RLS; pgvector; server-side AI gateway; append-only audit; closed tool catalog |
 

@@ -33,6 +33,8 @@ Manish_Patel_Foodgod_Chat_Context_Export.pdf
 # --- Case-document file types (blanket block) -----------------------------
 *.pdf
 *.docx
+*.pptx
+*.xlsx
 *.doc
 *.rtf
 *.odt

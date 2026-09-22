@@ -1,7 +1,7 @@
 {
   "$comment": "NyayOS canonical status registry. MACHINE SOURCE OF TRUTH for task status and dependencies. Edited by hand or by the maintainer; validated and rendered by scripts/governance/registry.mjs. Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md.",
   "version": 1,
-  "updated": "2026-09-21",
+  "updated": "2026-09-22",
   "statuses": [
     "OPEN",
     "IN_PROGRESS",
@@ -202,24 +202,25 @@
     },
     {
       "id": "A-010",
-      "title": "Security + data architecture review (specification only)",
+      "title": "NyayOS Security + Data Architecture Specification V1",
       "type": "architecture",
       "status": "OPEN",
-      "owner": "Unassigned",
-      "tool": "TBD — research/specification only",
+      "owner": "Claude Chat",
+      "tool": "Claude Chat — Opus with Extended Thinking (research and specification only; deployment not allowed)",
       "gate": null,
       "inputs": [
         "A-005",
-        "A-006"
+        "A-006",
+        "A-029"
       ],
       "planned_inputs": [],
       "outputs": [
-        "docs/architecture/NYAYOS_SECURITY_DATA_REVIEW_V1.md"
+        "docs/architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md"
       ],
       "evidence": "",
-      "updated": "2026-09-21",
+      "updated": "2026-09-22",
       "superseded_by": null,
-      "notes": "Recommended next assignment in Continuity Handoff V1."
+      "notes": "NEXT P0 (D-030). Scope: tenant/RLS incl. reviewer grants; purpose-bound consent and grant model; threat model (reviewer seat, conflict-check disclosure, prompt injection, export leakage); data classification; evidence-integrity manifest and custody log; deletion lifecycle with per-dispute keys; RAG trust boundary; OCR pipeline security; audit schema; policy/jurisdiction adapter and review-gate interfaces; security test cases mapped to Eval Protocol §17. A local draft of this name exists in the founder's Downloads — UNVERIFIED, not imported."
     },
     {
       "id": "A-011",
@@ -626,9 +627,34 @@
         "docs/print/"
       ],
       "evidence": "",
-      "updated": "2026-09-21",
+      "updated": "2026-09-22",
       "superseded_by": null,
-      "notes": "From the A-027 manifest: brochure 4-panel/tri-fold contradiction (prints at ~75 %); mediator and government A5 handouts overrun onto a blank/near-blank page 2; observation sheet page break mid-section; QR and name placeholders; deck market figures unsourced. Re-run the export after fixing."
+      "notes": "From the A-027 manifest: brochure 4-panel/tri-fold contradiction (prints at ~75 %); mediator and government A5 handouts overrun onto a blank/near-blank page 2; observation sheet page break mid-section; QR and name placeholders; deck market figures unsourced. Re-run the export after fixing. PAUSED 22 Sep 2026 — founder materials paused (founder instruction)."
+    },
+    {
+      "id": "A-029",
+      "title": "Repository alignment audit; operating system and status established",
+      "type": "governance",
+      "status": "CANONICAL",
+      "owner": "Claude Code",
+      "tool": "Claude Code — Repository Alignment Auditor and Continuity Maintainer",
+      "gate": null,
+      "inputs": [
+        "A-006",
+        "A-013",
+        "A-019",
+        "A-027"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "NYAYOS_OPERATING_SYSTEM.md",
+        "NYAYOS_STATUS.json",
+        "docs/architecture/NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md"
+      ],
+      "evidence": "NYAYOS_OPERATING_SYSTEM.md",
+      "updated": "2026-09-22",
+      "superseded_by": null,
+      "notes": "Read-only audit at dbd3093. Decisions D-019–D-030 appended to the Decision Log from the founder instruction of 22 Sep 2026 (history preserved). Ecosystem Architecture Review V1 imported unchanged (sha256 4bd3b5d1…). Directive document not supplied; represented via the instruction only. Two EduOS .pptx files found untracked in the working copy — not staged; *.pptx gitignored; founder to remove."
     }
   ]
 }

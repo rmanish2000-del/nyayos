@@ -2,7 +2,7 @@
 
 > **Justice starts with clarity.**
 
-**NyayOS** turns unstructured disputes into **structured, evidence-linked, human-reviewable dispute files.**
+**NyayOS** turns unstructured disputes into **structured, evidence-linked, human-reviewable dispute files** — a **Dispute File platform with a professional-review layer** (D-019), never a lawyer-advertising marketplace (D-024).
 
 ---
 
@@ -13,7 +13,7 @@
 | **Repository contents** | **Documentation (`docs/`) + Sprint 1 Foundation code (`app/`).** Frontend foundation only — no database schema, no migrations, no backend, no infrastructure |
 | **Staging build** | ✅ **ALLOWED** under [FA-001](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) — staging environment and fixture data only |
 | **Production** | ⛔ **NOT ALLOWED.** No production build, deployment, database, domain, public beta, or real case data in any environment |
-| **Project stage** | Design Preparation → Staging Build |
+| **Project stage** | Product definition reconciled → Security + Data Architecture Specification (staging frontend through Sprint 4 exists; no persistence, backend or deployment) |
 | **Private data** | **Never commit case material.** See [CONTRIBUTING.md](CONTRIBUTING.md) § *Private-data rules* |
 
 **This repository is private** (set to private on 20 Sep 2026, before the first push, because it carries governance references to a private criminal matter). Keep it private unless a redaction review is completed and recorded as a decision.
@@ -25,6 +25,7 @@
 | If you want to… | Read |
 |---|---|
 | See current state, decisions, risks and next actions | **[Founder Dashboard](docs/founder/NYAYOS_FOUNDER_DASHBOARD.md)** |
+| **Understand the whole project in one document** | **[Operating System](NYAYOS_OPERATING_SYSTEM.md)** — tier 2; every claim labelled VERIFIED / REPORTED / UNVERIFIED / NOT IMPLEMENTED. Machine twin: [`NYAYOS_STATUS.json`](NYAYOS_STATUS.json) |
 | **Know what you are allowed to do** | **[Founder Authorization Record](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** — tier 1, read before acting |
 | See task status, what is blocked, what is ready | [Status Dashboard](docs/founder/NYAYOS_STATUS_DASHBOARD.md) (auto) · [Dependency Graph](docs/founder/NYAYOS_DEPENDENCY_GRAPH.md) · [Status Rules](docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md) |
 | Find any document, or see which document wins a conflict | [docs/INDEX.md](docs/INDEX.md) — includes the [authority hierarchy](docs/INDEX.md#document-authority-hierarchy) |

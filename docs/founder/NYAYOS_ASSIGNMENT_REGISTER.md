@@ -309,6 +309,23 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | PNGs are full-page rasters under print media at 2× (192 dpi-equivalent) — proofing quality, not press plates. Brochure, both A5 handouts (mediator, government), observation sheet and feedback form are delivered as rendered with their overrun/fit issues documented, not redesigned. Symbol glyphs (✓ ✗ → ₹) fall back to Arial / Segoe UI Symbol. Repository rules changed: `.gitignore` and `task-gate` now permit PDF/PNG **only** under `docs/print/exports/`. The export commit `f957a43` shipped a stale manifest because of a scripting fault; corrected in the following commit |
 | **Handoff back to M365 Copilot** | Exports are canonical. Assign **A-028** for the five source notes and placeholders, then re-run the export. **Sprint 4 (A-026) landed without a conformance review — schedule one before Sprint 5** |
 
+### A-029 — Repository alignment audit; operating system and status established
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-029 |
+| **Tool and exact mode** | Claude Code — Repository Alignment Auditor and Continuity Maintainer (read-only audit; documentation-only commit) |
+| **Purpose** | Verify repository identity; inventory the repository; compare against the Master Operating System Directive; create `NYAYOS_OPERATING_SYSTEM.md` and `NYAYOS_STATUS.json`; reconcile the 22 Sep 2026 strategic decisions; define the next assignment |
+| **Input files** | Founder instruction 22 Sep 2026 ("Current verified state"); Ecosystem Architecture Review V1 (imported); Product Spec V1; Master Context V1; Decision Log V1; Risk Register V1; Continuity Handoffs V1/V2; Architecture Review; Lovable Build Brief V1; Real-Case Evaluation Protocol V1; 90-Day Validation Plan V1. **Not supplied:** the Master Operating System and Continuity Directive itself |
+| **Expected output** | Operating system document; status JSON; decision records D-019–D-030; register/dashboard/index/README updates |
+| **Environment** | Local working copy of the canonical repository, `main` at `dbd30939c76b5397c479c28ad5260277ca59fbfd`; remote identity verified by `git remote -v`, `git fetch`, `git ls-remote`, `gh repo view` (PRIVATE) |
+| **Deployment allowed** | **NOT ALLOWED.** No code, database, staging or production change |
+| **Status** | **CANONICAL — 22 September 2026** |
+| **Result** | Identity verified. Inventory: 17 frontend components, 4 test files (53/53 pass, `tsc` clean), no schema/migrations/backend/deployment config/security docs. Decisions D-019–D-030 appended with history preserved. Ecosystem Review V1 imported unchanged. Gap register ranked P0/P1/P2 in the operating system § 23. Two foreign-project `.pptx` files found untracked in the working copy — not staged; `*.pptx`/`*.xlsx` added to `.gitignore` |
+| **Evidence** | [NYAYOS_OPERATING_SYSTEM.md](../../NYAYOS_OPERATING_SYSTEM.md) · [NYAYOS_STATUS.json](../../NYAYOS_STATUS.json) |
+| **Limitations** | The directive document was not available; its content is represented only via the instruction block (REPORTED). Legal claims in the Ecosystem Review were not re-verified against primary sources. Staging environment never verified (no URL supplied). A local `NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md` exists in Downloads — UNVERIFIED, not imported. Master Context V1 § 9 left unedited by rule; superseded by the operating system § 22 |
+| **Handoff back to M365 Copilot** | Next: **A-010** (Claude Chat, Opus with Extended Thinking — Security + Data Architecture Specification V1). Founder-only: legal opinion; supply the directive; remove the `.pptx` files; decide A-008; review Sprint 4 |
+
 ---
 
 ## Open assignments — not yet issued
@@ -317,6 +334,7 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 |---|---|---|---|
 | A-008 | **Figma V2** | Figma — design mode | Founder assigns owner |
 | A-009 | **User interviews + WTP validation** | Founder-led field research | Founder defines exact category boundary |
+| A-010 | **NyayOS Security + Data Architecture Specification V1** | Claude Chat — Opus with Extended Thinking | **NEXT P0 (D-030).** Research and specification only; deployment not allowed. Inputs A-005, A-006, A-029 |
 | A-010 | **NyayOS Security + Data Architecture Review** (research/specification only) | Recommended in the Continuity Handoff. Inputs: Master Product Spec V1, Architecture Review, Risk Register V1, Real Case Evaluation Protocol | May run in parallel with A-008/A-009 |
 | A-011 | **Sprint 1 Foundation — Lovable staging build** | Lovable — staging build | ● **CANONICAL** (imported under A-017; gaps recorded in A-014 § 11.3) |
 | A-012 | **Production build / deployment** | TBD | ⛔ **NOT AUTHORIZED.** Requires FA-002 |

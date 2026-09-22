@@ -355,3 +355,143 @@
 ## Evidence caveat
 
 The founder-supplied Red Team and Global Benchmark contain secondary-source research and market estimates. Where those documents make current market or legal claims that matter to production decisions, treat them as research inputs and re-verify the underlying primary source before external publication, procurement, or legal implementation.
+
+---
+
+# Decisions added 22 September 2026 (A-029 reconciliation)
+
+**Provenance.** Each decision below was stated by the founder instruction of 22 September 2026 ("Current verified state") and is supported by the Ecosystem Architecture Review V1 (Claude Chat, 22 Sep 2026; `docs/architecture/NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md`). The instruction is treated as founder ratification. **No earlier entry has been edited or deleted**; where an earlier decision is affected its new status is stated here.
+
+**Effect on earlier entries**
+
+| Earlier | New status | By |
+|---|---|---|
+| D-001 Dispute Readiness Engine as single MVP capability | **Amended, not superseded** — the Engine remains the MVP; the product it belongs to is now the Dispute File platform with a professional-review layer, and four Dispute-File properties are added | D-019 – D-023 |
+| D-005 Criminal case remains private | **Reaffirmed**; extended to exclude criminal-matter drafting from any public product | D-028 |
+| D-008 Deterministic workflow / human authority | **Reaffirmed** | D-028 |
+| D-015 ODR — data model yes, marketplace deferred | **Unchanged**; note that a ratings/placement lawyer marketplace is now rejected permanently (distinct from ODR/mediation routing) | D-024 |
+| D-017 No private-case training | **Reaffirmed** | D-019 |
+| D-018 Revenue model — one-time fee first | **Extended**: lead fees, success fees, listing fees and paid placement are rejected permanently rather than "requiring legal review" | D-025, D-026 |
+| Master Context V1 § 9 decision state | **Superseded** by `NYAYOS_OPERATING_SYSTEM.md` § 22 (the V1 text is left unedited by rule) | A-029 |
+
+---
+
+## D-019 — Dispute File platform with a professional-review layer
+
+**Recommendation:** NyayOS is the trusted system of record for a dispute before and around professional engagement — a Dispute File platform with a professional-review layer. It is **not** a lawyer marketplace.
+
+**Evidence:** Founder instruction 22 Sep 2026; Ecosystem Review § 1.2 (Rule 36 solicitation ban, July 2024 BCI directive, Rules 20/21/37 — graded [V] there against S1–S3; not re-verified by the maintainer).
+
+**Confidence:** High as positioning. **Status:** Locked.
+
+**Alternative:** Lawyer-advertising marketplace. **Reason rejected:** on the wrong side of an active enforcement trend; a directory is replicable, the record compounds.
+
+**Revisit trigger:** Written legal opinion changes the reading of Rule 36/37 for legal-tech tools.
+
+## D-020 — Reviewer seat (MVP addition)
+
+**Recommendation:** The owner may invite a named professional to a scoped, revocable, read-and-comment view of the Dispute File; comments are suggestions the owner accepts or rejects; reviewer identity is self-declared and displayed as "not verified by NyayOS"; no listing, discovery or public profile.
+
+**Evidence:** Founder instruction; Ecosystem Review § 1.1 B-1, § 4.1 items 4–5. **Confidence:** Medium-high. **Status:** Locked as MVP scope; NOT IMPLEMENTED.
+
+**Alternative:** Human review = emailed export. **Reason rejected:** no feedback loop; advocate-side value unmeasurable (90-Day Plan reviewer-usefulness gate).
+
+**Revisit trigger:** Legal opinion on the reviewer-seat model; E4 leakage risk assessment in the Security + Data spec.
+
+## D-021 — Communication outline (MVP addition)
+
+**Recommendation:** Produce a Tier-0 outline — facts to state, documents to attach, what is asked, questions for the advocate. Not a sendable notice; no statutory language; not rendered as a letter.
+
+**Evidence:** Founder instruction; Ecosystem Review § 1.1 B-2, § 5.2. **Confidence:** Medium-high. **Status:** Locked as MVP scope; NOT IMPLEMENTED.
+
+**Alternative:** Full Tier-1 draft notices in MVP. **Reason rejected:** drafts without a proven record produce confident errors; unauthorised-practice exposure (E3).
+
+**Revisit trigger:** Phase 2A evaluation data plus legal opinion on the self-help boundary.
+
+## D-022 — Evidence-integrity manifest (MVP addition)
+
+**Recommendation:** SHA-256 hash and server ingest timestamp per original; custody log (upload, view, share, export); hash manifest carried into every export; originals immutable; NyayOS never alters evidence.
+
+**Evidence:** Founder instruction; Ecosystem Review § 4.1 item 2, § 15.2. **Confidence:** High. **Status:** Locked; NOT IMPLEMENTED.
+
+**Alternative:** Immutable originals without hashing. **Reason rejected:** integrity cannot be demonstrated to a reviewer or forum.
+
+**Revisit trigger:** BSA 2023 electronic-record certificate requirements verified against India Code (Ecosystem Review § 23 item 5).
+
+## D-023 — Purpose-bound sharing (MVP addition)
+
+**Recommendation:** Every share is a grant bound to an enumerated purpose, a scope and an expiry; revocable immediately (signed URLs invalidated, caches cleared, audit event); access list visible to the owner; purpose-mismatched reads denied.
+
+**Evidence:** Founder instruction; Ecosystem Review § 1.1 B-4, § 15.1. **Confidence:** High. **Status:** Locked; NOT IMPLEMENTED.
+
+**Alternative:** Unscoped share links. **Reason rejected:** DPDP purpose limitation; R20 reviewer over-read.
+
+**Revisit trigger:** Security + Data spec grant model; DPDP Rules consent-manager provisions (dates to verify).
+
+## D-024 — No lawyer-advertising marketplace (permanent)
+
+**Recommendation:** Never build a two-sided, ranked, reviewed, pay-to-appear advocate marketplace in India. A particulars-only, eligibility-plus-client-choice directory is a separate, **deferred** question gated on a written legal opinion (Phase 3 at the earliest).
+
+**Evidence:** Founder instruction; Ecosystem Review § 12, § 14. **Confidence:** High. **Status:** Locked — **permanent rejection**.
+
+**Revisit trigger:** None for the marketplace. The compliant directory has its own trigger: written legal opinion plus Phase 2 exit.
+
+## D-025 — No lead fees or success fees (permanent)
+
+**Recommendation:** No per-lead, per-contact or per-request fees; no success fees or revenue share on engagements. Advocate payments to NyayOS must never rise with the number of clients NyayOS sends them; advocate SaaS pricing is flat.
+
+**Evidence:** Founder instruction; Ecosystem Review § 13, § 14 (Rules 20, 36, 37 — [V] there). **Confidence:** High. **Status:** Locked — **permanent rejection**. Extends D-018.
+
+**Revisit trigger:** None.
+
+## D-026 — No paid placement (permanent)
+
+**Recommendation:** No listing fees, paid visibility, sponsored ordering or placement of advocates.
+
+**Evidence:** Founder instruction; Ecosystem Review § 13 (listing fee = high-risk; paid placement = reject). **Confidence:** High. **Status:** Locked — **permanent rejection**.
+
+**Revisit trigger:** None.
+
+## D-027 — No public ratings, reviews, win-rate metrics or rankings (permanent)
+
+**Recommendation:** No public advocate star ratings or reviews; no win/success/disposal-rate metrics; no "best lawyer" rankings. Trustworthy advocate metrics are limited to enrolment status, years since enrolment, declared practice areas/forums/languages and availability. Any private feedback (Phase 3) is min-n and never used for ordering.
+
+**Evidence:** Founder instruction; Ecosystem Review § 10, § 1.4. **Confidence:** High. **Status:** Locked — **permanent rejection**.
+
+**Revisit trigger:** None.
+
+## D-028 — No autonomous legal actions (permanent)
+
+**Recommendation:** NyayOS never sends, files, signs, submits or approves any output; never auto-approves; never chooses an advocate for a user; never fabricates facts, citations, deadlines or reference numbers; never produces outcome or win probability, bail or risk scoring; never resolves contradictions. Court documents (Tier 2) exist only inside an advocate-controlled workspace (Phase 3). Criminal-matter drafting is excluded from any public product.
+
+**Evidence:** Founder instruction; Ecosystem Review § 5.3; Master Context § 9 item 7; D-005, D-008; SC draft AI regulations (human primacy — [D]). **Confidence:** High. **Status:** Locked — **permanent**.
+
+**Revisit trigger:** None.
+
+## D-029 — India-first; nyayos.global defensive only
+
+**Recommendation:** Operate under the NyayOS brand on an India-facing primary domain; Indian law, forums, professional regulation, data residency, Hindi + English first. Register `nyayos.global` defensively and park it. Build jurisdiction adapters (legal corpus, taxonomy, templates, policy flags, registry, privacy, language packs) rather than a global product; never generalise limitation periods, forum logic, advertising/fee rules, privilege, residency or professional verification.
+
+**Evidence:** Founder instruction; Ecosystem Review § 18. **Confidence:** High. **Status:** Locked. Domain availability/ownership UNVERIFIED.
+
+**Revisit trigger:** India Phase 3 exit criteria met and a partner institution exists in a target jurisdiction.
+
+## D-030 — Security + Data Architecture Specification V1 is the next P0 work
+
+**Recommendation:** Before any persistence, backend or reviewer-seat implementation, produce `NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md` (research and specification only; no code; no deployment). Tool: Claude Chat, Opus with Extended Thinking. Registered as **A-010**.
+
+**Evidence:** Founder instruction; Continuity Handoff V1 recommended next assignment; Ecosystem Review § 24. **Confidence:** High. **Status:** Locked as sequencing.
+
+**Note:** A file of that name (973 lines, dated 22 Sep 2026) exists in the founder's local Downloads — UNVERIFIED and not imported by this reconciliation. If it is the intended output, supply it for import and review.
+
+**Revisit trigger:** Specification accepted (A-010 CANONICAL) — then the build sequence in `NYAYOS_OPERATING_SYSTEM.md` § 25 applies.
+
+## Reported but not ratified (Ecosystem Review § 21 — recorded for continuity, not locked)
+
+L6 policy/jurisdiction adapter owns all regulatory rules (no hard-coded rules) · L7 "engagement request" terminology, client-initiated only · L8 advocate pricing independent of platform-sourced engagements (partly captured in D-025) · L10 fee quotes block contingent / share-of-proceeds structures. **Founder ratification pending.**
+
+## Current locked list (supersedes the list above dated 20 Sep 2026)
+
+1–11 as before (Dispute Readiness Engine · "What happened?" entry · small-business/FPO commercial hypothesis · consumer sandbox · criminal private sandbox · human decision authority · provenance-first · multi-tenant-ready schema · Supabase/Postgres/RLS · pgvector · deterministic workflow), plus **12** Dispute File platform with professional-review layer (D-019) · **13** reviewer seat (D-020) · **14** communication outline (D-021) · **15** evidence-integrity manifest (D-022) · **16** purpose-bound sharing (D-023) · **17–21** permanent rejections (D-024 – D-028) · **22** India-first, nyayos.global defensive (D-029) · **23** Security + Data spec next (D-030).
+
+**Provisional list unchanged**, plus: typography (Noto stack in code, decision unrecorded); exact reviewer identity fields; consent purpose catalogue.

@@ -7,6 +7,39 @@ Newest first. One entry per commit or per material decision.
 
 ---
 
+## 2026-09-22 — Operating system and status established; decisions D-019–D-030 reconciled (A-029)
+
+### Audited
+
+Read-only alignment audit at `dbd30939c76b5397c479c28ad5260277ca59fbfd` (= `origin/main`, verified by `git fetch`, `git ls-remote`, `gh repo view` — PRIVATE). Inventory: 17 frontend components, 4 test files (53/53 pass, `tsc` clean, `eslint` 0 errors), no schema / migrations / backend / deployment configuration / security documentation.
+
+### Added
+
+- **`NYAYOS_OPERATING_SYSTEM.md`** (root, tier 2) — consolidated operating directive; every claim labelled VERIFIED / REPORTED / UNVERIFIED / NOT IMPLEMENTED / NOT APPLICABLE; gap register ranked P0/P1/P2.
+- **`NYAYOS_STATUS.json`** (root) — machine-readable state; `next_assignment` = A-010.
+- **`docs/architecture/NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md`** — founder-supplied, imported unchanged (sha256 `4bd3b5d1…`).
+- **Decision Log V1** — appended section "Decisions added 22 September 2026": D-019 Dispute File platform with professional-review layer · D-020 reviewer seat · D-021 communication outline · D-022 evidence-integrity manifest · D-023 purpose-bound sharing · D-024 no lawyer-advertising marketplace · D-025 no lead/success fees · D-026 no paid placement · D-027 no public ratings/win rates/rankings · D-028 no autonomous legal actions · D-029 India-first, nyayos.global defensive · D-030 Security + Data spec next. **No earlier entry edited or deleted**; effects on D-001, D-005, D-008, D-015, D-017, D-018 stated in a table.
+
+### Changed
+
+- A-010 re-scoped as **NyayOS Security + Data Architecture Specification V1** — Claude Chat, Opus with Extended Thinking; research/spec only; deployment not allowed.
+- A-028 print corrections marked **paused** (founder materials paused — REPORTED).
+- `.gitignore`: `*.pptx`, `*.xlsx` added.
+- Dashboard, INDEX, README, registers updated to point at the operating system.
+
+### Found
+
+- **The Master Operating System and Continuity Directive was not supplied** and is not present locally; represented via the instruction's "current verified state" block only.
+- **Two foreign-project files** (`EduOS_Founder_Pitch_Deck 1.pptx`, `… 2.pptx`) untracked in `docs/print/exports/pdf/` — not staged, not opened; founder to remove.
+- A local **`NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md`** (973 lines, 22 Sep) exists in Downloads — UNVERIFIED, not imported; if it is the A-010 output, supply it.
+- Sprint 4 (A-026) is canonical **without a conformance review**.
+
+### Not changed
+
+No code, database, staging or production change. Master Context V1 § 9 left unedited (superseded by the operating system § 22).
+
+---
+
 ## 2026-09-21 — Print export completion: 13 PDF + 13 PNG verified (A-027)
 
 ### Generated

@@ -1,8 +1,9 @@
 # NYAYOS FOUNDER DASHBOARD
 
 **Canonical project name:** NyayOS
-**Status date:** 20 September 2026
+**Status date:** 22 September 2026
 **Maintained by:** Repository and Product-Continuity Maintainer (Claude Code)
+**Operating directive:** [NYAYOS_OPERATING_SYSTEM.md](../../NYAYOS_OPERATING_SYSTEM.md) (tier 2, consolidated) · [NYAYOS_STATUS.json](../../NYAYOS_STATUS.json)
 **Machine view:** [NYAYOS_STATUS_DASHBOARD.md](NYAYOS_STATUS_DASHBOARD.md) (auto-generated from the [status registry](NYAYOS_STATUS_REGISTRY.json)) · [dependency graph](NYAYOS_DEPENDENCY_GRAPH.md) · [status rules](NYAYOS_CANONICAL_STATUS_RULES.md)
 **Authority:** This dashboard is a *view*. It has no independent authority.
 For gates, [NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md](NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) governs.
@@ -29,6 +30,11 @@ No product exists, no users exist, no dispute files have been produced. This met
 
 ## D. Current phase
 
+> **Product definition reconciled → Security + Data Architecture Specification**
+
+Changed 22 Sep 2026 (A-029). Strategic product: **Dispute File platform with a professional-review layer** (D-019); MVP additions D-020–D-023; permanent rejections D-024–D-028. Staging frontend exists through Sprint 4 (unreviewed); no persistence, backend or deployment.
+
+*Superseded phase line (21 Sep):*
 > **Staging Build — Sprint 1 canonical → Sprint 1.1 / Sprint 2**
 
 Changed 21 Sep 2026. Sprint 1 Foundation is **imported and canonical** (A-017). Design and validation remain incomplete and run in parallel.
@@ -345,6 +351,9 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | 2 | **Lovable staging build** | ✅ **Authorized (FA-001).** Staging only, fixture data only |
 | 3 | **Figma V2** | — · feeds 2 |
 | 4 | **User interviews and WTP validation** | — · de-risks 2 |
+| 0 | **A-010 Security + Data Architecture Specification V1** — Claude Chat, Opus with Extended Thinking | ✅ **NEXT P0 (D-030).** Research/spec only. Precedes any persistence or reviewer-seat build |
+| 0a | **Founder-only:** commission the written legal opinion; supply the Operating System Directive; remove the two `.pptx` files from the working copy | Blocks nothing mechanically; blocks trust |
+| 0b | **Sprint 4 (A-026) conformance review** before Sprint 5 | Unreviewed build |
 | 4a | **A-025 Sprint 3 evidence conformance fixes** | ✅ Authorized (FA-001). **Must precede Timeline / Evidence Mapping.** Items 1–3 of A-024 § 4 change the document model |
 | 4a″ | A-021 items 4, 6, 8 (contradiction actions, source metadata, confidence hue) — not in A-022 | Follow-on assignment needed |
 | 4a′ | **Decide A-008 (Figma)** — assign, or SUPERSEDE by A-020 + A-022 | The registry carries it as a planned input to A-015 |
@@ -364,10 +373,10 @@ NyayOS should **not** trade away privacy, evidence provenance, source traceabili
 | **Repository URL** | https://github.com/rmanish2000-del/nyayos |
 | **Local workspace** | `C:\nyayos` |
 | **Branch** | `main` |
-| **Latest commit SHA** | `516ba15` — `516ba153470c9e30144e58f1f67dbfea95b76841` (initialization commit; see § *Note*) |
+| **Latest commit SHA** | `dbd3093` — `dbd30939c76b5397c479c28ad5260277ca59fbfd` (A-029 audit base, 22 Sep 2026; see § *Note*) |
 | **Working-tree status** | Clean at time of writing |
 | **Deployment status** | **NOT DEPLOYED.** Sprint 1 built and validated locally; Cloudflare config emitted by build tool but `nitro deploy` **not run**. Staging URL not supplied. **Production deployment NOT ALLOWED** |
-| **Repository contents** | **Documentation (`docs/`) + Sprint 1 Foundation code (`app/`).** Frontend only — no schema, no migrations, no database resources, no backend. Code location resolved as option (b) — FA-001 addendum |
+| **Repository contents** | **Documentation (`docs/`) + staging frontend (`app/`) through Sprint 4 (A-026, unreviewed) + print collateral (`docs/print/`).** No schema, no migrations, no database resources, no backend, no deployment config. Code location resolved as option (b) — FA-001 addendum |
 | **Private data in repository** | **None.** See § *Security posture* below |
 
 **Note on the SHA.** This field records the SHA of the initialization commit. It is updated by a follow-up commit and therefore always trails `HEAD` by one commit. For the live value run:
