@@ -465,3 +465,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md`; probe transcripts summarised in §11 |
 | **Limitations** | Reviewer is the same tool that built A-030; independence is procedural (fresh session, execution-based verification, adversarial probes), not organisational. No fixes were applied. The FM-A Product & User Flow deck's U01–U21 differ from the Scope Sheet's; the cross-map is the reviewer's, not a founder decision |
 | **Handoff back to M365 Copilot** | Record A-032 CANONICAL; A-030 stays REVIEW until the §8 fixes land on the branch and the founder re-reviews; founder decisions D-031…D-036 candidates in §9 |
+
+---
+
+### A-033 — Critical fix pack for A-030
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-033 |
+| **Owner / tool** | Claude Code — A-033 Critical Fix Pack |
+| **Purpose** | Fix only the items blocking merge from the A-032 review: C-1 audit-chain concurrency fork, C-2 deletion-request authorisation, M-1 consent-withdrawal ordering, M-4 provenance and identity guards, M-5 export-manifest item typing |
+| **Input files** | PR #2; `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md`; `feature/fma-foundation-v1` at `05bbd1a4` |
+| **Gate** | FA-001 (staging only). Deployment NOT allowed; production NOT allowed |
+| **Deployment allowed** | **NOT ALLOWED.** Verified only on an ephemeral local Postgres 16.14 container, destroyed afterwards; nothing applied to any environment |
+| **Status** | **REVIEW — 23 September 2026.** All five scoped findings closed; PR #2 remains a draft for founder re-review |
+| **Result** | Migration `0001` (unmerged, so edited in place per A-032 §8): advisory transaction lock in the audit trigger; `request_deletion()` server function replaces the direct INSERT grant and policy; `decide_proposal` refuses identity keys, sets `created_by` from the session, refuses `ai_extraction`, validates `source_ref`; CHECK constraints `*_source_ref_shape` (11 tables) and `*_fma_origin_inert` (10 tables). Domain: order-independent `requirePurpose`; `SERVER_CONTROLLED_KEYS` guard in `proposeChange`; explicit `itemType` on every canonical item and a typed manifest; `newDeletionRequest` verifies ownership. Tests: 6 new Vitest tests; 13 new smoke checks; `audit_concurrency_0001.sh` two-session proof |
+| **Evidence** | `db/tests/smoke_0001.sql` (54/54 PASS); `db/tests/audit_concurrency_0001.sh` (PASS: chain intact, 0 forked predecessors); A-032 probes PROBE1/4/4b/5b/7 re-run and now fail closed; `vitest`, `tsc`, `eslint`, `schema-lint` clean |
+| **Limitations** | Scope was five items. Still open from A-032: m-1 (`status` in the dispute UPDATE grant), the M-8 U01–U21 cross-map addendum to the gap report, and the design decisions D-031…D-036 (M-2, M-3, M-6, M-7). No architecture change; no new document created |
+| **Handoff back to M365 Copilot** | Record A-033 REVIEW; risk rating Medium; recommendation SAFE TO MERGE once the founder accepts m-1 and the M-8 addendum as tracked follow-ups (or applies them in one further commit) |

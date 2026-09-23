@@ -50,6 +50,46 @@ describe("requirePurpose (S8, AC-M0-06)", () => {
     ).toMatchObject({ ok: false, code: "purpose_withdrawn" });
   });
 
+  it("honours a withdrawal regardless of row order, and a later re-grant after it (A-033 M-1)", () => {
+    const withdrawn = withdrawConsent(storage, "2026-09-22T00:00:00.000Z", "r2", "c2");
+    for (const rows of [
+      [storage, withdrawn],
+      [withdrawn, storage],
+    ]) {
+      expect(
+        requirePurpose("storage", { scopeType: "account", scopeId: "u1" }, rows, NOW),
+      ).toMatchObject({
+        ok: false,
+        code: "purpose_withdrawn",
+      });
+    }
+    const regrant: Consent = {
+      ...storage,
+      id: "c3",
+      grantedAt: "2026-09-22T12:00:00.000Z",
+      requestId: "r3",
+    };
+    expect(
+      requirePurpose(
+        "storage",
+        { scopeType: "account", scopeId: "u1" },
+        [regrant, withdrawn, storage],
+        NOW,
+      ),
+    ).toEqual({
+      ok: true,
+      consentId: "c3",
+    });
+    // a withdrawal dated in the future is not yet effective
+    const future = withdrawConsent(storage, "2026-09-30T00:00:00.000Z", "r4", "c4");
+    expect(
+      requirePurpose("storage", { scopeType: "account", scopeId: "u1" }, [future, storage], NOW),
+    ).toEqual({
+      ok: true,
+      consentId: "c1",
+    });
+  });
+
   it("locked purposes can never pass, even with a consent row present", () => {
     for (const purpose of LOCKED_PURPOSES) {
       const forged: Consent = { ...storage, id: "forged", purpose };

@@ -5,6 +5,23 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-23 — A-030 critical fix pack: C-1, C-2, M-1, M-4, M-5 closed (A-033)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft.** Fixes only; no redesign; no new documents; nothing deployed.
+
+### Changed
+
+- `db/migrations/0001_fma_foundation.sql` (unmerged; edited in place): advisory transaction lock serialises audit-chain writers (C-1); `request_deletion()` replaces the direct INSERT path on `deletion_requests` and verifies scope ownership (C-2); `decide_proposal` refuses identity keys, sets `created_by` server-side, refuses `ai_extraction`, validates `source_ref`; CHECK constraints for provenance shape (11 tables) and FM-A origin lock (10 tables) (M-4).
+- `app/src/domain`: order-independent consent check (M-1); `SERVER_CONTROLLED_KEYS` guard and AI-origin refusal in `proposeChange` (M-4); explicit `itemType` on canonical items, typed manifest entries, heuristic removed (M-5); `newDeletionRequest` verifies ownership (C-2 mirror).
+- Tests: 6 Vitest tests added; 13 smoke checks added (54/54 total PASS); `db/tests/audit_concurrency_0001.sh` two-session proof added and passing.
+- Registry: A-033 REVIEW; A-030 and A-032 notes updated. `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md` gains a post-fix status block.
+
+### Not changed
+
+Architecture, documents, `main`, environments. Open from A-032: m-1, M-8 addendum, D-031…D-036.
+
+---
+
 ## 2026-09-23 — Independent merge-readiness review of A-030: MERGE WITH FIXES (A-032)
 
 **Branch `feature/fma-foundation-v1`, not `main`.** Review only; no code changed.

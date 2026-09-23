@@ -2,9 +2,12 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  CANONICAL_TARGET_TYPES,
   DEFAULT_PROV_CONFIG,
+  DeletionScopeError,
   type DocumentVersion,
   type Event,
+  type Proposition,
   PROHIBITED_TERMS,
   REQUIRED_COPY,
   buildExportManifest,
@@ -51,6 +54,7 @@ const version: DocumentVersion = {
 
 const complete: Event = {
   id: "e1",
+  itemType: "event",
   tenantId: "t1",
   disputeId: "d1",
   verificationStatus: "confirmed",
@@ -97,8 +101,9 @@ describe("Export manifest (F16, AC-M5-01/02/04, Deck G4)", () => {
     });
     expect(manifest.items.map((i) => i.targetId)).toEqual(["e1"]);
     expect(manifest.omissions).toEqual([
-      { targetType: "event_or_proposition", targetId: "e2", reason: "incomplete_provenance" },
+      { targetType: "event", targetId: "e2", reason: "incomplete_provenance" },
     ]);
+    expect(manifest.items[0]!.targetType).toBe("event");
     expect(manifest.documents[0]).toMatchObject({ documentId: "doc1", sha256: "a".repeat(64) });
     expect(manifest.statements.noAi).toBe(REQUIRED_COPY.export_no_ai.en);
     expect(manifest.statements.integrityScope).not.toMatch(/admissib|court|evidence act/i);
@@ -123,6 +128,30 @@ describe("Export manifest (F16, AC-M5-01/02/04, Deck G4)", () => {
     expect(
       verifyManifestAgainstStored(a.manifest, [{ ...version, sha256: "b".repeat(64) }]),
     ).toEqual({ ok: false, mismatches: [{ documentId: "doc1", version: 1 }] });
+  });
+
+  it("names every canonical item type explicitly — an event and a proposition are never conflated (A-033 M-5)", async () => {
+    const proposition: Proposition = {
+      ...complete,
+      id: "p1",
+      itemType: "proposition",
+      text: "The invoice was paid late",
+    };
+    const { manifest } = await buildExportManifest({
+      exportId: "x",
+      disputeId: "d1",
+      requestedBy: "u1",
+      generatedAt: NOW,
+      exportVersion: 1,
+      language: "en",
+      items: [complete, proposition],
+      documentVersions: [version],
+    });
+    expect(manifest.items.map((i) => [i.targetId, i.targetType])).toEqual([
+      ["e1", "event"],
+      ["p1", "proposition"],
+    ]);
+    for (const entry of manifest.items) expect(CANONICAL_TARGET_TYPES).toContain(entry.targetType);
   });
 
   it("contains no prohibited wording in either language", async () => {
@@ -244,6 +273,46 @@ describe("Deletion lifecycle (F17, S9, AC-M6-04, FN-12)", () => {
       phase: "verified",
       isComplete: true,
     });
+  });
+
+  it("verifies ownership of the scope before a request exists (A-033 C-2)", () => {
+    const strangerInSameTenant = userContext(
+      { userId: "u2", sessionId: "s2", tenantId: "t1", tenantRole: "tenant_owner" },
+      { now: NOW },
+    );
+    const otherTenant = userContext(
+      { userId: "u3", sessionId: "s3", tenantId: "t2", tenantRole: "tenant_owner" },
+      { now: NOW },
+    );
+    const forDispute = { id: "del", tenantId: "t1", scopeType: "dispute" as const, scopeId: "d1" };
+    expect(() => newDeletionRequest(strangerInSameTenant, forDispute, cfg)).toThrow(
+      DeletionScopeError,
+    );
+    expect(() => newDeletionRequest(otherTenant, forDispute, cfg)).toThrow(/cross_tenant/);
+    expect(() =>
+      newDeletionRequest(
+        owner,
+        { ...forDispute, scopeType: "account", scopeId: "someone-else" },
+        cfg,
+      ),
+    ).toThrow(/not_self/);
+    expect(() =>
+      newDeletionRequest(owner, { ...forDispute, scopeType: "document", scopeId: "doc1" }, cfg),
+    ).toThrow(/dispute_required/);
+    expect(() =>
+      newDeletionRequest(
+        strangerInSameTenant,
+        { ...forDispute, scopeType: "document", scopeId: "doc1", disputeId: "d1" },
+        cfg,
+      ),
+    ).toThrow(/not_document_editor/);
+    const ok = newDeletionRequest(
+      owner,
+      { ...forDispute, scopeType: "document", scopeId: "doc1", disputeId: "d1" },
+      cfg,
+    );
+    expect(ok).toMatchObject({ scopeType: "document", scopeId: "doc1", requestedBy: "u1" });
+    expect("disputeId" in ok).toBe(false);
   });
 
   it("reference check follows the configured policy (Deck G5 vs SEC-DEL-01 reconciliation item)", () => {

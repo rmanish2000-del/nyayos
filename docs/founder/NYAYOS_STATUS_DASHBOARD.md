@@ -8,13 +8,14 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 6 | 0 | 1 | 25 | 0 | 32 |
+| 6 | 0 | 2 | 25 | 0 | 33 |
 
 ## In flight
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
 | A-030 | FM-A Foundation Build — canonical integration branch feature/fma-foundation-v1 (repository assessment, security foundation, data model, gap report) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
+| A-033 | Critical fix pack for A-030 — C-1, C-2, M-1, M-4, M-5 from the A-032 review | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
 
 ## Ready to start — all inputs canonical, nothing planned outstanding
 
@@ -66,6 +67,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-033 | Critical fix pack for A-030 — C-1, C-2, M-1, M-4, M-5 from the A-032 review | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
 | A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 | A-030 | FM-A Foundation Build — canonical integration branch feature/fma-foundation-v1 (repository assessment, security foundation, data model, gap report) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
 | A-031 | Fast Mode specification set — import (FMS V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1, executive deck text extracts) | ● CANONICAL | Claude Chat | — | 2026-09-23 |
@@ -73,7 +75,6 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-010 | NyayOS Security + Data Architecture Specification V1 | ● CANONICAL | Claude Chat | — | 2026-09-23 |
 | A-008 | Figma V2 — Fact Card and journey design | ○ OPEN | Unassigned | — | 2026-09-23 |
 | A-029 | Repository alignment audit; operating system and status established | ● CANONICAL | Claude Code | — | 2026-09-22 |
-| A-028 | Print source corrections | ○ OPEN | Founder | — | 2026-09-22 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)

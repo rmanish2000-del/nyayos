@@ -67,18 +67,63 @@ export const RetentionRecord = z.object({
 });
 export type RetentionRecord = z.infer<typeof RetentionRecord>;
 
+export class DeletionScopeError extends Error {
+  readonly code:
+    "cross_tenant" | "not_dispute_owner" | "not_document_editor" | "not_self" | "dispute_required";
+  constructor(code: DeletionScopeError["code"]) {
+    super(`deletion request refused: ${code}`);
+    this.name = "DeletionScopeError";
+    this.code = code;
+  }
+}
+
+/**
+ * Ownership of the scope is verified from the server-built context (A-033 C-2): a dispute may be
+ * deleted only by its owner, a document only by an editor of its dispute (pass `disputeId`), and an
+ * account only by itself. The undo window always comes from configuration.
+ */
 export function newDeletionRequest(
   ctx: RequestContext,
-  input: { id: string; tenantId: string; scopeType: DeletionRequest["scopeType"]; scopeId: string },
+  input: {
+    id: string;
+    tenantId: string;
+    scopeType: DeletionRequest["scopeType"];
+    scopeId: string;
+    /** Required for document scope: the dispute the document belongs to. */
+    disputeId?: string;
+  },
   config: ProvConfig,
 ): DeletionRequest {
   if (!isUser(ctx.principal)) throw new Error("deletion requests are user-initiated");
+  const p = ctx.principal;
+  if (p.tenantId !== input.tenantId) throw new DeletionScopeError("cross_tenant");
+  const roleOf = (disputeId: string) =>
+    p.disputeMemberships.find((m) => m.disputeId === disputeId)?.role;
+  switch (input.scopeType) {
+    case "dispute":
+      if (roleOf(input.scopeId) !== "dispute_owner")
+        throw new DeletionScopeError("not_dispute_owner");
+      break;
+    case "document": {
+      if (!input.disputeId) throw new DeletionScopeError("dispute_required");
+      const role = roleOf(input.disputeId);
+      if (role !== "dispute_owner" && role !== "dispute_editor")
+        throw new DeletionScopeError("not_document_editor");
+      break;
+    }
+    case "account":
+      if (input.scopeId !== p.userId) throw new DeletionScopeError("not_self");
+      break;
+    default:
+      throw new DeletionScopeError("not_self");
+  }
   const undoUntil = new Date(
     new Date(ctx.now).getTime() + config.deletion_undo_window_days * 86_400_000,
   ).toISOString();
+  const { disputeId: _disputeId, ...row } = input;
   return DeletionRequest.parse({
-    ...input,
-    requestedBy: ctx.principal.userId,
+    ...row,
+    requestedBy: p.userId,
     state: "requested",
     undoUntil,
     createdAt: ctx.now,

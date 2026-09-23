@@ -125,6 +125,49 @@ describe("Single-writer proposal pipeline (S3, AC-M1-02, AC-M1-03)", () => {
     }
   });
 
+  it("refuses identity and server-controlled fields in the payload (A-033 M-4)", () => {
+    for (const key of [
+      "created_by",
+      "uploader_id",
+      "tenant_id",
+      "dispute_id",
+      "id",
+      "version",
+      "recordedBy",
+    ]) {
+      expect(
+        proposeChange(owner, {
+          ...base,
+          id: "p7",
+          targetId: null,
+          proposedValue: { text: "x", [key]: "spoof" },
+          origin: "user",
+        }),
+      ).toEqual({ ok: false, code: "server_controlled_field" });
+    }
+  });
+
+  it("refuses an ai_extraction origin type in FM-A (A-033 M-4, S11)", () => {
+    expect(
+      proposeChange(owner, {
+        ...base,
+        id: "p8",
+        targetId: null,
+        proposedValue: { text: "x", origin_type: "ai_extraction" },
+        origin: "user",
+      }),
+    ).toEqual({ ok: false, code: "origin_type_not_enabled_in_fma" });
+    expect(
+      proposeChange(owner, {
+        ...base,
+        id: "p9",
+        targetId: null,
+        proposedValue: { text: "x", provenance: { originType: "ai_extraction" } },
+        origin: "user",
+      }),
+    ).toEqual({ ok: false, code: "origin_type_not_enabled_in_fma" });
+  });
+
   it("refuses cross-tenant proposals", () => {
     const stranger = userContext(
       { userId: "u2", sessionId: "s2", tenantId: "t2", tenantRole: "tenant_owner" },

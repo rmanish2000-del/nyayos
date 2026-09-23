@@ -72,6 +72,8 @@ const CanonicalBase = z.object({
   id: Id,
   tenantId: Id,
   disputeId: Id,
+  /** Explicit discriminant (A-033 M-5): manifests and corrections name the item type, never infer it. */
+  itemType: z.enum(CANONICAL_TARGET_TYPES),
   verificationStatus: z.enum(VERIFICATION_STATUSES),
   provenance: Provenance,
   /** Monotonic; incremented only by an accepted proposal (see proposal.ts). */
@@ -167,6 +169,7 @@ export function nextQuestion(
 // ---------------------------------------------------------------------------
 
 export const Entity = CanonicalBase.extend({
+  itemType: z.literal("entity"),
   canonicalLabel: z.string().min(1).max(300),
   entityType: z.enum(ENTITY_TYPES),
   roleLabel: z.string().max(120).nullable(),
@@ -187,11 +190,13 @@ export const EntitySourceForm = z.object({
 export type EntitySourceForm = z.infer<typeof EntitySourceForm>;
 
 export const Event = CanonicalBase.extend({
+  itemType: z.literal("event"),
   text: z.string().min(1),
 });
 export type Event = z.infer<typeof Event>;
 
 export const DateAssertion = CanonicalBase.extend({
+  itemType: z.literal("date_assertion"),
   targetType: z.enum(CANONICAL_TARGET_TYPES),
   targetId: Id,
   /** ISO date or partial date as entered; never system-generated (AC-M1-04). */
@@ -224,11 +229,13 @@ export function markConflictingDates(assertions: readonly DateAssertion[]): Date
 }
 
 export const Proposition = CanonicalBase.extend({
+  itemType: z.literal("proposition"),
   text: z.string().min(1),
 });
 export type Proposition = z.infer<typeof Proposition>;
 
 export const EvidenceItem = CanonicalBase.extend({
+  itemType: z.literal("evidence_item"),
   documentId: Id.nullable(),
   description: z.string().min(1),
   evidenceType: z.string().min(1).max(60),
@@ -236,6 +243,7 @@ export const EvidenceItem = CanonicalBase.extend({
 export type EvidenceItem = z.infer<typeof EvidenceItem>;
 
 export const EvidenceRelationRow = CanonicalBase.extend({
+  itemType: z.literal("evidence_relation"),
   evidenceItemId: Id,
   targetType: z.enum(CANONICAL_TARGET_TYPES),
   targetId: Id,
@@ -258,6 +266,7 @@ export type ItemRef = z.infer<typeof ItemRef>;
  * that could record which side is "true" (AC-M1-06, U12).
  */
 export const Contradiction = CanonicalBase.extend({
+  itemType: z.literal("contradiction"),
   itemARef: ItemRef,
   itemBRef: ItemRef,
   field: z.string().min(1).max(120),
@@ -285,6 +294,7 @@ export function validateContradiction(
 
 /** "What may still be useful": links to an expected/mentioned item; never implies non-occurrence (AC-M1-07). */
 export const MissingEvidence = CanonicalBase.extend({
+  itemType: z.literal("missing_evidence"),
   expectedItem: z.string().min(1),
   reason: z.string().min(1),
   relatedRef: ItemRef.nullable(),
@@ -294,6 +304,7 @@ export type MissingEvidence = z.infer<typeof MissingEvidence>;
 
 /** File label. Required UI copy: "A label to help organise your file, not a legal determination." */
 export const Issue = CanonicalBase.extend({
+  itemType: z.literal("issue"),
   label: z.string().min(1).max(160),
   supportingRefs: z.array(ItemRef),
   note: z.string().nullable(),
@@ -301,6 +312,7 @@ export const Issue = CanonicalBase.extend({
 export type Issue = z.infer<typeof Issue>;
 
 export const NextStep = CanonicalBase.extend({
+  itemType: z.literal("next_step"),
   text: z.string().min(1),
   ownerNote: z.string().nullable(),
   status: z.enum(["open", "done", "dropped"]),

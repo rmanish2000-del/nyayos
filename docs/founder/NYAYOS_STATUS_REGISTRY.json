@@ -716,7 +716,7 @@
       "evidence": "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md",
       "updated": "2026-09-23",
       "superseded_by": null,
-      "notes": "Branch feature/fma-foundation-v1 from main 6c6b478. Phase 2 (import Figma FM-A UI, U01–U21) NOT executed: the 'Figma FM-A source handoff package' does not exist in any local location; U01–U21 mapped to existing components instead (gap report §4). Domain layer: 14 TypeScript modules, 79 tests (132 total). SQL migration 0001 is NOT applied to any environment (none exists); statically linted (39 tables, RLS+policies+grants+allow-list) and executed once on an ephemeral local postgres:16-alpine container with synthetic data — db/tests/smoke_0001.sql 41/41 PASS; three defects found by execution were fixed before commit. No deployment, no production change, no AI, no legal functionality, no marketplace. REVIEW until the founder merges the branch by pull request. — 23 Sep 2026: independently reviewed under A-032: MERGE WITH FIXES (2 critical, 8 major, 12 minor); required fixes listed in NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md §8. Remains REVIEW."
+      "notes": "Branch feature/fma-foundation-v1 from main 6c6b478. Phase 2 (import Figma FM-A UI, U01–U21) NOT executed: the 'Figma FM-A source handoff package' does not exist in any local location; U01–U21 mapped to existing components instead (gap report §4). Domain layer: 14 TypeScript modules, 79 tests (132 total). SQL migration 0001 is NOT applied to any environment (none exists); statically linted (39 tables, RLS+policies+grants+allow-list) and executed once on an ephemeral local postgres:16-alpine container with synthetic data — db/tests/smoke_0001.sql 41/41 PASS; three defects found by execution were fixed before commit. No deployment, no production change, no AI, no legal functionality, no marketplace. REVIEW until the founder merges the branch by pull request. — 23 Sep 2026: independently reviewed under A-032: MERGE WITH FIXES (2 critical, 8 major, 12 minor); required fixes listed in NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md §8. Remains REVIEW. — 23 Sep 2026: A-033 fix pack closed C-1, C-2, M-1, M-4, M-5 on the branch; PR #2 stays draft pending founder re-review."
     },
     {
       "id": "A-032",
@@ -740,7 +740,37 @@
       "evidence": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
       "updated": "2026-09-23",
       "superseded_by": null,
-      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report."
+      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open."
+    },
+    {
+      "id": "A-033",
+      "title": "Critical fix pack for A-030 — C-1, C-2, M-1, M-4, M-5 from the A-032 review",
+      "type": "build",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — A-033 Critical Fix Pack (fix only the merge blockers; no redesign, no new documents)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-010",
+        "A-029",
+        "A-031",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "db/migrations/0001_fma_foundation.sql",
+        "db/tests/smoke_0001.sql",
+        "db/tests/audit_concurrency_0001.sh",
+        "app/src/domain/consent.ts",
+        "app/src/domain/proposal.ts",
+        "app/src/domain/export.ts",
+        "app/src/domain/dispute.ts",
+        "app/src/domain/deletion.ts"
+      ],
+      "evidence": "db/tests/smoke_0001.sql",
+      "updated": "2026-09-23",
+      "superseded_by": null,
+      "notes": "On feature/fma-foundation-v1 (PR #2, still draft). C-1: advisory transaction lock in the audit writer trigger; two-session proof script passes (chain linear, no forked predecessor). C-2: direct INSERT on deletion_requests removed; request_deletion() verifies scope ownership and takes the undo window from config; TS newDeletionRequest mirrors it. M-1: consent event-time ordering (order-independent). M-4: identity keys refused and created_by server-set; ai_extraction origin refused in function and by CHECK on 10 tables; source_ref shape enforced by CHECK on 11 tables. M-5: explicit itemType discriminant on canonical items; manifest heuristic removed. Smoke suite 54/54 PASS on an ephemeral local Postgres 16.14 container (destroyed); the A-032 probes PROBE1/4/4b/5b/7 now fail closed. No deployment; nothing applied to any environment. Out of scope and still open: A-032 m-1 (status column grant) and the M-8 cross-map addendum."
     }
   ]
 }

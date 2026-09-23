@@ -80,9 +80,46 @@ export interface FactVersion {
   readonly previousVersionCorrectionId: string | null;
 }
 
+/** Fields a proposal may never set: identity and server-controlled columns (A-033 M-4). */
+export const SERVER_CONTROLLED_KEYS = [
+  "id",
+  "tenant_id",
+  "dispute_id",
+  "created_at",
+  "updated_at",
+  "version",
+  "created_by",
+  "uploader_id",
+  "recordedBy",
+  "tenantId",
+  "disputeId",
+] as const;
+
 export type ProposeResult =
   | { ok: true; proposal: Proposal; audit: AuditAction[] }
-  | { ok: false; code: "origin_not_enabled_in_fma" | "not_a_user" | "cross_tenant" };
+  | {
+      ok: false;
+      code:
+        | "origin_not_enabled_in_fma"
+        | "origin_type_not_enabled_in_fma"
+        | "server_controlled_field"
+        | "not_a_user"
+        | "cross_tenant";
+    };
+
+function guardProposedValue(value: unknown): Extract<ProposeResult, { ok: false }> | null {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) return null;
+  const record = value as Record<string, unknown>;
+  if (Object.keys(record).some((k) => (SERVER_CONTROLLED_KEYS as readonly string[]).includes(k))) {
+    return { ok: false, code: "server_controlled_field" };
+  }
+  const origin = record["origin_type"] ?? record["originType"];
+  const nested = (record["provenance"] as Record<string, unknown> | undefined)?.["originType"];
+  if (origin === "ai_extraction" || nested === "ai_extraction") {
+    return { ok: false, code: "origin_type_not_enabled_in_fma" };
+  }
+  return null;
+}
 
 export function proposeChange(
   ctx: RequestContext,
@@ -101,6 +138,8 @@ export function proposeChange(
   if (!(FMA_ENABLED_PROPOSAL_ORIGINS as readonly string[]).includes(input.origin)) {
     return { ok: false, code: "origin_not_enabled_in_fma" };
   }
+  const guarded = guardProposedValue(input.proposedValue);
+  if (guarded) return guarded;
   if (!isUser(ctx.principal)) return { ok: false, code: "not_a_user" };
   if (ctx.principal.tenantId !== input.tenantId) return { ok: false, code: "cross_tenant" };
   const proposal = Proposal.parse({

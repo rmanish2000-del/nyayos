@@ -4,7 +4,7 @@
 \pset tuples_only on
 \pset format unaligned
 -- scratch table owned by the superuser so every role in this script can read/write it
-create temp table s (tenant_a uuid, dispute_a uuid, p1 uuid, c1 uuid, e1 uuid, p2 uuid, c2 uuid);
+create temp table s (tenant_a uuid, dispute_a uuid, p1 uuid, c1 uuid, e1 uuid, p2 uuid, c2 uuid, del uuid);
 insert into s default values;
 grant all on s to public;
 
@@ -183,4 +183,91 @@ end $$;
 select 'CHECK all_tables_forced_rls ' || case when (select count(*) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='nyayos' and c.relkind='r' and not (c.relrowsecurity and c.relforcerowsecurity)) = 0 then 'PASS' else 'FAIL' end;
 select 'CHECK table_count_39 ' || case when (select count(*) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='nyayos' and c.relkind='r') = 39 then 'PASS' else 'FAIL' end;
 select 'CHECK allowlist_39 ' || case when (select count(*) from nyayos.deletion_allowlist) = 39 then 'PASS' else 'FAIL' end;
+-- ---------------------------------------------------------------- A-033 fix pack checks
+-- C-2: deletion requests only through request_deletion(), scope ownership verified, undo window from config
+set role nyayos_authenticated; set nyayos.principal_id = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
+do $$ begin
+  begin
+    insert into nyayos.deletion_requests (tenant_id, scope_type, scope_id, requested_by, undo_until)
+      select tenant_id, 'dispute', (select dispute_a from s), 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', now() - interval '1 day'
+      from nyayos.tenant_memberships where user_id = nyayos.current_user_id();
+    raise notice 'CHECK C2_direct_insert_denied FAIL';
+  exception when insufficient_privilege then raise notice 'CHECK C2_direct_insert_denied PASS';
+  end;
+end $$;
+do $$ begin
+  begin
+    perform nyayos.request_deletion('dispute', (select dispute_a from s));
+    raise notice 'CHECK C2_B_cannot_request_deletion_of_A_dispute FAIL';
+  exception when insufficient_privilege then raise notice 'CHECK C2_B_cannot_request_deletion_of_A_dispute PASS';
+  end;
+end $$;
+do $$ begin
+  begin
+    perform nyayos.request_deletion('account', 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa');
+    raise notice 'CHECK C2_account_deletion_only_for_self FAIL';
+  exception when insufficient_privilege then raise notice 'CHECK C2_account_deletion_only_for_self PASS';
+  end;
+end $$;
+reset role; set role nyayos_authenticated; set nyayos.principal_id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+update s set del = nyayos.request_deletion('dispute', (select dispute_a from s));
+select 'CHECK C2_owner_request_uses_config_window ' || case when
+  (select undo_until between now() + interval '6 days 23 hours' and now() + interval '7 days 1 hour'
+     from nyayos.deletion_requests where id = (select del from s))
+  then 'PASS' else 'FAIL' end;
+select 'CHECK C2_request_row_scoped_to_owner_tenant ' || case when
+  (select count(*) from nyayos.deletion_requests r where r.scope_id = (select dispute_a from s)
+     and r.tenant_id = (select tenant_a from s) and r.requested_by = nyayos.current_user_id()) = 1 then 'PASS' else 'FAIL' end;
+
+-- M-4: identity fields are server-set; AI origin inert; provenance reference must be well-formed
+do $$ begin
+  begin
+    perform nyayos.decide_proposal(nyayos.propose_change((select dispute_a from s), 'dispute_statement', null,
+      '{"kind":"narrative","text":"x","created_by":"cccccccc-cccc-4ccc-8ccc-cccccccccccc"}'::jsonb, null), true, null);
+    raise notice 'CHECK M4_created_by_key_refused FAIL';
+  exception when check_violation then raise notice 'CHECK M4_created_by_key_refused PASS';
+  end;
+end $$;
+do $$
+declare cid uuid; who uuid;
+begin
+  cid := nyayos.decide_proposal(nyayos.propose_change((select dispute_a from s), 'dispute_statement', null,
+    '{"kind":"narrative","text":"my own words"}'::jsonb, null), true, null);
+  select created_by into who from nyayos.dispute_statements where dispute_id = (select dispute_a from s) and text = 'my own words';
+  if who = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa' then raise notice 'CHECK M4_created_by_forced_to_caller PASS';
+  else raise notice 'CHECK M4_created_by_forced_to_caller FAIL (%)', who; end if;
+end $$;
+do $$ begin
+  begin
+    perform nyayos.decide_proposal(nyayos.propose_change((select dispute_a from s), 'event', null,
+      '{"text":"e","origin_type":"ai_extraction","source_ref":{"kind":"user_entry","enteredBy":"aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"}}'::jsonb, null), true, null);
+    raise notice 'CHECK M4_ai_extraction_origin_refused FAIL';
+  exception when check_violation then raise notice 'CHECK M4_ai_extraction_origin_refused PASS';
+  end;
+end $$;
+do $$ begin
+  begin
+    perform nyayos.decide_proposal(nyayos.propose_change((select dispute_a from s), 'event', null,
+      '{"text":"e","origin_type":"user_statement","source_ref":{}}'::jsonb, null), true, null);
+    raise notice 'CHECK M4_empty_source_ref_refused FAIL';
+  exception when check_violation then raise notice 'CHECK M4_empty_source_ref_refused PASS';
+  end;
+end $$;
+do $$ begin
+  begin
+    perform nyayos.decide_proposal(nyayos.propose_change((select dispute_a from s), 'event', null,
+      '{"text":"e","origin_type":"user_statement"}'::jsonb, null), true, null);
+    raise notice 'CHECK M4_missing_source_ref_refused FAIL';
+  exception when not_null_violation or check_violation then raise notice 'CHECK M4_missing_source_ref_refused PASS';
+  end;
+end $$;
+reset role;
+select 'CHECK M4_source_ref_shape_constraints_present ' || case when
+  (select count(*) from pg_constraint where conname like '%_source_ref_shape') = 11 then 'PASS' else 'FAIL' end;
+select 'CHECK M4_fma_origin_inert_constraints_present ' || case when
+  (select count(*) from pg_constraint where conname like '%_fma_origin_inert') = 10 then 'PASS' else 'FAIL' end;
+-- C-1: the writer trigger takes a transaction-scoped advisory lock (two-session proof: db/tests/audit_concurrency_0001.sh)
+select 'CHECK C1_advisory_lock_in_audit_trigger ' || case when
+  position('pg_advisory_xact_lock' in pg_get_functiondef('nyayos.tg_audit_before_insert'::regproc)) > 0 then 'PASS' else 'FAIL' end;
+
 select 'CHECK no_authenticated_write_grant_on_canonical ' || case when (select count(*) from information_schema.role_table_grants where table_schema='nyayos' and grantee='nyayos_authenticated' and privilege_type in ('INSERT','UPDATE','DELETE') and table_name in ('dispute_statements','entities','entity_source_forms','events','date_assertions','propositions','evidence_items','evidence_relations','contradictions','missing_evidence','issues','next_steps','user_corrections','audit_events','document_versions')) = 0 then 'PASS' else 'FAIL' end;

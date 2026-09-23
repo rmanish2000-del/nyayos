@@ -15,7 +15,7 @@ import { z } from "zod";
 
 import { Id } from "./context";
 import { type CanonicalItem, isProvenanceComplete } from "./dispute";
-import { EXPORT_PROFILES, EXPORT_SECTIONS } from "./enums";
+import { CANONICAL_TARGET_TYPES, EXPORT_PROFILES, EXPORT_SECTIONS } from "./enums";
 import { type DocumentVersion, sha256Hex } from "./evidence";
 
 export const ExportRecord = z.object({
@@ -42,7 +42,7 @@ export const ManifestDocumentEntry = z.object({
 export type ManifestDocumentEntry = z.infer<typeof ManifestDocumentEntry>;
 
 export const ManifestItemEntry = z.object({
-  targetType: z.string().min(1),
+  targetType: z.enum(CANONICAL_TARGET_TYPES),
   targetId: Id,
   version: z.number().int().min(1),
   verificationStatus: z.string().min(1),
@@ -96,20 +96,6 @@ function describeSourceRef(item: CanonicalItem): string {
   }
 }
 
-function targetTypeOf(item: CanonicalItem): string {
-  if ("canonicalLabel" in item) return "entity";
-  if ("precision" in item) return "date_assertion";
-  if ("relation" in item) return "evidence_relation";
-  if ("evidenceType" in item) return "evidence_item";
-  if ("itemARef" in item) return "contradiction";
-  if ("expectedItem" in item) return "missing_evidence";
-  if ("label" in item) return "issue";
-  if ("userSetDate" in item) return "next_step";
-  if ("text" in item && "ownerNote" in item) return "next_step";
-  if ("text" in item) return "event_or_proposition";
-  return "unknown";
-}
-
 export async function buildExportManifest(input: {
   exportId: string;
   disputeId: string;
@@ -123,7 +109,7 @@ export async function buildExportManifest(input: {
   const items: ManifestItemEntry[] = [];
   const omissions: ExportManifest["omissions"] = [];
   for (const item of input.items) {
-    const targetType = targetTypeOf(item);
+    const targetType = item.itemType; // explicit discriminant (A-033 M-5)
     if (!isProvenanceComplete(item.provenance)) {
       omissions.push({ targetType, targetId: item.id, reason: "incomplete_provenance" });
       continue;

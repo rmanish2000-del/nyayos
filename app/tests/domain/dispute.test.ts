@@ -140,6 +140,7 @@ describe("Canonical item rules (AC-M1-04, AC-M1-06, U11)", () => {
   it("two different exact dates for one target are both kept and marked conflicting", () => {
     const a: DateAssertion = {
       ...base,
+      itemType: "date_assertion",
       id: "da1",
       targetType: "event",
       targetId: "e1",
@@ -148,6 +149,7 @@ describe("Canonical item rules (AC-M1-04, AC-M1-06, U11)", () => {
     };
     const b: DateAssertion = {
       ...base,
+      itemType: "date_assertion",
       id: "da2",
       targetType: "event",
       targetId: "e1",
@@ -156,6 +158,7 @@ describe("Canonical item rules (AC-M1-04, AC-M1-06, U11)", () => {
     };
     const c: DateAssertion = {
       ...base,
+      itemType: "date_assertion",
       id: "da3",
       targetType: "event",
       targetId: "e2",
@@ -201,6 +204,7 @@ describe("Canonical item rules (AC-M1-04, AC-M1-06, U11)", () => {
   it("an evidence relation without a resolvable source is invalid", () => {
     const relation = {
       ...base,
+      itemType: "evidence_relation" as const,
       id: "r1",
       evidenceItemId: "ev1",
       targetType: "event" as const,

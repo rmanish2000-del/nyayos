@@ -90,8 +90,20 @@ export function requirePurpose(
   );
   if (matching.length === 0) return { ok: false, code: "purpose_not_consented", purpose };
 
-  // Latest record wins; withdrawal is a later record with withdrawnAt set.
-  const latest = [...matching].sort((a, b) => a.grantedAt.localeCompare(b.grantedAt)).at(-1)!;
+  // The most recent consent EVENT wins. A withdrawal row copies the original grantedAt, so its
+  // event time is withdrawnAt; ordering by event time makes the result independent of row order
+  // (A-033 M-1). At equal instants a withdrawal outranks a grant.
+  // A withdrawal dated in the future is not yet an event and is ignored entirely.
+  const effective = matching.filter((c) => c.withdrawnAt === null || c.withdrawnAt <= now);
+  if (effective.length === 0) return { ok: false, code: "purpose_not_consented", purpose };
+  const eventTime = (c: Consent) => c.withdrawnAt ?? c.grantedAt;
+  const latest = [...effective]
+    .sort((a, b) => {
+      const byTime = eventTime(a).localeCompare(eventTime(b));
+      if (byTime !== 0) return byTime;
+      return Number(a.withdrawnAt !== null) - Number(b.withdrawnAt !== null);
+    })
+    .at(-1)!;
   if (latest.withdrawnAt !== null && latest.withdrawnAt <= now) {
     return { ok: false, code: "purpose_withdrawn", purpose };
   }

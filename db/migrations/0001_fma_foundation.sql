@@ -756,6 +756,8 @@ begin
       raise exception 'audit metadata value for % exceeds 256 characters', k using errcode = '23514';
     end if;
   end loop;
+  -- A-033 C-1: serialise chain writers so two concurrent inserts cannot share a predecessor.
+  perform pg_advisory_xact_lock(hashtext('nyayos.audit_events'));
   select a.row_hash into prev from nyayos.audit_events a order by a.seq desc limit 1;
   new.prev_hash := coalesce(prev, repeat('0', 64));
   canonical := jsonb_build_object(
@@ -849,6 +851,30 @@ begin
   return pid;
 end $$;
 
+-- A-033 M-4: provenance reference shape (mirrors app/src/domain/dispute.ts SourceRef).
+create or replace function nyayos.source_ref_valid(r jsonb) returns boolean
+language sql immutable set search_path = pg_catalog
+as $$
+  select r is not null and jsonb_typeof(r) = 'object' and case r->>'kind'
+    when 'statement'  then coalesce(r->>'statementId', '') <> ''
+    when 'document'   then coalesce(r->>'documentId', '') <> '' and coalesce(r->>'documentVersionId', '') <> ''
+    when 'user_entry' then coalesce(r->>'enteredBy', '') <> ''
+    else false end
+$$;
+
+-- Every canonical item must carry a well-formed provenance reference ("no fact without provenance"),
+-- and no FM-A item may claim an AI origin (S11). The origin lock is dropped by the FM-D migration.
+do $$
+declare t text;
+begin
+  foreach t in array array['entities','events','date_assertions','propositions','evidence_items','evidence_relations',
+                           'contradictions','missing_evidence','issues','next_steps'] loop
+    execute format('alter table nyayos.%I add constraint %I check (nyayos.source_ref_valid(source_ref))', t, t || '_source_ref_shape');
+    execute format('alter table nyayos.%I add constraint %I check (origin_type <> ''ai_extraction'')', t, t || '_fma_origin_inert');
+  end loop;
+  execute 'alter table nyayos.entity_source_forms add constraint entity_source_forms_source_ref_shape check (nyayos.source_ref_valid(source_ref))';
+end $$;
+
 -- A07: decide. Accepting writes the canonical row AND the correction in one transaction.
 -- Generic over target tables via jsonb_populate_record; server-controlled columns are never taken from the proposal.
 create or replace function nyayos.decide_proposal(p_proposal uuid, p_accept boolean, p_reason text default null)
@@ -869,6 +895,9 @@ declare
   setcols text;
   bad_keys text[];
   has_version boolean;
+  has_created_by boolean;
+  extra_cols text := '';
+  extra_vals text := '';
 begin
   select * into pr from nyayos.proposals where id = p_proposal for update;
   if pr.id is null then raise exception 'proposal not found' using errcode = 'P0002'; end if;
@@ -902,11 +931,19 @@ begin
   -- tenant_id, dispute_id, id or version). Columns absent from the proposal keep their defaults.
   select array_agg(k) into bad_keys
     from jsonb_object_keys(pr.proposed_value) k
-    where k in ('id', 'tenant_id', 'dispute_id', 'created_at', 'updated_at', 'version')
+    where k in ('id', 'tenant_id', 'dispute_id', 'created_at', 'updated_at', 'version', 'created_by', 'uploader_id')  -- identity fields are server-set (A-033 M-4)
        or not exists (select 1 from information_schema.columns c
                       where c.table_schema = 'nyayos' and c.table_name = tbl and c.column_name = k);
   if bad_keys is not null then
     raise exception 'proposal contains keys that cannot be written: %', array_to_string(bad_keys, ', ') using errcode = '23514';
+  end if;
+
+  -- A-033 M-4: provenance guards. AI origins are inert in FM-A; a provenance reference must be well-formed.
+  if pr.proposed_value ? 'origin_type' and pr.proposed_value ->> 'origin_type' = 'ai_extraction' then
+    raise exception 'origin_type ai_extraction is not enabled in FM-A' using errcode = '23514';
+  end if;
+  if pr.proposed_value ? 'source_ref' and not nyayos.source_ref_valid(pr.proposed_value -> 'source_ref') then
+    raise exception 'source_ref is not a valid provenance reference' using errcode = '23514';
   end if;
 
   select string_agg(format('%I', k), ', '), string_agg(format('v.%I', k), ', '), string_agg(format('%I = v.%I', k, k), ', ')
@@ -918,16 +955,19 @@ begin
 
   select exists (select 1 from information_schema.columns c
                  where c.table_schema = 'nyayos' and c.table_name = tbl and c.column_name = 'version') into has_version;
+  select exists (select 1 from information_schema.columns c
+                 where c.table_schema = 'nyayos' and c.table_name = tbl and c.column_name = 'created_by') into has_created_by;
+  if has_created_by then extra_cols := ', created_by'; extra_vals := ', $4'; end if;  -- server-set identity (A-033 M-4)
 
   if pr.target_id is null then
     if has_version then
       execute format(
-        'insert into nyayos.%I (id, tenant_id, dispute_id, version, %s) select gen_random_uuid(), $2, $3, 1, %s from jsonb_populate_record(null::nyayos.%I, $1) as v returning id',
-        tbl, cols, vcols, tbl) into new_id using pr.proposed_value, pr.tenant_id, pr.dispute_id;
+        'insert into nyayos.%I (id, tenant_id, dispute_id, version%s, %s) select gen_random_uuid(), $2, $3, 1%s, %s from jsonb_populate_record(null::nyayos.%I, $1) as v returning id',
+        tbl, extra_cols, cols, extra_vals, vcols, tbl) into new_id using pr.proposed_value, pr.tenant_id, pr.dispute_id, uid;
     else
       execute format(
-        'insert into nyayos.%I (id, tenant_id, dispute_id, %s) select gen_random_uuid(), $2, $3, %s from jsonb_populate_record(null::nyayos.%I, $1) as v returning id',
-        tbl, cols, vcols, tbl) into new_id using pr.proposed_value, pr.tenant_id, pr.dispute_id;
+        'insert into nyayos.%I (id, tenant_id, dispute_id%s, %s) select gen_random_uuid(), $2, $3%s, %s from jsonb_populate_record(null::nyayos.%I, $1) as v returning id',
+        tbl, extra_cols, cols, extra_vals, vcols, tbl) into new_id using pr.proposed_value, pr.tenant_id, pr.dispute_id, uid;
     end if;
   else
     if not has_version then
@@ -948,6 +988,42 @@ begin
   update nyayos.proposals set status = 'accepted', decided_by = uid, decided_at = now(), reason = coalesce(p_reason, reason)
     where id = p_proposal;
   return cid;
+end $$;
+
+-- A23 (A-033 C-2): request deletion. Ownership of the scope is verified server-side and the undo
+-- window comes from config_provisional — a client can neither name a foreign scope nor pick its own window.
+create or replace function nyayos.request_deletion(p_scope_type nyayos.deletion_scope_type, p_scope_id uuid)
+returns uuid
+language plpgsql security definer
+set search_path = pg_catalog, nyayos
+as $$
+declare uid uuid := nyayos.current_user_id(); tid uuid; did uuid; days int; rid uuid;
+begin
+  if uid is null then raise exception 'not authenticated' using errcode = '42501'; end if;
+  case p_scope_type
+    when 'dispute' then
+      if not nyayos.is_dispute_member(p_scope_id, 'dispute_owner') then
+        raise exception 'only the dispute owner may request deletion of a dispute' using errcode = '42501';
+      end if;
+      select d.tenant_id into tid from nyayos.disputes d where d.id = p_scope_id;
+    when 'document' then
+      select d.dispute_id, d.tenant_id into did, tid from nyayos.documents d where d.id = p_scope_id;
+      if did is null or not nyayos.is_dispute_member(did, 'dispute_editor') then
+        raise exception 'not authorised to request deletion of this document' using errcode = '42501';
+      end if;
+    when 'account' then
+      if p_scope_id <> uid then
+        raise exception 'account deletion may only be requested for oneself' using errcode = '42501';
+      end if;
+      select m.tenant_id into tid from nyayos.tenant_memberships m join nyayos.tenants t on t.id = m.tenant_id
+        where m.user_id = uid and t.type = 'personal' and m.status = 'active' limit 1;
+      if tid is null then raise exception 'no personal tenant for this user' using errcode = 'P0002'; end if;
+  end case;
+  select nullif(c.value, '')::int into days from nyayos.config_provisional c where c.key = 'deletion_undo_window_days';
+  days := coalesce(days, 7);
+  insert into nyayos.deletion_requests (tenant_id, scope_type, scope_id, requested_by, undo_until)
+    values (tid, p_scope_type, p_scope_id, uid, now() + make_interval(days => days)) returning id into rid;
+  return rid;
 end $$;
 
 -- A28: audit writer. Only the audit service identity may execute it; hash chain computed by trigger.
@@ -999,12 +1075,16 @@ revoke all on function nyayos.sign_up_personal_tenant(text, nyayos.notice_langua
 revoke all on function nyayos.create_dispute(uuid, text, text) from public;
 revoke all on function nyayos.propose_change(uuid, nyayos.canonical_target_type, uuid, jsonb, text) from public;
 revoke all on function nyayos.decide_proposal(uuid, boolean, text) from public;
+revoke all on function nyayos.request_deletion(nyayos.deletion_scope_type, uuid) from public;
+revoke all on function nyayos.source_ref_valid(jsonb) from public;
 revoke all on function nyayos.log_audit_event(nyayos.audit_actor_type, text, uuid, uuid, uuid, text, text, text, text, nyayos.audit_outcome, nyayos.audit_severity, text, text, text, jsonb) from public;
 revoke all on function nyayos.verify_audit_chain() from public;
 grant execute on function nyayos.sign_up_personal_tenant(text, nyayos.notice_language) to nyayos_authenticated;
 grant execute on function nyayos.create_dispute(uuid, text, text) to nyayos_authenticated;
 grant execute on function nyayos.propose_change(uuid, nyayos.canonical_target_type, uuid, jsonb, text) to nyayos_authenticated;
 grant execute on function nyayos.decide_proposal(uuid, boolean, text) to nyayos_authenticated;
+grant execute on function nyayos.request_deletion(nyayos.deletion_scope_type, uuid) to nyayos_authenticated;
+grant execute on function nyayos.source_ref_valid(jsonb) to nyayos_authenticated;
 grant execute on function nyayos.log_audit_event(nyayos.audit_actor_type, text, uuid, uuid, uuid, text, text, text, text, nyayos.audit_outcome, nyayos.audit_severity, text, text, text, jsonb) to nyayos_service_audit;
 grant execute on function nyayos.verify_audit_chain() to nyayos_service_audit;
 
@@ -1317,16 +1397,14 @@ revoke all on nyayos.audit_anchors from public;
 grant select, insert on nyayos.audit_anchors to nyayos_service_audit;
 create policy audit_anchors_service on nyayos.audit_anchors for all to nyayos_service_audit using (true) with check (true);
 
--- 7.35 deletion_requests (owner creates and reads; worker advances state)
+-- 7.35 deletion_requests (created only via request_deletion(); owner reads and undoes; worker advances state) — A-033 C-2
 alter table nyayos.deletion_requests enable row level security;
 alter table nyayos.deletion_requests force row level security;
 revoke all on nyayos.deletion_requests from public;
-grant select, insert, update (state) on nyayos.deletion_requests to nyayos_authenticated;
+grant select, update (state) on nyayos.deletion_requests to nyayos_authenticated;
 grant select, update (state, locked_at, purged_at) on nyayos.deletion_requests to nyayos_service_deletion;
 create policy deletion_requests_self on nyayos.deletion_requests for select to nyayos_authenticated
   using (requested_by = nyayos.current_user_id());
-create policy deletion_requests_insert_self on nyayos.deletion_requests for insert to nyayos_authenticated
-  with check (requested_by = nyayos.current_user_id() and nyayos.is_tenant_member(tenant_id));
 create policy deletion_requests_undo_self on nyayos.deletion_requests for update to nyayos_authenticated
   using (requested_by = nyayos.current_user_id() and state = 'requested' and now() <= undo_until)
   with check (state = 'undone');

@@ -14,6 +14,21 @@
 
 ---
 
+## 0. Post-fix status (A-033, 23 September 2026)
+
+| Finding | Status | Evidence |
+|---|---|---|
+| C-1 audit chain fork | **Closed** — advisory transaction lock in `tg_audit_before_insert` | `db/tests/audit_concurrency_0001.sh`: two sessions, chain intact, 0 forked predecessors; smoke `C1_advisory_lock_in_audit_trigger` |
+| C-2 deletion-request authorisation | **Closed** — INSERT grant and policy removed; `request_deletion()` verifies owner / editor / self and takes the undo window from config; TS mirror | smoke `C2_*` (5 checks); PROBE1 now denied |
+| M-1 consent ordering | **Closed** — event-time ordering | `consent.test.ts` order-independence + re-grant + future-withdrawal |
+| M-4 provenance / identity guards | **Closed** — identity keys refused, `created_by` server-set, `ai_extraction` refused (function + CHECK ×10), `source_ref` shape (CHECK ×11) | smoke `M4_*` (7 checks); PROBE4/4b/5b now refused |
+| M-5 manifest typing | **Closed** — explicit `itemType`, typed manifest | `export-deletion.test.ts` event vs proposition |
+| m-1, M-8 (doc), M-2, M-3, M-6, M-7 | **Open** — outside the A-033 scope | see §8–§9 |
+
+**Updated risk rating: Medium.** **Updated recommendation: SAFE TO MERGE** as the FM-A foundation once the founder either applies m-1 (one grant line) and the M-8 cross-map addendum, or accepts them as tracked follow-ups; D-031…D-036 remain decisions to take before wave W1. Sections 1–11 below are the original review as issued and are unchanged.
+
+---
+
 ## 1. Executive summary
 
 **Recommendation: MERGE WITH FIXES.** The branch does what A-030 claimed and does not do anything it was forbidden to do: no AI, legal, representation, marketplace, deployment or dependency change exists (§7). Tenant isolation, single-writer enforcement, the write-once evidence model and the append-only audit table hold under adversarial probes. But two controls that the whole design leans on are wrong in ways only execution shows: the audit hash chain **forks under two concurrent writers** and then reports a legitimate row as tampered, and the deletion-request policy **accepts a request naming another tenant's dispute** with a client-chosen undo window. Eight further major findings are real defects or unresolved design conflicts, most of them small to fix. Because the migration has never been merged or applied to any environment, every fix can be made in place on this branch.
