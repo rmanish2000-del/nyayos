@@ -12,6 +12,8 @@
 - [x] A-025 validation: tests 40/40, typecheck, lint, build, and responsive 390/834/1280 rendering with no console errors.
 - [x] Sprint 4 — S11 Parties & Entities and S12 Timeline (A-026): Party Card (name, role, relationship, confirm/edit/add/remove, multi-party) and Timeline (exact / approximate / inferred / unknown / conflicting dates, add/edit/remove event, source references, conflict indicators, filters).
 - [x] Sprint 4 validation: tests 53/53, typecheck, lint (0 errors), build, responsive 390/834/1280 with no console errors.
+- [x] A-030 FM-A domain foundation — `src/domain/` (14 modules), `tests/domain/` (79 tests), SQL twin in `db/migrations/` (not applied); 132/132 tests, typecheck, lint clean. Branch `feature/fma-foundation-v1`, REVIEW.
+- [ ] A-030 wave W2 — wire U01–U21 screens to the domain types; Figma FM-A package still missing (A-008).
 - [ ] A-021 items 4, 6, 8 — contradiction-specific actions, extended source metadata, separate confidence hue family (not in the A-022 instruction; needs a follow-on assignment).
 - [ ] Screen-reader pass (NVDA / VoiceOver) — owed since A-014; needs assistive-technology access.
 - [ ] A-015 Sprint 2 closure — blocked on A-008 Fact Card design (external input) and a conformance re-review.

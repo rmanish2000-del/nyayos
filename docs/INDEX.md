@@ -80,12 +80,19 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | Document | Type | Contents |
 |---|---|---|
 | [NYAYOS_MASTER_PRODUCT_SPEC_V1.md](product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md) | Supplied — A-006 | Canonical specification for the Dispute Readiness Engine |
+| [NYAYOS_FAST_MODE_STRATEGY_V1.md](product/NYAYOS_FAST_MODE_STRATEGY_V1.md) | Supplied — A-031, Claude Chat, 22 Sep 2026 | Fast Mode: FM-0 → FM-A → FM-B → FM-C → FM-D → FM-E; §7 security floor S1–S16; §14 convergence rules CR-1–CR-14 |
+| [NYAYOS_FM0_CONCIERGE_PACK_V1.md](product/NYAYOS_FM0_CONCIERGE_PACK_V1.md) | Supplied — A-031 | FM-0 concierge operating pack (no code) |
+| [NYAYOS_EXECUTIVE_PRODUCT_VISION_DECK_V1_TEXT.md](product/NYAYOS_EXECUTIVE_PRODUCT_VISION_DECK_V1_TEXT.md) | Derived — A-031 (text extract of a gitignored deck) | Product vision v2 narrative, bilingual |
 | [NYAYOS_MVP_RECONCILIATION_V3.md](product/NYAYOS_MVP_RECONCILIATION_V3.md) | Maintainer — A-013 | **Tier 7 view.** Consolidates the MVP position at V3 under FA-001. No new product decisions. Superseded by any founder-held V3 |
 
 ## `/docs/architecture` — how it would be built
 
 | Document | Type | Contents |
 |---|---|---|
+| [NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md](architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md) | Supplied — A-010, Claude Chat, 22 Sep 2026 (imported under A-030) | **Security & Data Architecture Spec V1 — CANONICAL.** Tenant model, RLS helpers, purpose-bound consent, evidence integrity, deletion lifecycle, audit architecture, threat model, SEC test suite. Governs the FM-A security foundation |
+| [NYAYOS_EXECUTIVE_ARCHITECTURE_DECK_V1_TEXT.md](architecture/NYAYOS_EXECUTIVE_ARCHITECTURE_DECK_V1_TEXT.md) | Derived — A-031 (text extract of a gitignored deck) | Executive architecture narrative. Its S1–S16 numbering differs from the Scope Sheet; see the A-030 gap report §3 |
+| [NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md](architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md) | Maintainer — A-030 | **Phase 1 assessment:** structure, architecture inventory, conflicts, integration strategy for `feature/fma-foundation-v1` |
+| [NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md](architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md) | Maintainer — A-030 | **Gap report:** U01–U21 READY / PARTIAL / MISSING · S1–S16 coverage · entity diagram · risks · implementation waves |
 | [NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md](architecture/NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md) | Supplied — Claude Chat, 22 Sep 2026 (imported under A-029) | **Strategy review:** Dispute File platform with professional-review layer; four MVP additions; permanent rejections; revenue, legal-conduct, privacy, domain architecture, nyayos.global, phased roadmap. Its L1–L10 enter only through founder-ratified Decision Log entries (D-019–D-030) |
 | [NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) | Maintainer — A-014 | **Sprint 1 review — EXECUTED (§ 11).** GO (conditional) for Sprint 2 on Sprint 1.1 State Completion; typography finding retracted; ranked findings |
 | [ARCHITECTURE_REVIEW.md](architecture/ARCHITECTURE_REVIEW.md) | Supplied — A-005 | TanStack Start / React 19 / Vite 7 on edge runtime; Supabase Postgres + Auth + Storage + RLS; pgvector; server-side AI gateway; append-only audit; closed tool catalog |
@@ -175,3 +182,6 @@ Exact commercial wedge boundary · pricing · retention period · OCR provider �
 | Schema, migrations, database resources, backend, infrastructure | Not yet authorized. Only the Sprint 1 frontend foundation is in `app/` |
 | `nyayos-sprint1-foundation.zip`, `app/node_modules`, `app/.output`, `app/.wrangler`, `app/package-lock.json` | Gitignored. Lockfile of record is `app/bun.lock` |
 | `NYAYOS_V1_REVISED_DELIVERABLES.zip` | Redundant — its contents are committed individually |
+| [NYAYOS_FM_A_SCOPE_SHEET_V1.md](implementation/NYAYOS_FM_A_SCOPE_SHEET_V1.md) | Supplied — A-031, Claude Chat, 22 Sep 2026 | **FM-A Scope Sheet V1 — governs FM-A.** F01–F24, data model §4, API A01–A28, UI U01–U21, security S1–S16, tests, exit gate. Where the decks disagree, this sheet wins |
+| [NYAYOS_BUILD_BRIEF_V2.md](implementation/NYAYOS_BUILD_BRIEF_V2.md) | Supplied — A-031, Claude Chat | Build Brief V2 — milestones M0–M7, acceptance criteria, conventions (§3.3). FM-A is a strict subset (CR-1) |
+| [NYAYOS_COUNSEL_BRIEF_V1.md](founder/NYAYOS_COUNSEL_BRIEF_V1.md) | Supplied — A-031, Claude Chat | Counsel Brief V1 — open legal questions OL-01…OL-11, blocking matrix; **OL-01 and OL-04 block any pilot**. Not legal advice |

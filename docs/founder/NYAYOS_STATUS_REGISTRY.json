@@ -1,7 +1,7 @@
 {
   "$comment": "NyayOS canonical status registry. MACHINE SOURCE OF TRUTH for task status and dependencies. Edited by hand or by the maintainer; validated and rendered by scripts/governance/registry.mjs. Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md.",
   "version": 1,
-  "updated": "2026-09-22",
+  "updated": "2026-09-23",
   "statuses": [
     "OPEN",
     "IN_PROGRESS",
@@ -176,9 +176,9 @@
         "external:figma"
       ],
       "evidence": "",
-      "updated": "2026-09-21",
+      "updated": "2026-09-23",
       "superseded_by": null,
-      "notes": "Fact Card design may start now against A-014 § 3.1 / § 4.5."
+      "notes": "Fact Card design may start now against A-014 § 3.1 / § 4.5. — 23 Sep 2026: the 'Figma FM-A source handoff package' named as an A-030 input was not found in Downloads, OneDrive, Desktop, Documents or any GitHub repository; A-008 remains OPEN and Phase 2 of A-030 is blocked on it."
     },
     {
       "id": "A-009",
@@ -204,7 +204,7 @@
       "id": "A-010",
       "title": "NyayOS Security + Data Architecture Specification V1",
       "type": "architecture",
-      "status": "OPEN",
+      "status": "CANONICAL",
       "owner": "Claude Chat",
       "tool": "Claude Chat — Opus with Extended Thinking (research and specification only; deployment not allowed)",
       "gate": null,
@@ -217,10 +217,10 @@
       "outputs": [
         "docs/architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md"
       ],
-      "evidence": "",
-      "updated": "2026-09-22",
+      "evidence": "docs/architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md",
+      "updated": "2026-09-23",
       "superseded_by": null,
-      "notes": "NEXT P0 (D-030). Scope: tenant/RLS incl. reviewer grants; purpose-bound consent and grant model; threat model (reviewer seat, conflict-check disclosure, prompt injection, export leakage); data classification; evidence-integrity manifest and custody log; deletion lifecycle with per-dispute keys; RAG trust boundary; OCR pipeline security; audit schema; policy/jurisdiction adapter and review-gate interfaces; security test cases mapped to Eval Protocol §17. A local draft of this name exists in the founder's Downloads — UNVERIFIED, not imported."
+      "notes": "NEXT P0 (D-030). Scope: tenant/RLS incl. reviewer grants; purpose-bound consent and grant model; threat model (reviewer seat, conflict-check disclosure, prompt injection, export leakage); data classification; evidence-integrity manifest and custody log; deletion lifecycle with per-dispute keys; RAG trust boundary; OCR pipeline security; audit schema; policy/jurisdiction adapter and review-gate interfaces; security test cases mapped to Eval Protocol §17. A local draft of this name exists in the founder's Downloads — UNVERIFIED, not imported. — 23 Sep 2026: delivered by Claude Chat (dated 22 Sep 2026) and supplied by the founder as an input to the A-030 build assignment; imported unchanged on feature/fma-foundation-v1 (sha256 7dc6222b60547007…). The founder's use of it as a build input is recorded as the acceptance event."
     },
     {
       "id": "A-011",
@@ -251,18 +251,19 @@
       "owner": "Unassigned",
       "tool": "TBD",
       "gate": "FA-002 (not granted)",
-      "inputs": [],
+      "inputs": [
+        "A-010"
+      ],
       "planned_inputs": [
         "A-008",
         "A-009",
-        "A-010",
         "A-015"
       ],
       "outputs": [],
       "evidence": "",
-      "updated": "2026-09-21",
+      "updated": "2026-09-23",
       "superseded_by": null,
-      "notes": "NOT AUTHORIZED. Requires FA-002."
+      "notes": "NOT AUTHORIZED. Requires FA-002. 23 Sep 2026: A-010 promoted from planned_inputs to inputs (CANONICAL); A-012 remains OPEN and ungated (FA-002 not granted)."
     },
     {
       "id": "A-013",
@@ -655,6 +656,67 @@
       "updated": "2026-09-22",
       "superseded_by": null,
       "notes": "Read-only audit at dbd3093. Decisions D-019–D-030 appended to the Decision Log from the founder instruction of 22 Sep 2026 (history preserved). Ecosystem Architecture Review V1 imported unchanged (sha256 4bd3b5d1…). Directive document not supplied; represented via the instruction only. Two EduOS .pptx files found untracked in the working copy — not staged; *.pptx gitignored; founder to remove."
+    },
+    {
+      "id": "A-031",
+      "title": "Fast Mode specification set — import (FMS V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1, executive deck text extracts)",
+      "type": "specification",
+      "status": "CANONICAL",
+      "owner": "Claude Chat",
+      "tool": "Claude Chat — Opus with Extended Thinking (specification only); imported unchanged by Claude Code under A-030",
+      "gate": null,
+      "inputs": [
+        "A-006",
+        "A-010",
+        "A-029"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/product/NYAYOS_FAST_MODE_STRATEGY_V1.md",
+        "docs/implementation/NYAYOS_FM_A_SCOPE_SHEET_V1.md",
+        "docs/implementation/NYAYOS_BUILD_BRIEF_V2.md",
+        "docs/founder/NYAYOS_COUNSEL_BRIEF_V1.md",
+        "docs/product/NYAYOS_FM0_CONCIERGE_PACK_V1.md",
+        "docs/architecture/NYAYOS_EXECUTIVE_ARCHITECTURE_DECK_V1_TEXT.md",
+        "docs/product/NYAYOS_EXECUTIVE_PRODUCT_VISION_DECK_V1_TEXT.md"
+      ],
+      "evidence": "docs/implementation/NYAYOS_FM_A_SCOPE_SHEET_V1.md",
+      "updated": "2026-09-23",
+      "superseded_by": null,
+      "notes": "Produced outside the repository (Claude Chat, 22 Sep 2026) and supplied by the founder as inputs to A-030. Imported byte-identical: FMS 422e1e4a59e8a3a7…, Scope Sheet b7f8b59bc099cd7b…, BB2 6b9003f9845ac9c8…, CB1 80798c5b2c70b9d5…, FM-0 pack 37da3870e6bd7dc2…. Decks are binary .pptx (gitignored); verbatim text extracts committed with source hashes dd6c03dd4584dd04… and b9b911032475feff…. Specifications only — none asserts an implementation exists."
+    },
+    {
+      "id": "A-030",
+      "title": "FM-A Foundation Build — canonical integration branch feature/fma-foundation-v1 (repository assessment, security foundation, data model, gap report)",
+      "type": "build",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — Canonical Repository Integration and FM-A Foundation Build (staging only; no deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-010",
+        "A-017",
+        "A-018",
+        "A-026",
+        "A-029",
+        "A-031"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md",
+        "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md",
+        "app/src/domain/index.ts",
+        "app/tests/domain/enums.test.ts",
+        "db/migrations/0001_fma_foundation.sql",
+        "db/README.md",
+        "db/tests/smoke_0001.sql",
+        "scripts/db/schema-lint.mjs",
+        ".github/workflows/schema-lint.yml"
+      ],
+      "evidence": "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md",
+      "updated": "2026-09-23",
+      "superseded_by": null,
+      "notes": "Branch feature/fma-foundation-v1 from main 6c6b478. Phase 2 (import Figma FM-A UI, U01–U21) NOT executed: the 'Figma FM-A source handoff package' does not exist in any local location; U01–U21 mapped to existing components instead (gap report §4). Domain layer: 14 TypeScript modules, 79 tests (132 total). SQL migration 0001 is NOT applied to any environment (none exists); statically linted (39 tables, RLS+policies+grants+allow-list) and executed once on an ephemeral local postgres:16-alpine container with synthetic data — db/tests/smoke_0001.sql 41/41 PASS; three defects found by execution were fixed before commit. No deployment, no production change, no AI, no legal functionality, no marketplace. REVIEW until the founder merges the branch by pull request."
     }
   ]
 }

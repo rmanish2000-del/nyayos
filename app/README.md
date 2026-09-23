@@ -41,6 +41,20 @@ Foundation components: `Button`, `InputField`, `StatusChip`, `SourceBadge`,
 `ReadinessIndicator`, `EvidenceCard`, `EvidenceWorkspace`, `PartyCard`,
 `TimelineEventCard`, `PartiesTimelineWorkspace`, `AppShell`.
 
+## Domain foundation (A-030)
+
+`src/domain/` is the FM-A security and data foundation: framework-agnostic types, zod
+schemas and pure functions with no I/O. It defines every enum in full with the FM-A-enabled
+subset (tenant types, roles, consent purposes, proposal origins…), the table registry and
+deletion allow-list, the `isDisputeMember` / `grantAllows` authorisation helpers, consent
+enforcement with `aggregate_analytics` and `model_improvement` locked off, the single-writer
+proposal → correction pipeline, the upload → quarantine → scan → promote state machine,
+hash-chained content-free audit, the export manifest, the deletion lifecycle and the required
+bilingual copy. Tests live in `tests/domain/`. The SQL twin is `../db/migrations/` (not applied).
+UI components do not yet consume it; wiring is wave W2 in the A-030 gap report.
+
+No AI, no legal or procedural content, no sharing and no marketplace code path exists in this package.
+
 ## Stack
 
 TanStack Start v1 · React 19 · TanStack Router · Vite · Tailwind CSS v4

@@ -5,6 +5,36 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-23 — FM-A foundation build on `feature/fma-foundation-v1`; specification set imported (A-030, A-031)
+
+**Branch, not `main`.** All changes below live on `feature/fma-foundation-v1` (from `main` at `6c6b478ffa1a811ba435d2891b0b3179a3a7043d`) and await a founder-reviewed pull request. No direct `main` commit.
+
+### Added
+
+- **Specifications imported unchanged (A-031, CANONICAL):** Security & Data Architecture Spec V1 (closes A-010 → CANONICAL), Fast Mode Strategy V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1; verbatim text extracts of the two executive decks (binaries gitignored).
+- **`docs/architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md`** — Phase 1 repository assessment, architecture inventory, conflict list, integration strategy.
+- **`app/src/domain/`** — 14 TypeScript modules: enums declared in full with FM-A-enabled subsets (CR-3); table registry and deletion allow-list (CR-4); [PROV] configuration; server-built request context; `isDisputeMember` / `grantAllows` (always false in FM-A, CR-2); consent enforcement with `aggregate_analytics` and `model_improvement` hard-locked (S8); personal-tenant sign-up; dispute core with the fixed provenance contract (CR-8); single-writer proposal → correction pipeline and version-chain rebuild (S3, Deck G2); evidence lifecycle state machine — no promotion without a clean verdict, no timeout promotion (S5); hash-chained, content-free audit (S7); export manifest that excludes and lists incomplete provenance (Deck G4); deletion lifecycle with honest status and content-free tombstones (S9, OL-03 interim); bilingual required copy and prohibited-wording guard (FN-16).
+- **`app/tests/domain/`** — 8 files, 79 tests. Suite total 132/132.
+- **`db/migrations/0001_fma_foundation.sql`** — 39 tables, RLS enabled + forced everywhere, helpers, single-writer functions, audit trigger, allow-list seed, self-check. **Not applied to any environment** (none exists); executed once on an ephemeral local Postgres 16.14 container with synthetic data — **`db/tests/smoke_0001.sql` 41/41 PASS**; three execution-only defects fixed before commit.
+- **`scripts/db/schema-lint.mjs`** + **`schema-lint`** workflow — static SEC-RLS-01 / SEC-DEL-06 and TypeScript/SQL twin parity.
+- **`docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md`** — U01–U21 READY / PARTIAL / MISSING, S1–S16 coverage with Scope-Sheet-vs-Deck numbering reconciliation, entity diagram, technical risks, implementation waves.
+
+### Changed
+
+- Registry: A-010 → **CANONICAL** (spec delivered and supplied as a build input); A-031 added CANONICAL; A-030 added **REVIEW**; A-008 note — Figma package not found.
+- `README.md`, `docs/INDEX.md`, `NYAYOS_STATUS.json`, `NYAYOS_OPERATING_SYSTEM.md` (addendum §27), `app/README.md`, `app/roadmap.md` updated to describe the branch state.
+
+### Found
+
+- **The Figma FM-A source handoff package does not exist** in Downloads, OneDrive, Desktop, Documents or any GitHub repository. Phase 2 (import U01–U21 UI) could not be executed; U01–U21 were mapped against the existing 17 components instead.
+- The Executive Architecture Deck and the FM-A Scope Sheet **number S1–S16 differently**; the Scope Sheet numbering is adopted and a cross-map is recorded.
+- The Deck's "reference-checked deletion" (block) and the Scope Sheet's SEC-DEL-01 (references removed) disagree; recorded as `document_reference_policy` [PROV], default `block`.
+- `app/src/lib/lovable-error-reporting.ts` is an editor-only telemetry shim (inert outside the Lovable preview); retained and documented, not a production claim.
+
+### Not changed
+
+No deployment, no production change, no database provisioned or written, no AI code path, no legal or procedural content, no marketplace or fee path. `main` untouched.
+
 ---
 
 ## 2026-09-22 — Operating system and status established; decisions D-019–D-030 reconciled (A-029)

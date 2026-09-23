@@ -84,25 +84,107 @@
     "note": "A-009 (interviews + WTP) is OPEN; no business metric has been observed or verified."
   },
   "active_risks": [
-    {"id": "R01", "risk": "Unsupported legal/procedural claim", "severity": "Critical", "source": "Risk Register V1"},
-    {"id": "R02", "risk": "Cross-tenant data leakage", "severity": "Critical", "source": "Risk Register V1"},
-    {"id": "R06", "risk": "Prompt injection in documents", "severity": "Critical", "likelihood": "High", "source": "Risk Register V1"},
-    {"id": "R25", "risk": "Market thesis is wrong — build running ahead of validation", "severity": "Critical", "source": "Risk Register V1"},
-    {"id": "R14", "risk": "Individual-advocate economics fail", "severity": "High", "likelihood": "High", "source": "Risk Register V1"},
-    {"id": "E1", "risk": "Platform characterised as advertising/soliciting for advocates (Rule 36; 2024 BCI directive)", "severity": "Critical", "source": "Ecosystem Review V1 §20 (REPORTED)"},
-    {"id": "E2", "risk": "Revenue model treated as tout/fee-sharing (Rules 20, 36, 37)", "severity": "Critical", "source": "Ecosystem Review V1 §20 (REPORTED)"},
-    {"id": "E4", "risk": "Reviewer seat leaks data beyond purpose", "severity": "Critical", "source": "Ecosystem Review V1 §20 (REPORTED)"},
-    {"id": "E11", "risk": "Business payer (FPO/SMB) will not pay", "severity": "Critical", "source": "Ecosystem Review V1 §20 (REPORTED)"},
-    {"id": "G-SPRINT4", "risk": "Sprint 4 (A-026) canonical without conformance review", "severity": "High", "source": "A-029 audit"},
-    {"id": "G-SELFCANON", "risk": "Build outputs self-declare CANONICAL (A-018, A-020, A-023, A-026)", "severity": "Medium", "source": "A-029 audit"},
-    {"id": "G-CONTAM", "risk": "Foreign-project (.pptx) files present in the working copy", "severity": "Medium", "source": "A-029 audit — untracked, gitignored 22 Sep"}
+    {
+      "id": "R01",
+      "risk": "Unsupported legal/procedural claim",
+      "severity": "Critical",
+      "source": "Risk Register V1"
+    },
+    {
+      "id": "R02",
+      "risk": "Cross-tenant data leakage",
+      "severity": "Critical",
+      "source": "Risk Register V1"
+    },
+    {
+      "id": "R06",
+      "risk": "Prompt injection in documents",
+      "severity": "Critical",
+      "likelihood": "High",
+      "source": "Risk Register V1"
+    },
+    {
+      "id": "R25",
+      "risk": "Market thesis is wrong — build running ahead of validation",
+      "severity": "Critical",
+      "source": "Risk Register V1"
+    },
+    {
+      "id": "R14",
+      "risk": "Individual-advocate economics fail",
+      "severity": "High",
+      "likelihood": "High",
+      "source": "Risk Register V1"
+    },
+    {
+      "id": "E1",
+      "risk": "Platform characterised as advertising/soliciting for advocates (Rule 36; 2024 BCI directive)",
+      "severity": "Critical",
+      "source": "Ecosystem Review V1 §20 (REPORTED)"
+    },
+    {
+      "id": "E2",
+      "risk": "Revenue model treated as tout/fee-sharing (Rules 20, 36, 37)",
+      "severity": "Critical",
+      "source": "Ecosystem Review V1 §20 (REPORTED)"
+    },
+    {
+      "id": "E4",
+      "risk": "Reviewer seat leaks data beyond purpose",
+      "severity": "Critical",
+      "source": "Ecosystem Review V1 §20 (REPORTED)"
+    },
+    {
+      "id": "E11",
+      "risk": "Business payer (FPO/SMB) will not pay",
+      "severity": "Critical",
+      "source": "Ecosystem Review V1 §20 (REPORTED)"
+    },
+    {
+      "id": "G-SPRINT4",
+      "risk": "Sprint 4 (A-026) canonical without conformance review",
+      "severity": "High",
+      "source": "A-029 audit"
+    },
+    {
+      "id": "G-SELFCANON",
+      "risk": "Build outputs self-declare CANONICAL (A-018, A-020, A-023, A-026)",
+      "severity": "Medium",
+      "source": "A-029 audit"
+    },
+    {
+      "id": "G-CONTAM",
+      "risk": "Foreign-project (.pptx) files present in the working copy",
+      "severity": "Medium",
+      "source": "A-029 audit — untracked, gitignored 22 Sep"
+    }
   ],
   "blocked_items": [
-    {"id": "A-012", "item": "Production build / deployment", "blocked_by": "FA-002 not granted"},
-    {"id": "A-015", "item": "Sprint 2 closure", "blocked_by": "A-008 Figma V2 (OPEN since 21 Sep 2026)"},
-    {"id": "A-028", "item": "Print source corrections", "blocked_by": "Founder materials paused (REPORTED, founder instruction 22 Sep 2026)"},
-    {"id": "PR-1", "item": "Auto-generated changelog PR from status-update", "blocked_by": "Awaiting founder merge"},
-    {"id": "DIRECTIVE", "item": "Master Operating System and Continuity Directive", "blocked_by": "Document not supplied; not present locally"}
+    {
+      "id": "A-012",
+      "item": "Production build / deployment",
+      "blocked_by": "FA-002 not granted"
+    },
+    {
+      "id": "A-015",
+      "item": "Sprint 2 closure",
+      "blocked_by": "A-008 Figma V2 (OPEN since 21 Sep 2026)"
+    },
+    {
+      "id": "A-028",
+      "item": "Print source corrections",
+      "blocked_by": "Founder materials paused (REPORTED, founder instruction 22 Sep 2026)"
+    },
+    {
+      "id": "PR-1",
+      "item": "Auto-generated changelog PR from status-update",
+      "blocked_by": "Awaiting founder merge"
+    },
+    {
+      "id": "DIRECTIVE",
+      "item": "Master Operating System and Continuity Directive",
+      "blocked_by": "Document not supplied; not present locally"
+    }
   ],
   "unresolved_legal_questions": [
     "Written legal opinion (practising advocate) on reviewer seat, organisation panels, public directory, engagement-request model, advocate SaaS pricing, T1 self-help drafting — founder-only act, not commissioned",
@@ -117,27 +199,84 @@
     "Domain ownership: nyayos.global and India-facing primary"
   ],
   "next_assignment": {
-    "id": "A-010",
-    "tool": "Claude Chat",
-    "mode": "Opus with Extended Thinking",
-    "assignment": "NyayOS Security + Data Architecture Specification V1",
-    "environment": "Research and specification only",
-    "deployment": "Not allowed",
-    "inputs": ["A-005", "A-006", "A-029"],
-    "scope": "Tenant/RLS design incl. reviewer grants · purpose-bound consent and grant model · threat model (reviewer seat, conflict-check disclosure, prompt injection, export leakage) · data classification · evidence-integrity manifest and custody log · storage/deletion lifecycle with per-dispute keys · RAG trust boundary · OCR pipeline security · audit schema · policy/jurisdiction adapter interface · review-gate interface · security test cases mapped to Eval Protocol §17",
-    "expected_output": "docs/architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md",
-    "handoff_owner": "M365 Copilot"
+    "id": "A-030 → merge, then W1",
+    "tool": "Founder (review/merge) then Claude Code",
+    "mode": "Staging build under FA-001; FD-02 hosting decision required before any database",
+    "assignment": "Review and merge feature/fma-foundation-v1; then wave W1 — auth, personal tenant, consent, audit server functions against a synthetic staging database",
+    "environment": "Staging only (synthetic data)",
+    "deployment": "Not allowed (production)",
+    "inputs": [
+      "A-010",
+      "A-030",
+      "A-031"
+    ],
+    "prior_next_assignment_closed": "A-010 delivered (CANONICAL 23 Sep 2026)"
   },
-  "last_verified_at": "2026-09-22",
+  "last_verified_at": "2026-09-23",
   "evidence_packages": [
-    {"name": "Operating system directive (consolidated)", "path": "NYAYOS_OPERATING_SYSTEM.md", "assignment": "A-029"},
-    {"name": "Ecosystem Architecture Review V1", "path": "docs/architecture/NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md", "assignment": "imported under A-029", "sha256_prefix": "4bd3b5d1494300db"},
-    {"name": "Sprint 1 Foundation review", "path": "docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md", "assignment": "A-014"},
-    {"name": "Fact Card conformance review", "path": "docs/design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md", "assignment": "A-021"},
-    {"name": "Sprint 3 evidence conformance review", "path": "docs/design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md", "assignment": "A-024"},
-    {"name": "Print export manifest (26 files, SHA-256)", "path": "docs/print/exports/NYAYOS_PRINT_EXPORT_MANIFEST.md", "assignment": "A-027"},
-    {"name": "Continuity Handoff V2", "path": "docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md", "assignment": "A-017"},
-    {"name": "Founder Authorization Record", "path": "docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md", "assignment": "A-013"},
-    {"name": "Status registry (machine source of truth)", "path": "docs/founder/NYAYOS_STATUS_REGISTRY.json", "assignment": "A-019"}
+    {
+      "name": "Operating system directive (consolidated)",
+      "path": "NYAYOS_OPERATING_SYSTEM.md",
+      "assignment": "A-029"
+    },
+    {
+      "name": "Ecosystem Architecture Review V1",
+      "path": "docs/architecture/NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md",
+      "assignment": "imported under A-029",
+      "sha256_prefix": "4bd3b5d1494300db"
+    },
+    {
+      "name": "Sprint 1 Foundation review",
+      "path": "docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md",
+      "assignment": "A-014"
+    },
+    {
+      "name": "Fact Card conformance review",
+      "path": "docs/design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md",
+      "assignment": "A-021"
+    },
+    {
+      "name": "Sprint 3 evidence conformance review",
+      "path": "docs/design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md",
+      "assignment": "A-024"
+    },
+    {
+      "name": "Print export manifest (26 files, SHA-256)",
+      "path": "docs/print/exports/NYAYOS_PRINT_EXPORT_MANIFEST.md",
+      "assignment": "A-027"
+    },
+    {
+      "name": "Continuity Handoff V2",
+      "path": "docs/handoffs/NYAYOS_CONTINUITY_HANDOFF_V2.md",
+      "assignment": "A-017"
+    },
+    {
+      "name": "Founder Authorization Record",
+      "path": "docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md",
+      "assignment": "A-013"
+    },
+    {
+      "name": "Status registry (machine source of truth)",
+      "path": "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+      "assignment": "A-019"
+    }
+  ],
+  "feature_branches": [
+    {
+      "name": "feature/fma-foundation-v1",
+      "base": "6c6b478ffa1a811ba435d2891b0b3179a3a7043d",
+      "task": "A-030",
+      "status": "REVIEW — pull request to main pending founder review",
+      "contents": "Specification set import (A-031); app/src/domain (14 modules, 79 tests); db/migrations/0001_fma_foundation.sql (NOT applied); scripts/db/schema-lint.mjs; assessment and gap report",
+      "verified": {
+        "tests": "132/132",
+        "typecheck": "clean",
+        "eslint": "0 errors (11 pre-existing warnings)",
+        "build": "pass",
+        "schema_lint": "clean (39 tables)",
+        "migration_smoke": "41/41 PASS on ephemeral local postgres:16-alpine (synthetic data; container destroyed; no environment)"
+      },
+      "not_done": "Figma FM-A UI import (package missing); server functions; auth; storage; scan adapter; any database"
+    }
   ]
 }

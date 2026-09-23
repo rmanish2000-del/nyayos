@@ -1,0 +1,40 @@
+# schema-lint — static SEC-RLS-01 / SEC-DEL-06 check over db/migrations against the
+# TypeScript twin in app/src/domain/tables.ts. No database is connected; nothing is applied.
+# Added by A-030. Not yet a required status check (founder decision: branch protection).
+name: schema-lint
+
+on:
+  pull_request:
+    paths:
+      - "db/**"
+      - "scripts/db/**"
+      - "app/src/domain/tables.ts"
+      - ".github/workflows/schema-lint.yml"
+  push:
+    branches: [main]
+    paths:
+      - "db/**"
+      - "scripts/db/**"
+      - "app/src/domain/tables.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  schema-lint:
+    name: schema-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Lint migrations (RLS, policies, grants, allow-list, twin parity)
+        run: node scripts/db/schema-lint.mjs
+      - name: Assert no database connection or deploy step exists in this workflow
+        run: |
+          # Anchored to a command position so this check's own pattern text cannot match itself.
+          if grep -nE '^\s*(- )?(run: )?(psql|supabase db|supabase migration|pg_restore)' .github/workflows/schema-lint.yml; then
+            echo "schema-lint must never connect to or apply against a database"; exit 1; fi
+          echo "no database connection in schema-lint"

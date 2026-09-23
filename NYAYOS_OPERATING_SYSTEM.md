@@ -289,3 +289,19 @@ Legal opinion (item 1) · Rule 36 website-particulars schedule text · BCI/State
 ## 26. Handoff
 
 Owner: **M365 Copilot.** Read `NYAYOS_STATUS.json` for machine state and this document for the operating directive. Every gate question → Founder Authorization Record. Every status question → Status Registry. Every "why" → Decision Log.
+
+---
+
+## 27. Addendum — 23 September 2026 (A-030)
+
+Appended, not edited: §§ 1–26 describe `main` at `6c6b478` and remain accurate for `main`.
+
+| Claim | Label | Detail |
+|---|---|---|
+| Security & Data Architecture Spec V1 exists and is canonical | **VERIFIED** | `docs/architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md`, sha256 `7dc6222b60547007…`; A-010 CANONICAL |
+| Fast Mode specification set is in the repository | **VERIFIED** | A-031: FMS V1, FM-A Scope Sheet V1, BB2, CB1, FM-0 pack; deck text extracts |
+| FM-A domain foundation exists as code | **VERIFIED (branch only)** | `app/src/domain/` on `feature/fma-foundation-v1`; 79 tests; not on `main` |
+| FM-A database schema exists | **SPECIFIED, NOT IMPLEMENTED** | `db/migrations/0001_fma_foundation.sql` is statically linted and parsed; **no database exists**; nothing applied |
+| Figma FM-A UI (U01–U21) imported | **NOT DONE** | Package not supplied and not found anywhere; A-008 OPEN |
+| Deployment / production | **NOT ALLOWED — unchanged** | FA-001 staging only; FA-002 not granted |
+| Next priority | — | Founder review and merge of the branch; FD-02 hosting decision; then wave W1 (`docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md` §7) |

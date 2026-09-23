@@ -411,3 +411,39 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `app/src/components/nyayos/party-card.tsx`, `app/src/components/nyayos/timeline-event-card.tsx`, `app/src/components/nyayos/parties-timeline-workspace.tsx`, `app/src/components/nyayos/app-shell.tsx`, `app/src/routes/index.tsx`, `app/tests/parties-timeline.test.tsx` (13 tests), `app/README.md`, `app/roadmap.md` |
 | **Limitations** | Frontend staging fixtures only: parties and events are not persisted and no backend, OCR or AI was added. Conflict resolution is indicated, not resolved — no merge or adjudication flow exists. NVDA / VoiceOver verification remains open (owed since A-014); no formal contrast audit. A-008 design artefact remains absent, so visual conformance is judged against canonical text and existing components |
 | **Handoff back to M365 Copilot** | A-026 is CANONICAL as a validated staging implementation. No deployment occurred and no Sprint 5 work started. A design conformance review of S11 / S12 is recommended before Evidence Mapping |
+
+---
+
+### A-031 — Fast Mode specification set import
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-031 |
+| **Owner / tool** | Claude Chat — Opus with Extended Thinking (specification only); imported by Claude Code under A-030 |
+| **Purpose** | Bring the founder-supplied Fast Mode specification set into the canonical repository unchanged so that A-030 can cite CANONICAL inputs |
+| **Input files** | Founder-supplied on 23 Sep 2026: `NYAYOS_FAST_MODE_STRATEGY_V1.md`, `NYAYOS_FM_A_SCOPE_SHEET_V1.md`, `NYAYOS_BUILD_BRIEF_V2.md`, `NYAYOS_COUNSEL_BRIEF_V1.md`, `NYAYOS_FM0_CONCIERGE_PACK_V1.md`, `Executive Architecture Deck.pptx`, `Executive Product Vision Deck.pptx` |
+| **Gate** | None (documents only) |
+| **Deployment allowed** | Not applicable |
+| **Status** | **CANONICAL — 23 September 2026** (imported byte-identical; hashes in the registry notes) |
+| **Result** | Five Markdown specifications imported unchanged into `docs/product`, `docs/implementation`, `docs/founder`; two `.pptx` decks (gitignored) represented by verbatim text extracts with source SHA-256 |
+| **Evidence** | `docs/implementation/NYAYOS_FM_A_SCOPE_SHEET_V1.md` and the six sibling files listed in the registry |
+| **Limitations** | Specifications only; none asserts that any implementation exists. Deck layouts and diagrams are not reproduced. The Executive Architecture Deck numbers S1–S16 differently from the Scope Sheet — reconciled in the A-030 gap report §3 |
+| **Handoff back to M365 Copilot** | Record as canonical inputs; the Scope Sheet and the Security & Data Architecture Spec govern where the decks disagree |
+
+---
+
+### A-030 — FM-A Foundation Build (canonical integration branch)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-030 |
+| **Owner / tool** | Claude Code — Canonical Repository Integration and FM-A Foundation Build |
+| **Purpose** | Create `feature/fma-foundation-v1`; assess the repository; integrate the FM-A UI package; build the security foundation and FM-A data model; produce the U01–U21 gap report and S1–S16 coverage matrix |
+| **Input files** | A-010 Security & Data Architecture Spec V1; A-031 Fast Mode specification set; A-017/A-018/A-026 staging frontend (`app/`); A-029 operating system. **The Figma FM-A source handoff package was not supplied and does not exist locally** |
+| **Gate** | FA-001 (staging only). No deployment · no production change · no direct `main` commit · no legal functionality · no AI functionality · no advocate marketplace |
+| **Deployment allowed** | **NOT ALLOWED.** Nothing deployed; no database provisioned or written; SQL migration not applied |
+| **Status** | **REVIEW — 23 September 2026.** Branch pushed; founder to review and merge by pull request. 132/132 tests (79 new) · `tsc` clean · `eslint` 0 errors · build · schema-lint clean · migration executed on an ephemeral local Postgres 16.14 container: 41/41 smoke checks PASS (no environment created) |
+| **Result** | 1. Repository assessment and integration strategy (`docs/architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md`). 2. Domain foundation `app/src/domain/` — 14 modules: reserved enums (CR-3), table registry and deletion allow-list (CR-4), [PROV] config, server-built request context, `isDisputeMember` / `grantAllows` (CR-2), consent enforcement with locked purposes, identity and personal-tenant sign-up, dispute core with the provenance contract (CR-8), single-writer proposal → correction pipeline with version-chain rebuild, evidence lifecycle state machine (no promotion without a clean verdict), hash-chained content-free audit, export manifest with provenance omissions, honest deletion lifecycle with content-free tombstones, bilingual required copy and prohibited-wording guard. 3. `db/migrations/0001_fma_foundation.sql` — 39 tables, RLS enabled and forced on every table, helpers, single-writer functions, audit trigger, allow-list registration (NOT applied). 4. `scripts/db/schema-lint.mjs` + `schema-lint` workflow (static SEC-RLS-01 / SEC-DEL-06). 5. Gap report (`docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md`): U01–U21 READY/PARTIAL/MISSING, S1–S16 mapping with deck/scope-sheet reconciliation, entity diagram, risks, implementation waves |
+| **Evidence** | `docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md`; `app/tests/domain/*.test.ts` (8 files, 79 tests); `node scripts/db/schema-lint.mjs` |
+| **Limitations** | Phase 2 (Figma UI import) not executed — package missing; U01–U21 mapped against existing components only. SQL migration has been executed only on a throwaway local container, never on a provider or an environment (none exists; FD-02 pending). Hindi copy strings are working translations awaiting native review; notice and integrity wording awaits counsel (OL-01, OL-04, OL-08). No server functions, auth provider, storage or scan adapter exist yet |
+| **Handoff back to M365 Copilot** | Record A-030 as REVIEW on `feature/fma-foundation-v1`; open a pull request to `main` for founder review; next implementation wave is W1 in the gap report §7 (auth + tenant + consent server functions on a staging database once FD-02 is decided) |

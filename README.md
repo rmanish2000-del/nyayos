@@ -13,7 +13,7 @@
 | **Repository contents** | **Documentation (`docs/`) + Sprint 1 Foundation code (`app/`).** Frontend foundation only — no database schema, no migrations, no backend, no infrastructure |
 | **Staging build** | ✅ **ALLOWED** under [FA-001](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) — staging environment and fixture data only |
 | **Production** | ⛔ **NOT ALLOWED.** No production build, deployment, database, domain, public beta, or real case data in any environment |
-| **Project stage** | Product definition reconciled → Security + Data Architecture Specification (staging frontend through Sprint 4 exists; no persistence, backend or deployment) |
+| **Project stage** | Security + Data Architecture Spec V1 CANONICAL → **FM-A foundation build in REVIEW on `feature/fma-foundation-v1`** (domain layer + specification-grade SQL migration; staging frontend through Sprint 4; no persistence, backend or deployment on `main`) |
 | **Private data** | **Never commit case material.** See [CONTRIBUTING.md](CONTRIBUTING.md) § *Private-data rules* |
 
 **This repository is private** (set to private on 20 Sep 2026, before the first push, because it carries governance references to a private criminal matter). Keep it private unless a redaction review is completed and recorded as a decision.
@@ -122,6 +122,7 @@ user claim   →   verified fact   →   AI inference
 
 ### Immediate next actions — parallel
 
+0. **Review and merge `feature/fma-foundation-v1`** (A-030 FM-A foundation, REVIEW) — then decide FD-02 hosting so wave W1 can start on a staging database
 1. **Sprint 1.1 — State Completion** (A-018; seven items in [A-014 § 11.4](docs/architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md))
 2. Sprint 2 — Fact Card System (A-015) — after 1
 3. Figma V2 (A-008) — Fact Card design may start now
@@ -143,6 +144,9 @@ Lockfile of record is `app/bun.lock` (Lovable). Sprint 1 needs no environment va
 
 ```
 app/                       Sprint 1 Foundation — TanStack Start · React 19 · Tailwind v4 · Vitest
+                           app/src/domain — FM-A domain foundation (branch feature/fma-foundation-v1)
+db/                        FM-A migrations — specification grade, NOT applied (branch feature/fma-foundation-v1)
+scripts/db/                schema-lint.mjs — static RLS / allow-list check
 .github/workflows/         task-gate · dependency-check · status-update
 scripts/governance/        registry.mjs — validate / generate / changelog
 README.md                  Entry point
