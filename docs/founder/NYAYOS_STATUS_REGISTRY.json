@@ -793,7 +793,7 @@
       "evidence": "NYAYOS_GAP_ANALYSIS_V1.md",
       "updated": "2026-09-23",
       "superseded_by": null,
-      "notes": "Reviewed feature/fma-foundation-v1 at afe4744 (main 6c6b478 has no domain/schema). ALREADY_EXISTS: Case Isolation, Date Precision Framework, Generated Content Firewall (FM-A seam). PARTIALLY_EXISTS: Provenance Engine, Contradiction Registry, Missing Material Registry, Stable Document IDs, Entity Variant Management, Version Family Tracking. MISSING: Correction Propagation, Stale Output Detection, Duplicate Detection, OCR Confidence Scoring. Backlog terms are not defined in the repository; interpretations recorded as assumptions."
+      "notes": "Reviewed feature/fma-foundation-v1 at afe4744 (main 6c6b478 has no domain/schema). Backlog read from NYAYOS_PRODUCT_VALIDATION/ (untracked, uncommitted, not registered; case handoffs not opened). ALREADY_EXISTS: Case Isolation, Date Precision Framework, Stable Document IDs (schema level). PARTIALLY_EXISTS: Provenance Engine, Generated Content Firewall (seam only), Contradiction Registry, Missing Material Registry, Entity Variant Management, Version Family Tracking. MISSING: Correction Propagation, Stale Output Detection, Duplicate Detection, OCR Confidence Scoring. Backlog provenance taxonomy and typed conflict/missing categories are not the repository's enums — data-model decision for the founder."
     }
   ]
 }

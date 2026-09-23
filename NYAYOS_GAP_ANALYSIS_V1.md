@@ -6,7 +6,8 @@
 | Repository | `rmanish2000-del/nyayos` (PRIVATE) |
 | **Commit reviewed** | `afe4744077a9e6eafc0b9648541ca0cf32fbbb8b` on `feature/fma-foundation-v1` (PR #2, draft). `main` is at `6c6b478ffa1a811ba435d2891b0b3179a3a7043d` and does **not** contain `app/src/domain/`, `db/` or `scripts/db/`; where an item exists only on the branch this is stated. |
 | Method | Read `README.md`, `NYAYOS_OPERATING_SYSTEM.md`, `NYAYOS_STATUS.json`; inventoried `app/`, `docs/`, `scripts/` (and `db/`, which the branch added) by `find`/`grep`; every claim cites a file and, where useful, a line. |
-| Rules honoured | No feature designed, no architecture rewritten. Backlog terms are compared as named; where a term is not defined in any repository document, the working interpretation is stated under **Assumptions**. |
+| Backlog source | `NYAYOS_PRODUCT_VALIDATION/NYAYOS_PRODUCT_BACKLOG_V1.md` and `NYAYOS_VALIDATED_REQUIREMENTS_V1.md` (status "Evidence-Validated", decision date 2026-09-20). Both are **untracked in the working copy, not committed** and not registered; their stated sources are two sanitised case handoffs in the same folder, which this analysis did **not** open (private-data rule). |
+| Rules honoured | No feature designed, no architecture rewritten. Items are compared against the backlog's own definitions (Part B, first table). |
 | Date | 23 September 2026 |
 | Continuity owner | M365 Copilot |
 
@@ -137,23 +138,25 @@ On `main`: **no data model exists** (`NYAYOS_STATUS.json.database_status.schema 
 
 ## Part B — Comparison against the validated backlog
 
-**Interpretation of backlog terms** (no repository document defines them; see Assumptions):
+**Backlog definitions** (verbatim substance from `NYAYOS_PRODUCT_BACKLOG_V1.md`) and how each maps onto repository vocabulary:
 
-| Backlog item | Working interpretation used for the comparison |
-|---|---|
-| Provenance Engine | Every fact carries origin, source pointer, confidence and actor; enforced at write time; reproducible in export |
-| Generated Content Firewall | Any generated (AI/extracted) content enters only as a proposal, never as canonical truth, and is visibly labelled |
-| Contradiction Registry | Persistent, queryable record of conflicting items with neutral status handling |
-| Missing Material Registry | Persistent record of expected-but-absent material, linked to what mentions it, with no negative inference |
-| Stable Document IDs | A document keeps one identity across versions, exports and references; content is addressed by hash |
-| Case Isolation | Tenant and dispute boundaries enforced at the data layer for reads and writes |
-| Correction Propagation | When a fact is corrected, dependent artefacts (timeline entries, relations, exports) reflect or flag the change |
-| Stale Output Detection | An export or derived view built from a superseded version is detectable as stale |
-| Duplicate Detection | Same or near-same document uploaded twice is detected (hash-level at minimum) |
-| Version Family Tracking | Related versions of one document are grouped and ordered |
-| Entity Variant Management | Spellings/scripts/aliases of one party are recorded and reviewable without auto-merge |
-| Date Precision Framework | Dates carry explicit precision states and conflicts are preserved |
-| OCR Confidence Scoring | Extracted text carries a confidence band per document/derivative |
+| Backlog item | Backlog definition | Repository vocabulary it maps to |
+|---|---|---|
+| Provenance Engine | Every proposition linked to source; source types Original · Founder · Third Party · Generated · AI Analysis | `Provenance.originType` ∈ {user_statement, document_extraction, user_inference, ai_extraction}; `SourceRef` ∈ {statement, document+version+location, user_entry}. No "who supplied it" dimension (Founder vs Third Party) and no "Generated" origin exist |
+| Generated Content Firewall | Generated content cannot become evidence; generated content visually marked | Proposal-only write path; `ai`/`reviewer` origins refused; `ai_extraction` locked by CHECK; UI `SourceKind = "ai-extraction"` badge. **No "generated content" object class exists**, so nothing can yet be marked or blocked |
+| Contradiction Registry | Date conflicts · Amount conflicts · Role conflicts · Version conflicts | `contradictions(item_a, item_b, field, description, status)`; `markConflictingDates` for dates. No typed conflict categories; no amount/role/version detection |
+| Missing Material Registry | Referenced but absent · inaccessible · unreadable | `missing_evidence(expected_item, reason, related_ref, user_response)`; `reason` is free text, not the three categories |
+| Stable Document IDs | Permanent internal IDs; annexure changes do not affect IDs | `documents.id` (uuid) is permanent; `display_label` is mutable and separate; versions hang off the id; storage paths use ids, never names |
+| Case Isolation Layer | No cross-case retrieval by default; separate indexes | RLS per tenant + per dispute; helper-only policies; no retrieval index exists yet, so "separate indexes" has nothing to separate |
+| Correction Propagation | Update downstream outputs automatically | Nothing walks dependants of a corrected item. Note the product rule "no silent overwrite" (Deck slide 9; single-writer S3): propagation in this codebase can only mean re-flagging dependants through the proposal path, not silent rewriting |
+| Stale Output Detection | Detect outputs invalidated by newer evidence | `export_manifests.entries` record item and document versions; no comparison against current versions exists |
+| Duplicate Detection | (WAVE_1, undefined beyond the name) | Server SHA-256 per version exists; no lookup across documents |
+| Version Family Tracking | (WAVE_1, undefined) | Per-document version chain and per-fact correction chain exist; no grouping of separate documents |
+| Entity Variant Management | (WAVE_1, undefined) | `entity_source_forms` + "never merged automatically" rule; no review screen, no comparison |
+| Date Precision Framework | (WAVE_1, undefined) | Five precision states in UI, domain and schema; conflicts preserved |
+| OCR Confidence Scoring | (WAVE_1, undefined) | No OCR; `confidence` band exists on items; `document_derivatives` deliberately not created in FM-A |
+
+The backlog's **product principle** orders priorities Privacy → Case Isolation → Provenance → Contradiction Detection → Missing Material Discovery → Correction Propagation → User Efficiency; the sequence in this document follows that order where dependencies allow.
 
 ### ALREADY_EXISTS
 
@@ -161,16 +164,16 @@ On `main`: **no data model exists** (`NYAYOS_STATUS.json.database_status.schema 
 |---|---|---|---|---|
 | **Case Isolation** | 0 | Tenant-first deny-by-default authorisation; RLS enabled and forced on every table; helper-only policies; immutable `tenant_id`; cross-tenant reads return zero rows and cross-tenant writes are denied (executed proof) | `app/src/domain/authz.ts`; `db/migrations/0001_fma_foundation.sql` §4, §7; `db/tests/smoke_0001.sql` | Branch only; not on `main`; no live environment. Intra-tenant cross-dispute document reference (A-032 m-3) open |
 | **Date Precision Framework** | 1 | Five precision states in UI and domain; conflicting dates preserved and marked, never resolved; table column `precision`; no system-generated dates | `date-badge.tsx:12`; `dispute.ts:198-212`; `0001:287` | UI on `main`; storage on branch |
-| **Generated Content Firewall** (FM-A form) | 0 | Proposals are the only write path; `origin` ∈ {user, ai, reviewer} with `ai`/`reviewer` refused; `ai_extraction` origin refused by function and CHECK; UI already distinguishes `ai-extraction` from `document-fact` and `unverified-claim` | `proposal.ts`; `0001` `decide_proposal`, `*_fma_origin_inert`; `source-badge.tsx:17-27` | Exists **by absence of AI** plus a locked seam; the firewall has never been exercised against real generated content because none exists. Re-verify when FM-D introduces an `ai` origin |
+| **Stable Document IDs** | 0 | `documents.id` is a permanent uuid; the user-facing `display_label` is a separate mutable column, so relabelling or re-numbering an annexure never touches the id; `document_versions` hang off the id with `unique (document_id, version)`; storage paths and manifest entries reference ids, never names | `0001:477-507`; `evidence.ts:63,77`; `export.ts` (`documentId@version`) | Schema and domain only (branch); no runtime yet. No content-addressing lookup by hash (covered under Duplicate Detection) |
 
 ### PARTIALLY_EXISTS
 
 | Item | Wave | What exists | What is missing | Where |
 |---|---|---|---|---|
-| **Provenance Engine** | 0 | Provenance contract on every canonical item; shape enforced by CHECK; `isProvenanceComplete`; manifest omissions for incomplete chains; UI source panel | No server function writes provenance from a real document location yet (A16 `addLocation` not built); audit is not written in the same transaction as the fact (A-032 M-7 open); TS/SQL audit hashes not interoperable (M-2 open) | `dispute.ts:35-58`; `0001:872-875`; `export.ts`; A-032 §2 |
-| **Contradiction Registry** | 0 | `contradictions` table and schema with two references, neutral description, status lifecycle, no "true side" field; validation | No U12 screen; no query/list API (A18 `flagContradiction` not built); no contradiction-specific Fact Card actions (A-021 item 4) | `dispute.ts:268-296`; `0001:351`; `app/roadmap.md` |
-| **Missing Material Registry** | 0 | `missing_evidence` table and schema: expected item, reason, related reference, user response; copy rule "no negative inference" | No U13 screen; no API; no link from a document's mention to the registry entry beyond `relatedRef` | `dispute.ts:296`; `0001:373`; `copy.ts` |
-| **Stable Document IDs** | 0 | `documents.id` is the stable identity; `document_versions` keyed `(document_id, version)`; every version hashed (SHA-256); manifest references `documentId@version`; storage path derived from ids not names | No content-addressing index (hash → document) so the same bytes can exist under two ids; no cross-dispute reference by id (by design); ids exist only in schema, no runtime | `0001:477-507`; `evidence.ts:63,135`; `export.ts` |
+| **Provenance Engine** | 0 | Provenance contract on every canonical item; shape enforced by CHECK; `isProvenanceComplete`; manifest omissions for incomplete chains; UI source panel | The backlog's source taxonomy is not modelled: there is no **Founder vs Third Party** supplier dimension and no **Generated** origin; no server function writes provenance from a real document location yet (A16 not built); audit is not written in the same transaction as the fact (A-032 M-7 open); TS/SQL audit hashes not interoperable (M-2 open) | `dispute.ts:35-58`; `enums.ts` `ITEM_ORIGIN_TYPES`; `0001:872-875`; A-032 §2 |
+| **Generated Content Firewall** | 0 | The seam: proposals are the only write path; `ai`/`reviewer` proposal origins refused; `ai_extraction` item origin refused by function and CHECK; UI already renders an `ai-extraction` badge distinct from `document-fact` | **No "generated content" class exists** (no generated document, summary or derivative object), so nothing can be marked generated or blocked from becoming an `evidence_item`; the firewall has never been exercised because FM-A produces no generated content | `proposal.ts` (`FMA_ENABLED_PROPOSAL_ORIGINS`); `0001` `*_fma_origin_inert`; `source-badge.tsx:17-27` |
+| **Contradiction Registry** | 0 | `contradictions` table and schema with two references, neutral description, status lifecycle, no "true side" field; validation | No typed conflict categories (date / amount / role / version) — `field` is free text; only date conflicts are detected (`markConflictingDates`); no U12 screen; no A18 `flagContradiction`; no contradiction-specific Fact Card actions (A-021 item 4) | `dispute.ts:268-296`; `0001:351`; `app/roadmap.md` |
+| **Missing Material Registry** | 0 | `missing_evidence` table and schema: expected item, reason, related reference, user response; copy rule "no negative inference" | The three backlog categories (absent / inaccessible / unreadable) are not enumerated — `reason` is free text; no U13 screen; no API; no link from a document's mention beyond `relatedRef` | `dispute.ts:296`; `0001:373`; `copy.ts` |
 | **Entity Variant Management** | 1 | `entity_source_forms` table and schema (form text, source, first seen); rule "similar names are never merged automatically" in copy and tests; Party Card confirm/edit | No duplicate-review screen (Scope Sheet U10 state); no similarity or script-variant comparison; no merge-as-explicit-action function | `dispute.ts:181`; `0001:262`; `copy.ts` `no_auto_merge`; `party-card.tsx` |
 | **Version Family Tracking** | 1 | Per-document version chain (`document_versions`), per-fact version chain (`user_corrections`), replacement flow | No grouping of *separate* documents into a family (re-upload as a new document, scan of the same paper); no diff between versions; no UI | `evidence.ts:280`; `proposal.ts:270`; `0001:454,507` |
 
@@ -178,7 +181,7 @@ On `main`: **no data model exists** (`NYAYOS_STATUS.json.database_status.schema 
 
 | Item | Wave | Evidence of absence | Nearest existing seam |
 |---|---|---|---|
-| **Correction Propagation** | 0 | `decideProposal` updates one target row and writes one correction; nothing walks `evidence_relations`, `date_assertions` or `exports` that reference the corrected item (`proposal.ts`, `0001` `decide_proposal`). No test covers a dependent artefact | `ItemRef` references on `evidence_relations`, `date_assertions.target_id`, `contradictions`, `issues.supporting_refs`; `referenceCheck` in `deletion.ts` already enumerates references for deletion and could be reused for reads |
+| **Correction Propagation** | 0 | `decideProposal` updates one target row and writes one correction; nothing walks `evidence_relations`, `date_assertions` or `exports` that reference the corrected item (`proposal.ts`, `0001` `decide_proposal`). No test covers a dependent artefact. The backlog says "automatically"; the repository's single-writer rule forbids silent rewriting, so the achievable form is automatic **re-flagging** of dependants (see Risks) | `ItemRef` references on `evidence_relations`, `date_assertions.target_id`, `contradictions`, `issues.supporting_refs`; `referenceCheck` in `deletion.ts` already enumerates references for deletion and could be reused for reads |
 | **Stale Output Detection** | 0 | Exports record `manifest_sha256` and item versions, but nothing compares an export's recorded versions with current versions; no "stale" state on `exports`; the only "stale" concept in the specs is authority-source staleness (SDAS §12), which is out of FM-A scope | `export_manifests.entries` already store item `version` and document `version`; a comparison against `user_corrections.resulting_version` is data-complete |
 | **Duplicate Detection** | 1 | No uniqueness or lookup on `document_versions.sha256` across documents; no near-duplicate logic; `acceptUpload` does not consult existing hashes (`evidence.ts:175`) | Every version already carries a server-computed SHA-256; a `(tenant_id, sha256)` lookup is data-complete |
 | **OCR Confidence Scoring** | 1 | No OCR exists (excluded from FM-A, FM-D deferred); `confidence` band exists on canonical items and in UI, but no derivative table (`document_derivatives` is in `NOT_CREATED_IN_FMA`, `tables.ts`) | `CONFIDENCE_BANDS` enum; Build Brief V2 §5 specifies `document_derivatives.confidence_band` (SPECIFIED, not built) |
@@ -211,6 +214,8 @@ Ordered by dependency, not by preference. Each step names only existing seams; n
 
 Items **not** low effort: Version Family Tracking (schema change after merge), OCR Confidence Scoring (blocked on OCR, FM-D), audit atomicity (design decision D-031).
 
+*Aside (outside the requested comparison):* two WAVE_2 items already have seams — Page-Level Anchoring (`document_locations`, `dispute.ts` `SourceRef.locationId`) and Bilingual UX (`copy.ts` hi/en, `notices` versioned per language).
+
 ---
 
 ## Part C — Return values
@@ -229,9 +234,9 @@ Cited inline per row (file:line, test name or smoke check). Test and check count
 
 ### Assumptions
 
-1. The "validated backlog" (WAVE_0, WAVE_1) is not a document in the repository; its items were compared using the interpretations in Part B's first table. If the backlog defines any term differently, the corresponding row must be re-judged.
+1. The validated backlog was read from `NYAYOS_PRODUCT_VALIDATION/NYAYOS_PRODUCT_BACKLOG_V1.md` and `NYAYOS_VALIDATED_REQUIREMENTS_V1.md`, which appeared **untracked** in the working copy during this analysis. They are not committed, not registered and not yet canonical; WAVE_1 items carry names only, so their rows use the repository's nearest vocabulary. The two sanitised case handoffs the backlog cites were not opened.
 2. Branch content counts as "existing" for this analysis because the founder scoped the request to the repository, not to `main`; each branch-only row is marked.
-3. "Generated content" is read broadly (AI extraction, OCR, any machine-derived text). In FM-A none exists, so the firewall is judged on the seam (proposal-only writes, locked origins), not on behaviour under load.
+3. "Generated content" follows the backlog (Generated and AI Analysis source types). In FM-A none exists, so the firewall is judged PARTIAL: the seam exists, the object class does not.
 4. "Case" is read as the Scope Sheet's *dispute* within a *tenant*; the Deck's *matter* is the same object.
 5. Effort rankings are relative and qualitative; no day estimates are given (Scope Sheet forbids implementation claims).
 
@@ -242,6 +247,8 @@ Cited inline per row (file:line, test name or smoke check). Test and check count
 | PR #2 not merged | Everything in ALREADY_EXISTS except the Date Precision UI is on a branch; if the branch is abandoned, WAVE_0 is almost entirely MISSING on `main` |
 | Open A-032 majors (M-2 audit hash interoperability, M-3 no purge path, M-6 deletion enumeration, M-7 audit atomicity) | Provenance Engine and Stable Document IDs are PARTIAL rather than EXISTS partly because of these; they are design decisions D-031…D-034, not backlog items |
 | No environment (FD-02 undecided) | Every "VERIFIED (SQL)" row was verified on a throwaway container; live RLS and isolation behaviour on the chosen provider is unproven |
-| Backlog vocabulary vs repository vocabulary | Terms such as "Missing Material" (repo: `missing_evidence`), "Version Family", "Stale Output", "Correction Propagation" have no canonical definition in `docs/`; misalignment here changes the sequence, not the inventory |
+| Backlog vocabulary vs repository vocabulary | The backlog's provenance taxonomy (Original / Founder / Third Party / Generated / AI Analysis) and its typed conflict and missing-material categories are not the repository's enums; adopting them is a data-model decision, not a gap fill |
+| Backlog not in the repository | `NYAYOS_PRODUCT_VALIDATION/` is untracked and sits beside two sanitised case handoffs; importing it needs a founder decision under the private-data rules (CONTRIBUTING §2) and a registry entry before any task may cite it as an input |
+| "Automatically" in Correction Propagation | Conflicts with the no-silent-overwrite invariant (single-writer S3, Deck slide 9). Needs a founder reading before implementation: re-flag dependants (compatible) or rewrite them (not compatible) |
 | Figma FM-A package still absent (A-008) | Every screen-dependent PARTIAL item (contradictions, gaps, entity review) waits on design input or a founder decision to proceed from canonical copy |
 | OCR out of FM-A scope | OCR Confidence Scoring cannot move before FM-D regardless of effort |

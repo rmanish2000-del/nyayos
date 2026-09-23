@@ -7,7 +7,7 @@ Newest first. One entry per commit or per material decision.
 
 ## 2026-09-23 — Gap analysis V1 against the validated backlog (A-034)
 
-**Branch `feature/fma-foundation-v1`, read-only analysis.** Added `NYAYOS_GAP_ANALYSIS_V1.md` (root, beside the operating system): feature, architecture, data-model, provenance, audit, document-processing, chronology, contradiction, isolation and versioning inventories at `afe4744`, compared against WAVE_0 and WAVE_1. Result: 3 ALREADY_EXISTS · 6 PARTIALLY_EXISTS · 4 MISSING; implementation sequence and five lowest-effort/highest-value items; assumptions and risks recorded. No feature designed; no code changed.
+**Branch `feature/fma-foundation-v1`, read-only analysis.** Added `NYAYOS_GAP_ANALYSIS_V1.md` (root, beside the operating system): feature, architecture, data-model, provenance, audit, document-processing, chronology, contradiction, isolation and versioning inventories at `afe4744`, compared against WAVE_0 and WAVE_1. Backlog definitions read from the untracked `NYAYOS_PRODUCT_VALIDATION/` folder (not committed; founder decision pending). Result: 3 ALREADY_EXISTS (Case Isolation, Date Precision, Stable Document IDs) · 6 PARTIALLY_EXISTS · 4 MISSING; implementation sequence and five lowest-effort/highest-value items; assumptions and risks recorded. No feature designed; no code changed.
 
 ---
 
