@@ -5,6 +5,12 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-23 — Gap analysis V1 against the validated backlog (A-034)
+
+**Branch `feature/fma-foundation-v1`, read-only analysis.** Added `NYAYOS_GAP_ANALYSIS_V1.md` (root, beside the operating system): feature, architecture, data-model, provenance, audit, document-processing, chronology, contradiction, isolation and versioning inventories at `afe4744`, compared against WAVE_0 and WAVE_1. Result: 3 ALREADY_EXISTS · 6 PARTIALLY_EXISTS · 4 MISSING; implementation sequence and five lowest-effort/highest-value items; assumptions and risks recorded. No feature designed; no code changed.
+
+---
+
 ## 2026-09-23 — A-030 critical fix pack: C-1, C-2, M-1, M-4, M-5 closed (A-033)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft.** Fixes only; no redesign; no new documents; nothing deployed.

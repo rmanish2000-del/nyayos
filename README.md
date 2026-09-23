@@ -26,6 +26,7 @@
 |---|---|
 | See current state, decisions, risks and next actions | **[Founder Dashboard](docs/founder/NYAYOS_FOUNDER_DASHBOARD.md)** |
 | **Understand the whole project in one document** | **[Operating System](NYAYOS_OPERATING_SYSTEM.md)** — tier 2; every claim labelled VERIFIED / REPORTED / UNVERIFIED / NOT IMPLEMENTED. Machine twin: [`NYAYOS_STATUS.json`](NYAYOS_STATUS.json) |
+| **See what exists versus the validated backlog** | [Gap Analysis V1](NYAYOS_GAP_ANALYSIS_V1.md) — inventory at `afe4744` compared with WAVE_0 / WAVE_1: exists · partial · missing · sequence |
 | **Know what you are allowed to do** | **[Founder Authorization Record](docs/founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md)** — tier 1, read before acting |
 | See task status, what is blocked, what is ready | [Status Dashboard](docs/founder/NYAYOS_STATUS_DASHBOARD.md) (auto) · [Dependency Graph](docs/founder/NYAYOS_DEPENDENCY_GRAPH.md) · [Status Rules](docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md) |
 | Find any document, or see which document wins a conflict | [docs/INDEX.md](docs/INDEX.md) — includes the [authority hierarchy](docs/INDEX.md#document-authority-hierarchy) |

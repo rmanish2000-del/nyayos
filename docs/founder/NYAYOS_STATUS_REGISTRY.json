@@ -771,6 +771,29 @@
       "updated": "2026-09-23",
       "superseded_by": null,
       "notes": "On feature/fma-foundation-v1 (PR #2, still draft). C-1: advisory transaction lock in the audit writer trigger; two-session proof script passes (chain linear, no forked predecessor). C-2: direct INSERT on deletion_requests removed; request_deletion() verifies scope ownership and takes the undo window from config; TS newDeletionRequest mirrors it. M-1: consent event-time ordering (order-independent). M-4: identity keys refused and created_by server-set; ai_extraction origin refused in function and by CHECK on 10 tables; source_ref shape enforced by CHECK on 11 tables. M-5: explicit itemType discriminant on canonical items; manifest heuristic removed. Smoke suite 54/54 PASS on an ephemeral local Postgres 16.14 container (destroyed); the A-032 probes PROBE1/4/4b/5b/7 now fail closed. No deployment; nothing applied to any environment. Out of scope and still open: A-032 m-1 (status column grant) and the M-8 cross-map addendum."
+    },
+    {
+      "id": "A-034",
+      "title": "Gap analysis V1 — repository inventory compared against the validated backlog (WAVE_0, WAVE_1)",
+      "type": "review",
+      "status": "CANONICAL",
+      "owner": "Claude Code",
+      "tool": "Claude Code — read-only inventory and comparison (no features designed, no architecture changed)",
+      "gate": null,
+      "inputs": [
+        "A-010",
+        "A-029",
+        "A-031",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "NYAYOS_GAP_ANALYSIS_V1.md"
+      ],
+      "evidence": "NYAYOS_GAP_ANALYSIS_V1.md",
+      "updated": "2026-09-23",
+      "superseded_by": null,
+      "notes": "Reviewed feature/fma-foundation-v1 at afe4744 (main 6c6b478 has no domain/schema). ALREADY_EXISTS: Case Isolation, Date Precision Framework, Generated Content Firewall (FM-A seam). PARTIALLY_EXISTS: Provenance Engine, Contradiction Registry, Missing Material Registry, Stable Document IDs, Entity Variant Management, Version Family Tracking. MISSING: Correction Propagation, Stale Output Detection, Duplicate Detection, OCR Confidence Scoring. Backlog terms are not defined in the repository; interpretations recorded as assumptions."
     }
   ]
 }

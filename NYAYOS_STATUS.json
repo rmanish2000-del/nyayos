@@ -302,5 +302,29 @@
         "risk": "Medium"
       }
     }
-  ]
+  ],
+  "gap_analysis": {
+    "document": "NYAYOS_GAP_ANALYSIS_V1.md",
+    "task": "A-034",
+    "reviewed_commit": "afe4744077a9e6eafc0b9648541ca0cf32fbbb8b",
+    "already_exists": [
+      "Case Isolation",
+      "Date Precision Framework",
+      "Generated Content Firewall (FM-A seam)"
+    ],
+    "partially_exists": [
+      "Provenance Engine",
+      "Contradiction Registry",
+      "Missing Material Registry",
+      "Stable Document IDs",
+      "Entity Variant Management",
+      "Version Family Tracking"
+    ],
+    "missing": [
+      "Correction Propagation",
+      "Stale Output Detection",
+      "Duplicate Detection",
+      "OCR Confidence Scoring"
+    ]
+  }
 }
