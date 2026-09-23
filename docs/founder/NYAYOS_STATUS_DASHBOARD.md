@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 6 | 0 | 2 | 26 | 0 | 34 |
+| 6 | 0 | 2 | 27 | 0 | 35 |
 
 ## In flight
 
@@ -63,11 +63,13 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-031 | Fast Mode specification set — import (FMS V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1, executive deck text extracts) | ● CANONICAL | Claude Chat | — | 2026-09-23 |
 | A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 | A-034 | Gap analysis V1 — repository inventory compared against the validated backlog (WAVE_0, WAVE_1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
+| A-035 | WAVE0 implementation plan V1 — Duplicate Detection, Stale Output Detection, Contradiction Registry surfacing, Missing Material surfacing, Correction Propagation (plan only) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 
 ## Recently updated
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-035 | WAVE0 implementation plan V1 — Duplicate Detection, Stale Output Detection, Contradiction Registry surfacing, Missing Material surfacing, Correction Propagation (plan only) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 | A-034 | Gap analysis V1 — repository inventory compared against the validated backlog (WAVE_0, WAVE_1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 | A-033 | Critical fix pack for A-030 — C-1, C-2, M-1, M-4, M-5 from the A-032 review | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
 | A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
@@ -75,7 +77,6 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-031 | Fast Mode specification set — import (FMS V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1, executive deck text extracts) | ● CANONICAL | Claude Chat | — | 2026-09-23 |
 | A-012 | Production build / deployment | ○ OPEN | Unassigned | FA-002 (not granted) | 2026-09-23 |
 | A-010 | NyayOS Security + Data Architecture Specification V1 | ● CANONICAL | Claude Chat | — | 2026-09-23 |
-| A-008 | Figma V2 — Fact Card and journey design | ○ OPEN | Unassigned | — | 2026-09-23 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)

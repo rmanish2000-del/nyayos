@@ -80,6 +80,8 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | Document | Type | Contents |
 |---|---|---|
 | [NYAYOS_MASTER_PRODUCT_SPEC_V1.md](product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md) | Supplied — A-006 | Canonical specification for the Dispute Readiness Engine |
+| [NYAYOS_PRODUCT_BACKLOG_V1.md](product/NYAYOS_PRODUCT_BACKLOG_V1.md) | Supplied — founder, 20 Sep 2026 (imported under A-035) | **Validated backlog:** WAVE_0 / WAVE_1 / WAVE_2, deferred list, product principle. Source: two sanitised case handoffs (not in the repository) |
+| [NYAYOS_VALIDATED_REQUIREMENTS_V1.md](product/NYAYOS_VALIDATED_REQUIREMENTS_V1.md) | Supplied — founder, 20 Sep 2026 (imported under A-035) | Validated P0 / P1 / deferred lists; founder evaluation complete |
 | [NYAYOS_FAST_MODE_STRATEGY_V1.md](product/NYAYOS_FAST_MODE_STRATEGY_V1.md) | Supplied — A-031, Claude Chat, 22 Sep 2026 | Fast Mode: FM-0 → FM-A → FM-B → FM-C → FM-D → FM-E; §7 security floor S1–S16; §14 convergence rules CR-1–CR-14 |
 | [NYAYOS_FM0_CONCIERGE_PACK_V1.md](product/NYAYOS_FM0_CONCIERGE_PACK_V1.md) | Supplied — A-031 | FM-0 concierge operating pack (no code) |
 | [NYAYOS_FMA_PRODUCT_USER_FLOW_DECK_V1_TEXT.md](product/NYAYOS_FMA_PRODUCT_USER_FLOW_DECK_V1_TEXT.md) | Derived — A-032 (text extract of a gitignored deck) | FM-A screen-by-screen flow. **Its U01–U21 numbering differs from the Scope Sheet**; Scope Sheet governs |
@@ -186,6 +188,7 @@ Exact commercial wedge boundary · pricing · retention period · OCR provider �
 | Schema, migrations, database resources, backend, infrastructure | Not yet authorized. Only the Sprint 1 frontend foundation is in `app/` |
 | `nyayos-sprint1-foundation.zip`, `app/node_modules`, `app/.output`, `app/.wrangler`, `app/package-lock.json` | Gitignored. Lockfile of record is `app/bun.lock` |
 | `NYAYOS_V1_REVISED_DELIVERABLES.zip` | Redundant — its contents are committed individually |
+| [A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md](implementation/A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md) | Maintainer — A-035 | **Plan only.** Five backlog items: reuse, new files, migration, risk, order; first build item Duplicate Detection → Stale Output Detection |
 | [NYAYOS_FM_A_SCOPE_SHEET_V1.md](implementation/NYAYOS_FM_A_SCOPE_SHEET_V1.md) | Supplied — A-031, Claude Chat, 22 Sep 2026 | **FM-A Scope Sheet V1 — governs FM-A.** F01–F24, data model §4, API A01–A28, UI U01–U21, security S1–S16, tests, exit gate. Where the decks disagree, this sheet wins |
 | [NYAYOS_BUILD_BRIEF_V2.md](implementation/NYAYOS_BUILD_BRIEF_V2.md) | Supplied — A-031, Claude Chat | Build Brief V2 — milestones M0–M7, acceptance criteria, conventions (§3.3). FM-A is a strict subset (CR-1) |
 | [NYAYOS_COUNSEL_BRIEF_V1.md](founder/NYAYOS_COUNSEL_BRIEF_V1.md) | Supplied — A-031, Claude Chat | Counsel Brief V1 — open legal questions OL-01…OL-11, blocking matrix; **OL-01 and OL-04 block any pilot**. Not legal advice |

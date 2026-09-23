@@ -6,7 +6,7 @@
 | Repository | `rmanish2000-del/nyayos` (PRIVATE) |
 | **Commit reviewed** | `afe4744077a9e6eafc0b9648541ca0cf32fbbb8b` on `feature/fma-foundation-v1` (PR #2, draft). `main` is at `6c6b478ffa1a811ba435d2891b0b3179a3a7043d` and does **not** contain `app/src/domain/`, `db/` or `scripts/db/`; where an item exists only on the branch this is stated. |
 | Method | Read `README.md`, `NYAYOS_OPERATING_SYSTEM.md`, `NYAYOS_STATUS.json`; inventoried `app/`, `docs/`, `scripts/` (and `db/`, which the branch added) by `find`/`grep`; every claim cites a file and, where useful, a line. |
-| Backlog source | `NYAYOS_PRODUCT_VALIDATION/NYAYOS_PRODUCT_BACKLOG_V1.md` and `NYAYOS_VALIDATED_REQUIREMENTS_V1.md` (status "Evidence-Validated", decision date 2026-09-20). Both are **untracked in the working copy, not committed** and not registered; their stated sources are two sanitised case handoffs in the same folder, which this analysis did **not** open (private-data rule). |
+| Backlog source | `NYAYOS_PRODUCT_VALIDATION/NYAYOS_PRODUCT_BACKLOG_V1.md` and `NYAYOS_VALIDATED_REQUIREMENTS_V1.md` (status "Evidence-Validated", decision date 2026-09-20). Both were untracked at the time of analysis; **imported unchanged into `docs/product/` under A-035** (23 Sep 2026); their stated sources are two sanitised case handoffs in the same folder, which this analysis did **not** open (private-data rule). |
 | Rules honoured | No feature designed, no architecture rewritten. Items are compared against the backlog's own definitions (Part B, first table). |
 | Date | 23 September 2026 |
 | Continuity owner | M365 Copilot |

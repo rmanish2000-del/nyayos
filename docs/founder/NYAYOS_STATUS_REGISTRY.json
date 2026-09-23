@@ -794,6 +794,31 @@
       "updated": "2026-09-23",
       "superseded_by": null,
       "notes": "Reviewed feature/fma-foundation-v1 at afe4744 (main 6c6b478 has no domain/schema). Backlog read from NYAYOS_PRODUCT_VALIDATION/ (untracked, uncommitted, not registered; case handoffs not opened). ALREADY_EXISTS: Case Isolation, Date Precision Framework, Stable Document IDs (schema level). PARTIALLY_EXISTS: Provenance Engine, Generated Content Firewall (seam only), Contradiction Registry, Missing Material Registry, Entity Variant Management, Version Family Tracking. MISSING: Correction Propagation, Stale Output Detection, Duplicate Detection, OCR Confidence Scoring. Backlog provenance taxonomy and typed conflict/missing categories are not the repository's enums — data-model decision for the founder."
+    },
+    {
+      "id": "A-035",
+      "title": "WAVE0 implementation plan V1 — Duplicate Detection, Stale Output Detection, Contradiction Registry surfacing, Missing Material surfacing, Correction Propagation (plan only)",
+      "type": "plan",
+      "status": "CANONICAL",
+      "owner": "Claude Code",
+      "tool": "Claude Code — plan only; no code, no implementation, no deployment",
+      "gate": null,
+      "inputs": [
+        "A-010",
+        "A-029",
+        "A-031",
+        "A-034"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/implementation/A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md",
+        "docs/product/NYAYOS_PRODUCT_BACKLOG_V1.md",
+        "docs/product/NYAYOS_VALIDATED_REQUIREMENTS_V1.md"
+      ],
+      "evidence": "docs/implementation/A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md",
+      "updated": "2026-09-23",
+      "superseded_by": null,
+      "notes": "Planned against feature/fma-foundation-v1 at 668c2dc. A-034 findings re-verified against code (all five hold). Imported unchanged as founder-named inputs: NYAYOS_PRODUCT_BACKLOG_V1.md (sha256 b8b71d6bd19f72e5…) and NYAYOS_VALIDATED_REQUIREMENTS_V1.md (sha256 45cef79033123171…); the sanitised case handoffs in the same untracked folder were not opened and are not imported. FIRST BUILD ITEM: Duplicate Detection (hash level) followed by Stale Output Detection — both pure, read-side, no server layer or founder decision needed. HIGHEST VALUE: Correction Propagation in re-flag form only (rewrite would break single-writer S3); founder confirmation requested. Typed conflict/missing categories are additive 0002 columns if adopted."
     }
   ]
 }

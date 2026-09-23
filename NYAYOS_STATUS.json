@@ -326,6 +326,13 @@
       "Duplicate Detection",
       "OCR Confidence Scoring"
     ],
-    "backlog_source": "NYAYOS_PRODUCT_VALIDATION/NYAYOS_PRODUCT_BACKLOG_V1.md (untracked in working copy; not committed; founder decision pending)"
+    "backlog_source": "docs/product/NYAYOS_PRODUCT_BACKLOG_V1.md (imported under A-035)"
+  },
+  "wave0_plan": {
+    "document": "docs/implementation/A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md",
+    "task": "A-035",
+    "first_build_item": "Duplicate Detection (hash level), then Stale Output Detection",
+    "highest_value": "Correction Propagation (re-flag form; founder confirmation requested)",
+    "lowest_effort": "Duplicate Detection"
   }
 }

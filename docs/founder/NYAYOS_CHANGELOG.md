@@ -5,6 +5,12 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-23 — WAVE0 implementation plan V1 (A-035)
+
+**Branch `feature/fma-foundation-v1`, plan only; no code.** Added `docs/implementation/A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md`: A-034 findings re-verified against code; per-item reuse (files, database objects, APIs, UI), new files, migration yes/no, risk and order for Duplicate Detection, Stale Output Detection, Contradiction Registry surfacing, Missing Material surfacing and Correction Propagation. FIRST BUILD ITEM: Duplicate Detection then Stale Output Detection. HIGHEST VALUE: Correction Propagation in re-flag form (founder confirmation requested). Imported the two backlog files as founder-named inputs into `docs/product/`; case handoffs not imported.
+
+---
+
 ## 2026-09-23 — Gap analysis V1 against the validated backlog (A-034)
 
 **Branch `feature/fma-foundation-v1`, read-only analysis.** Added `NYAYOS_GAP_ANALYSIS_V1.md` (root, beside the operating system): feature, architecture, data-model, provenance, audit, document-processing, chronology, contradiction, isolation and versioning inventories at `afe4744`, compared against WAVE_0 and WAVE_1. Backlog definitions read from the untracked `NYAYOS_PRODUCT_VALIDATION/` folder (not committed; founder decision pending). Result: 3 ALREADY_EXISTS (Case Isolation, Date Precision, Stable Document IDs) · 6 PARTIALLY_EXISTS · 4 MISSING; implementation sequence and five lowest-effort/highest-value items; assumptions and risks recorded. No feature designed; no code changed.
