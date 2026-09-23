@@ -5,6 +5,25 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-23 — Independent merge-readiness review of A-030: MERGE WITH FIXES (A-032)
+
+**Branch `feature/fma-foundation-v1`, not `main`.** Review only; no code changed.
+
+### Added
+
+- **`docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md`** — fresh review of PR #2 at `63ac9f29`. Verdict **MERGE WITH FIXES**: 2 critical (audit hash chain forks under concurrent writers; deletion-request policy accepts any scope id with client-chosen undo window), 8 major (consent-withdrawal ordering, TS/SQL audit hash non-interoperability, no purge path for the deletion worker, client-settable provenance fields incl. `ai_extraction`, manifest item-type ambiguity, deletion enumeration misses tenant-scoped tables, audit not atomic with canonical writes, two conflicting U01–U21 numberings), 12 minor. Eleven defects verified by execution.
+- Text extracts of the **FM-A Product & User Flow** and **FM-0 Concierge** decks (mandated review inputs; not A-030 inputs).
+
+### Changed
+
+- Registry: A-032 added CANONICAL; A-030 note updated (remains REVIEW).
+
+### Not changed
+
+No fix applied to code or SQL; no deployment; no environment; `main` untouched.
+
+---
+
 ## 2026-09-23 — FM-A foundation build on `feature/fma-foundation-v1`; specification set imported (A-030, A-031)
 
 **Branch, not `main`.** All changes below live on `feature/fma-foundation-v1` (from `main` at `6c6b478ffa1a811ba435d2891b0b3179a3a7043d`) and await a founder-reviewed pull request. No direct `main` commit.

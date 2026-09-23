@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 6 | 0 | 1 | 24 | 0 | 31 |
+| 6 | 0 | 1 | 25 | 0 | 32 |
 
 ## In flight
 
@@ -60,11 +60,13 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-027 | Print export completion — 13 PDF + 13 PNG from docs/print | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-029 | Repository alignment audit; operating system and status established | ● CANONICAL | Claude Code | — | 2026-09-22 |
 | A-031 | Fast Mode specification set — import (FMS V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1, executive deck text extracts) | ● CANONICAL | Claude Chat | — | 2026-09-23 |
+| A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 
 ## Recently updated
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 | A-030 | FM-A Foundation Build — canonical integration branch feature/fma-foundation-v1 (repository assessment, security foundation, data model, gap report) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
 | A-031 | Fast Mode specification set — import (FMS V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1, executive deck text extracts) | ● CANONICAL | Claude Chat | — | 2026-09-23 |
 | A-012 | Production build / deployment | ○ OPEN | Unassigned | FA-002 (not granted) | 2026-09-23 |
@@ -72,7 +74,6 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-008 | Figma V2 — Fact Card and journey design | ○ OPEN | Unassigned | — | 2026-09-23 |
 | A-029 | Repository alignment audit; operating system and status established | ● CANONICAL | Claude Code | — | 2026-09-22 |
 | A-028 | Print source corrections | ○ OPEN | Founder | — | 2026-09-22 |
-| A-027 | Print export completion — 13 PDF + 13 PNG from docs/print | ● CANONICAL | Claude Code | — | 2026-09-21 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)

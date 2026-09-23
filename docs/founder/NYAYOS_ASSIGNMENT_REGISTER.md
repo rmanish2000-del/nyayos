@@ -447,3 +447,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md`; `app/tests/domain/*.test.ts` (8 files, 79 tests); `node scripts/db/schema-lint.mjs` |
 | **Limitations** | Phase 2 (Figma UI import) not executed — package missing; U01–U21 mapped against existing components only. SQL migration has been executed only on a throwaway local container, never on a provider or an environment (none exists; FD-02 pending). Hindi copy strings are working translations awaiting native review; notice and integrity wording awaits counsel (OL-01, OL-04, OL-08). No server functions, auth provider, storage or scan adapter exist yet |
 | **Handoff back to M365 Copilot** | Record A-030 as REVIEW on `feature/fma-foundation-v1`; open a pull request to `main` for founder review; next implementation wave is W1 in the gap report §7 (auth + tenant + consent server functions on a staging database once FD-02 is decided) |
+
+---
+
+### A-032 — Independent review and merge-readiness audit of A-030
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-032 |
+| **Owner / tool** | Claude Code — Independent Review & Merge Readiness Audit |
+| **Purpose** | Fresh review of PR #2 (`feature/fma-foundation-v1`, commits `a23faf85`, `63ac9f29`) against the FM-A Scope Sheet, Security & Data Architecture Spec, Build Brief V2, Counsel Brief V1, the four decks and the A-030 reports; issue a merge recommendation |
+| **Input files** | The 14 mandated inputs. Two decks (FM-A Product & User Flow, FM-0 Concierge) were not in the repository and were not A-030 inputs; imported as text extracts under this task |
+| **Gate** | None required (review). Deployment NOT allowed; production NOT allowed — nothing deployed |
+| **Deployment allowed** | **NOT ALLOWED.** The migration was executed only on a throwaway local Postgres 16.14 container for the probes; destroyed afterwards |
+| **Status** | **CANONICAL — 23 September 2026** (review delivered; precedent A-021 / A-024) |
+| **Result** | **MERGE WITH FIXES.** Critical 2 · Major 8 · Minor 12. Nine defects verified by execution, two by a temporary test probe. Scope compliance verified (no AI, legal, representation, marketplace, deployment or dependency change). Required fixes before merge and design decisions before W1 are listed in the report §8–§9 |
+| **Evidence** | `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md`; probe transcripts summarised in §11 |
+| **Limitations** | Reviewer is the same tool that built A-030; independence is procedural (fresh session, execution-based verification, adversarial probes), not organisational. No fixes were applied. The FM-A Product & User Flow deck's U01–U21 differ from the Scope Sheet's; the cross-map is the reviewer's, not a founder decision |
+| **Handoff back to M365 Copilot** | Record A-032 CANONICAL; A-030 stays REVIEW until the §8 fixes land on the branch and the founder re-reviews; founder decisions D-031…D-036 candidates in §9 |

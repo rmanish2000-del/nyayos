@@ -185,3 +185,15 @@ These are **policy statements, not case material**. They were left unchanged bec
 | `scripts/db/schema-lint.mjs`, `.github/workflows/schema-lint.yml` | Produced (A-030) | Static SEC-RLS-01 / SEC-DEL-06; twin parity with `tables.ts` |
 
 **Not produced:** any Figma-derived UI (package missing), any server function, auth integration, storage bucket, scan adapter, staging database, or deployment.
+
+---
+
+## A-032 outputs — 23 September 2026 (branch `feature/fma-foundation-v1`)
+
+| Artefact | Origin | Notes |
+|---|---|---|
+| `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md` | Produced (A-032) | Independent review of A-030: findings table, S1–S16 and U01–U21 verification, merge recommendation (MERGE WITH FIXES), required fixes, risk rating |
+| `docs/product/NYAYOS_FMA_PRODUCT_USER_FLOW_DECK_V1_TEXT.md` | Derived (A-032) — verbatim text extract of a gitignored `.pptx` | source sha256 `489ccc68f7da158f…`; 47 slides; numbers U01–U21 differently from the Scope Sheet |
+| `docs/product/NYAYOS_FM0_CONCIERGE_DECK_V1_TEXT.md` | Derived (A-032) — verbatim text extract of a gitignored `.pptx` | source sha256 `904f5081ab7f6b94…`; 25 slides |
+
+**Not produced:** any code change. Fixes are listed, not applied.

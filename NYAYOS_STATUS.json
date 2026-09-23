@@ -266,7 +266,7 @@
       "name": "feature/fma-foundation-v1",
       "base": "6c6b478ffa1a811ba435d2891b0b3179a3a7043d",
       "task": "A-030",
-      "status": "REVIEW — pull request to main pending founder review",
+      "status": "REVIEW — A-032 audit: MERGE WITH FIXES; fixes pending before founder merge",
       "contents": "Specification set import (A-031); app/src/domain (14 modules, 79 tests); db/migrations/0001_fma_foundation.sql (NOT applied); scripts/db/schema-lint.mjs; assessment and gap report",
       "verified": {
         "tests": "132/132",
@@ -276,7 +276,15 @@
         "schema_lint": "clean (39 tables)",
         "migration_smoke": "41/41 PASS on ephemeral local postgres:16-alpine (synthetic data; container destroyed; no environment)"
       },
-      "not_done": "Figma FM-A UI import (package missing); server functions; auth; storage; scan adapter; any database"
+      "not_done": "Figma FM-A UI import (package missing); server functions; auth; storage; scan adapter; any database",
+      "review": {
+        "task": "A-032",
+        "verdict": "MERGE WITH FIXES",
+        "critical": 2,
+        "major": 8,
+        "minor": 12,
+        "report": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md"
+      }
     }
   ]
 }
