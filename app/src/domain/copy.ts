@@ -81,7 +81,17 @@ export const REQUIRED_COPY = {
     en: "AI assists; AI does not decide. In this version there is no AI at all.",
     hi: "AI सहायता करता है; AI निर्णय नहीं करता। इस संस्करण में कोई AI नहीं है।",
   },
+  /** U06 evidence locker — Duplicate Detection V1 (A-036). {label} is the existing document's label. */
+  duplicate_detected: {
+    en: 'This file is identical to "{label}", which is already in your file. It has not been merged; you can keep both or remove one.',
+    hi: 'यह फ़ाइल "{label}" के समान है, जो आपकी फ़ाइल में पहले से मौजूद है। इसे मिलाया नहीं गया है; आप दोनों रख सकते हैं या एक हटा सकते हैं।',
+  },
 } as const satisfies Record<string, BilingualCopy>;
+
+/** Fill the `{label}` placeholder of a copy string. */
+export function fillCopy(template: string, values: Record<string, string>): string {
+  return template.replace(/\{(\w+)\}/g, (_, k: string) => values[k] ?? `{${k}}`);
+}
 
 export type RequiredCopyKey = keyof typeof REQUIRED_COPY;
 

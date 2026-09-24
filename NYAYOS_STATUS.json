@@ -212,7 +212,7 @@
     ],
     "prior_next_assignment_closed": "A-010 delivered (CANONICAL 23 Sep 2026)"
   },
-  "last_verified_at": "2026-09-23",
+  "last_verified_at": "2026-09-24",
   "evidence_packages": [
     {
       "name": "Operating system directive (consolidated)",
@@ -267,14 +267,14 @@
       "base": "6c6b478ffa1a811ba435d2891b0b3179a3a7043d",
       "task": "A-030",
       "status": "REVIEW — A-033 closed the merge-blocking findings; PR #2 draft pending founder re-review",
-      "contents": "Specification set import (A-031); app/src/domain (14 modules, 79 tests); db/migrations/0001_fma_foundation.sql (NOT applied); scripts/db/schema-lint.mjs; assessment and gap report",
+      "contents": "Specification set import (A-031); app/src/domain (14 modules, 79 tests); db/migrations/0001_fma_foundation.sql (NOT applied); scripts/db/schema-lint.mjs; assessment and gap report; A-036 Duplicate Detection V1 (duplicate.ts, 0002_duplicate_lookup.sql, EvidenceCard chip)",
       "verified": {
-        "tests": "132/132",
+        "tests": "146/146",
         "typecheck": "clean",
         "eslint": "0 errors (11 pre-existing warnings)",
         "build": "pass",
         "schema_lint": "clean (39 tables)",
-        "migration_smoke": "54/54 PASS on ephemeral local postgres:16-alpine (synthetic data; container destroyed; no environment); two-session audit concurrency proof PASS"
+        "migration_smoke": "62/62 PASS with 0001+0002 on ephemeral local postgres:16-alpine (synthetic data; container destroyed; no environment); two-session audit concurrency proof PASS"
       },
       "not_done": "Figma FM-A UI import (package missing); server functions; auth; storage; scan adapter; any database",
       "review": {
@@ -333,6 +333,10 @@
     "task": "A-035",
     "first_build_item": "Duplicate Detection (hash level), then Stale Output Detection",
     "highest_value": "Correction Propagation (re-flag form; founder confirmation requested)",
-    "lowest_effort": "Duplicate Detection"
+    "lowest_effort": "Duplicate Detection",
+    "progress": {
+      "A-036 Duplicate Detection V1": "REVIEW on branch",
+      "next": "Stale Output Detection"
+    }
   }
 }

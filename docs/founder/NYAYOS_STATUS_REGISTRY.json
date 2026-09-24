@@ -1,7 +1,7 @@
 {
   "$comment": "NyayOS canonical status registry. MACHINE SOURCE OF TRUTH for task status and dependencies. Edited by hand or by the maintainer; validated and rendered by scripts/governance/registry.mjs. Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md.",
   "version": 1,
-  "updated": "2026-09-23",
+  "updated": "2026-09-24",
   "statuses": [
     "OPEN",
     "IN_PROGRESS",
@@ -819,6 +819,34 @@
       "updated": "2026-09-23",
       "superseded_by": null,
       "notes": "Planned against feature/fma-foundation-v1 at 668c2dc. A-034 findings re-verified against code (all five hold). Imported unchanged as founder-named inputs: NYAYOS_PRODUCT_BACKLOG_V1.md (sha256 b8b71d6bd19f72e5…) and NYAYOS_VALIDATED_REQUIREMENTS_V1.md (sha256 45cef79033123171…); the sanitised case handoffs in the same untracked folder were not opened and are not imported. FIRST BUILD ITEM: Duplicate Detection (hash level) followed by Stale Output Detection — both pure, read-side, no server layer or founder decision needed. HIGHEST VALUE: Correction Propagation in re-flag form only (rewrite would break single-writer S3); founder confirmation requested. Typed conflict/missing categories are additive 0002 columns if adopted."
+    },
+    {
+      "id": "A-036",
+      "title": "Duplicate Detection V1 — hash-level, tenant-scoped, informational (first WAVE0 build item per A-035)",
+      "type": "build",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — development build on feature/fma-foundation-v1 (staging only; no deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-010",
+        "A-031",
+        "A-034",
+        "A-035"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "app/src/domain/duplicate.ts",
+        "app/tests/domain/duplicate.test.ts",
+        "db/migrations/0002_duplicate_lookup.sql",
+        "app/src/components/nyayos/evidence-card.tsx",
+        "app/src/domain/copy.ts",
+        "db/tests/smoke_0001.sql"
+      ],
+      "evidence": "app/tests/domain/duplicate.test.ts",
+      "updated": "2026-09-24",
+      "superseded_by": null,
+      "notes": "Built exactly as planned in A-035 §3.1. Domain: findDuplicateVersions/assessDuplicate (pure; tenant boundary enforced; same-dispute matches first; malformed hash refused; never merges/rejects). SQL 0002 (append-only, NOT applied to any environment): index on document_versions.sha256; SECURITY INVOKER find_duplicate_versions(text) so RLS scopes results to the caller's disputes; config duplicate_detection_mode = inform (block deliberately absent). UI: EvidenceCard.duplicateOf informational chip; bilingual copy duplicate_detected [PROV translation]. Tests: 8 Vitest (146 total), 1 component test, 8 smoke checks (62/62 on a throwaway Postgres 16.14 container with 0001+0002; destroyed). Not wired to a server function yet (A10 completeUpload arrives in wave W1). Near-duplicates out of scope."
     }
   ]
 }

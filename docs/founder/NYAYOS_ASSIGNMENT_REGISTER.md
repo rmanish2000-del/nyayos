@@ -483,3 +483,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `db/tests/smoke_0001.sql` (54/54 PASS); `db/tests/audit_concurrency_0001.sh` (PASS: chain intact, 0 forked predecessors); A-032 probes PROBE1/4/4b/5b/7 re-run and now fail closed; `vitest`, `tsc`, `eslint`, `schema-lint` clean |
 | **Limitations** | Scope was five items. Still open from A-032: m-1 (`status` in the dispute UPDATE grant), the M-8 U01–U21 cross-map addendum to the gap report, and the design decisions D-031…D-036 (M-2, M-3, M-6, M-7). No architecture change; no new document created |
 | **Handoff back to M365 Copilot** | Record A-033 REVIEW; risk rating Medium; recommendation SAFE TO MERGE once the founder accepts m-1 and the M-8 addendum as tracked follow-ups (or applies them in one further commit) |
+
+---
+
+### A-036 — Duplicate Detection V1
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-036 |
+| **Owner / tool** | Claude Code — development build on `feature/fma-foundation-v1` |
+| **Purpose** | Build the first WAVE0 item named by A-035: hash-level, tenant-scoped, informational duplicate detection |
+| **Input files** | A-035 plan §3.1; A-034 gap analysis; FM-A Scope Sheet (A10 `completeUpload`, S5 write-once originals); branch at `ff06012` |
+| **Gate** | FA-001 (staging only). Deployment NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** Migration `0002` executed only on a throwaway local container with `0001`; destroyed; no environment |
+| **Status** | **REVIEW — 24 September 2026.** On the draft PR #2 branch for founder review |
+| **Result** | `app/src/domain/duplicate.ts` (`findDuplicateVersions`, `assessDuplicate`, `duplicateAuditMetadata`); `db/migrations/0002_duplicate_lookup.sql` (index + SECURITY INVOKER `find_duplicate_versions(text)` + `duplicate_detection_mode = inform`); `EvidenceCard.duplicateOf` informational chip; bilingual `duplicate_detected` copy and `fillCopy` helper; docs updated |
+| **Evidence** | Vitest 146/146 (8 new domain tests + 1 component test); `tsc`, `eslint` (0 errors), build clean; schema-lint clean; smoke 62/62 incl. 8 `DUP_*` checks (owner sees both identical versions; hex case-insensitive; unknown hash none; labels returned; other tenant sees nothing; index present; mode inform; originals untouched); concurrency proof PASS |
+| **Limitations** | Not yet invoked by a server function (A10 arrives in wave W1); near-duplicates (re-scans) out of scope; Hindi copy is a working translation; UI chip is fed by props only until the evidence workspace is wired to storage |
+| **Handoff back to M365 Copilot** | Record A-036 REVIEW; next per A-035 order: Stale Output Detection (A-037 candidate) — pure, read-side, no prerequisites |

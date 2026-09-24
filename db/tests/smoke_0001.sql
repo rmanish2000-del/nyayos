@@ -270,4 +270,24 @@ select 'CHECK M4_fma_origin_inert_constraints_present ' || case when
 select 'CHECK C1_advisory_lock_in_audit_trigger ' || case when
   position('pg_advisory_xact_lock' in pg_get_functiondef('nyayos.tg_audit_before_insert'::regproc)) > 0 then 'PASS' else 'FAIL' end;
 
+-- ---------------------------------------------------------------- A-036 Duplicate Detection V1 (requires 0002)
+reset role; set role nyayos_service_promote;
+insert into nyayos.documents (id, tenant_id, dispute_id, display_label) select gen_random_uuid(), tenant_a, dispute_a, 'Invoice (second copy)' from s;
+insert into nyayos.document_versions (document_id, version, sha256, size_bytes, sniffed_mime, original_filename, uploader_id, scan_result, storage_path)
+  select id, 1, repeat('d', 64), 10, 'application/pdf', 'invoice2.pdf', 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'clean', 'p2' from nyayos.documents where display_label = 'Invoice (second copy)';
+insert into nyayos.documents (id, tenant_id, dispute_id, display_label) select gen_random_uuid(), tenant_a, dispute_a, 'Invoice (third copy)' from s;
+insert into nyayos.document_versions (document_id, version, sha256, size_bytes, sniffed_mime, original_filename, uploader_id, scan_result, storage_path)
+  select id, 1, repeat('d', 64), 10, 'application/pdf', 'invoice3.pdf', 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'clean', 'p3' from nyayos.documents where display_label = 'Invoice (third copy)';
+reset role; set role nyayos_authenticated; set nyayos.principal_id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+select 'CHECK DUP_owner_sees_both_identical_versions ' || case when (select count(*) from nyayos.find_duplicate_versions(repeat('d', 64))) = 2 then 'PASS' else 'FAIL' end;
+select 'CHECK DUP_hex_case_insensitive ' || case when (select count(*) from nyayos.find_duplicate_versions(upper(repeat('d', 64)))) = 2 then 'PASS' else 'FAIL' end;
+select 'CHECK DUP_unknown_hash_no_match ' || case when (select count(*) from nyayos.find_duplicate_versions(repeat('e', 64))) = 0 then 'PASS' else 'FAIL' end;
+select 'CHECK DUP_labels_returned_for_user ' || case when (select string_agg(display_label, ',' order by display_label) from nyayos.find_duplicate_versions(repeat('d', 64))) = 'Invoice (second copy),Invoice (third copy)' then 'PASS' else 'FAIL' end;
+reset role; set role nyayos_authenticated; set nyayos.principal_id = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
+select 'CHECK DUP_other_tenant_sees_nothing ' || case when (select count(*) from nyayos.find_duplicate_versions(repeat('d', 64))) = 0 then 'PASS' else 'FAIL' end;
+reset role;
+select 'CHECK DUP_index_present ' || case when exists (select 1 from pg_indexes where schemaname = 'nyayos' and indexname = 'document_versions_sha256_idx') then 'PASS' else 'FAIL' end;
+select 'CHECK DUP_mode_inform_only ' || case when (select value from nyayos.config_provisional where key = 'duplicate_detection_mode') = 'inform' then 'PASS' else 'FAIL' end;
+select 'CHECK DUP_originals_untouched ' || case when (select count(*) from nyayos.document_versions where sha256 = repeat('d', 64)) = 2 then 'PASS' else 'FAIL' end;
+
 select 'CHECK no_authenticated_write_grant_on_canonical ' || case when (select count(*) from information_schema.role_table_grants where table_schema='nyayos' and grantee='nyayos_authenticated' and privilege_type in ('INSERT','UPDATE','DELETE') and table_name in ('dispute_statements','entities','entity_source_forms','events','date_assertions','propositions','evidence_items','evidence_relations','contradictions','missing_evidence','issues','next_steps','user_corrections','audit_events','document_versions')) = 0 then 'PASS' else 'FAIL' end;

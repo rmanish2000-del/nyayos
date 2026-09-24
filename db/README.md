@@ -7,6 +7,13 @@
 | **Twin** | `app/src/domain/` holds the same model in TypeScript with 79 unit tests. `scripts/db/schema-lint.mjs` proves the two agree on table names and that every table carries RLS, policies, grants and allow-list registration. |
 | **Tested how** | Statically linted, and executed once on an **ephemeral local `postgres:16-alpine` container** with synthetic data during A-030: `0001` applied with `ON_ERROR_STOP` (exit 0) and `db/tests/smoke_0001.sql` passed 41/41 (RLS isolation, single-writer, consent locks, audit chain and tamper detection, allow-list). The container was destroyed afterwards; **no environment exists**. First environment execution must be a synthetic-data staging database, followed by the Scope Sheet §8.1 SEC subset. Any defect found there is fixed by a **new** migration, never by editing `0001`. |
 
+## Migrations
+
+| File | Content | Status |
+|---|---|---|
+| `0001_fma_foundation.sql` | FM-A foundation: 39 tables, RLS, helpers, single-writer functions, audit chain, deletion allow-list | Not applied to any environment |
+| `0002_duplicate_lookup.sql` | Duplicate Detection V1 (A-036): index on `document_versions.sha256`, read-only SECURITY INVOKER `find_duplicate_versions(text)`, `duplicate_detection_mode = inform` | Not applied to any environment |
+
 ## Provider neutrality
 
 Session context (`nyayos.principal_id`, `nyayos.request_id`) is read from connection settings set server-side on checkout (Architecture Deck slide 7). `nyayos.current_user_id()` falls back to `request.jwt.claim.sub` so a Supabase/PostgREST deployment works without change. No provider SDK is referenced.
@@ -31,4 +38,4 @@ node scripts/db/schema-lint.mjs
 docker run -d --name nyayos-migtest -e POSTGRES_HOST_AUTH_METHOD=trust postgres:16-alpine
 ```
 
-Then copy `db/migrations/0001_fma_foundation.sql` and `db/tests/smoke_0001.sql` into the container, apply the migration with `psql -v ON_ERROR_STOP=1 -f`, run the smoke file the same way (every line prints `CHECK … PASS|FAIL`), and `docker rm -f nyayos-migtest`. This is a local developer check, not a deployment; never point it at a shared database.
+Then copy `db/migrations/*.sql` and `db/tests/smoke_0001.sql` into the container, apply the migrations in order (`0001`, then `0002`) with `psql -v ON_ERROR_STOP=1 -f`, run the smoke file the same way (every line prints `CHECK … PASS|FAIL`), and `docker rm -f nyayos-migtest`. This is a local developer check, not a deployment; never point it at a shared database.

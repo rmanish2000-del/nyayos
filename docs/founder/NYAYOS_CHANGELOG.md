@@ -5,6 +5,19 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-24 — Duplicate Detection V1 (A-036)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed; `0002` not applied to any environment.**
+
+### Added
+
+- `app/src/domain/duplicate.ts` — hash-level, tenant-scoped, informational duplicate detection (never merges, rejects or deletes); `duplicateAuditMetadata` (ids and counts only).
+- `db/migrations/0002_duplicate_lookup.sql` — index on `document_versions.sha256`; SECURITY INVOKER `find_duplicate_versions(text)` (RLS-scoped); `duplicate_detection_mode = inform`.
+- `EvidenceCard.duplicateOf` chip; bilingual `duplicate_detected` copy; `fillCopy` helper.
+- Tests: 8 domain, 1 component, 8 smoke checks (62/62 with `0001`+`0002`). Registry A-036 REVIEW.
+
+---
+
 ## 2026-09-23 — WAVE0 implementation plan V1 (A-035)
 
 **Branch `feature/fma-foundation-v1`, plan only; no code.** Added `docs/implementation/A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md`: A-034 findings re-verified against code; per-item reuse (files, database objects, APIs, UI), new files, migration yes/no, risk and order for Duplicate Detection, Stale Output Detection, Contradiction Registry surfacing, Missing Material surfacing and Correction Propagation. FIRST BUILD ITEM: Duplicate Detection then Stale Output Detection. HIGHEST VALUE: Correction Propagation in re-flag form (founder confirmation requested). Imported the two backlog files as founder-named inputs into `docs/product/`; case handoffs not imported.

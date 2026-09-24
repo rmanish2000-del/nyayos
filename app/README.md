@@ -49,7 +49,8 @@ subset (tenant types, roles, consent purposes, proposal origins…), the table r
 deletion allow-list, the `isDisputeMember` / `grantAllows` authorisation helpers, consent
 enforcement with `aggregate_analytics` and `model_improvement` locked off, the single-writer
 proposal → correction pipeline, the upload → quarantine → scan → promote state machine,
-hash-chained content-free audit, the export manifest, the deletion lifecycle and the required
+hash-chained content-free audit, the export manifest, the deletion lifecycle, hash-level duplicate
+detection (`duplicate.ts`, A-036 — informational, tenant-scoped, never merges) and the required
 bilingual copy. Tests live in `tests/domain/`. The SQL twin is `../db/migrations/` (not applied).
 UI components do not yet consume it; wiring is wave W2 in the A-030 gap report.
 
