@@ -14,6 +14,7 @@
 - [x] Sprint 4 validation: tests 53/53, typecheck, lint (0 errors), build, responsive 390/834/1280 with no console errors.
 - [x] A-030 FM-A domain foundation — `src/domain/` (14 modules), `tests/domain/` (79 tests), SQL twin in `db/migrations/` (not applied); 132/132 tests, typecheck, lint clean. Branch `feature/fma-foundation-v1`, REVIEW.
 - [x] A-036 Duplicate Detection V1 — `src/domain/duplicate.ts`, `find_duplicate_versions()` in `db/migrations/0002`, `EvidenceCard.duplicateOf` chip, bilingual copy; tests added. Informational only; never merges or rejects.
+- [x] A-037 Stale Output Detection V1 — `src/domain/staleness.ts`, `export_staleness()` in `db/migrations/0003`, `StaleOutputNotice`, bilingual copy; tests added. Detection only; never regenerates or rewrites an export.
 - [ ] A-030 wave W2 — wire U01–U21 screens to the domain types; Figma FM-A package still missing (A-008).
 - [ ] A-021 items 4, 6, 8 — contradiction-specific actions, extended source metadata, separate confidence hue family (not in the A-022 instruction; needs a follow-on assignment).
 - [ ] Screen-reader pass (NVDA / VoiceOver) — owed since A-014; needs assistive-technology access.

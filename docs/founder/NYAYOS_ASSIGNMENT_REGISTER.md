@@ -501,3 +501,22 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | Vitest 146/146 (8 new domain tests + 1 component test); `tsc`, `eslint` (0 errors), build clean; schema-lint clean; smoke 62/62 incl. 8 `DUP_*` checks (owner sees both identical versions; hex case-insensitive; unknown hash none; labels returned; other tenant sees nothing; index present; mode inform; originals untouched); concurrency proof PASS |
 | **Limitations** | Not yet invoked by a server function (A10 arrives in wave W1); near-duplicates (re-scans) out of scope; Hindi copy is a working translation; UI chip is fed by props only until the evidence workspace is wired to storage |
 | **Handoff back to M365 Copilot** | Record A-036 REVIEW; next per A-035 order: Stale Output Detection (A-037 candidate) — pure, read-side, no prerequisites |
+
+---
+
+### A-037 — Stale Output Detection V1
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-037 |
+| **Owner / tool** | Claude Code — repository implementation on `feature/fma-foundation-v1` |
+| **Purpose** | Read-only detection of exports that reference item or document versions no longer current. Detection only: nothing rewritten, refreshed, replaced, deleted, merged or regenerated |
+| **Input files** | Operating system; status JSON; A-035 plan §3.2; gap analysis V1; backlog and validated requirements; A-036 at baseline `266d96e` |
+| **Gate** | FA-001 (staging only). Deployment NOT ALLOWED; production access NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** Migration `0003` executed only on disposable local containers with `0001` and `0002`; destroyed; no environment |
+| **Status** | **REVIEW — 24 September 2026.** On the draft PR #2 branch for founder review |
+| **Result** | `app/src/domain/staleness.ts` (row-level and summary assessment, CURRENT / STALE / UNKNOWN, version comparison only); `db/migrations/0003_export_staleness.sql` (SECURITY INVOKER, STABLE `export_staleness(uuid)`, dispute-confined lookups, no writes); `StaleOutputNotice` (warning, counts, review link, no regenerate control); bilingual copy |
+| **Evidence** | Vitest 162/162 (12 domain + 4 component new); `tsc`, `eslint` (0 errors), build, schema-lint clean; smoke 75/75 incl. 13 `STALE_*` checks (current, stale, multiple, missing, malformed, malformed manifest, other dispute no leak, dispute mismatch, other tenant zero rows, nonexistent indistinguishable, no mutation fingerprint, invoker + stable, no writes) and all 8 A-036 `DUP_*` checks |
+| **Limitations** | No export service exists yet, so exports in the smoke suite are written by the test superuser; the notice is fed by props until the export screens (U16/U17) exist; the SQL reason set omits `malformed_current_version` and `ambiguous_current_version`, which the schema makes impossible (NOT NULL, CHECK ≥ 1, primary keys); Hindi copy is a working translation |
+| **Rollback** | `git revert <A-037 commit>` on the branch, or delete `app/src/domain/staleness.ts`, `app/tests/domain/staleness.test.ts`, `app/src/components/nyayos/stale-output-notice.tsx`, `app/tests/stale-output-notice.test.tsx`, `db/migrations/0003_export_staleness.sql`, remove the `./staleness` export from `app/src/domain/index.ts`, the six `stale_output_*` keys from `copy.ts` and the A-037 section of `db/tests/smoke_0001.sql`. Database (disposable only): `drop function if exists nyayos.export_staleness(uuid);` |
+| **Handoff back to M365 Copilot** | Record A-037 REVIEW; next per A-035 order: Contradiction Registry surfacing, which needs the server layer (W1) and a founder decision on typed conflict kinds |

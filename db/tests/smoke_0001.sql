@@ -290,4 +290,122 @@ select 'CHECK DUP_index_present ' || case when exists (select 1 from pg_indexes 
 select 'CHECK DUP_mode_inform_only ' || case when (select value from nyayos.config_provisional where key = 'duplicate_detection_mode') = 'inform' then 'PASS' else 'FAIL' end;
 select 'CHECK DUP_originals_untouched ' || case when (select count(*) from nyayos.document_versions where sha256 = repeat('d', 64)) = 2 then 'PASS' else 'FAIL' end;
 
+-- ---------------------------------------------------------------- A-037 Stale Output Detection V1 (requires 0003)
+-- Synthetic data only. Exports are written by the superuser here because no export service exists yet.
+set role nyayos_authenticated; set nyayos.principal_id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+do $$
+declare pid uuid; eid uuid; d2 uuid;
+begin
+  pid := nyayos.propose_change((select dispute_a from s), 'event', null,
+    '{"text":"stale-probe event","origin_type":"user_statement","source_ref":{"kind":"user_entry","enteredBy":"aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"}}'::jsonb, null);
+  perform nyayos.decide_proposal(pid, true, null);
+  select id into eid from nyayos.events where text = 'stale-probe event';
+  pid := nyayos.propose_change((select dispute_a from s), 'event', eid, '{"text":"stale-probe event (corrected)"}'::jsonb, 'synthetic correction');
+  perform nyayos.decide_proposal(pid, true, null);
+  d2 := nyayos.create_dispute((select tenant_a from s), 'Stale probe second dispute');
+  pid := nyayos.propose_change(d2, 'event', null,
+    '{"text":"other-dispute event","origin_type":"user_statement","source_ref":{"kind":"user_entry","enteredBy":"aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"}}'::jsonb, null);
+  perform nyayos.decide_proposal(pid, true, null);
+end $$;
+
+reset role;
+do $$
+declare
+  v_da uuid := (select dispute_a from s);
+  v_ta uuid := (select tenant_a from s);
+  v_e1 uuid := (select e1 from s);
+  v_v1 int := (select version from nyayos.events where id = (select e1 from s));
+  v_ep uuid := (select id from nyayos.events where text like 'stale-probe event%');
+  v_eo uuid := (select id from nyayos.events where text = 'other-dispute event');
+  v_d2 uuid := (select dispute_id from nyayos.events where text = 'other-dispute event');
+  v_doc uuid := (select id from nyayos.documents where display_label = 'Invoice (second copy)');
+  x text;
+begin
+  foreach x in array array['1','2','3','4','5','6'] loop
+    insert into nyayos.exports (id, tenant_id, dispute_id, version, included_sections, generated_by, manifest_sha256, storage_path)
+      values (('37000000-0000-4000-8000-00000000000' || x)::uuid, v_ta, v_da, x::int, array['manifest'],
+              'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', repeat('f', 64), 'synthetic/' || x);
+  end loop;
+  insert into nyayos.export_manifests (export_id, entries) values
+    ('37000000-0000-4000-8000-000000000001', jsonb_build_object('disputeId', v_da, 'items',
+       jsonb_build_array(jsonb_build_object('targetType','event','targetId',v_e1,'version',v_v1,'sourceRef','user_entry:a')),
+       'documents', jsonb_build_array(jsonb_build_object('documentId',v_doc,'version',1)))),
+    ('37000000-0000-4000-8000-000000000002', jsonb_build_object('disputeId', v_da, 'items',
+       jsonb_build_array(jsonb_build_object('targetType','event','targetId',v_e1,'version',v_v1 - 1,'sourceRef','user_entry:a')),
+       'documents', '[]'::jsonb)),
+    ('37000000-0000-4000-8000-000000000003', jsonb_build_object('disputeId', v_da, 'items',
+       jsonb_build_array(jsonb_build_object('targetType','event','targetId',v_e1,'version',v_v1 - 1),
+                         jsonb_build_object('targetType','event','targetId',v_ep,'version',1)),
+       'documents', jsonb_build_array(jsonb_build_object('documentId',v_doc,'version',1)))),
+    ('37000000-0000-4000-8000-000000000004', jsonb_build_object('disputeId', v_da, 'items',
+       jsonb_build_array(
+         jsonb_build_object('targetType','event','targetId','00000000-0000-4000-8000-0000000000aa','version',1),
+         jsonb_build_object('targetType','event','targetId',v_e1,'version','two'),
+         jsonb_build_object('targetType','dispute_statement','targetId',v_e1,'version',1),
+         jsonb_build_object('targetType','event','targetId',v_e1,'version',99),
+         jsonb_build_object('targetType','event','version',1),
+         jsonb_build_object('targetType','event','targetId',v_eo,'version',1)),
+       'documents', '[]'::jsonb)),
+    ('37000000-0000-4000-8000-000000000005', '{"items": "not-an-array"}'::jsonb),
+    ('37000000-0000-4000-8000-000000000006', jsonb_build_object('disputeId', v_d2, 'items',
+       jsonb_build_array(jsonb_build_object('targetType','event','targetId',v_eo,'version',1)), 'documents', '[]'::jsonb));
+end $$;
+
+create function pg_temp.stale_fp() returns text language sql as $f$
+  select md5(
+    coalesce((select string_agg(id::text || ':' || version || ':' || text, ',' order by id) from nyayos.events), '') ||
+    coalesce((select string_agg(export_id::text || ':' || entries::text, ',' order by export_id) from nyayos.export_manifests), '') ||
+    coalesce((select string_agg(id::text || ':' || manifest_sha256 || ':' || storage_path, ',' order by id) from nyayos.exports), '') ||
+    coalesce((select string_agg(id::text || ':' || current_version || ':' || status, ',' order by id) from nyayos.documents), '') ||
+    (select count(*) from nyayos.user_corrections)::text || ':' ||
+    (select count(*) from nyayos.proposals)::text || ':' ||
+    (select count(*) from nyayos.document_versions)::text || ':' ||
+    (select count(*) from nyayos.audit_events)::text)
+$f$;
+alter table s add column if not exists fp text;
+update s set fp = pg_temp.stale_fp();
+
+set role nyayos_authenticated; set nyayos.principal_id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+select 'CHECK STALE_current_manifest_is_CURRENT ' || case when
+  (select count(*) = 3 and bool_and(status = 'CURRENT') from nyayos.export_staleness('37000000-0000-4000-8000-000000000001')) then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_older_version_is_STALE ' || case when
+  (select status = 'STALE' and reason = 'newer_version' and current_version = recorded_version + 1 and source_ref = 'user_entry:a' and review_ref like 'event:%'
+     from nyayos.export_staleness('37000000-0000-4000-8000-000000000002') where entry_kind = 'item') then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_multiple_items_all_reported ' || case when
+  (select count(*) filter (where status = 'STALE') = 2 and count(*) filter (where entry_kind = 'document' and status = 'CURRENT') = 1
+     from nyayos.export_staleness('37000000-0000-4000-8000-000000000003')) then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_missing_is_UNKNOWN ' || case when
+  (select status = 'UNKNOWN' and reason = 'not_found_or_inaccessible' and current_version is null
+     from nyayos.export_staleness('37000000-0000-4000-8000-000000000004') where item_id = '00000000-0000-4000-8000-0000000000aa') then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_malformed_version_fails_safe ' || case when
+  (select count(*) filter (where reason = 'malformed_recorded_version') = 1
+      and count(*) filter (where reason = 'malformed_entry') = 1
+      and count(*) filter (where reason = 'unsupported_item_type') = 1
+      and count(*) filter (where reason = 'recorded_version_ahead') = 1
+      and count(*) filter (where entry_kind <> 'manifest' and status <> 'UNKNOWN') = 0
+     from nyayos.export_staleness('37000000-0000-4000-8000-000000000004')) then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_malformed_manifest_is_UNKNOWN ' || case when
+  (select count(*) = 1 and bool_and(status = 'UNKNOWN' and reason = 'malformed_manifest')
+     from nyayos.export_staleness('37000000-0000-4000-8000-000000000005')) then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_other_dispute_record_does_not_leak ' || case when
+  (select status = 'UNKNOWN' and reason = 'not_found_or_inaccessible' and current_version is null
+     from nyayos.export_staleness('37000000-0000-4000-8000-000000000004')
+     where item_id = (select id::text from nyayos.events where text = 'other-dispute event')) then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_dispute_mismatch_not_assessed ' || case when
+  (select count(*) = 1 and bool_and(entry_kind = 'manifest' and reason = 'dispute_mismatch')
+     from nyayos.export_staleness('37000000-0000-4000-8000-000000000006')) then 'PASS' else 'FAIL' end;
+
+reset role; set role nyayos_authenticated; set nyayos.principal_id = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
+select 'CHECK STALE_other_tenant_sees_no_rows ' || case when
+  (select count(*) from nyayos.export_staleness('37000000-0000-4000-8000-000000000002')) = 0 then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_nonexistent_indistinguishable ' || case when
+  (select count(*) from nyayos.export_staleness('37000000-0000-4000-8000-0000000000ff')) = 0 then 'PASS' else 'FAIL' end;
+
+reset role;
+select 'CHECK STALE_no_mutation ' || case when (select fp from s) = pg_temp.stale_fp() then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_function_invoker_and_stable ' || case when
+  (select not prosecdef and provolatile = 's' from pg_proc where oid = 'nyayos.export_staleness(uuid)'::regprocedure) then 'PASS' else 'FAIL' end;
+select 'CHECK STALE_function_has_no_writes ' || case when
+  pg_get_functiondef('nyayos.export_staleness(uuid)'::regprocedure) !~* '\m(insert|update|delete|truncate)\M' then 'PASS' else 'FAIL' end;
+
 select 'CHECK no_authenticated_write_grant_on_canonical ' || case when (select count(*) from information_schema.role_table_grants where table_schema='nyayos' and grantee='nyayos_authenticated' and privilege_type in ('INSERT','UPDATE','DELETE') and table_name in ('dispute_statements','entities','entity_source_forms','events','date_assertions','propositions','evidence_items','evidence_relations','contradictions','missing_evidence','issues','next_steps','user_corrections','audit_events','document_versions')) = 0 then 'PASS' else 'FAIL' end;

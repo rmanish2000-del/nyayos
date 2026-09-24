@@ -50,8 +50,9 @@ deletion allow-list, the `isDisputeMember` / `grantAllows` authorisation helpers
 enforcement with `aggregate_analytics` and `model_improvement` locked off, the single-writer
 proposal → correction pipeline, the upload → quarantine → scan → promote state machine,
 hash-chained content-free audit, the export manifest, the deletion lifecycle, hash-level duplicate
-detection (`duplicate.ts`, A-036 — informational, tenant-scoped, never merges) and the required
-bilingual copy. Tests live in `tests/domain/`. The SQL twin is `../db/migrations/` (not applied).
+detection (`duplicate.ts`, A-036 — informational, tenant-scoped, never merges), stale output
+detection (`staleness.ts`, A-037 — version comparison only, CURRENT / STALE / UNKNOWN, never
+regenerates) and the required bilingual copy. `StaleOutputNotice` renders the informational warning. Tests live in `tests/domain/`. The SQL twin is `../db/migrations/` (not applied).
 UI components do not yet consume it; wiring is wave W2 in the A-030 gap report.
 
 No AI, no legal or procedural content, no sharing and no marketplace code path exists in this package.

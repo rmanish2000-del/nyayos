@@ -847,6 +847,35 @@
       "updated": "2026-09-24",
       "superseded_by": null,
       "notes": "Built exactly as planned in A-035 §3.1. Domain: findDuplicateVersions/assessDuplicate (pure; tenant boundary enforced; same-dispute matches first; malformed hash refused; never merges/rejects). SQL 0002 (append-only, NOT applied to any environment): index on document_versions.sha256; SECURITY INVOKER find_duplicate_versions(text) so RLS scopes results to the caller's disputes; config duplicate_detection_mode = inform (block deliberately absent). UI: EvidenceCard.duplicateOf informational chip; bilingual copy duplicate_detected [PROV translation]. Tests: 8 Vitest (146 total), 1 component test, 8 smoke checks (62/62 on a throwaway Postgres 16.14 container with 0001+0002; destroyed). Not wired to a server function yet (A10 completeUpload arrives in wave W1). Near-duplicates out of scope."
+    },
+    {
+      "id": "A-037",
+      "title": "Stale Output Detection V1 — read-only version comparison (CURRENT / STALE / UNKNOWN), detection only",
+      "type": "build",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — repository implementation on feature/fma-foundation-v1 (local development and verification only; no deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-010",
+        "A-031",
+        "A-034",
+        "A-035"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "app/src/domain/staleness.ts",
+        "app/tests/domain/staleness.test.ts",
+        "app/src/components/nyayos/stale-output-notice.tsx",
+        "app/tests/stale-output-notice.test.tsx",
+        "db/migrations/0003_export_staleness.sql",
+        "db/tests/smoke_0001.sql",
+        "app/src/domain/copy.ts"
+      ],
+      "evidence": "app/tests/domain/staleness.test.ts",
+      "updated": "2026-09-24",
+      "superseded_by": null,
+      "notes": "Baseline 266d96e (A-036, itself REVIEW and therefore not listed as a registry input). Domain staleness.ts: staleOutputRows / summariseStalenessRows / assessOutputStaleness — version comparison only, timestamps never read; missing, malformed, ambiguous, unsupported or out-of-scope data is UNKNOWN, never CURRENT; precedence STALE > UNKNOWN > CURRENT; no mutation. SQL 0003 (append-only, NOT applied to any environment): SECURITY INVOKER STABLE export_staleness(uuid), confined to the export's dispute, zero rows for an invisible or nonexistent export; rollback drop function. UI StaleOutputNotice (informational warning, counts, review link, no regenerate control) and bilingual copy [PROV translation]. Tests: 12 domain + 4 component (Vitest 162/162); 13 STALE_* smoke checks (75/75 with 0001+0002+0003 on disposable Postgres 16.14 containers, destroyed); A-036 DUP_* checks unchanged and passing. No correction propagation, no regeneration."
     }
   ]
 }

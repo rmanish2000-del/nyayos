@@ -267,14 +267,14 @@
       "base": "6c6b478ffa1a811ba435d2891b0b3179a3a7043d",
       "task": "A-030",
       "status": "REVIEW — A-033 closed the merge-blocking findings; PR #2 draft pending founder re-review",
-      "contents": "Specification set import (A-031); app/src/domain (14 modules, 79 tests); db/migrations/0001_fma_foundation.sql (NOT applied); scripts/db/schema-lint.mjs; assessment and gap report; A-036 Duplicate Detection V1 (duplicate.ts, 0002_duplicate_lookup.sql, EvidenceCard chip)",
+      "contents": "Specification set import (A-031); app/src/domain (14 modules, 79 tests); db/migrations/0001_fma_foundation.sql (NOT applied); scripts/db/schema-lint.mjs; assessment and gap report; A-036 Duplicate Detection V1 (duplicate.ts, 0002_duplicate_lookup.sql, EvidenceCard chip); A-037 Stale Output Detection V1 (staleness.ts, 0003_export_staleness.sql, StaleOutputNotice)",
       "verified": {
-        "tests": "146/146",
+        "tests": "162/162",
         "typecheck": "clean",
         "eslint": "0 errors (11 pre-existing warnings)",
         "build": "pass",
         "schema_lint": "clean (39 tables)",
-        "migration_smoke": "62/62 PASS with 0001+0002 on ephemeral local postgres:16-alpine (synthetic data; container destroyed; no environment); two-session audit concurrency proof PASS"
+        "migration_smoke": "75/75 PASS with 0001+0002+0003 on disposable local postgres:16-alpine (synthetic data; containers destroyed; no environment); two-session audit concurrency proof PASS"
       },
       "not_done": "Figma FM-A UI import (package missing); server functions; auth; storage; scan adapter; any database",
       "review": {
@@ -336,7 +336,8 @@
     "lowest_effort": "Duplicate Detection",
     "progress": {
       "A-036 Duplicate Detection V1": "REVIEW on branch",
-      "next": "Stale Output Detection"
+      "A-037 Stale Output Detection V1": "REVIEW on branch",
+      "next": "Contradiction Registry surfacing (needs W1 server layer and a founder decision on typed conflict kinds)"
     }
   }
 }

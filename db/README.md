@@ -13,6 +13,7 @@
 |---|---|---|
 | `0001_fma_foundation.sql` | FM-A foundation: 39 tables, RLS, helpers, single-writer functions, audit chain, deletion allow-list | Not applied to any environment |
 | `0002_duplicate_lookup.sql` | Duplicate Detection V1 (A-036): index on `document_versions.sha256`, read-only SECURITY INVOKER `find_duplicate_versions(text)`, `duplicate_detection_mode = inform` | Not applied to any environment |
+| `0003_export_staleness.sql` | Stale Output Detection V1 (A-037): read-only SECURITY INVOKER `export_staleness(uuid)` comparing manifest entries with current canonical versions (CURRENT / STALE / UNKNOWN). Rollback: `drop function if exists nyayos.export_staleness(uuid);` | Not applied to any environment |
 
 ## Provider neutrality
 
@@ -38,4 +39,4 @@ node scripts/db/schema-lint.mjs
 docker run -d --name nyayos-migtest -e POSTGRES_HOST_AUTH_METHOD=trust postgres:16-alpine
 ```
 
-Then copy `db/migrations/*.sql` and `db/tests/smoke_0001.sql` into the container, apply the migrations in order (`0001`, then `0002`) with `psql -v ON_ERROR_STOP=1 -f`, run the smoke file the same way (every line prints `CHECK … PASS|FAIL`), and `docker rm -f nyayos-migtest`. This is a local developer check, not a deployment; never point it at a shared database.
+Then copy `db/migrations/*.sql` and `db/tests/smoke_0001.sql` into the container, apply the migrations in order (`0001`, `0002`, `0003`) with `psql -v ON_ERROR_STOP=1 -f`, run the smoke file the same way (every line prints `CHECK … PASS|FAIL`), and `docker rm -f nyayos-migtest`. This is a local developer check, not a deployment; never point it at a shared database.

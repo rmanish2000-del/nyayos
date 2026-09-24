@@ -5,6 +5,19 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-24 — Stale Output Detection V1 (A-037)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed; `0003` not applied to any environment.**
+
+### Added
+
+- `app/src/domain/staleness.ts` — version-only comparison of an export manifest against current canonical versions: CURRENT / STALE / UNKNOWN with per-entry reasons; missing or malformed data is UNKNOWN, never CURRENT; timestamps never read; nothing mutated.
+- `db/migrations/0003_export_staleness.sql` — SECURITY INVOKER, STABLE `export_staleness(uuid)`; lookups confined to the export's dispute; invisible and nonexistent exports both return zero rows. Rollback: `drop function if exists nyayos.export_staleness(uuid);`.
+- `StaleOutputNotice` — informational warning with counts and a review link; no regenerate control; states the export and originals are unchanged. Bilingual copy.
+- Tests: 12 domain, 4 component (Vitest 162/162); 13 smoke checks (75/75 with `0001`+`0002`+`0003`). Registry A-037 REVIEW.
+
+---
+
 ## 2026-09-24 — Duplicate Detection V1 (A-036)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed; `0002` not applied to any environment.**

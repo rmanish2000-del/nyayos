@@ -25,3 +25,4 @@ export * from "./export";
 export * from "./deletion";
 export * from "./copy";
 export * from "./duplicate";
+export * from "./staleness";

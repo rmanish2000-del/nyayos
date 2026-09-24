@@ -86,6 +86,31 @@ export const REQUIRED_COPY = {
     en: 'This file is identical to "{label}", which is already in your file. It has not been merged; you can keep both or remove one.',
     hi: 'यह फ़ाइल "{label}" के समान है, जो आपकी फ़ाइल में पहले से मौजूद है। इसे मिलाया नहीं गया है; आप दोनों रख सकते हैं या एक हटा सकते हैं।',
   },
+  /** Stale Output Detection V1 (A-037). Never implies the original evidence changed. */
+  stale_output_title: {
+    en: "This export may be out of date",
+    hi: "यह निर्यात पुराना हो सकता है",
+  },
+  stale_output_stale: {
+    en: "Items referenced by this export that now have a newer version: {count}.",
+    hi: "इस निर्यात में संदर्भित मदें जिनका अब नया संस्करण है: {count}।",
+  },
+  stale_output_unknown: {
+    en: "Items referenced by this export that NyayOS could not confirm as current: {count}.",
+    hi: "इस निर्यात में संदर्भित मदें जिन्हें NyayOS वर्तमान के रूप में पुष्टि नहीं कर सका: {count}।",
+  },
+  stale_output_unreadable: {
+    en: "NyayOS could not read this export's list of contents, so it cannot confirm that the export is current.",
+    hi: "NyayOS इस निर्यात की सामग्री-सूची नहीं पढ़ सका, इसलिए यह पुष्टि नहीं कर सकता कि निर्यात वर्तमान है।",
+  },
+  stale_output_unchanged: {
+    en: "This export has not been changed or replaced, and your stored original documents are unchanged. Review the items before relying on this export.",
+    hi: "इस निर्यात को न तो बदला गया है और न ही प्रतिस्थापित किया गया है, और आपके संग्रहीत मूल दस्तावेज़ अपरिवर्तित हैं। इस निर्यात पर भरोसा करने से पहले इन मदों की समीक्षा करें।",
+  },
+  stale_output_review: {
+    en: "Review these items ({count})",
+    hi: "इन मदों की समीक्षा करें ({count})",
+  },
 } as const satisfies Record<string, BilingualCopy>;
 
 /** Fill the `{label}` placeholder of a copy string. */
