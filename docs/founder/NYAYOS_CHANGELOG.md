@@ -5,6 +5,21 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-24 — Deletion purge worker: A-032 M-3 closed (A-040)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0007` not applied to any environment.**
+
+### Added
+
+- `db/migrations/0007_deletion_purge_worker.sql` — server-only `purge_deletion_request()` for the deletion service: consumes the A-039 enumeration as the requester, refuses undo-window, undone, legal-hold and unauthorised requests, deletes only purge candidates after an orphan closure, writes a content-free tombstone and an audit event in the same transaction, reruns idempotently.
+- `DELETION_PURGE_ORDER`, `purgeGate`, `purgeCandidates`, `purgeOutcome` and the `purge_incomplete` transition in `deletion.ts`; `deletion-purge.test.ts`; `db/tests/deletion_purge_0001.sql` (55 checks) and `db/tests/deletion_purge_concurrency.sh`. Smoke +3 checks.
+
+### Changed
+
+- `document_versions` and `user_corrections` accept DELETE only inside an active purge; UPDATE stays forbidden. schema-lint checks purge-order parity. Registry A-040 REVIEW; A-032 report records M-3 closed.
+
+---
+
 ## 2026-09-24 — Deletion scope graph completed: A-032 M-6 closed (A-039)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0006` not applied to any environment. No purge.**

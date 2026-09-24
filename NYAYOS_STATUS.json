@@ -269,12 +269,12 @@
       "status": "REVIEW — A-033 closed the merge-blocking findings; PR #2 draft pending founder re-review",
       "contents": "Specification set import (A-031); app/src/domain (14 modules, 79 tests); db/migrations/0001_fma_foundation.sql (NOT applied); scripts/db/schema-lint.mjs; assessment and gap report; A-036 Duplicate Detection V1 (duplicate.ts, 0002_duplicate_lookup.sql, EvidenceCard chip); A-037 Stale Output Detection V1 (staleness.ts, 0003_export_staleness.sql, StaleOutputNotice)",
       "verified": {
-        "tests": "192/192",
+        "tests": "199/199",
         "typecheck": "clean",
         "eslint": "0 errors (11 pre-existing warnings)",
         "build": "pass",
-        "schema_lint": "clean (39 tables)",
-        "migration_smoke": "82/82 PASS with 0001-0006 on disposable local postgres:16-alpine (synthetic data; containers destroyed; no environment); deletion scope 28/28; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency 5/5"
+        "schema_lint": "clean (39 tables; deletion graph and purge order parity)",
+        "migration_smoke": "85/85 PASS with 0001-0007 on disposable local postgres:16-alpine (synthetic data; containers destroyed; no environment); deletion purge 55/55; purge race 3/3; deletion scope 28/28; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency 5/5"
       },
       "not_done": "Figma FM-A UI import (package missing); server functions; auth; storage; scan adapter; any database",
       "review": {
@@ -307,7 +307,6 @@
         "C-1": "closed by 0004 (A-033 fix was incomplete)",
         "C-2": "closed (re-verified)",
         "A-032_major_open": [
-          "M-3 (purge, D-032)",
           "M-8 documentation addendum"
         ],
         "A-038": {
@@ -316,7 +315,14 @@
         },
         "A-039": {
           "M-6": "closed (explicit graph; oracle-verified enumeration; zero mutation)"
-        }
+        },
+        "A-040": {
+          "M-3": "closed (server-controlled purge worker from the A-039 enumeration; D-032)"
+        },
+        "A-040_residuals": [
+          "object-storage blob deletion (no storage exists; FD-02)",
+          "account purge keeps the personal tenant row (FK from retained records) — founder decision"
+        ]
       }
     }
   ],

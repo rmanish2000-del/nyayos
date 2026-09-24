@@ -433,4 +433,20 @@ select 'CHECK M6_enumeration_definer_pinned_and_client_scoped ' || case when
 select 'CHECK M6_legal_hold_config_seeded_empty ' || case when
   (select value from nyayos.config_provisional where key = 'legal_hold_dispute_ids') = '' then 'PASS' else 'FAIL' end;
 
+-- ---------------------------------------------------------------- A-040 purge worker (requires 0007)
+select 'CHECK M3_worker_definer_pinned_and_service_only ' || case when
+  (select prosecdef and proconfig::text like '%search_path=pg_catalog, nyayos, pg_temp%' from pg_proc
+    where oid = 'nyayos.purge_deletion_request(uuid)'::regprocedure)
+  and has_function_privilege('nyayos_service_deletion', 'nyayos.purge_deletion_request(uuid)', 'execute')
+  and not has_function_privilege('nyayos_authenticated', 'nyayos.purge_deletion_request(uuid)', 'execute')
+  and not has_function_privilege('nyayos_anon', 'nyayos.purge_deletion_request(uuid)', 'execute') then 'PASS' else 'FAIL' end;
+select 'CHECK M3_no_role_holds_delete_on_any_table ' || case when not exists (
+  select 1 from information_schema.role_table_grants where table_schema = 'nyayos' and privilege_type = 'DELETE'
+    and grantee like 'nyayos\_%') then 'PASS' else 'FAIL' end;
+select 'CHECK M3_audit_and_ledger_immutable_for_everyone ' || case when
+  (select count(*) from pg_trigger where not tgisinternal and tgrelid in ('nyayos.audit_events'::regclass, 'nyayos.deletion_ledger'::regclass)
+     and tgfoid = 'nyayos.tg_forbid()'::regprocedure) = 3
+  and (select count(*) from pg_trigger where not tgisinternal and tgfoid = 'nyayos.tg_forbid_delete_unless_purge()'::regprocedure
+     and tgrelid in ('nyayos.document_versions'::regclass, 'nyayos.user_corrections'::regclass)) = 2 then 'PASS' else 'FAIL' end;
+
 select 'CHECK no_authenticated_write_grant_on_canonical ' || case when (select count(*) from information_schema.role_table_grants where table_schema='nyayos' and grantee='nyayos_authenticated' and privilege_type in ('INSERT','UPDATE','DELETE') and table_name in ('dispute_statements','entities','entity_source_forms','events','date_assertions','propositions','evidence_items','evidence_relations','contradictions','missing_evidence','issues','next_steps','user_corrections','audit_events','document_versions')) = 0 then 'PASS' else 'FAIL' end;

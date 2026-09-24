@@ -574,3 +574,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Enumeration is callable by the requester only; the future purge worker's access path arrives with purge (D-032). Reference scans read whole canonical tables (acceptable for FM-A volumes). Account deletion does not pseudonymise the user's actor references in other tenants (later work). Legal hold is manual configuration pending counsel (OL-06). The old single-column `deletion_allowlist` remains as registration only; the graph is authoritative |
 | **Rollback** | `git revert` the A-039 commit; disposable databases only: the three `drop function` statements and the config `delete` listed in the `0006` header |
 | **Handoff back to M365 Copilot** | Record A-039 REVIEW; A-032 critical 0; open: M-3 (purge, D-032) and M-8 documentation addendum |
+
+---
+
+### A-040 — Deletion purge worker V1
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-040 |
+| **Owner / tool** | Claude Code — security and data-integrity implementation |
+| **Purpose** | Close A-032 M-3: a server-controlled purge worker (D-032) that deletes strictly from the A-039 enumeration, respects undo window, legal hold, blocked and configuration-controlled records, preserves audit, tombstones and retained metadata, and leaves no orphan |
+| **Gate** | FA-001 (staging only). Deployment, production access and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** `0007` executed only on disposable local PostgreSQL 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 24 September 2026** |
+| **Result** | Migration `0007_deletion_purge_worker.sql`: `purge_deletion_request(request)` (definer, service-only), internal `deletion_record_key_v1`, `deletion_purge_order_v1`, `deletion_logical_refs_v1`, `deletion_audit_internal`; worker-only DELETE exemption on `document_versions` and `user_corrections`. `deletion.ts`: `DELETION_PURGE_ORDER` twin, `purgeGate`, `purgeCandidates`, `purgeOutcome`, `purge_incomplete` transition. schema-lint enforces purge-order parity and coverage |
+| **Evidence** | `db/tests/deletion_purge_0001.sql` 55/55 (valid, blocked, document and account purges; undo window; undone; legal hold incl. unreadable; forged cross-tenant and cross-dispute requests; duplicate and incomplete reruns; audit chain; tombstones; whole-database snapshots per purge; independent orphan oracle); 7 negative controls each detected; `deletion_purge_concurrency.sh` 3/3; smoke 85/85; deletion scope 28/28; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency matrix 5/5; Vitest 199/199; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | Object-storage blobs (document originals, export files) are not deleted: no storage exists (FD-02) and the rows holding their paths are purged, so blob deletion must be designed before storage is provisioned. Account purge keeps the personal tenant row, and the own membership with it, because retained `deletion_requests` and `consents` reference it by foreign key; the tenant name therefore persists (founder decision). No scheduler invokes the worker (server runtime not built). Closure reads whole tables (FM-A volumes). Legal hold remains manual configuration (OL-06) |
+| **Rollback** | `git revert` the A-040 commit; disposable databases only: the statements listed in the `0007` header |
+| **Handoff back to M365 Copilot** | Record A-040 REVIEW; A-032 critical 0 and majors closed except the M-8 documentation addendum; decide the two residuals (blob deletion design; account tenant retention) |

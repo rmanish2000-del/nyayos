@@ -4,6 +4,7 @@
  *
  *   requested ─undo→ undone
  *   requested ─window closes→ locked ─worker→ purging ─→ purged ─operator→ verified | incomplete
+ *                                                      └─→ incomplete (records kept: blocked or referenced; A-040)
  *   incomplete ─remediate→ locked
  *
  * Honest status: "requested" and "completed" are never conflated; an incomplete
@@ -137,6 +138,7 @@ export type DeletionEvent =
   | { type: "window_closed" }
   | { type: "purge_started" }
   | { type: "purge_completed" }
+  | { type: "purge_incomplete" }
   | { type: "verified"; result: "pass" | "incomplete" }
   | { type: "remediated" };
 
@@ -196,6 +198,15 @@ export function transitionDeletion(
       });
       return { ok: true, request: set("purged", { purgedAt: ctx.now }), ledger };
     }
+    case "purge_incomplete":
+      // A-040: some records were kept (blocked, configuration-controlled or still referenced). No
+      // tombstone is written and the request is never shown as complete; a later run retries.
+      if (!isService(ctx.principal) || ctx.principal.serviceIdentity !== "deletion_worker") {
+        return { ok: false, code: "service_identity_required" };
+      }
+      return s === "purging"
+        ? { ok: true, request: set("incomplete"), ledger: null }
+        : { ok: false, code: "illegal_transition" };
     case "verified":
       if (!isUser(ctx.principal) || !ctx.principal.platformRoles.includes("platform_security")) {
         return { ok: false, code: "operator_required" };
@@ -846,4 +857,107 @@ export const DELETION_GRAPH: readonly DeletionGraphEdge[] = [
 export function graphUncoveredTables(tableNames: readonly string[] = FMA_TABLE_NAMES): string[] {
   const covered = new Set(DELETION_GRAPH.map((x) => x.table));
   return tableNames.filter((n) => !covered.has(n));
+}
+
+// ---------------------------------------------------------------------------
+// Purge worker (A-040; closes A-032 M-3). The worker itself is nyayos.purge_deletion_request() in
+// db/migrations/0007_deletion_purge_worker.sql — server-only, executable by the deletion service
+// identity alone. These pure functions state its rules so they can be reviewed and tested here;
+// no client code path deletes anything.
+// ---------------------------------------------------------------------------
+
+/**
+ * Delete order, children before parents. Twin of nyayos.deletion_purge_order_v1();
+ * scripts/db/schema-lint.mjs enforces parity and that every purge_candidate table appears.
+ */
+export const DELETION_PURGE_ORDER = [
+  "annotations",
+  "document_locations",
+  "custody_events",
+  "evidence_relations",
+  "entity_source_forms",
+  "user_corrections",
+  "contradictions",
+  "date_assertions",
+  "missing_evidence",
+  "evidence_items",
+  "document_versions",
+  "jobs",
+  "quarantine_uploads",
+  "export_manifests",
+  "exports",
+  "entities",
+  "events",
+  "propositions",
+  "issues",
+  "next_steps",
+  "dispute_statements",
+  "proposals",
+  "documents",
+  "dispute_roles",
+  "disputes",
+  "tenant_memberships",
+  "profiles",
+  "tenants",
+] as const;
+
+export const PURGE_OUTCOMES = [
+  "purged",
+  "incomplete",
+  "already_purged",
+  "request_undone",
+  "undo_window_active",
+  "legal_hold_active",
+  "not_found_or_not_authorized",
+] as const;
+export type PurgeOutcome = (typeof PURGE_OUTCOMES)[number];
+
+/** One row of nyayos.enumerate_deletion_scope() (A-039). */
+export interface EnumeratedRecord {
+  readonly table: string;
+  readonly recordId: string | null;
+  readonly classification: DeletionClassification;
+  readonly reason: string;
+}
+
+/**
+ * The worker's gate before anything is deleted (SQL steps a and c). Returns the refusal, or null
+ * when the purge may proceed. Authorisation is re-verified by the enumeration itself, which the
+ * worker runs as the requester; a failure there is "not_found_or_not_authorized".
+ */
+export function purgeGate(
+  request: Pick<DeletionRequest, "state" | "undoUntil">,
+  rows: readonly EnumeratedRecord[],
+  now: string,
+): PurgeOutcome | null {
+  if (request.state === "purged" || request.state === "verified") return "already_purged";
+  if (request.state === "undone") return "request_undone";
+  if (new Date(now).getTime() <= new Date(request.undoUntil).getTime()) return "undo_window_active";
+  if (
+    rows.some(
+      (r) =>
+        r.classification === "retained_legal_hold" || r.reason === "legal_hold_on_owned_dispute",
+    )
+  ) {
+    return "legal_hold_active";
+  }
+  return null;
+}
+
+/**
+ * The only records the worker may delete: purge candidates with an identifier. The orphan closure
+ * in SQL can only remove records from this set (keep them), never add to it.
+ */
+export function purgeCandidates(rows: readonly EnumeratedRecord[]): EnumeratedRecord[] {
+  return rows.filter((r) => r.classification === "purge_candidate" && r.recordId !== null);
+}
+
+/** Honest outcome: complete only when no candidate was kept and nothing was blocked. */
+export function purgeOutcome(
+  keptCandidates: number,
+  rows: readonly EnumeratedRecord[],
+): "purged" | "incomplete" {
+  return keptCandidates === 0 && !rows.some((r) => r.classification === "blocked_active_reference")
+    ? "purged"
+    : "incomplete";
 }

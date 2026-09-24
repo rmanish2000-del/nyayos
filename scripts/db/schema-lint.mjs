@@ -81,7 +81,26 @@ for (const k of tsEdges) if (!sqlEdges.has(k)) findings.push(`deletion graph edg
 const graphTables = new Set([...sqlEdges].map((k) => k.split("|")[0]));
 for (const t of sqlTables) if (!graphTables.has(t)) findings.push(`table ${t} has no deletion graph decision`);
 
-const summary = `schema-lint: ${sqlTables.size} tables in SQL, ${tsTables.size} in tables.ts, ${notCreated.size} deferred names checked, ${sqlEdges.size} deletion-graph edges (SQL = TS)`;
+// Purge order (A-040): SQL deletion_purge_order_v1() and TS DELETION_PURGE_ORDER must match exactly,
+// and every table the graph can classify purge_candidate must be in it.
+const orderSql = readdirSync(migrationsDir).filter((f) => f.endsWith(".sql")).sort()
+  .map((f) => readFileSync(join(migrationsDir, f), "utf8"))
+  .filter((s) => s.includes("function nyayos.deletion_purge_order_v1()"))
+  .pop() ?? "";
+const sqlOrder = [...(orderSql.match(/function nyayos\.deletion_purge_order_v1\(\)[\s\S]*?array\[([\s\S]*?)\]::text\[\]/)?.[1] ?? "")
+  .matchAll(/'([a-z_]+)'/g)].map((m) => m[1]);
+const tsOrder = [...(deletionTs.match(/DELETION_PURGE_ORDER = \[([\s\S]*?)\] as const/)?.[1] ?? "").matchAll(/"([a-z_]+)"/g)]
+  .map((m) => m[1]);
+if (orderSql === "") findings.push("no migration defines nyayos.deletion_purge_order_v1()");
+if (sqlOrder.join(",") !== tsOrder.join(",")) {
+  findings.push(`purge order differs: SQL [${sqlOrder.join(", ")}] vs deletion.ts [${tsOrder.join(", ")}]`);
+}
+for (const k of sqlEdges) {
+  const [table, , , cls] = k.split("|");
+  if (cls === "purge_candidate" && !sqlOrder.includes(table)) findings.push(`purge candidate table ${table} missing from the purge order`);
+}
+
+const summary = `schema-lint: ${sqlTables.size} tables in SQL, ${tsTables.size} in tables.ts, ${notCreated.size} deferred names checked, ${sqlEdges.size} deletion-graph edges (SQL = TS), ${sqlOrder.length}-table purge order (SQL = TS)`;
 if (findings.length) {
   console.error(summary);
   for (const f of findings) console.error(`  ✗ ${f}`);
