@@ -274,7 +274,7 @@
         "eslint": "0 errors (11 pre-existing warnings)",
         "build": "pass",
         "schema_lint": "clean (39 tables)",
-        "migration_smoke": "75/75 PASS with 0001+0002+0003 on disposable local postgres:16-alpine (synthetic data; containers destroyed; no environment); two-session audit concurrency proof PASS"
+        "migration_smoke": "78/78 PASS with 0001-0004 on disposable local postgres:16-alpine (synthetic data; containers destroyed; no environment); audit concurrency matrix (RC/RR/SERIALIZABLE/10x5 burst) PASS x3; deletion authorisation suite 25/25"
       },
       "not_done": "Figma FM-A UI import (package missing); server functions; auth; storage; scan adapter; any database",
       "review": {
@@ -300,6 +300,19 @@
           "D-031…D-036 decisions"
         ],
         "risk": "Medium"
+      },
+      "security_remediation": {
+        "task": "A-033-R",
+        "A-032_critical_open": 0,
+        "C-1": "closed by 0004 (A-033 fix was incomplete)",
+        "C-2": "closed (re-verified)",
+        "A-032_major_open": [
+          "M-2",
+          "M-3",
+          "M-6",
+          "M-7",
+          "M-8 documentation addendum"
+        ]
       }
     }
   ],

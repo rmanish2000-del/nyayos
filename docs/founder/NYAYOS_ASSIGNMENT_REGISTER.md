@@ -520,3 +520,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | No export service exists yet, so exports in the smoke suite are written by the test superuser; the notice is fed by props until the export screens (U16/U17) exist; the SQL reason set omits `malformed_current_version` and `ambiguous_current_version`, which the schema makes impossible (NOT NULL, CHECK ≥ 1, primary keys); Hindi copy is a working translation |
 | **Rollback** | `git revert <A-037 commit>` on the branch, or delete `app/src/domain/staleness.ts`, `app/tests/domain/staleness.test.ts`, `app/src/components/nyayos/stale-output-notice.tsx`, `app/tests/stale-output-notice.test.tsx`, `db/migrations/0003_export_staleness.sql`, remove the `./staleness` export from `app/src/domain/index.ts`, the six `stale_output_*` keys from `copy.ts` and the A-037 section of `db/tests/smoke_0001.sql`. Database (disposable only): `drop function if exists nyayos.export_staleness(uuid);` |
 | **Handoff back to M365 Copilot** | Record A-037 REVIEW; next per A-035 order: Contradiction Registry surfacing, which needs the server layer (W1) and a founder decision on typed conflict kinds |
+
+---
+
+### A-033-R — Close outstanding A-032 critical findings
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-033-R |
+| **Owner / tool** | Claude Code — critical security remediation and regression verification |
+| **Purpose** | Verify at `8489353` whether A-032 C-1 and C-2 are still open; fix what is open; prove closure by adversarial execution |
+| **Gate** | FA-001 (staging only). Deployment, production access and PR merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** Migrations executed only on disposable local Postgres 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 24 September 2026** |
+| **Result** | **C-1 was still open** (forks under REPEATABLE READ and a concurrent READ COMMITTED burst); closed by append-only migration `0004_audit_chain_order.sql` (seq assigned under the advisory lock; unique index on `prev_hash`). **C-2 was already closed** by A-033; proven by 25 adversarial checks |
+| **Evidence** | `db/tests/audit_concurrency_matrix.sh` (baseline: FAIL; after: 4/4 PASS ×3 repeats, 162 rows, 0 forks); `db/tests/deletion_authz_0001.sql` 25/25; smoke 78/78 with `0001`–`0004` (8 `DUP_`, 13 `STALE_`, 3 new `C1R_`); Vitest 162/162; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | Writers at REPEATABLE READ or SERIALIZABLE that race another writer now fail (retryable) instead of forking; future server functions should run audit writes at READ COMMITTED. `request_deletion` remains SECURITY DEFINER by necessity. A non-positive `deletion_undo_window_days` set by an operator in `config_provisional` is not clamped in SQL (operator-only; TS config refuses it). Same-tenant multi-user cases were constructed directly because organisation tenants are reserved in FM-A |
+| **Rollback** | `git revert` the A-033-R commit; disposable databases only: `drop index if exists nyayos.audit_events_prev_hash_unique; revoke usage on sequence nyayos.audit_events_seq_seq from nyayos_service_audit;` then re-run the `tg_audit_before_insert` block from `0001` (reintroduces C-1) |
+| **Handoff back to M365 Copilot** | Record A-033-R REVIEW; A-032 critical count now 0; recommended next: close the remaining A-032 majors that block W1 (M-7 audit atomicity and M-3 deletion purge path, both founder decisions D-031/D-032) before further Wave-0 features |

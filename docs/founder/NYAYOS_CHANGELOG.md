@@ -5,6 +5,27 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-24 — Critical remediation: A-032 C-1 completed, C-2 re-verified (A-033-R)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0004` not applied to any environment.**
+
+### Found
+
+- At `8489353` the audit chain still forked: under a REPEATABLE READ writer (snapshot older than the lock) and under a 10×5 READ COMMITTED burst (the identity default assigned `seq` before the lock, so sequence order drifted from chain order and the verifier falsely reported tampering). A-033's closure of C-1 was incomplete.
+- C-2 was genuinely closed: 25 adversarial checks pass at baseline.
+
+### Added
+
+- `db/migrations/0004_audit_chain_order.sql` — trigger assigns `seq` under the advisory lock; unique index on `audit_events.prev_hash`; USAGE on the sequence for the audit role. Rollback in the header.
+- `db/tests/audit_concurrency_matrix.sh` (RC / RR / SERIALIZABLE pairs + parallel burst) and `db/tests/deletion_authz_0001.sql` (cross-tenant, cross-dispute, role, bypass, deadline, leakage).
+- Smoke suite: 3 `C1R_*` checks (78/78). Registry ID pattern accepts an `-R` suffix.
+
+### Changed
+
+- Registry: A-033-R REVIEW; A-032 and A-033 notes; A-032 report post-fix block records C-1 closed by A-033-R.
+
+---
+
 ## 2026-09-24 — Stale Output Detection V1 (A-037)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed; `0003` not applied to any environment.**

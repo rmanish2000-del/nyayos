@@ -8,16 +8,17 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 6 | 0 | 4 | 27 | 0 | 37 |
+| 6 | 0 | 5 | 27 | 0 | 38 |
 
 ## In flight
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
 | A-030 | FM-A Foundation Build — canonical integration branch feature/fma-foundation-v1 (repository assessment, security foundation, data model, gap report) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
-| A-033 | Critical fix pack for A-030 — C-1, C-2, M-1, M-4, M-5 from the A-032 review | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
+| A-033 | Critical fix pack for A-030 — C-1, C-2, M-1, M-4, M-5 from the A-032 review | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
 | A-036 | Duplicate Detection V1 — hash-level, tenant-scoped, informational (first WAVE0 build item per A-035) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
 | A-037 | Stale Output Detection V1 — read-only version comparison (CURRENT / STALE / UNKNOWN), detection only | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
+| A-033-R | Critical security remediation — close A-032 C-1 (audit chain fork) and verify C-2 (deletion-request authorisation) with adversarial execution | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
 
 ## Ready to start — all inputs canonical, nothing planned outstanding
 
@@ -63,7 +64,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-027 | Print export completion — 13 PDF + 13 PNG from docs/print | ● CANONICAL | Claude Code | — | 2026-09-21 |
 | A-029 | Repository alignment audit; operating system and status established | ● CANONICAL | Claude Code | — | 2026-09-22 |
 | A-031 | Fast Mode specification set — import (FMS V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1, executive deck text extracts) | ● CANONICAL | Claude Chat | — | 2026-09-23 |
-| A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
+| A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-24 |
 | A-034 | Gap analysis V1 — repository inventory compared against the validated backlog (WAVE_0, WAVE_1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 | A-035 | WAVE0 implementation plan V1 — Duplicate Detection, Stale Output Detection, Contradiction Registry surfacing, Missing Material surfacing, Correction Propagation (plan only) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 
@@ -71,14 +72,14 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-033-R | Critical security remediation — close A-032 C-1 (audit chain fork) and verify C-2 (deletion-request authorisation) with adversarial execution | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
 | A-037 | Stale Output Detection V1 — read-only version comparison (CURRENT / STALE / UNKNOWN), detection only | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
 | A-036 | Duplicate Detection V1 — hash-level, tenant-scoped, informational (first WAVE0 build item per A-035) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
+| A-033 | Critical fix pack for A-030 — C-1, C-2, M-1, M-4, M-5 from the A-032 review | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
+| A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-24 |
 | A-035 | WAVE0 implementation plan V1 — Duplicate Detection, Stale Output Detection, Contradiction Registry surfacing, Missing Material surfacing, Correction Propagation (plan only) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 | A-034 | Gap analysis V1 — repository inventory compared against the validated backlog (WAVE_0, WAVE_1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
-| A-033 | Critical fix pack for A-030 — C-1, C-2, M-1, M-4, M-5 from the A-032 review | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
-| A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-23 |
 | A-030 | FM-A Foundation Build — canonical integration branch feature/fma-foundation-v1 (repository assessment, security foundation, data model, gap report) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-23 |
-| A-031 | Fast Mode specification set — import (FMS V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1, executive deck text extracts) | ● CANONICAL | Claude Chat | — | 2026-09-23 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)

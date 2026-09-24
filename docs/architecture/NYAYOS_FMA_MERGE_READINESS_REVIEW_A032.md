@@ -18,8 +18,8 @@
 
 | Finding | Status | Evidence |
 |---|---|---|
-| C-1 audit chain fork | **Closed** — advisory transaction lock in `tg_audit_before_insert` | `db/tests/audit_concurrency_0001.sh`: two sessions, chain intact, 0 forked predecessors; smoke `C1_advisory_lock_in_audit_trigger` |
-| C-2 deletion-request authorisation | **Closed** — INSERT grant and policy removed; `request_deletion()` verifies owner / editor / self and takes the undo window from config; TS mirror | smoke `C2_*` (5 checks); PROBE1 now denied |
+| C-1 audit chain fork | **Closed by A-033-R (24 Sep 2026).** A-033's advisory lock alone was insufficient: at `8489353` the chain still forked under a REPEATABLE READ writer and under a 10×5 READ COMMITTED burst. Migration `0004` assigns `seq` under the lock and adds a unique index on `prev_hash` | `db/tests/audit_concurrency_matrix.sh`: RC, RR, SERIALIZABLE pairs and 10×5 burst, three repeats, 162 rows, 0 forks, 0 out-of-order rows, chain intact; smoke `C1R_*` |
+| C-2 deletion-request authorisation | **Closed** — INSERT grant and policy removed; `request_deletion()` verifies owner / editor / self and takes the undo window from config; TS mirror. **Re-verified by A-033-R** | smoke `C2_*` (5); `db/tests/deletion_authz_0001.sql` 25/25 (cross-tenant, same-tenant cross-dispute, viewer, editor, direct-insert bypasses, server-computed deadline, no existence leakage) |
 | M-1 consent ordering | **Closed** — event-time ordering | `consent.test.ts` order-independence + re-grant + future-withdrawal |
 | M-4 provenance / identity guards | **Closed** — identity keys refused, `created_by` server-set, `ai_extraction` refused (function + CHECK ×10), `source_ref` shape (CHECK ×11) | smoke `M4_*` (7 checks); PROBE4/4b/5b now refused |
 | M-5 manifest typing | **Closed** — explicit `itemType`, typed manifest | `export-deletion.test.ts` event vs proposition |

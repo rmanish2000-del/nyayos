@@ -269,6 +269,14 @@ select 'CHECK M4_fma_origin_inert_constraints_present ' || case when
 -- C-1: the writer trigger takes a transaction-scoped advisory lock (two-session proof: db/tests/audit_concurrency_0001.sh)
 select 'CHECK C1_advisory_lock_in_audit_trigger ' || case when
   position('pg_advisory_xact_lock' in pg_get_functiondef('nyayos.tg_audit_before_insert'::regproc)) > 0 then 'PASS' else 'FAIL' end;
+-- A-033-R (requires 0004): chain position taken under the lock; forks structurally impossible
+select 'CHECK C1R_seq_assigned_under_lock ' || case when
+  position('pg_advisory_xact_lock' in pg_get_functiondef('nyayos.tg_audit_before_insert'::regproc))
+    < position('new.seq := nextval' in pg_get_functiondef('nyayos.tg_audit_before_insert'::regproc)) then 'PASS' else 'FAIL' end;
+select 'CHECK C1R_prev_hash_unique_index ' || case when exists (select 1 from pg_indexes where schemaname = 'nyayos'
+  and indexname = 'audit_events_prev_hash_unique' and indexdef like 'CREATE UNIQUE INDEX%') then 'PASS' else 'FAIL' end;
+select 'CHECK C1R_trigger_not_security_definer ' || case when
+  (select not prosecdef from pg_proc where oid = 'nyayos.tg_audit_before_insert'::regproc) then 'PASS' else 'FAIL' end;
 
 -- ---------------------------------------------------------------- A-036 Duplicate Detection V1 (requires 0002)
 reset role; set role nyayos_service_promote;

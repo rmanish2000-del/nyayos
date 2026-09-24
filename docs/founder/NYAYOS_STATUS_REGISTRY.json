@@ -738,9 +738,9 @@
         "docs/product/NYAYOS_FM0_CONCIERGE_DECK_V1_TEXT.md"
       ],
       "evidence": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
-      "updated": "2026-09-23",
+      "updated": "2026-09-24",
       "superseded_by": null,
-      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open."
+      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open. — 24 Sep 2026: C-1 and C-2 CLOSED with adversarial execution evidence under A-033-R (C-1 required migration 0004). No A-032 critical finding remains; majors M-2, M-3, M-6, M-7 and the M-8 documentation addendum remain open."
     },
     {
       "id": "A-033",
@@ -768,9 +768,9 @@
         "app/src/domain/deletion.ts"
       ],
       "evidence": "db/tests/smoke_0001.sql",
-      "updated": "2026-09-23",
+      "updated": "2026-09-24",
       "superseded_by": null,
-      "notes": "On feature/fma-foundation-v1 (PR #2, still draft). C-1: advisory transaction lock in the audit writer trigger; two-session proof script passes (chain linear, no forked predecessor). C-2: direct INSERT on deletion_requests removed; request_deletion() verifies scope ownership and takes the undo window from config; TS newDeletionRequest mirrors it. M-1: consent event-time ordering (order-independent). M-4: identity keys refused and created_by server-set; ai_extraction origin refused in function and by CHECK on 10 tables; source_ref shape enforced by CHECK on 11 tables. M-5: explicit itemType discriminant on canonical items; manifest heuristic removed. Smoke suite 54/54 PASS on an ephemeral local Postgres 16.14 container (destroyed); the A-032 probes PROBE1/4/4b/5b/7 now fail closed. No deployment; nothing applied to any environment. Out of scope and still open: A-032 m-1 (status column grant) and the M-8 cross-map addendum."
+      "notes": "On feature/fma-foundation-v1 (PR #2, still draft). C-1: advisory transaction lock in the audit writer trigger; two-session proof script passes (chain linear, no forked predecessor). C-2: direct INSERT on deletion_requests removed; request_deletion() verifies scope ownership and takes the undo window from config; TS newDeletionRequest mirrors it. M-1: consent event-time ordering (order-independent). M-4: identity keys refused and created_by server-set; ai_extraction origin refused in function and by CHECK on 10 tables; source_ref shape enforced by CHECK on 11 tables. M-5: explicit itemType discriminant on canonical items; manifest heuristic removed. Smoke suite 54/54 PASS on an ephemeral local Postgres 16.14 container (destroyed); the A-032 probes PROBE1/4/4b/5b/7 now fail closed. No deployment; nothing applied to any environment. Out of scope and still open: A-032 m-1 (status column grant) and the M-8 cross-map addendum. — 24 Sep 2026: A-033-R found the C-1 fix incomplete (forks under REPEATABLE READ and a concurrent READ COMMITTED burst, reproduced at 8489353) and completed it in migration 0004; C-2 re-verified closed."
     },
     {
       "id": "A-034",
@@ -876,6 +876,32 @@
       "updated": "2026-09-24",
       "superseded_by": null,
       "notes": "Baseline 266d96e (A-036, itself REVIEW and therefore not listed as a registry input). Domain staleness.ts: staleOutputRows / summariseStalenessRows / assessOutputStaleness — version comparison only, timestamps never read; missing, malformed, ambiguous, unsupported or out-of-scope data is UNKNOWN, never CURRENT; precedence STALE > UNKNOWN > CURRENT; no mutation. SQL 0003 (append-only, NOT applied to any environment): SECURITY INVOKER STABLE export_staleness(uuid), confined to the export's dispute, zero rows for an invisible or nonexistent export; rollback drop function. UI StaleOutputNotice (informational warning, counts, review link, no regenerate control) and bilingual copy [PROV translation]. Tests: 12 domain + 4 component (Vitest 162/162); 13 STALE_* smoke checks (75/75 with 0001+0002+0003 on disposable Postgres 16.14 containers, destroyed); A-036 DUP_* checks unchanged and passing. No correction propagation, no regeneration."
+    },
+    {
+      "id": "A-033-R",
+      "title": "Critical security remediation — close A-032 C-1 (audit chain fork) and verify C-2 (deletion-request authorisation) with adversarial execution",
+      "type": "security",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — critical security remediation and regression verification (disposable databases only; no deployment, no merge)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-010",
+        "A-029",
+        "A-031",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "db/migrations/0004_audit_chain_order.sql",
+        "db/tests/audit_concurrency_matrix.sh",
+        "db/tests/deletion_authz_0001.sql",
+        "db/tests/smoke_0001.sql"
+      ],
+      "evidence": "db/tests/audit_concurrency_matrix.sh",
+      "updated": "2026-09-24",
+      "superseded_by": null,
+      "notes": "Baseline 8489353. C-1 was NOT fully closed by A-033: the matrix reproduced forks at baseline under REPEATABLE READ (stale snapshot after the lock) and under a 10x5 READ COMMITTED burst (identity default assigned seq before the lock, so seq order drifted from chain order; 2 of 50 burst rows mis-chained and verify falsely reported tampering). Fixed by append-only 0004: trigger assigns seq under the advisory lock; unique index on audit_events.prev_hash; USAGE on the sequence for the audit role; trigger remains SECURITY INVOKER. After fix: RC pair, RR pair (stale writer fails closed with unique_violation), SERIALIZABLE pair (serialization failure) and 10x5 burst all PASS, three repeats, 162 rows, 0 forks, 0 out-of-order rows, chain intact. C-2 already closed by A-033: 25/25 adversarial checks at baseline and after (cross-tenant, same-tenant cross-dispute, viewer, editor, direct-insert by owner/foreign user/service role, undo deadline server-computed from config and not client-writable, no re-scoping or state advance, undo refused after window, foreign vs nonexistent indistinguishable, every stored request authorised and scoped). request_deletion stays SECURITY DEFINER (justified: callers have no INSERT grant) with pinned search_path. Smoke 78/78 with 0001-0004 incl. 8 DUP_ and 13 STALE_; Vitest 162/162; tsc, eslint (0 errors), build, schema-lint clean. Registry ID pattern widened to allow the -R suffix."
     }
   ]
 }
