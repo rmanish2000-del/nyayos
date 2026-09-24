@@ -1,0 +1,391 @@
+{
+  "contract": "nyayos-audit-v1",
+  "separator": "U+2016",
+  "note": "Synthetic golden vectors for the audit hash contract (A-038). Expected values were computed independently by PostgreSQL 16.14 (db/migrations/0005) and by app/src/domain/audit.ts and matched byte for byte before being frozen. Both runtimes are tested against this file.",
+  "vectors": [
+    {
+      "name": "basic_all_fields",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000001",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": "50000000-0000-4000-8000-000000000001",
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": "60000000-0000-4000-8000-000000000001",
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "userAgentClass": "mobile",
+        "metadata": {
+          "proposal_id": "p-1",
+          "count": 3,
+          "purpose_checked": true
+        }
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000001\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",\"50000000-0000-4000-8000-000000000001\",\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",\"60000000-0000-4000-8000-000000000001\",\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"mobile\",{\"count\":3,\"proposal_id\":\"p-1\",\"purpose_checked\":true}]",
+        "rowHash": "0b888dfefbf5b7e353182e45f1010b53c9dffe2e57a71d154802bc3076694428"
+      }
+    },
+    {
+      "name": "nulls_and_empty_metadata",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000002",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "system",
+        "actorId": "system",
+        "onBehalfOf": null,
+        "tenantId": null,
+        "disputeId": null,
+        "grantId": null,
+        "action": "auth.sign_in",
+        "resourceType": "session",
+        "resourceId": null,
+        "purpose": null,
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {}
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000002\",\"2026-09-24T10:00:00.000000Z\",\"system\",\"system\",null,null,null,null,\"auth.sign_in\",\"session\",null,null,\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{}]",
+        "rowHash": "0e446330b5768cf0e39350690339bd8ab895a2208133d672a07334033c71beb8"
+      }
+    },
+    {
+      "name": "hindi_unicode_emoji",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000003",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "दस्तावेज़",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {
+          "reason_code": "हिंदी — विवाद फ़ाइल 📄",
+          "notice_language": "hi"
+        }
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000003\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"दस्तावेज़\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{\"notice_language\":\"hi\",\"reason_code\":\"हिंदी — विवाद फ़ाइल 📄\"}]",
+        "rowHash": "69ff94c94b6fc2d97119bf938a741358600aa2857f33d4d81b6aece4799f19fa"
+      }
+    },
+    {
+      "name": "escapes_and_control_characters",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000004",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {
+          "reason_code": "quote \" backslash \\ newline \n tab \t cr \r bs \b ff \f ctl \u0001 del  ls   end"
+        }
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000004\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{\"reason_code\":\"quote \\\" backslash \\\\ newline \\n tab \\t cr \\r bs \\b ff \\f ctl \\u0001 del  ls   end\"}]",
+        "rowHash": "6546923103291583b5f5efde4a56a1c9bf82e9b13e0df07fb1ba772cceab7e72"
+      }
+    },
+    {
+      "name": "timestamp_offset_normalised",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000005",
+        "occurredAt": "2026-09-24T15:30:00.123456+05:30",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {}
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000005\",\"2026-09-24T10:00:00.123456Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{}]",
+        "rowHash": "95ac412b45c67a9646701ba001a661d87bffbcb47a1714fd3446655a0310e5c3"
+      }
+    },
+    {
+      "name": "timestamp_no_fraction",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000006",
+        "occurredAt": "2026-01-01T00:00:00Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {}
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000006\",\"2026-01-01T00:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{}]",
+        "rowHash": "6e39f53a1d9a4e2f4e4ac7254c37f45b48dd852dd0feb366cb1760c477bb8c7c"
+      }
+    },
+    {
+      "name": "timestamp_day_rollover_negative_offset",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000007",
+        "occurredAt": "2026-02-28T23:59:59.5-01:00",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {}
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000007\",\"2026-03-01T00:59:59.500000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{}]",
+        "rowHash": "a29c2a000ac46a2fc5ae0dc4aad5132b670984341680b891fb6d1898b820bb00"
+      }
+    },
+    {
+      "name": "uppercase_uuid_normalised",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "3F2504E0-4F89-41D3-9A0C-0305E82C3301",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "1000000A-0000-4000-8000-00000000000B",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {}
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"3f2504e0-4f89-41d3-9a0c-0305e82c3301\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"1000000a-0000-4000-8000-00000000000b\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{}]",
+        "rowHash": "0a4d7a76757db567699852abc1bd90ce7595397863bb1d45de83e5b89f0bccc8"
+      }
+    },
+    {
+      "name": "integer_metadata_bounds",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000009",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {
+          "count": 9007199254740991,
+          "version": -42,
+          "size_bytes": 0,
+          "purpose_checked": false
+        }
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000009\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{\"count\":9007199254740991,\"purpose_checked\":false,\"size_bytes\":0,\"version\":-42}]",
+        "rowHash": "087d129847876d9212eb59e668fe606a727080344ea7b355747decfbc9a8b4a4"
+      }
+    },
+    {
+      "name": "metadata_key_order",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000010",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "req-vector-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {
+          "version": 2,
+          "target_type": "event",
+          "target_id": "e-1",
+          "correction_id": "c-1",
+          "proposal_id": "p-1"
+        }
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000010\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"req-vector-1\",null,\"mobile\",{\"correction_id\":\"c-1\",\"proposal_id\":\"p-1\",\"target_id\":\"e-1\",\"target_type\":\"event\",\"version\":2}]",
+        "rowHash": "a4db099349eb92dcb9ac63c0f824d3264297a81e4ec6e25105e39f15c9611ae7"
+      }
+    },
+    {
+      "name": "chain_1_genesis",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000011",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "dispute.created",
+        "resourceType": "dispute",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "chain-1",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {}
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000011\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"dispute.created\",\"dispute\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"chain-1\",null,\"mobile\",{}]",
+        "rowHash": "456db03196dfd369c77e8c1c09b58d448468e56558ac0779267b7fe69b91c2c3"
+      }
+    },
+    {
+      "name": "chain_2",
+      "prevHash": "456db03196dfd369c77e8c1c09b58d448468e56558ac0779267b7fe69b91c2c3",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000012",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "proposal.created",
+        "resourceType": "proposal",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "chain-2",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {}
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000012\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"proposal.created\",\"proposal\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"chain-2\",null,\"mobile\",{}]",
+        "rowHash": "1e6b3334226e10f52d0d007fadc7ad88aa02c8d7b0f6a237e5f4ab70dac4abc4"
+      }
+    },
+    {
+      "name": "chain_3",
+      "prevHash": "1e6b3334226e10f52d0d007fadc7ad88aa02c8d7b0f6a237e5f4ab70dac4abc4",
+      "input": {
+        "id": "30000000-0000-4000-8000-000000000013",
+        "occurredAt": "2026-09-24T10:00:00.000000Z",
+        "actorType": "user",
+        "actorId": "40000000-0000-4000-8000-000000000001",
+        "onBehalfOf": null,
+        "tenantId": "10000000-0000-4000-8000-000000000001",
+        "disputeId": "20000000-0000-4000-8000-000000000001",
+        "grantId": null,
+        "action": "proposal.accepted",
+        "resourceType": "proposal",
+        "resourceId": "20000000-0000-4000-8000-000000000001",
+        "purpose": "storage",
+        "outcome": "success",
+        "severity": "info",
+        "requestId": "chain-3",
+        "ipHash": null,
+        "userAgentClass": "mobile",
+        "metadata": {}
+      },
+      "expected": {
+        "canonical": "[\"nyayos-audit-v1\",\"30000000-0000-4000-8000-000000000013\",\"2026-09-24T10:00:00.000000Z\",\"user\",\"40000000-0000-4000-8000-000000000001\",null,\"10000000-0000-4000-8000-000000000001\",\"20000000-0000-4000-8000-000000000001\",null,\"proposal.accepted\",\"proposal\",\"20000000-0000-4000-8000-000000000001\",\"storage\",\"success\",\"info\",\"chain-3\",null,\"mobile\",{}]",
+        "rowHash": "2082f99c8698019759bb83588f91caca022c1d0caa16e102d65fbb23d52d829d"
+      }
+    }
+  ]
+}

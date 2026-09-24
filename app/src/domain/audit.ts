@@ -2,7 +2,7 @@
  * Append-only, hash-chained audit (SDAS §17; Scope Sheet F05; Architecture Deck
  * slide 14).
  *
- *   row_hash = SHA-256(prev_hash ‖ canonical_row)
+ *   row_hash = SHA-256(prev_hash ‖ canonical_row) — contract `nyayos-audit-v1`, see below.
  *
  * Writers: a single helper using the `audit_writer` service identity; no client
  * path; no UPDATE/DELETE grants to any role. Prohibited in audit: content, AI
@@ -117,20 +117,161 @@ export function assertContentFree(metadata: Record<string, unknown>): void {
   }
 }
 
-/** Deterministic serialisation: keys sorted, no whitespace, hashes excluded. */
+/**
+ * Audit hash contract `nyayos-audit-v1` (A-038; closes A-032 M-2). The SQL twin is
+ * `nyayos.audit_canonical_v1` / `nyayos.audit_row_hash_v1` in
+ * `db/migrations/0005_audit_contract_and_atomicity.sql`; both must produce byte-identical
+ * output, which `db/tests/audit_hash_vectors_v1.json` pins for both runtimes.
+ *
+ *   canonical = compact JSON array, no whitespace:
+ *     ["nyayos-audit-v1", id, occurredAt, actorType, actorId, onBehalfOf, tenantId, disputeId,
+ *      grantId, action, resourceType, resourceId, purpose, outcome, severity, requestId,
+ *      ipHash, userAgentClass, metadata]
+ *   - text: JSON string (escapes `"` `\` and U+0000–U+001F only; `\b \f \n \r \t` short forms,
+ *     others `\u00xx` lowercase); non-ASCII emitted as UTF-8. NUL and lone surrogates rejected.
+ *   - absent value: JSON `null` (never the empty string).
+ *   - id, onBehalfOf, tenantId, disputeId, grantId: UUID, rendered lowercase.
+ *   - occurredAt: UTC, `YYYY-MM-DDTHH:MM:SS.ffffffZ` (exactly 6 fractional digits; any input
+ *     offset is converted; more than 6 input digits is rejected, never rounded).
+ *   - metadata: JSON object, keys sorted by code point; values string, boolean, or a safe
+ *     integer (|n| ≤ 2^53 − 1) written in plain decimal. Anything else is rejected.
+ *   row_hash = lowercase hex SHA-256 of UTF-8( prev_hash ‖ canonical ), where ‖ is U+2016 and
+ *   prev_hash is 64 lowercase hex characters (genesis: 64 zeros).
+ */
+export const AUDIT_HASH_CONTRACT = "nyayos-audit-v1" as const;
+export const AUDIT_HASH_SEPARATOR = "\u2016";
+
+const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+const HASH_RE = /^[0-9a-f]{64}$/;
+const TIMESTAMP_RE =
+  /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,6}))?(Z|[+-]\d{2}:\d{2})$/;
+
+const pad = (n: number, width: number) => String(n).padStart(width, "0");
+
+/** Convert an ISO-8601 timestamp with an offset to the contract's UTC microsecond form. */
+export function normalizeAuditTimestamp(value: string): string {
+  const m = TIMESTAMP_RE.exec(value);
+  if (!m) {
+    throw new Error(
+      `audit timestamp ${JSON.stringify(value)} must be ISO-8601 with an offset and at most 6 fractional digits`,
+    );
+  }
+  const [year, month, day, hour, minute, second] = m.slice(1, 7).map(Number) as [
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+  ];
+  const fraction = m[7] ?? "";
+  const offset = m[8]!;
+  const local = new Date(0);
+  local.setUTCFullYear(year, month - 1, day);
+  local.setUTCHours(hour, minute, second, 0);
+  if (
+    local.getUTCFullYear() !== year ||
+    local.getUTCMonth() !== month - 1 ||
+    local.getUTCDate() !== day ||
+    local.getUTCHours() !== hour ||
+    local.getUTCMinutes() !== minute ||
+    local.getUTCSeconds() !== second
+  ) {
+    throw new Error(`audit timestamp ${JSON.stringify(value)} is not a valid calendar time`);
+  }
+  let offsetMinutes = 0;
+  if (offset !== "Z") {
+    const oh = Number(offset.slice(1, 3));
+    const om = Number(offset.slice(4, 6));
+    if (oh > 23 || om > 59) throw new Error(`audit timestamp offset ${offset} is invalid`);
+    offsetMinutes = (offset.startsWith("-") ? -1 : 1) * (oh * 60 + om);
+  }
+  const utc = new Date(local.getTime() - offsetMinutes * 60_000);
+  const y = utc.getUTCFullYear();
+  if (y < 1000 || y > 9999) throw new Error(`audit timestamp year ${y} is outside 1000–9999`);
+  return (
+    `${pad(y, 4)}-${pad(utc.getUTCMonth() + 1, 2)}-${pad(utc.getUTCDate(), 2)}` +
+    `T${pad(utc.getUTCHours(), 2)}:${pad(utc.getUTCMinutes(), 2)}:${pad(utc.getUTCSeconds(), 2)}` +
+    `.${fraction.padEnd(6, "0")}Z`
+  );
+}
+
+function checkText(value: string, field: string): string {
+  for (let i = 0; i < value.length; i++) {
+    const c = value.charCodeAt(i);
+    if (c === 0)
+      throw new Error(`audit field ${field} contains NUL, which PostgreSQL text cannot store`);
+    if (c >= 0xd800 && c <= 0xdbff) {
+      const next = value.charCodeAt(i + 1);
+      if (!(next >= 0xdc00 && next <= 0xdfff))
+        throw new Error(`audit field ${field} contains a lone surrogate`);
+      i++;
+    } else if (c >= 0xdc00 && c <= 0xdfff) {
+      throw new Error(`audit field ${field} contains a lone surrogate`);
+    }
+  }
+  return value;
+}
+
+const text = (v: string, field: string) => JSON.stringify(checkText(v, field));
+const optionalText = (v: string | null, field: string) => (v === null ? "null" : text(v, field));
+function uuid(v: string | null, field: string, nullable: boolean): string {
+  if (v === null) {
+    if (nullable) return "null";
+    throw new Error(`audit field ${field} is required`);
+  }
+  if (!UUID_RE.test(v)) throw new Error(`audit field ${field} must be a UUID`);
+  return JSON.stringify(v.toLowerCase());
+}
+
+function metadataJson(metadata: Record<string, string | number | boolean>): string {
+  const keys = Object.keys(metadata).sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+  const parts = keys.map((k) => {
+    const v = metadata[k];
+    let rendered: string;
+    if (typeof v === "string") rendered = text(v, `metadata.${k}`);
+    else if (typeof v === "boolean") rendered = v ? "true" : "false";
+    else if (typeof v === "number" && Number.isSafeInteger(v)) rendered = String(v === 0 ? 0 : v);
+    else throw new Error(`audit metadata ${k} must be a string, boolean or safe integer`);
+    return `${text(k, "metadata key")}:${rendered}`;
+  });
+  return `{${parts.join(",")}}`;
+}
+
+/** Contract `nyayos-audit-v1` canonical string. Throws on any value the contract cannot represent. */
 export function canonicalizeAuditRow(input: AuditEventInput): string {
-  const { metadata, ...rest } = input;
-  const sortedMeta = Object.fromEntries(
-    Object.entries(metadata).sort(([a], [b]) => a.localeCompare(b)),
+  return (
+    "[" +
+    [
+      JSON.stringify(AUDIT_HASH_CONTRACT),
+      uuid(input.id, "id", false),
+      JSON.stringify(normalizeAuditTimestamp(input.occurredAt)),
+      text(input.actorType, "actorType"),
+      text(input.actorId, "actorId"),
+      uuid(input.onBehalfOf, "onBehalfOf", true),
+      uuid(input.tenantId, "tenantId", true),
+      uuid(input.disputeId, "disputeId", true),
+      uuid(input.grantId, "grantId", true),
+      text(input.action, "action"),
+      text(input.resourceType, "resourceType"),
+      optionalText(input.resourceId, "resourceId"),
+      optionalText(input.purpose, "purpose"),
+      text(input.outcome, "outcome"),
+      text(input.severity, "severity"),
+      text(input.requestId, "requestId"),
+      optionalText(input.ipHash, "ipHash"),
+      text(input.userAgentClass, "userAgentClass"),
+      metadataJson(input.metadata),
+    ].join(",") +
+    "]"
   );
-  const ordered = Object.fromEntries(
-    Object.entries({ ...rest, metadata: sortedMeta }).sort(([a], [b]) => a.localeCompare(b)),
-  );
-  return JSON.stringify(ordered);
 }
 
 export async function computeRowHash(prevHash: string, input: AuditEventInput): Promise<string> {
-  const bytes = new TextEncoder().encode(prevHash + "‖" + canonicalizeAuditRow(input));
+  if (!HASH_RE.test(prevHash)) throw new Error("prev_hash must be 64 lowercase hex characters");
+  const bytes = new TextEncoder().encode(
+    prevHash + AUDIT_HASH_SEPARATOR + canonicalizeAuditRow(input),
+  );
   return sha256Hex(bytes);
 }
 
@@ -168,6 +309,38 @@ export async function verifyAuditChain(chain: readonly AuditEvent[]): Promise<Ch
     prev = row.rowHash;
   }
   return { ok: true, length: chain.length };
+}
+
+/**
+ * Map a row as PostgreSQL returns it (`row_to_json(nyayos.audit_events)`, any session time
+ * zone) to an AuditEvent, so the TypeScript verifier can check a chain the SQL trigger wrote.
+ */
+export function fromSqlAuditRow(row: unknown): AuditEvent {
+  if (typeof row !== "object" || row === null) throw new Error("audit row must be an object");
+  const r = row as Record<string, unknown>;
+  const lower = (v: unknown) => (typeof v === "string" ? v.toLowerCase() : v);
+  return AuditEvent.parse({
+    id: lower(r["id"]),
+    occurredAt: normalizeAuditTimestamp(String(r["occurred_at"])),
+    actorType: r["actor_type"],
+    actorId: r["actor_id"],
+    onBehalfOf: lower(r["on_behalf_of"]),
+    tenantId: lower(r["tenant_id"]),
+    disputeId: lower(r["dispute_id"]),
+    grantId: lower(r["grant_id"]),
+    action: r["action"],
+    resourceType: r["resource_type"],
+    resourceId: r["resource_id"],
+    purpose: r["purpose"],
+    outcome: r["outcome"],
+    severity: r["severity"],
+    requestId: r["request_id"],
+    ipHash: r["ip_hash"],
+    userAgentClass: r["user_agent_class"],
+    metadata: r["metadata"],
+    prevHash: r["prev_hash"],
+    rowHash: r["row_hash"],
+  });
 }
 
 /** Weekly manual anchor (F05, `ff_audit_anchor_auto` off): the last row hash of the period. */

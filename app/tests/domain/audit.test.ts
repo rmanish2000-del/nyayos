@@ -19,13 +19,13 @@ const writer = serviceContext("audit_writer", { now: NOW });
 
 function input(i: number, actorId = "u1"): AuditEventInput {
   return {
-    id: `a${i}`,
+    id: `00000000-0000-4000-8000-${String(i).padStart(12, "0")}`,
     occurredAt: NOW,
     actorType: "user",
     actorId,
     onBehalfOf: null,
-    tenantId: "t1",
-    disputeId: "d1",
+    tenantId: "10000000-0000-4000-8000-000000000001",
+    disputeId: "20000000-0000-4000-8000-000000000001",
     grantId: null,
     action: "proposal.accepted",
     resourceType: "proposal",

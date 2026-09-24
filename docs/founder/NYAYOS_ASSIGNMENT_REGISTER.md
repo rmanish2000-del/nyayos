@@ -538,3 +538,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Writers at REPEATABLE READ or SERIALIZABLE that race another writer now fail (retryable) instead of forking; future server functions should run audit writes at READ COMMITTED. `request_deletion` remains SECURITY DEFINER by necessity. A non-positive `deletion_undo_window_days` set by an operator in `config_provisional` is not clamped in SQL (operator-only; TS config refuses it). Same-tenant multi-user cases were constructed directly because organisation tenants are reserved in FM-A |
 | **Rollback** | `git revert` the A-033-R commit; disposable databases only: `drop index if exists nyayos.audit_events_prev_hash_unique; revoke usage on sequence nyayos.audit_events_seq_seq from nyayos_service_audit;` then re-run the `tg_audit_before_insert` block from `0001` (reintroduces C-1) |
 | **Handoff back to M365 Copilot** | Record A-033-R REVIEW; A-032 critical count now 0; recommended next: close the remaining A-032 majors that block W1 (M-7 audit atomicity and M-3 deletion purge path, both founder decisions D-031/D-032) before further Wave-0 features |
+
+---
+
+### A-038 — Audit atomicity and hash interoperability fix pack
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-038 |
+| **Owner / tool** | Claude Code — security and data-integrity implementation |
+| **Purpose** | Close A-032 M-2 (TypeScript and SQL audit hashes not interoperable) and M-7 (audit not atomic with canonical writes) under founder decisions D-031 (commit or roll back together) and D-032 (no purge now) |
+| **Gate** | FA-001 (staging only). Deployment, production access and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** `0005` executed only on disposable local PostgreSQL 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 24 September 2026** |
+| **Result** | Migration `0005_audit_contract_and_atomicity.sql`: contract functions `audit_canonical_v1`, `audit_row_hash_v1`; trigger hashes through them (A-033-R locking unchanged) and validates metadata value types; `verify_audit_chain` on the same contract; `audit_append_internal` (no client grant) called inside `sign_up_personal_tenant`, `create_dispute`, `propose_change`, `decide_proposal`, `request_deletion`. `app/src/domain/audit.ts`: same contract, `normalizeAuditTimestamp`, `fromSqlAuditRow` |
+| **Evidence** | Golden vectors 13/13 in both runtimes (frozen after independent byte-for-byte agreement); TypeScript verifies a 10-row PostgreSQL-written chain; atomicity 21/21; concurrency matrix 5/5 (incl. server-function burst); smoke 79/79; deletion authz 25/25; Vitest 185/185; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | `0005` requires an empty `audit_events` (no environment holds rows; records are never rewritten). Server-side audit rows carry `ip_hash = null` and `user_agent_class = 'unknown'` until the server layer passes them. Request id and principal come from connection settings, which assumes clients never hold raw database sessions (existing architecture assumption). Audit writes serialise on one advisory lock, which bounds write throughput |
+| **Rollback** | `git revert` the A-038 commit; disposable databases only: re-run the server-function and `verify_audit_chain` blocks from `0001` and the trigger block from `0004`, then drop the five contract/writer functions listed in the `0005` header (reopens M-2 and M-7) |
+| **Handoff back to M365 Copilot** | Record A-038 REVIEW; A-032 critical 0; open majors M-3 (purge path, D-032), M-6 (deletion scope graph), M-8 (documentation addendum) |

@@ -5,6 +5,22 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-24 — Audit hash contract and audit atomicity: A-032 M-2 and M-7 closed (A-038)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0005` not applied to any environment.**
+
+### Added
+
+- `db/migrations/0005_audit_contract_and_atomicity.sql` — audit hash contract `nyayos-audit-v1` (shared with `app/src/domain/audit.ts`); the five single-writer server functions write their audit event in the same transaction (D-031); `verify_audit_chain` on the same contract. Removes a latent defect: the old SQL serialisation rendered `occurred_at` in the session time zone.
+- Golden vectors `db/tests/audit_hash_vectors_v1.json` (13; checked by SQL and Vitest), `audit_hash_vectors_v1.sql`, `audit_atomicity_0001.sql` (fault injection), `audit_interop_export.sql` and the PostgreSQL-written chain fixture verified by TypeScript. Concurrency matrix gains a server-function burst.
+
+### Changed
+
+- `audit.ts`: new canonicalisation, `normalizeAuditTimestamp`, `fromSqlAuditRow`; audit test fixtures use UUIDs. Smoke check `my_activity_own_rows_only` now asserts ownership rather than a fixed row count; new `A038_server_writes_are_audited`. Deletion-authz invariant count scoped to its own users.
+- Registry A-038 REVIEW; A-032 report post-fix block records M-2 and M-7 closed.
+
+---
+
 ## 2026-09-24 — Critical remediation: A-032 C-1 completed, C-2 re-verified (A-033-R)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0004` not applied to any environment.**

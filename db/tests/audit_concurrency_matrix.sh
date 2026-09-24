@@ -50,4 +50,13 @@ wait
 echo "  burst: rows committed $(q "select count(*) from nyayos.audit_events where request_id like 'burst-%'")/50"
 check "parallel_burst_10x5"
 
+# Server-function burst (A-038): 5 users concurrently sign up and create 3 disputes each. Every
+# canonical write carries its audit event in the same transaction; the chain must stay linear.
+for i in 1 2 3 4 5; do
+  ( docker exec "$C" psql -U postgres -q -v ON_ERROR_STOP=1 -c "set role nyayos_authenticated; set nyayos.principal_id = 'b5b5b5b5-0000-4000-8000-00000000000$i'; set nyayos.request_id = 'sfburst-$i'; select nyayos.create_dispute(nyayos.sign_up_personal_tenant('Synthetic burst $i', 'en'), 'Synthetic burst dispute a'); select nyayos.create_dispute(nyayos.sign_up_personal_tenant('Synthetic burst $i', 'en'), 'Synthetic burst dispute b'); select nyayos.create_dispute(nyayos.sign_up_personal_tenant('Synthetic burst $i', 'en'), 'Synthetic burst dispute c');" >/dev/null 2>&1 ) &
+done
+wait
+echo "  server-function burst: audit events $(q "select count(*) from nyayos.audit_events where request_id like 'sfburst-%'")/20, disputes $(q "select count(*) from nyayos.disputes where title like 'Synthetic burst dispute %'")/15"
+check "server_function_burst_5x4"
+
 exit $FAILED

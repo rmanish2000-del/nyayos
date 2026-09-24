@@ -154,7 +154,13 @@ do $$ begin
   exception when insufficient_privilege then raise notice 'CHECK user_cannot_write_audit PASS';
   end;
 end $$;
-select 'CHECK my_activity_own_rows_only ' || case when (select count(*) from nyayos.audit_events) = 2 then 'PASS' else 'FAIL' end;
+select 'CHECK my_activity_own_rows_only ' || case when
+  (select count(*) from nyayos.audit_events) >= 2
+  and (select bool_and(actor_type = 'user' and actor_id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa') from nyayos.audit_events)
+  and (select count(*) from nyayos.audit_events where request_id in ('req-10', 'req-11')) = 2 then 'PASS' else 'FAIL' end;
+select 'CHECK A038_server_writes_are_audited ' || case when
+  (select count(*) from nyayos.audit_events where action in ('membership.added', 'dispute.created', 'proposal.created', 'proposal.accepted', 'correction.created')) >= 5
+  then 'PASS' else 'FAIL' end;
 
 -- tamper detection: superuser bypasses grants; trigger still blocks; disable trigger to simulate a raw tamper
 reset role;

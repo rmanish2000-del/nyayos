@@ -164,7 +164,8 @@ select 'CHECK C2_every_request_authorised_and_scoped ' || case when not exists (
         where d.id = r.scope_id and d.tenant_id = r.tenant_id and dr.user_id = r.requested_by and dr.dispute_role in ('dispute_owner', 'dispute_editor')))
     or (r.scope_type = 'account' and r.scope_id = r.requested_by and exists (select 1 from nyayos.tenant_memberships m
         where m.tenant_id = r.tenant_id and m.user_id = r.requested_by))
-  )) and (select count(*) from nyayos.deletion_requests) = 3 then 'PASS' else 'FAIL' end;
+  )) and (select count(*) from nyayos.deletion_requests
+        where requested_by in ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee')) = 3 then 'PASS' else 'FAIL' end;
 select 'CHECK C2_definer_function_search_path_pinned ' || case when
   (select prosecdef and proconfig::text like '%search_path=pg_catalog, nyayos%' from pg_proc
     where oid = 'nyayos.request_deletion(nyayos.deletion_scope_type, uuid)'::regprocedure) then 'PASS' else 'FAIL' end;
