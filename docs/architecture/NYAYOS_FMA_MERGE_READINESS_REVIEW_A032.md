@@ -25,7 +25,8 @@
 | M-5 manifest typing | **Closed** — explicit `itemType`, typed manifest | `export-deletion.test.ts` event vs proposition |
 | M-2 TS/SQL audit hashes not interoperable | **Closed by A-038 (24 Sep 2026)** — one contract `nyayos-audit-v1` in `0005` and `audit.ts`; the SQL session-TimeZone dependence of `occurred_at` also removed | 13 golden vectors matched byte for byte by both runtimes (`db/tests/audit_hash_vectors_v1.*`, `audit-interop.test.ts`); TypeScript verifies a PostgreSQL-written chain |
 | M-7 audit not atomic with canonical writes | **Closed by A-038 (24 Sep 2026)**, per D-031 — server functions write their audit event in the same transaction; internal writer has no client grant | `db/tests/audit_atomicity_0001.sql` 21/21 incl. fault-injected audit failure rolling back canonical writes and failed canonical writes leaving no audit row |
-| m-1, M-8 (doc), M-3, M-6 | **Open** — outside the A-033, A-033-R and A-038 scopes | see §8–§9 |
+| M-6 deletion enumeration incomplete | **Closed by A-039 (24 Sep 2026)** — explicit graph `deletion_graph_v1()` (every table decided; TS twin with lint parity) and read-only `enumerate_deletion_scope()`; documents, versions and quarantine uploads covered; shared or ambiguous records blocked | `db/tests/deletion_scope_0001.sql` 28/28 incl. catalogue-driven completeness oracle, isolation and zero-mutation fingerprint |
+| m-1, M-8 (doc), M-3 | **Open** — outside the A-033, A-033-R, A-038 and A-039 scopes (M-3 purge deferred by D-032) | see §8–§9 |
 
 **Updated risk rating: Medium.** **Updated recommendation: SAFE TO MERGE** as the FM-A foundation once the founder either applies m-1 (one grant line) and the M-8 cross-map addendum, or accepts them as tracked follow-ups; D-031…D-036 remain decisions to take before wave W1. Sections 1–11 below are the original review as issued and are unchanged.
 

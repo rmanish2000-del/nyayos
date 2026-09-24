@@ -317,22 +317,533 @@ export function allowlistCovers(
   return missing.length === 0 ? { ok: true } : { ok: false, missing };
 }
 
-/** Tables the deletion worker enumerates for a scope (A24). Retained tables are never touched. */
+/**
+ * Tables the deletion worker may act on for a scope (A24): edges classified purge_candidate or
+ * configuration_controlled in DELETION_GRAPH. Account scope also applies every dispute-scope edge
+ * to each dispute the account owns. Retained, outside-scope and excluded tables are never returned.
+ * The authoritative record-level answer is nyayos.enumerate_deletion_scope().
+ */
 export function tablesForScope(scopeType: DeletionRequest["scopeType"]): string[] {
-  const columns: Record<DeletionRequest["scopeType"], string[]> = {
-    document: ["document_id", "document_version_id"],
-    dispute: ["dispute_id", "document_id", "document_version_id", "export_id"],
-    account: [
-      "tenant_id",
-      "dispute_id",
-      "document_id",
-      "document_version_id",
-      "export_id",
-      "user_id",
-      "principal_user_id",
-    ],
-  };
-  return DELETION_ALLOWLIST.filter(
-    (x) => !x.retained && x.scopeColumn !== null && columns[scopeType].includes(x.scopeColumn),
-  ).map((x) => x.table);
+  const scopes: DeletionGraphScope[] =
+    scopeType === "account" ? ["account", "dispute"] : [scopeType];
+  const actionable = new Set<DeletionClassification>([
+    "purge_candidate",
+    "configuration_controlled",
+  ]);
+  return [
+    ...new Set(
+      DELETION_GRAPH.filter(
+        (x) => scopes.includes(x.scope) && actionable.has(x.classification),
+      ).map((x) => x.table),
+    ),
+  ].sort();
+}
+
+// ---------------------------------------------------------------------------
+// Deletion scope graph (A-039; closes A-032 M-6). Twin of nyayos.deletion_graph_v1() in
+// db/migrations/0006_deletion_scope_graph.sql; scripts/db/schema-lint.mjs enforces parity and that
+// every table has at least one decision. Enumeration itself is nyayos.enumerate_deletion_scope().
+// ---------------------------------------------------------------------------
+
+export const DELETION_CLASSIFICATIONS = [
+  "purge_candidate",
+  "retained_audit_metadata",
+  "retained_legal_hold",
+  "blocked_active_reference",
+  "outside_request_scope",
+  "configuration_controlled",
+] as const;
+export type DeletionClassification = (typeof DELETION_CLASSIFICATIONS)[number];
+
+export type DeletionGraphScope = DeletionRequest["scopeType"] | "none";
+
+export interface DeletionGraphEdge {
+  readonly table: string;
+  readonly scope: DeletionGraphScope;
+  readonly edge: string;
+  readonly classification: DeletionClassification;
+  readonly reason: string;
+}
+
+const e = (
+  table: string,
+  scope: DeletionGraphScope,
+  edge: string,
+  classification: DeletionClassification,
+  reason: string,
+): DeletionGraphEdge => ({ table, scope, edge, classification, reason });
+
+export const DELETION_GRAPH: readonly DeletionGraphEdge[] = [
+  e("disputes", "dispute", "root", "purge_candidate", "the dispute being deleted"),
+  e("dispute_roles", "dispute", "dispute_id", "purge_candidate", "membership of the dispute"),
+  e(
+    "dispute_statements",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "dispute narrative and intake answers",
+  ),
+  e(
+    "entities",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "entity_source_forms",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "events",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "date_assertions",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "propositions",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "evidence_items",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "evidence_relations",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "contradictions",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "missing_evidence",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "issues",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "next_steps",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "canonical item; blocked if referenced from another dispute",
+  ),
+  e(
+    "proposals",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "single-writer proposals of the dispute",
+  ),
+  e(
+    "user_corrections",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "version history of the dispute",
+  ),
+  e(
+    "quarantine_uploads",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "uploads into the dispute, any uploader",
+  ),
+  e(
+    "documents",
+    "dispute",
+    "dispute_id",
+    "purge_candidate",
+    "documents of the dispute; blocked if referenced from another dispute",
+  ),
+  e(
+    "document_versions",
+    "dispute",
+    "documents.id",
+    "purge_candidate",
+    "write-once originals of in-scope documents",
+  ),
+  e(
+    "document_locations",
+    "dispute",
+    "document_versions.id",
+    "purge_candidate",
+    "page links on in-scope versions",
+  ),
+  e(
+    "annotations",
+    "dispute",
+    "document_versions.id",
+    "purge_candidate",
+    "annotations on in-scope versions",
+  ),
+  e(
+    "custody_events",
+    "dispute",
+    "documents.id",
+    "purge_candidate",
+    "custody chain of in-scope documents",
+  ),
+  e(
+    "jobs",
+    "dispute",
+    "quarantine_uploads.id (payload_ref)",
+    "purge_candidate",
+    "scan jobs of in-scope uploads; blocked if tenant differs",
+  ),
+  e("exports", "dispute", "dispute_id", "purge_candidate", "exports of the dispute"),
+  e(
+    "export_manifests",
+    "dispute",
+    "exports.id",
+    "purge_candidate",
+    "manifests of in-scope exports",
+  ),
+  e(
+    "consents",
+    "dispute",
+    "scope_id (scope_type = dispute)",
+    "configuration_controlled",
+    "consent history retention pending counsel (OL-02)",
+  ),
+  e(
+    "audit_events",
+    "dispute",
+    "dispute_id",
+    "retained_audit_metadata",
+    "append-only, content-free audit",
+  ),
+  e(
+    "deletion_requests",
+    "dispute",
+    "scope_id",
+    "retained_audit_metadata",
+    "deletion workflow record, content-free",
+  ),
+  e(
+    "retention_records",
+    "dispute",
+    "object_id",
+    "retained_audit_metadata",
+    "retention and verification record",
+  ),
+  e(
+    "deletion_ledger",
+    "dispute",
+    "scope_id",
+    "retained_audit_metadata",
+    "content-free tombstone (OL-03 interim)",
+  ),
+  e(
+    "documents",
+    "document",
+    "root",
+    "purge_candidate",
+    "the document being deleted; blocked per document_reference_policy or cross-dispute reference",
+  ),
+  e(
+    "document_versions",
+    "document",
+    "document_id",
+    "purge_candidate",
+    "write-once originals of the document",
+  ),
+  e(
+    "document_locations",
+    "document",
+    "document_versions.id",
+    "purge_candidate",
+    "page links on the document",
+  ),
+  e(
+    "annotations",
+    "document",
+    "document_versions.id",
+    "purge_candidate",
+    "annotations on the document",
+  ),
+  e(
+    "custody_events",
+    "document",
+    "document_id",
+    "purge_candidate",
+    "custody chain of the document",
+  ),
+  e(
+    "quarantine_uploads",
+    "document",
+    "sha256 of a version, same dispute",
+    "purge_candidate",
+    "upload that became this document; blocked if the hash also matches another document",
+  ),
+  e(
+    "jobs",
+    "document",
+    "quarantine_uploads.id (payload_ref)",
+    "purge_candidate",
+    "scan jobs of those uploads",
+  ),
+  e(
+    "evidence_items",
+    "document",
+    "document_id",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "entities",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "entity_source_forms",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "events",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "date_assertions",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "propositions",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "evidence_items",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "evidence_relations",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "contradictions",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "missing_evidence",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "issues",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "next_steps",
+    "document",
+    "source_ref.documentId",
+    "outside_request_scope",
+    "reference to the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "export_manifests",
+    "document",
+    "entries.documents[].documentId",
+    "outside_request_scope",
+    "export that includes the document; configuration_controlled under cascade policy",
+  ),
+  e(
+    "audit_events",
+    "document",
+    "resource_id or metadata.document_id",
+    "retained_audit_metadata",
+    "append-only, content-free audit",
+  ),
+  e(
+    "deletion_requests",
+    "document",
+    "scope_id",
+    "retained_audit_metadata",
+    "deletion workflow record, content-free",
+  ),
+  e(
+    "retention_records",
+    "document",
+    "object_id",
+    "retained_audit_metadata",
+    "retention and verification record",
+  ),
+  e(
+    "deletion_ledger",
+    "document",
+    "scope_id",
+    "retained_audit_metadata",
+    "content-free tombstone (OL-03 interim)",
+  ),
+  e("profiles", "account", "user_id", "purge_candidate", "the account profile"),
+  e(
+    "tenants",
+    "account",
+    "personal tenant",
+    "purge_candidate",
+    "the personal tenant; blocked if shared with other members or under legal hold",
+  ),
+  e(
+    "tenant_memberships",
+    "account",
+    "tenant_id",
+    "purge_candidate",
+    "memberships of the personal tenant; other members blocked; memberships elsewhere blocked in aggregate",
+  ),
+  e(
+    "dispute_roles",
+    "account",
+    "user_id outside owned disputes",
+    "blocked_active_reference",
+    "roles in disputes the account does not own; reported in aggregate, no identifiers",
+  ),
+  e(
+    "platform_roles",
+    "account",
+    "user_id",
+    "configuration_controlled",
+    "operator role; removal is an operator decision",
+  ),
+  e(
+    "disputes",
+    "account",
+    "owned disputes in the tenant",
+    "purge_candidate",
+    "dispute scope applied to every dispute the account owns",
+  ),
+  e(
+    "consents",
+    "account",
+    "principal_user_id",
+    "configuration_controlled",
+    "consent history retention pending counsel (OL-02)",
+  ),
+  e(
+    "audit_events",
+    "account",
+    "tenant_id or actor_id",
+    "retained_audit_metadata",
+    "append-only audit; actor pseudonymisation is later work",
+  ),
+  e(
+    "deletion_requests",
+    "account",
+    "requested_by",
+    "retained_audit_metadata",
+    "deletion workflow record, content-free",
+  ),
+  e(
+    "retention_records",
+    "account",
+    "object_id",
+    "retained_audit_metadata",
+    "retention and verification record",
+  ),
+  e(
+    "deletion_ledger",
+    "account",
+    "scope_id",
+    "retained_audit_metadata",
+    "content-free tombstone (OL-03 interim)",
+  ),
+  e(
+    "notices",
+    "none",
+    "global",
+    "outside_request_scope",
+    "versioned notice text shared by all users; holds no personal data",
+  ),
+  e(
+    "intake_questions",
+    "none",
+    "global",
+    "outside_request_scope",
+    "global question set; holds no personal data",
+  ),
+  e(
+    "audit_anchors",
+    "none",
+    "global",
+    "retained_audit_metadata",
+    "period anchors of the global audit chain; content-free",
+  ),
+  e(
+    "deletion_allowlist",
+    "none",
+    "global",
+    "outside_request_scope",
+    "registry of tables; holds no case data",
+  ),
+  e(
+    "config_provisional",
+    "none",
+    "global",
+    "outside_request_scope",
+    "configuration; holds no case data",
+  ),
+];
+
+/** Tables with no decision in the graph (must be empty; CI and tests enforce). */
+export function graphUncoveredTables(tableNames: readonly string[] = FMA_TABLE_NAMES): string[] {
+  const covered = new Set(DELETION_GRAPH.map((x) => x.table));
+  return tableNames.filter((n) => !covered.has(n));
 }

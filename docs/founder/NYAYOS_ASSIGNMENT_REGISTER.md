@@ -556,3 +556,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | `0005` requires an empty `audit_events` (no environment holds rows; records are never rewritten). Server-side audit rows carry `ip_hash = null` and `user_agent_class = 'unknown'` until the server layer passes them. Request id and principal come from connection settings, which assumes clients never hold raw database sessions (existing architecture assumption). Audit writes serialise on one advisory lock, which bounds write throughput |
 | **Rollback** | `git revert` the A-038 commit; disposable databases only: re-run the server-function and `verify_audit_chain` blocks from `0001` and the trigger block from `0004`, then drop the five contract/writer functions listed in the `0005` header (reopens M-2 and M-7) |
 | **Handoff back to M365 Copilot** | Record A-038 REVIEW; A-032 critical 0; open majors M-3 (purge path, D-032), M-6 (deletion scope graph), M-8 (documentation addendum) |
+
+---
+
+### A-039 — Complete deletion scope graph
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-039 |
+| **Owner / tool** | Claude Code — security and data-integrity implementation |
+| **Purpose** | Close A-032 M-6: make deletion enumeration cover every dispute-linked record (including documents and quarantine uploads) without widening into other disputes or tenants. Enumeration only; no purge (D-032) |
+| **Gate** | FA-001 (staging only). Deployment, production access and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** `0006` executed only on disposable local PostgreSQL 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 24 September 2026** |
+| **Result** | Migration `0006_deletion_scope_graph.sql`: `deletion_graph_v1()` (70 edges over 39 tables, each with a reason), internal `deletion_document_refs_v1()`, read-only `enumerate_deletion_scope(request)` with six classifications, manual legal-hold config key. `deletion.ts`: `DELETION_GRAPH`, `graphUncoveredTables`, graph-driven `tablesForScope`. schema-lint enforces SQL/TS graph parity and full table coverage |
+| **Evidence** | `db/tests/deletion_scope_0001.sql` 28/28 (oracle completeness, documents/versions/uploads/derivatives/exports/corrections, cross-dispute and cross-tenant isolation, indistinguishable errors, shared records blocked, legal hold, block/cascade policy, zero-mutation fingerprint); negative controls for the oracle and for lint parity; smoke 82/82; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency 5/5; Vitest 192/192; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | Enumeration is callable by the requester only; the future purge worker's access path arrives with purge (D-032). Reference scans read whole canonical tables (acceptable for FM-A volumes). Account deletion does not pseudonymise the user's actor references in other tenants (later work). Legal hold is manual configuration pending counsel (OL-06). The old single-column `deletion_allowlist` remains as registration only; the graph is authoritative |
+| **Rollback** | `git revert` the A-039 commit; disposable databases only: the three `drop function` statements and the config `delete` listed in the `0006` header |
+| **Handoff back to M365 Copilot** | Record A-039 REVIEW; A-032 critical 0; open: M-3 (purge, D-032) and M-8 documentation addendum |

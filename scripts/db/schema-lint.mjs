@@ -65,7 +65,23 @@ for (const t of tsTables) if (!sqlTables.has(t)) findings.push(`tables.ts declar
 for (const t of sqlTables) if (!tsTables.has(t)) findings.push(`migration creates ${t} but tables.ts does not declare it`);
 for (const t of notCreated) if (sqlTables.has(t)) findings.push(`${t} is created but is listed in NOT_CREATED_IN_FMA (CR-1)`);
 
-const summary = `schema-lint: ${sqlTables.size} tables in SQL, ${tsTables.size} in tables.ts, ${notCreated.size} deferred names checked`;
+// Deletion scope graph (A-039): SQL deletion_graph_v1() and TS DELETION_GRAPH must match exactly,
+// and every table must have at least one decision.
+const graphSql = readdirSync(migrationsDir).filter((f) => f.endsWith(".sql")).sort()
+  .map((f) => readFileSync(join(migrationsDir, f), "utf8"))
+  .filter((s) => s.includes("function nyayos.deletion_graph_v1()"))
+  .pop() ?? "";
+const edgeKey = (m) => `${m[1]}|${m[2]}|${m[3]}|${m[4]}`;
+const sqlEdges = new Set([...graphSql.matchAll(/\('([a-z_]+)', '(dispute|document|account|none)', '([^']+)', '([a-z_]+)', '[^']*'\)/g)].map(edgeKey));
+const deletionTs = readFileSync(join(root, "app", "src", "domain", "deletion.ts"), "utf8");
+const tsEdges = new Set([...deletionTs.matchAll(/\be\(\s*"([a-z_]+)",\s*"(dispute|document|account|none)",\s*"([^"]+)",\s*"([a-z_]+)",/g)].map(edgeKey));
+if (graphSql === "") findings.push("no migration defines nyayos.deletion_graph_v1()");
+for (const k of sqlEdges) if (!tsEdges.has(k)) findings.push(`deletion graph edge in SQL but not in deletion.ts: ${k}`);
+for (const k of tsEdges) if (!sqlEdges.has(k)) findings.push(`deletion graph edge in deletion.ts but not in SQL: ${k}`);
+const graphTables = new Set([...sqlEdges].map((k) => k.split("|")[0]));
+for (const t of sqlTables) if (!graphTables.has(t)) findings.push(`table ${t} has no deletion graph decision`);
+
+const summary = `schema-lint: ${sqlTables.size} tables in SQL, ${tsTables.size} in tables.ts, ${notCreated.size} deferred names checked, ${sqlEdges.size} deletion-graph edges (SQL = TS)`;
 if (findings.length) {
   console.error(summary);
   for (const f of findings) console.error(`  ✗ ${f}`);

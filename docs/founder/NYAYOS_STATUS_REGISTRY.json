@@ -740,7 +740,7 @@
       "evidence": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
       "updated": "2026-09-24",
       "superseded_by": null,
-      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open. — 24 Sep 2026: C-1 and C-2 CLOSED with adversarial execution evidence under A-033-R (C-1 required migration 0004). No A-032 critical finding remains; majors M-2, M-3, M-6, M-7 and the M-8 documentation addendum remain open. — 24 Sep 2026: M-2 and M-7 CLOSED with execution evidence under A-038 (cross-runtime golden vectors; fault-injected rollback). Open majors: M-3, M-6, M-8 documentation addendum."
+      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open. — 24 Sep 2026: C-1 and C-2 CLOSED with adversarial execution evidence under A-033-R (C-1 required migration 0004). No A-032 critical finding remains; majors M-2, M-3, M-6, M-7 and the M-8 documentation addendum remain open. — 24 Sep 2026: M-2 and M-7 CLOSED with execution evidence under A-038 (cross-runtime golden vectors; fault-injected rollback). Open majors: M-3, M-6, M-8 documentation addendum. — 24 Sep 2026: M-6 CLOSED with execution evidence under A-039 (explicit graph, oracle-verified enumeration). Open: M-3 (purge path, D-032) and M-8 documentation addendum; minor m-1."
     },
     {
       "id": "A-033",
@@ -932,6 +932,34 @@
       "updated": "2026-09-24",
       "superseded_by": null,
       "notes": "Baseline 1f41d48. M-2: contract nyayos-audit-v1 (compact JSON array in fixed column order; JSON string escaping; null for absent; lowercase UUIDs; occurred_at UTC with 6 fractional digits; metadata keys code-point ordered, values string/boolean/safe integer; hash = sha256(prev ‖ canonical)). Also fixed a latent defect: the old SQL serialisation rendered occurred_at in the session TimeZone. 13 golden vectors computed independently by PostgreSQL 16.14 and TypeScript matched byte for byte, then frozen; SQL reproduces all 13 under two time zones; TypeScript reproduces all 13 and verifies a 10-row chain written by the PostgreSQL trigger (exported at +05:30). M-7 (D-031): the five single-writer server functions write their audit event in the same transaction via audit_append_internal (no client or service grant); 21/21 atomicity checks incl. fault-injected audit failure rolling back create_dispute, propose_change and decide_proposal (proposal still pending, fact version unchanged, no correction) and failed canonical writes leaving no audit row. A-033-R protections intact: concurrency matrix 5/5 incl. new 5x4 server-function burst (20 audit events, 0 forks). Smoke 79/79; deletion authz 25/25; Vitest 185/185; tsc, eslint 0 errors, build, schema-lint clean. Migration 0005 not applied to any environment; requires an empty audit_events (never rewrites records). D-032: no purge implemented."
+    },
+    {
+      "id": "A-039",
+      "title": "Complete deletion scope graph — explicit graph and read-only enumeration; closes A-032 M-6",
+      "type": "security",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — security and data-integrity implementation (disposable databases only; no purge, no deployment, no merge)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-010",
+        "A-029",
+        "A-031",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "db/migrations/0006_deletion_scope_graph.sql",
+        "app/src/domain/deletion.ts",
+        "app/tests/domain/deletion-graph.test.ts",
+        "db/tests/deletion_scope_0001.sql",
+        "scripts/db/schema-lint.mjs",
+        "db/tests/smoke_0001.sql"
+      ],
+      "evidence": "db/tests/deletion_scope_0001.sql",
+      "updated": "2026-09-24",
+      "superseded_by": null,
+      "notes": "Baseline 514d6ba. Migration 0006 (append-only; no table created or altered; not applied to any environment): deletion_graph_v1() with 70 explicit edges covering all 39 tables (5 excluded with reasons); TS twin DELETION_GRAPH with schema-lint parity (negative control: one changed edge fails the lint). enumerate_deletion_scope(request) — SECURITY DEFINER (justified: complete enumeration needs rows RLS hides from the requester) with pinned search_path, requester-plus-current-authority check, identical error for nonexistent and inaccessible requests, reads bounded to the request's tenant and in-scope disputes, ids and fixed codes only. Six classifications. Documents, versions, locations, annotations, custody events, quarantine uploads (dispute scope by dispute; document scope by content hash, ambiguous hash blocked) and jobs covered. Cross-dispute references (document_id, source_ref.documentId, export manifests, item-reference columns) block without naming the foreign record; foreign-tenant jobs and cross-tenant memberships/roles reported in aggregate without ids. Manual legal hold via config legal_hold_dispute_ids (unreadable value holds everything); document_reference_policy block/cascade. Evidence: deletion_scope 28/28 incl. catalogue-driven completeness oracle (negative control: removing uploads/documents/versions yields 10 missing, FAIL) and zero-mutation fingerprint over every table; smoke 82/82; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency matrix 5/5; Vitest 192/192; tsc, eslint 0 errors, build, schema-lint clean. No purge (D-032)."
     }
   ]
 }

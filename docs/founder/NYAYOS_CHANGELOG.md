@@ -5,6 +5,21 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-24 — Deletion scope graph completed: A-032 M-6 closed (A-039)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0006` not applied to any environment. No purge.**
+
+### Added
+
+- `db/migrations/0006_deletion_scope_graph.sql` — explicit graph `deletion_graph_v1()` (every table decided) and read-only `enumerate_deletion_scope()` classifying every record as purge candidate, retained audit metadata, retained legal hold, blocked by active reference, outside request scope or configuration-controlled; manual `legal_hold_dispute_ids` configuration.
+- `DELETION_GRAPH` twin in `deletion.ts` with schema-lint parity; `deletion-graph.test.ts`; `db/tests/deletion_scope_0001.sql` (28 checks incl. a catalogue-driven completeness oracle and a zero-mutation fingerprint). Smoke +3 checks.
+
+### Changed
+
+- `tablesForScope` now derives from the graph instead of single scope columns. Registry A-039 REVIEW; A-032 report records M-6 closed.
+
+---
+
 ## 2026-09-24 — Audit hash contract and audit atomicity: A-032 M-2 and M-7 closed (A-038)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0005` not applied to any environment.**
