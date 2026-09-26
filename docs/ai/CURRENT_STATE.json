@@ -3,7 +3,7 @@
   "schema_version": "2.0",
   "project": "NyayOS",
   "authority": "canonical",
-  "last_updated": "2026-09-26T18:51:46Z",
+  "last_updated": "2026-09-26T19:14:24Z",
   "current_phase": "FM-A foundation and the A-043 MVP UI verified merge-ready on draft PR #2 (A-048); awaiting the founder's merge. Founder decisions D-035 (Google Login, numbering) and D-036 recorded; no environment exists.",
   "canonical_branch": "main",
   "working_branch": "feature/fma-foundation-v1",
@@ -33,7 +33,7 @@
       "latest_completed_task": null,
       "latest_completion_commit": null,
       "handoff": null,
-      "reason": "A-047: repository handoff missing — Gemini A-047 output exists only outside GitHub"
+      "reason": "A-047: placeholder only, no output committed — repository handoff missing — Gemini A-047 output exists only outside GitHub"
     },
     "lovable": {
       "status": "idle",
@@ -62,7 +62,7 @@
     {
       "task_id": "A-047",
       "owner": "gemini",
-      "reason": "repository handoff missing — Gemini A-047 output exists only outside GitHub."
+      "reason": "repository handoff missing — only a placeholder exists at docs/ai/tool-output/gemini/A-047/; Gemini A-047 output exists only outside GitHub (re-inspected by A-062)."
     },
     {
       "task_id": "A-008",
@@ -87,7 +87,7 @@
       "order": 2,
       "task_id": "A-047",
       "owner": "gemini",
-      "output": "A-047 output committed with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json",
+      "output": "A-047 output committed by Gemini with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json (the directory currently holds only a placeholder)",
       "ready": true
     },
     {
@@ -176,26 +176,26 @@
     {
       "id": "OI-14",
       "kind": "dependency",
-      "description": "Gemini A-047 is reported done but nothing is in the repository; recorded as blocked (repository handoff missing) until Gemini commits its output and handoff."
+      "description": "Gemini A-047: the repository holds only a blocked ownership placeholder at docs/ai/tool-output/gemini/A-047/ (re-inspected by A-062, 27 Sep 2026); no Gemini output is committed. It stays blocked until Gemini commits its output with a completed handoff."
     },
     {
       "id": "OI-15",
       "kind": "finding",
-      "description": "Draft PR #3 (A-050) conflicts with PR #2's handoff protocol (no HANDOFF.json, A-050 unregistered) and targets paths that do not exist under app/; not merged — see docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md §5."
+      "description": "Draft PR #3 (branch fix/a050-accessibility-ux-mobile) now carries Figma-namespace audits A-050 and A-057 (docs/ai/tool-output/figma/A-050/, A-057/): neither is registered or has a HANDOFF.json, and the A-050 fixes target paths that do not exist under app/. Not merged — see docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md §5."
     }
   ],
   "derived": {
     "source": "docs/founder/NYAYOS_STATUS_REGISTRY.json",
     "registry_updated": "2026-09-27",
-    "task_count": 49,
+    "task_count": 50,
     "by_status": {
       "OPEN": 7,
       "IN_PROGRESS": 0,
-      "REVIEW": 15,
+      "REVIEW": 16,
       "CANONICAL": 27,
       "SUPERSEDED": 0
     },
-    "highest_task_id": "A-048",
+    "highest_task_id": "A-062",
     "open_tasks": [
       "A-008",
       "A-009",
@@ -221,10 +221,11 @@
       "A-044",
       "A-044-R",
       "A-044-R2",
-      "A-048"
+      "A-048",
+      "A-062"
     ],
     "registry_latest_by_tool": {
-      "claude-code": "A-048",
+      "claude-code": "A-062",
       "gemini": null,
       "lovable": "A-043",
       "figma": null

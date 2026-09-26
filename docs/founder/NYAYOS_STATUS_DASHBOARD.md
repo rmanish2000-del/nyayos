@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 7 | 0 | 15 | 27 | 0 | 49 |
+| 7 | 0 | 16 | 27 | 0 | 50 |
 
 ## In flight
 
@@ -29,6 +29,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-044-R | Complete and repair the repository-centric tool handoff system (per-task HANDOFF.json, per-tool ownership, CI enforcement) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-044-R2 | Fix the AI operating system itself — canonical CURRENT_STATE/NEXT_TASK, derived tool state, ownership and staleness gates, status command | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-048 | FM-A merge readiness and decision reconciliation — decisions logged, A-041 rebaselined against A-043, PR #2 verified, PR #3 conflicts identified | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-27 |
+| A-062 | Repository state reconciliation — Gemini A-047 directory inspected (placeholder only; blocked status confirmed) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-27 |
 
 ## Ready to start — all inputs canonical, nothing planned outstanding
 
@@ -38,7 +39,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-009 | User interviews and WTP validation | ○ OPEN | Founder | — | 2026-09-21 |
 | A-016 | Typography decision → Decision Log (D-019) | ○ OPEN | Founder | — | 2026-09-21 |
 | A-028 | Print source corrections | ○ OPEN | Founder | — | 2026-09-22 |
-| A-047 | Gemini assignment A-047 — issued outside this repository; output not committed | ○ OPEN | Gemini | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
+| A-047 | Gemini assignment A-047 — issued outside this repository; output not committed | ○ OPEN | Gemini | FA-001 (staging build allowed; production NOT allowed) | 2026-09-27 |
 
 ## Blocked — waiting on non-canonical inputs
 
@@ -83,14 +84,14 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-062 | Repository state reconciliation — Gemini A-047 directory inspected (placeholder only; blocked status confirmed) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-27 |
 | A-048 | FM-A merge readiness and decision reconciliation — decisions logged, A-041 rebaselined against A-043, PR #2 verified, PR #3 conflicts identified | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-27 |
+| A-047 | Gemini assignment A-047 — issued outside this repository; output not committed | ○ OPEN | Gemini | FA-001 (staging build allowed; production NOT allowed) | 2026-09-27 |
 | A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-27 |
 | A-044-R2 | Fix the AI operating system itself — canonical CURRENT_STATE/NEXT_TASK, derived tool state, ownership and staleness gates, status command | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
-| A-047 | Gemini assignment A-047 — issued outside this repository; output not committed | ○ OPEN | Gemini | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-044-R | Complete and repair the repository-centric tool handoff system (per-task HANDOFF.json, per-tool ownership, CI enforcement) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-043 | MVP Wave-1 UI implementation — U01 Google entry, U04–U09, U16, U17 on seeded synthetic data | ◑ REVIEW | Lovable | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-044 | Repository-centric AI operating system — docs/ai state, tool handoffs, validator and completion protocol | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
-| A-042 | Minor finding m-1 closure — dispute status server-controlled; closes A-032 m-1 | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)

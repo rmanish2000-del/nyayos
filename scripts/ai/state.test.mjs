@@ -292,6 +292,7 @@ test("blocked handoff without a commit records ownership and makes the tool bloc
   const s = JSON.parse(run(dir, "status", "--json").out);
   assert.equal(s.last_completed_by_tool.gemini.status, "blocked");
   assert.equal(s.last_completed_by_tool.gemini.task_id, "A-051");
+  assert.match(s.last_completed_by_tool.gemini.note, /A-057: placeholder only, no output committed — repository handoff missing/);
 });
 
 test("blocked handoff cannot claim files without a commit", () => {

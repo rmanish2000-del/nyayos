@@ -15,7 +15,8 @@
   "tests": [],
   "evidence": [],
   "limitations": [
-    "No A-047 commit, file or brief exists on any branch of the repository; its content is unknown here."
+    "No A-047 commit, file or brief exists on any branch of the repository; its content is unknown here.",
+    "A-062 re-inspection (27 Sep 2026): docs/ai/tool-output/gemini/A-047/ holds only this blocked ownership placeholder, written by Claude Code under A-044-R2 (commit 02f2f95). No Gemini commit, output file or evidence exists on any branch (feature/fma-foundation-v1, main, fix/a050-accessibility-ux-mobile, governance/status-update) or in any pull request. Verdict: placeholder only — not a valid or partial completion; the blocked status is correct."
   ],
   "risks": [
     {

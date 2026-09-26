@@ -2,7 +2,7 @@
 
 # NyayOS — AI status summary
 
-Read this page first. Updated **2026-09-26T18:51:46Z**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.
+Read this page first. Updated **2026-09-26T19:14:24Z**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.
 
 ## At a glance
 
@@ -11,7 +11,7 @@ Output of `node scripts/ai/state.mjs status`:
 ```text
 Last completed task per tool:
   claude-code  A-048     3edecc8  idle
-  gemini       —         —        blocked — A-047: repository handoff missing — Gemini A-047 output exists only outside GitHub
+  gemini       —         —        blocked — A-047: placeholder only, no output committed — repository handoff missing — Gemini A-047 output exists only outside GitHub
   lovable      A-043     9d23842  idle
   figma        —         —        blocked — A-008: Figma MVP Design Package never supplied to the repository (repository handoff missing).
 Latest completion overall: A-048 by claude-code (3edecc8)
@@ -25,7 +25,7 @@ Next recommended assignment: (ID to be issued) — Wave W1 — staging database 
 | Tool | Status | Latest completed task | Completion commit | Handoff | Note |
 |---|---|---|---|---|---|
 | `claude-code` | idle | A-048 | `3edecc8b89c8da9ec89809787c6a8192cbf74e15` | [docs/ai/tool-output/claude-code/A-048/HANDOFF.json](tool-output/claude-code/A-048/HANDOFF.json) |  |
-| `gemini` | blocked | — | — | — | A-047: repository handoff missing — Gemini A-047 output exists only outside GitHub |
+| `gemini` | blocked | — | — | — | A-047: placeholder only, no output committed — repository handoff missing — Gemini A-047 output exists only outside GitHub |
 | `lovable` | idle | A-043 | `9d238423949eabea28452e4e6a924186a94030c4` | [docs/ai/tool-output/lovable/A-043/HANDOFF.json](tool-output/lovable/A-043/HANDOFF.json) |  |
 | `figma` | blocked | — | — | — | A-008: Figma MVP Design Package never supplied to the repository (repository handoff missing). |
 
@@ -85,7 +85,7 @@ Rollback: git revert --no-edit $(git log --format=%H --grep='^\[TOOL:CLAUDE-CODE
 | # | Task | Owner | Output | Ready | Waiting on |
 |---|---|---|---|---|---|
 | 1 | (not issued) | `founder` | Mark PR #2 ready and merge it with a merge commit (A-048 report §6) | yes |  |
-| 2 | A-047 | `gemini` | A-047 output committed with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json | yes |  |
+| 2 | A-047 | `gemini` | A-047 output committed by Gemini with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json (the directory currently holds only a placeholder) | yes |  |
 | 3 | A-008 | `figma` | Figma MVP Design Package V1 with frames mapped to U01-U21, handed off at docs/ai/tool-output/figma/A-008/ | no | Founder to supply or commission the package |
 | 4 | (not issued) | `claude-code` | A-043 design conformance review against the Figma package | no | The A-008 design package |
 | 5 | (not issued) | `claude-code` | Wave W1: staging database with migrations applied, Google Login auth adapter, A01/A02/A28, smoke suite in CI | no | PR #2 merge and the FD-02 hosting / auth-provider decision |
@@ -120,7 +120,7 @@ Active: none.
 
 Blocked:
 
-- A-047 (`gemini`): repository handoff missing — Gemini A-047 output exists only outside GitHub.
+- A-047 (`gemini`): repository handoff missing — only a placeholder exists at docs/ai/tool-output/gemini/A-047/; Gemini A-047 output exists only outside GitHub (re-inspected by A-062).
 - A-008 (`figma`): Figma MVP Design Package never supplied to the repository (repository handoff missing).
 - A-012 (`founder`): Production build and deployment are not allowed: FA-002 not granted.
 
@@ -137,8 +137,8 @@ Blocked:
 | OI-09 | dependency | FD-02 hosting / India-region decision open; no staging database exists. | RES-05 |
 | OI-10 | dependency | A-043 MVP Wave-1 UI (Lovable, REVIEW, completion commit 9d238423, handoff docs/ai/tool-output/lovable/A-043/HANDOFF.json) awaits a design conformance review: the Figma MVP Design Package V1 (A-008) has not been supplied. | — |
 | OI-13 | finding | Lovable A-043 tests time out locally on Windows and one U06 test hits a jsdom SubtleCrypto.digest type difference; CI (ubuntu) passes 233/233. A local-environment robustness fix belongs to a Lovable follow-up. | — |
-| OI-14 | dependency | Gemini A-047 is reported done but nothing is in the repository; recorded as blocked (repository handoff missing) until Gemini commits its output and handoff. | — |
-| OI-15 | finding | Draft PR #3 (A-050) conflicts with PR #2's handoff protocol (no HANDOFF.json, A-050 unregistered) and targets paths that do not exist under app/; not merged — see docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md §5. | — |
+| OI-14 | dependency | Gemini A-047: the repository holds only a blocked ownership placeholder at docs/ai/tool-output/gemini/A-047/ (re-inspected by A-062, 27 Sep 2026); no Gemini output is committed. It stays blocked until Gemini commits its output with a completed handoff. | — |
+| OI-15 | finding | Draft PR #3 (branch fix/a050-accessibility-ux-mobile) now carries Figma-namespace audits A-050 and A-057 (docs/ai/tool-output/figma/A-050/, A-057/): neither is registered or has a HANDOFF.json, and the A-050 fixes target paths that do not exist under app/. Not merged — see docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md §5. | — |
 
 ## Decisions awaiting the founder
 

@@ -4,4 +4,6 @@ Recorded by Claude Code under A-044-R2 so that ownership of A-047 is machine-rea
 
 To complete it, Gemini commits its output with a `[TOOL:GEMINI][TASK:A-047] …` completion commit, pushes, and replaces this record with a completed `HANDOFF.json` (see `docs/ai/README.md`). The registry keeps A-047 OPEN until then.
 
+**Re-inspected by A-062 (27 Sep 2026): still a placeholder only.** The existence of this directory does not mean A-047 was completed.
+
 Machine-readable record: [HANDOFF.json](HANDOFF.json).

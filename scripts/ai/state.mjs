@@ -227,7 +227,12 @@ function deriveToolState(handoffs, cur) {
     const mine = done.filter((h) => h.tool === tool);
     const last = mine[mine.length - 1];
     const blocked = new Map();
-    for (const h of handoffs) if (h.tool === tool && h.data?.status === "blocked") blocked.set(h.id, `${h.id}: ${h.data.blocked_reason ?? "blocked"}`);
+    for (const h of handoffs) {
+      if (h.tool !== tool || h.data?.status !== "blocked") continue;
+      // A blocked handoff without a commit is an ownership placeholder: say so, so its directory is never read as a completion (A-062).
+      const kind = h.data.completion_commit ? "" : "placeholder only, no output committed — ";
+      blocked.set(h.id, `${h.id}: ${kind}${h.data.blocked_reason ?? "blocked"}`);
+    }
     for (const b of cur?.blocked_tasks ?? []) if (b.owner === tool && !blocked.has(b.task_id)) blocked.set(b.task_id, `${b.task_id}: ${b.reason}`);
     const active = (cur?.active_tasks ?? []).some((a) => a.tool === tool);
     const status = active ? "active" : blocked.size ? "blocked" : last ? "idle" : "no_records";

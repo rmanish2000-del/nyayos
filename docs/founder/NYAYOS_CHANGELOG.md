@@ -5,6 +5,16 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-27 — Repository state reconciliation: Gemini A-047 is a placeholder only (A-062)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed.**
+
+### Changed
+
+- `docs/ai/tool-output/gemini/A-047/` inspected: a blocked ownership placeholder, not a completion; blocked status confirmed and kept. Status output, `CURRENT_STATE` and `STATUS_SUMMARY` now label such records "placeholder only, no output committed". PR #3's new A-057 audit recorded. Registry A-062 REVIEW.
+
+---
+
 ## 2026-09-27 — FM-A merge readiness and decision reconciliation (A-048)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft and unmerged. Nothing deployed.**

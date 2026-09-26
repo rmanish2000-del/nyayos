@@ -1143,9 +1143,9 @@
       "planned_inputs": [],
       "outputs": [],
       "evidence": null,
-      "updated": "2026-09-26",
+      "updated": "2026-09-27",
       "superseded_by": null,
-      "notes": "Registered by A-044-R2 on the founder's instruction to backfill Gemini A-047. No commit, file or brief for A-047 exists on any branch of the repository, so no completion is recorded: docs/ai/tool-output/gemini/A-047/HANDOFF.json is a blocked ownership record (repository handoff missing). Type 'research' is assumed. When Gemini commits its output, it replaces the blocked handoff with a completed one and this task moves to REVIEW."
+      "notes": "Registered by A-044-R2 on the founder's instruction to backfill Gemini A-047. No commit, file or brief for A-047 exists on any branch of the repository, so no completion is recorded: docs/ai/tool-output/gemini/A-047/HANDOFF.json is a blocked ownership record (repository handoff missing). Type 'research' is assumed. When Gemini commits its output, it replaces the blocked handoff with a completed one and this task moves to REVIEW. — A-062 (27 Sep 2026): re-inspected; placeholder only, no Gemini output in the repository; stays OPEN and blocked."
     },
     {
       "id": "A-044-R2",
@@ -1198,6 +1198,30 @@
       "updated": "2026-09-27",
       "superseded_by": null,
       "notes": "Baseline 92be7c7. No task ID was issued; A-048 was the next free ID. Decisions logged (26 Sep 2026): D-035 partly (Google Login MVP primary sign-in; Scope Sheet numbering controls; C-02, C-03, C-05 open), D-036 (Scope Sheet numbering, document_reference_policy = block, content-free tombstones), and the A-038 rulings D-031 and D-032. A-041 rebaselined against A-043: PARTIAL 11, MISSING 10, READY 0. PR #2: 205 files, mergeable CLEAN, secrets/private-data scans clean; DB suites all pass on fresh containers (smoke 87/87, dispute status 21/21, authz 25/25, scope 28/28, purge 55/55, atomicity 21/21, vectors 16/16, concurrency 5/5, purge race 3/3); Vitest 233/233 in CI (local Windows 232/233: A-043 U06 jsdom SubtleCrypto difference); typecheck, lint 0 errors, build, schema-lint clean. PR #3 (A-050): no textual conflict; protocol, target-path and ownership conflicts documented; not merged. Merge must use a merge commit (handoff SHAs must stay in main's history). PR #2 stays draft; nothing deployed."
+    },
+    {
+      "id": "A-062",
+      "title": "Repository state reconciliation — Gemini A-047 directory inspected (placeholder only; blocked status confirmed)",
+      "type": "governance",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — repository state reconciliation (docs/ai state and status wording; no application code, SQL or deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-029",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/ai/CURRENT_STATE.json",
+        "docs/ai/NEXT_TASK.json",
+        "docs/ai/STATUS_SUMMARY.md",
+        "scripts/ai/state.mjs"
+      ],
+      "evidence": "docs/ai/tool-output/gemini/A-047/HANDOFF.json",
+      "updated": "2026-09-27",
+      "superseded_by": null,
+      "notes": "Baseline 14c5ea0. A-062 re-inspection (27 Sep 2026): docs/ai/tool-output/gemini/A-047/ holds only this blocked ownership placeholder, written by Claude Code under A-044-R2 (commit 02f2f95). No Gemini commit, output file or evidence exists on any branch (feature/fma-foundation-v1, main, fix/a050-accessibility-ux-mobile, governance/status-update) or in any pull request. Verdict: placeholder only — not a valid or partial completion; the blocked status is correct. The reported inconsistency was one of presentation: the directory's existence read as a completion. Fix: blocked handoffs without a commit are now reported as 'placeholder only, no output committed' in tools.<tool>.reason, the status command and STATUS_SUMMARY; CURRENT_STATE open items and awaited outputs say so explicitly. No blocked status was removed, because removing it would claim a completion the repository does not contain. Also recorded: draft PR #3 now additionally carries a Figma-namespace A-057 audit (unregistered, no handoff)."
     }
   ]
 }
