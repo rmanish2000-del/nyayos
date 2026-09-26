@@ -1,145 +1,87 @@
-# A-050 — Exact Fixes
+# A-050 — Exact Developer Fixes (v2)
 
-**Task:** A-043 implementation audit vs Figma MVP package  
-**Date:** 2026-09-26  
-**Format:** Ready-to-apply diffs. All paths relative to `src/`.
+**Task:** A-043 Lovable implementation audit vs Figma MVP package
+**Date:** 2026-09-26 (v2 — re-verified against live code)
 
-Fixes are ordered P0 → P3. Apply P0 and P1 before any visual pass.
-
----
-
-## P0 — Apply first (blocks AT users)
+Fixes ordered P0 → P3. Each entry: file, line(s), exact change, test instruction.
 
 ---
 
-### FIX-01 · `Select` — wire `htmlFor`/`id`
+## P0 — Critical Accessibility (screen reader blockers)
 
-**File:** `src/components/ui.tsx`  
-**Covers:** ACC-01
+### FIX-01 · ACC-02 — Toggle does NOT spread extra props; `aria-label` silently dropped
 
-```tsx
-// BEFORE
-interface SelectProps {
-  label?: string;
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-  className?: string;
-}
-
-export function Select({ label, value, onChange, options, className = '' }: SelectProps) {
-  return (
-    <div className="flex flex-col gap-1">
-      {label && <label className="text-sm font-semibold text-[var(--color-ink-2)]">{label}</label>}
-      <select
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className={`h-10 px-3 rounded-[var(--radius-md)] border border-[var(--color-border-2)] bg-white text-[var(--color-ink)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-navy-mid)] ${className}`}
-      >
-
-// AFTER
-interface SelectProps {
-  label?: string;
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-  className?: string;
-  id?: string;
-}
-
-export function Select({ label, value, onChange, options, className = '', id }: SelectProps) {
-  const selectId = id ?? label?.toLowerCase().replace(/\s+/g, '-');
-  return (
-    <div className="flex flex-col gap-1">
-      {label && <label htmlFor={selectId} className="text-sm font-semibold text-[var(--color-ink-2)]">{label}</label>}
-      <select
-        id={selectId}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className={`h-10 px-3 rounded-[var(--radius-md)] border border-[var(--color-border-2)] bg-white text-[var(--color-ink)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-navy-mid)] ${className}`}
-      >
-```
-
----
-
-### FIX-02 · `Toggle` — add `aria-label`
-
-**File:** `src/components/ui.tsx`  
-**Covers:** ACC-02
+**File:** `src/components/ui.tsx:302`
 
 ```tsx
 // BEFORE
 export function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label?: string }) {
-  return (
-    <label className="flex items-center gap-3 cursor-pointer select-none">
-      <button
-        role="switch"
-        aria-checked={checked}
-        onClick={() => onChange(!checked)}
-        className={`relative w-10 h-6 rounded-full transition-colors ${checked ? 'bg-[var(--color-navy)]' : 'bg-[var(--color-border-2)]'}`}
-      >
 
 // AFTER
-export function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label?: string }) {
-  return (
-    <label className="flex items-center gap-3 cursor-pointer select-none">
-      <button
-        role="switch"
-        aria-checked={checked}
-        aria-label={label}
-        onClick={() => onChange(!checked)}
-        className={`relative w-10 h-6 rounded-full transition-colors ${checked ? 'bg-[var(--color-navy)]' : 'bg-[var(--color-border-2)]'}`}
-      >
+export function Toggle({ checked, onChange, label, ...rest }: { checked: boolean; onChange: (v: boolean) => void; label?: string } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
 ```
+
+Then spread `{...rest}` onto the `<button>` element inside Toggle.
+
+The entire `<button>` block (lines 303–314 approximately):
+```tsx
+<button
+  type="button"
+  role="switch"
+  aria-checked={checked}
+  onClick={() => onChange(!checked)}
+  {...rest}   // ← ADD THIS
+  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-navy)] focus-visible:ring-offset-2 ${checked ? 'bg-[var(--color-navy)]' : 'bg-[var(--color-border-2)]'}`}
+>
+```
+
+**Test:** Open Export screen → inspect each Toggle with a screen reader. Verify announced label matches the section label (e.g. "Your narrative").
 
 ---
 
-### FIX-03 · `Checkbox` — replace `<div>` with real `<input type="checkbox">`
+### FIX-02 · ACC-03 — Checkbox has `<label htmlFor={id}>` but no matching `<input>`
 
-**File:** `src/components/ui.tsx`  
-**Covers:** ACC-03
+**File:** `src/components/ui.tsx:320`
+
+The current implementation uses `<div onClick>` instead of a real `<input type="checkbox">`. Replace the visual-only div with a real hidden input:
 
 ```tsx
-// REPLACE entire Checkbox function:
-export function Checkbox({ checked, onChange, label, id }: {
-  checked: boolean;
-  onChange: (v: boolean) => void;
-  label?: string;
-  id?: string;
-}) {
-  const cbId = id ?? `cb-${label?.toLowerCase().replace(/\s+/g, '-')}`;
+export function Checkbox({ checked, onChange, label, id: propId }: CheckboxProps) {
+  const id = propId ?? useId();
   return (
-    <label className="flex items-start gap-3 cursor-pointer select-none" htmlFor={cbId}>
+    <label className="flex items-start gap-3 cursor-pointer select-none" htmlFor={id}>
       <input
-        id={cbId}
         type="checkbox"
+        id={id}
         checked={checked}
         onChange={e => onChange(e.target.checked)}
         className="sr-only"
       />
-      <div
+      {/* visual indicator — driven by CSS :checked or sibling selector */}
+      <span
         aria-hidden="true"
         className={`flex-shrink-0 w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center transition-colors
-          ${checked ? 'bg-[var(--color-navy)] border-[var(--color-navy)]' : 'border-[var(--color-border-2)] bg-white'}`}
+          ${checked ? 'bg-[var(--color-navy)] border-[var(--color-navy)]' : 'bg-white border-[var(--color-border-2)]'}`}
       >
         {checked && (
           <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-            <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         )}
-      </div>
-      {label && <span className="text-sm text-[var(--color-ink-2)] leading-5">{label}</span>}
+      </span>
+      {label && <span className="text-sm text-[var(--color-ink)] leading-snug">{label}</span>}
     </label>
   );
 }
 ```
 
+**Test:** Tab to Export consent checkbox → Space bar toggles it. Screen reader announces checked state.
+
 ---
 
-### FIX-04 · Evidence Locker — remove `aria-hidden` from file `<input>`
+### FIX-03 · ACC-04 — Evidence file input is `aria-hidden` — keyboard users cannot upload
 
-**File:** `src/screens/Evidence.tsx`  
-**Covers:** ACC-04
+**File:** `src/screens/Evidence.tsx:97–105`
 
 ```tsx
 // BEFORE
@@ -153,117 +95,255 @@ export function Checkbox({ checked, onChange, label, id }: {
   aria-hidden="true"
 />
 
-// AFTER — overlay input, fully in AT tree
+// AFTER
 <input
   ref={fileRef}
   type="file"
   multiple
   accept=".pdf,.jpg,.jpeg,.png,.docx"
-  aria-label={t(lang, 'uploadDocuments')}
-  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+  className="sr-only"
   onChange={e => addFiles(e.target.files)}
+  aria-label={lang === 'hi' ? 'फ़ाइलें चुनें' : 'Choose files to upload'}
 />
 ```
 
-Also add `relative` to the drop zone wrapper `className`:
+`sr-only` keeps the input visually hidden but reachable. Remove `aria-hidden="true"`.
 
-```tsx
-// BEFORE
-className={`border-2 border-dashed rounded-[var(--radius-lg)] p-8 text-center mb-6 transition-colors cursor-pointer
-  ${dragging ? ... : ...}`}
-
-// AFTER
-className={`relative border-2 border-dashed rounded-[var(--radius-lg)] p-8 text-center mb-6 transition-colors cursor-pointer
-  ${dragging
-    ? 'border-[var(--color-amber)] bg-[var(--color-amber-50)]'
-    : 'border-[var(--color-border-2)] hover:border-[var(--color-navy-mid)] hover:bg-[var(--color-surface-2)]'
-  }`}
-```
-
-Remove the `onClick`, `onKeyDown`, and `role="button"` / `tabIndex` from the wrapper div — the overlay `<input>` is now the interactive target.
+**Test:** Tab into drop zone area → Tab once more → file input should receive focus and be keyboard-activatable.
 
 ---
 
-### FIX-05 · U05 radio group — replace `<div onClick>` with real `<input type="radio">`
+### FIX-04 · ACC-05 — Radio buttons in DisputeEntry are `<div onClick>`, not `<input type="radio">`
 
-**File:** `src/screens/DisputeEntry.tsx`  
-**Covers:** ACC-14
+**File:** `src/screens/DisputeEntry.tsx:156–170`
+
+Replace the `radioGroup` helper:
 
 ```tsx
-// REPLACE radioGroup() helper:
-const radioGroup = (field: keyof IntakeData, options: { value: string; label: string }[], groupLabel: string) => (
-  <div role="radiogroup" aria-label={groupLabel} className="flex gap-3 flex-wrap">
-    {options.map(opt => {
-      const radioId = `${field}-${opt.value}`;
-      return (
-        <label key={opt.value} htmlFor={radioId} className="flex items-center gap-2 cursor-pointer">
+const radioGroup = (field: keyof IntakeData, options: { value: string; label: string }[]) => {
+  const groupName = `intake-${field}`;
+  return (
+    <div className="flex gap-3 flex-wrap" role="radiogroup">
+      {options.map(opt => (
+        <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
           <input
             type="radio"
-            id={radioId}
-            name={field}
+            name={groupName}
             value={opt.value}
-            checked={data[field] === opt.value}
+            checked={intake[field] === opt.value}
             onChange={() => update(field, opt.value as IntakeData[typeof field])}
             className="sr-only"
           />
-          <div
+          <span
             aria-hidden="true"
-            className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-              ${data[field] === opt.value
+            className={`w-4 h-4 rounded-full border-2 flex-shrink-0 transition-colors
+              ${intake[field] === opt.value
                 ? 'border-[var(--color-navy)] bg-[var(--color-navy)]'
-                : 'border-[var(--color-border-2)]'}`}
-          >
-            {data[field] === opt.value && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
-          </div>
-          <span className="text-sm text-[var(--color-ink-2)]">{opt.label}</span>
+                : 'border-[var(--color-border-2)] bg-white'}`}
+          />
+          <span className="text-sm text-[var(--color-ink)]">{opt.label}</span>
         </label>
-      );
-    })}
-  </div>
-);
+      ))}
+    </div>
+  );
+};
 ```
 
-Update the call site to pass `groupLabel`:
+Also fix the orphaned label at line ~228: ensure any standalone radio or checkbox input has `id` and matching `htmlFor`.
 
-```tsx
-// BEFORE
-{radioGroup('hasWrittenAgreement', [...])}
-
-// AFTER
-{radioGroup('hasWrittenAgreement', [...], t(lang, 'hasWrittenAgreement'))}
-```
+**Test:** Dispute entry intake step → arrow keys move between radio options; Space/Enter selects.
 
 ---
 
-## P1 — Apply second (major UX / navigation failures)
+### FIX-05 · ACC-01 — Select label has no `htmlFor`/`id` association
 
----
-
-### FIX-06 · `StepBar` — add `aria-label`
-
-**File:** `src/components/ui.tsx`  
-**Covers:** ACC-05
+**File:** `src/components/ui.tsx:285`
 
 ```tsx
 // BEFORE
-<div className="flex items-center gap-1" role="progressbar" aria-valuenow={current + 1} aria-valuemax={steps.length}>
+export function Select({ label, value, onChange, options, className = '' }: SelectProps) {
+  return (
+    <div className="flex flex-col gap-1">
+      {label && <label className="text-sm font-semibold text-[var(--color-ink-2)]">{label}</label>}
+      <select value={value} onChange={e => onChange(e.target.value)} ...>
 
 // AFTER
-<div
-  className="flex items-center gap-1"
-  role="progressbar"
-  aria-valuenow={current + 1}
-  aria-valuemax={steps.length}
-  aria-label={`Step ${current + 1} of ${steps.length}: ${steps[current]}`}
+import { useId } from 'react';
+
+export function Select({ label, value, onChange, options, className = '' }: SelectProps) {
+  const id = useId();
+  return (
+    <div className="flex flex-col gap-1">
+      {label && <label htmlFor={id} className="text-sm font-semibold text-[var(--color-ink-2)]">{label}</label>}
+      <select id={id} value={value} onChange={e => onChange(e.target.value)} ...>
+```
+
+**Test:** Click the "Date precision" label → focus moves to the `<select>`.
+
+---
+
+## P1 — High Priority Accessibility + High Mobile
+
+### FIX-06 · ACC-07 — DocumentViewer back button has no `aria-label`
+
+**File:** `src/screens/Evidence.tsx:256–260`
+
+```tsx
+// BEFORE
+<button onClick={onBack} className="text-[var(--color-navy-mid)] hover:text-[var(--color-navy)]">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+
+// AFTER
+<button
+  onClick={onBack}
+  aria-label={lang === 'hi' ? 'दस्तावेज़ सूची पर वापस जाएं' : 'Back to document list'}
+  className="text-[var(--color-navy-mid)] hover:text-[var(--color-navy)]"
 >
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
 ```
 
 ---
 
-### FIX-07 · `Card` — activate on Space in addition to Enter
+### FIX-07 · ACC-08 — DocumentViewer page nav `‹`/`›` buttons have no `aria-label`
 
-**File:** `src/components/ui.tsx`  
-**Covers:** ACC-10
+**File:** `src/screens/Evidence.tsx:264–266`
+
+```tsx
+// BEFORE
+<button onClick={() => setPage(p => Math.max(0, p-1))} className="...">‹</button>
+<button onClick={() => setPage(p => Math.min(totalPages-1, p+1))} className="...">›</button>
+
+// AFTER
+<button
+  onClick={() => setPage(p => Math.max(0, p - 1))}
+  disabled={page === 0}
+  aria-label={lang === 'hi' ? 'पिछला पृष्ठ' : 'Previous page'}
+  className="..."
+>‹</button>
+<button
+  onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+  disabled={page === totalPages - 1}
+  aria-label={lang === 'hi' ? 'अगला पृष्ठ' : 'Next page'}
+  className="..."
+>›</button>
+```
+
+---
+
+### FIX-08 · ACC-09 — Analysis timeline uses `<div>` container, not `<ol>`/`<li>`
+
+**File:** `src/screens/Analysis.tsx:53`
+
+```tsx
+// BEFORE
+<div className="space-y-6">
+  {events.map(ev => (
+    <div key={ev.id} className="relative flex gap-4">
+
+// AFTER
+<ol className="space-y-6 list-none p-0 m-0" aria-label={lang === 'hi' ? 'समयरेखा' : 'Timeline'}>
+  {events.map(ev => (
+    <li key={ev.id} className="relative flex gap-4">
+      {/* ...existing content... */}
+    </li>
+  ))}
+</ol>
+```
+
+---
+
+### FIX-09 · ACC-10 — Facts delete button is `✕` with no `aria-label`
+
+**File:** `src/screens/Facts.tsx:262`
+
+```tsx
+// BEFORE
+<button onClick={() => deleteFact(fact.id)} className="text-xs text-[var(--color-muted)] hover:text-[var(--color-danger)] px-2 py-1 rounded transition-colors">
+  ✕
+</button>
+
+// AFTER
+<button
+  onClick={() => deleteFact(fact.id)}
+  aria-label={lang === 'hi' ? `"${fact.statement.slice(0, 30)}..." हटाएं` : `Delete fact: "${fact.statement.slice(0, 30)}..."`}
+  className="min-h-[44px] min-w-[44px] flex items-center justify-center text-[var(--color-muted)] hover:text-[var(--color-danger)] rounded transition-colors"
+>
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+</button>
+```
+
+---
+
+### FIX-10 · ACC-11 — Facts action buttons are `size="sm"` (32px), below 44px touch minimum
+
+**File:** `src/screens/Facts.tsx:241–266`
+
+Add `className="min-h-[44px] md:min-h-8"` to every `<Button size="sm">` in the action row:
+
+```tsx
+<Button size="sm" variant="primary"
+  className="min-h-[44px] md:min-h-8"
+  onClick={() => updateFact(fact.id, { confirmed: true, provenance: 'confirmed' })}>
+  ✓ {t(lang, 'confirmFact')}
+</Button>
+// repeat pattern for all four action buttons
+```
+
+---
+
+### FIX-11 · ACC-12 — Edit textarea has no `aria-label`
+
+**File:** `src/screens/Facts.tsx:203–207`
+
+```tsx
+// BEFORE
+<Textarea
+  value={editText}
+  onChange={setEditText}
+  className="mb-2"
+/>
+
+// AFTER
+<Textarea
+  value={editText}
+  onChange={setEditText}
+  aria-label={lang === 'hi' ? 'तथ्य संपादित करें' : 'Edit fact statement'}
+  className="mb-2"
+/>
+```
+
+---
+
+### FIX-12 · ACC-13 — DocumentViewer new-fact textarea has no `aria-label`
+
+**File:** `src/screens/Evidence.tsx:341–347`
+
+```tsx
+// BEFORE
+<Textarea
+  value={newFact}
+  onChange={setNewFact}
+  placeholder={lang === 'hi' ? 'नया तथ्य लिखें…' : 'Write a new fact…'}
+  className="mb-2 text-sm"
+/>
+
+// AFTER
+<Textarea
+  value={newFact}
+  onChange={setNewFact}
+  aria-label={lang === 'hi' ? 'नया तथ्य' : 'New fact statement'}
+  placeholder={lang === 'hi' ? 'नया तथ्य लिखें…' : 'Write a new fact…'}
+  className="mb-2 text-sm"
+/>
+```
+
+---
+
+### FIX-13 · ACC-14 — Card `onKeyDown` handles Enter only, not Space
+
+**File:** `src/components/ui.tsx:126`
 
 ```tsx
 // BEFORE
@@ -280,118 +360,136 @@ onKeyDown={onClick ? (e) => {
 
 ---
 
-### FIX-08 · Document viewer — label back button and page nav buttons
+### FIX-14 · ACC-06 — StepBar `role="progressbar"` missing `aria-label`
 
-**File:** `src/screens/Evidence.tsx`  
-**Covers:** ACC-07, ACC-08
-
-```tsx
-// Back button — BEFORE
-<button onClick={onBack} className="text-[var(--color-navy-mid)] hover:text-[var(--color-navy)]">
-  <svg ...>...</svg>
-</button>
-
-// Back button — AFTER
-<button
-  onClick={onBack}
-  aria-label={lang === 'hi' ? 'वापस जाएं' : 'Go back'}
-  className="text-[var(--color-navy-mid)] hover:text-[var(--color-navy)]"
->
-  <svg aria-hidden="true" ...>...</svg>
-</button>
-
-// Prev page — BEFORE
-<button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="disabled:opacity-30 hover:text-[var(--color-navy)]">‹</button>
-
-// Prev page — AFTER
-<button
-  onClick={() => setPage(p => Math.max(1, p - 1))}
-  disabled={page === 1}
-  aria-label={lang === 'hi' ? 'पिछला पृष्ठ' : 'Previous page'}
-  className="disabled:opacity-30 hover:text-[var(--color-navy)]"
->
-  <span aria-hidden="true">‹</span>
-</button>
-
-// Next page — AFTER (same pattern)
-<button
-  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-  disabled={page === totalPages}
-  aria-label={lang === 'hi' ? 'अगला पृष्ठ' : 'Next page'}
-  className="disabled:opacity-30 hover:text-[var(--color-navy)]"
->
-  <span aria-hidden="true">›</span>
-</button>
-```
-
----
-
-### FIX-09 · Timeline — semantic `<ol>/<li>`
-
-**File:** `src/screens/Analysis.tsx`  
-**Covers:** ACC-09
+**File:** `src/components/ui.tsx:342`
 
 ```tsx
 // BEFORE
-<div className="space-y-6">
-  {timelineItems.map((event, i) => (
-    <div key={event.id} className="flex gap-4 relative">
+<div className="flex items-center gap-1" role="progressbar" aria-valuenow={current + 1} aria-valuemax={steps.length}>
 
 // AFTER
-<ol
-  className="space-y-6"
-  aria-label={lang === 'hi' ? 'घटनाओं की समयरेखा' : 'Timeline of events'}
+<div
+  className="flex items-center gap-1"
+  role="progressbar"
+  aria-valuenow={current + 1}
+  aria-valuemin={1}
+  aria-valuemax={steps.length}
+  aria-label={`Step ${current + 1} of ${steps.length}`}
 >
-  {timelineItems.map((event, i) => (
-    <li key={event.id} className="flex gap-4 relative list-none">
 ```
 
 ---
 
-### FIX-10 · Shell — mobile step indicator + dispute nav strip
+### FIX-15 · ACC-15 — Language toggle buttons have no `aria-label` or `aria-pressed`
 
-**File:** `src/components/Shell.tsx`  
-**Covers:** MOB-01, MOB-02
-
-Add step chip to the top bar (inside `<header>`):
+**File:** `src/components/Shell.tsx:112–122` (sidebar) and `163–164` (top bar)
 
 ```tsx
-// Shell.tsx — inside <header>, between back button and right controls
-{inDispute && activeDispute && (
-  <span className="md:hidden absolute left-1/2 -translate-x-1/2 pointer-events-none text-xs font-semibold text-[var(--color-navy)] bg-[var(--color-amber-100)] border border-[var(--color-amber-200)] px-2.5 py-0.5 rounded-full whitespace-nowrap">
-    {DISPUTE_STEPS.findIndex(d => d.screen === screen) + 1}
-    {' / '}
-    {DISPUTE_STEPS.length}
-    {' — '}
-    {lang === 'hi'
-      ? DISPUTE_STEPS.find(d => d.screen === screen)?.labelHi
-      : DISPUTE_STEPS.find(d => d.screen === screen)?.short}
-  </span>
-)}
+// BEFORE (sidebar, line 112)
+<button onClick={() => setLang('en')} className={`text-xs px-2 py-0.5 rounded ${lang === 'en' ? '...' : '...'}`}>EN</button>
+<button onClick={() => setLang('hi')} className={`text-xs px-2 py-0.5 rounded ${lang === 'hi' ? '...' : '...'}`}>हि</button>
+
+// AFTER
+<button
+  onClick={() => setLang('en')}
+  aria-label="Switch to English"
+  aria-pressed={lang === 'en'}
+  className={`text-xs px-2 py-0.5 rounded ${lang === 'en' ? '...' : '...'}`}
+>EN</button>
+<button
+  onClick={() => setLang('hi')}
+  aria-label="हिंदी में बदलें"
+  aria-pressed={lang === 'hi'}
+  className={`text-xs px-2 py-0.5 rounded ${lang === 'hi' ? '...' : '...'}`}
+>हि</button>
 ```
 
-Replace bottom `<nav>` with conditional:
+Apply same pattern to top-bar equivalents at lines 163–164.
+
+---
+
+### FIX-16 · ACC-16 — Sidebar main nav buttons missing `aria-current`
+
+**File:** `src/components/Shell.tsx:68–77`
 
 ```tsx
-// Shell.tsx — BEFORE
-<nav className="md:hidden flex border-t border-[var(--color-border)] bg-white">
-  {MAIN_NAV.slice(0, 4).map(item => ( ... ))}
-</nav>
+// BEFORE
+<button key={item.screen} onClick={() => nav(item.screen)} className={`...`}>
 
-// Shell.tsx — AFTER
+// AFTER
+<button
+  key={item.screen}
+  onClick={() => nav(item.screen)}
+  aria-current={screen === item.screen ? 'page' : undefined}
+  className={`...`}
+>
+```
+
+---
+
+### FIX-17 · ACC-17 — Mobile bottom nav buttons have no explicit `aria-label`
+
+**File:** `src/components/Shell.tsx:175–187`
+
+```tsx
+// BEFORE
+<button key={item.screen} onClick={() => nav(item.screen)} aria-current={screen === item.screen ? 'page' : undefined} className={`...`}>
+
+// AFTER
+<button
+  key={item.screen}
+  onClick={() => nav(item.screen)}
+  aria-current={screen === item.screen ? 'page' : undefined}
+  aria-label={lang === 'hi' ? item.labelHi : item.label}
+  className={`...`}
+>
+```
+
+---
+
+### FIX-18 · MOB-01 — No step position indicator on mobile during dispute flow
+
+**File:** `src/components/Shell.tsx:133–167` (top bar)
+
+Insert after logo div, before `ml-auto` controls:
+
+```tsx
+{inDispute && (() => {
+  const stepIdx = DISPUTE_STEPS.findIndex(d => d.screen === screen);
+  const step = DISPUTE_STEPS[stepIdx];
+  return step ? (
+    <span className="md:hidden absolute left-1/2 -translate-x-1/2 pointer-events-none
+      text-xs font-semibold text-[var(--color-navy)] bg-[var(--color-amber-100)]
+      border border-[var(--color-amber-200)] px-2.5 py-0.5 rounded-full whitespace-nowrap">
+      {stepIdx + 1} / {DISPUTE_STEPS.length} — {lang === 'hi' ? step.labelHi : step.short}
+    </span>
+  ) : null;
+})()}
+```
+
+---
+
+### FIX-19 · MOB-02 — Bottom nav always shows main tabs during dispute flow
+
+**File:** `src/components/Shell.tsx:175–187`
+
+Wrap existing `<nav>` with `{inMain && ...}` and add a dispute strip:
+
+```tsx
 {inMain ? (
   <nav className="md:hidden flex border-t border-[var(--color-border)] bg-white">
     {MAIN_NAV.slice(0, 4).map(item => (
       <button
         key={item.screen}
         onClick={() => nav(item.screen)}
-        aria-label={lang === 'hi' ? item.labelHi : item.label}
         aria-current={screen === item.screen ? 'page' : undefined}
+        aria-label={lang === 'hi' ? item.labelHi : item.label}
         className={`flex-1 flex flex-col items-center py-2.5 gap-0.5 text-xs font-medium transition-colors
           ${screen === item.screen ? 'text-[var(--color-navy)]' : 'text-[var(--color-muted)]'}`}
       >
         <span aria-hidden="true" className="text-lg leading-none">{item.icon}</span>
-        <span className="text-[10px]">{lang === 'hi' ? item.labelHi.slice(0, 6) : item.label.split(' ')[0]}</span>
+        <span className="text-[10px]">{lang === 'hi' ? item.labelHi : item.label}</span>
       </button>
     ))}
   </nav>
@@ -401,16 +499,16 @@ Replace bottom `<nav>` with conditional:
       onClick={back}
       disabled={!canGoBack}
       aria-label={lang === 'hi' ? 'पिछला चरण' : 'Previous step'}
-      className="text-sm font-medium text-[var(--color-navy-mid)] disabled:opacity-30 flex items-center gap-1"
+      className="text-sm font-medium text-[var(--color-navy-mid)] disabled:opacity-30 flex items-center gap-1.5 min-w-[44px] min-h-[44px]"
     >
-      ← <span>{lang === 'hi' ? 'पिछला' : 'Prev'}</span>
+      ← {lang === 'hi' ? 'पिछला' : 'Prev'}
     </button>
-    <span className="text-xs font-semibold text-[var(--color-ink)]">
+    <span className="text-xs font-semibold text-[var(--color-ink)] text-center flex-1 px-2">
       {lang === 'hi'
         ? DISPUTE_STEPS.find(d => d.screen === screen)?.labelHi
         : DISPUTE_STEPS.find(d => d.screen === screen)?.short}
     </span>
-    <span className="text-xs text-[var(--color-muted)]">
+    <span className="text-xs text-[var(--color-muted)] whitespace-nowrap">
       {DISPUTE_STEPS.findIndex(d => d.screen === screen) + 1} / {DISPUTE_STEPS.length}
     </span>
   </div>
@@ -419,69 +517,14 @@ Replace bottom `<nav>` with conditional:
 
 ---
 
-### FIX-11 · U07 Document Viewer — bottom sheet on mobile
+### FIX-20 · MOB-04 — All screen CTAs need sticky bottom strip on mobile
 
-**File:** `src/screens/Evidence.tsx`  
-**Covers:** MOB-03
+**Files:** `DisputeEntry.tsx:72`, `DisputeEntry.tsx:288`, `Evidence.tsx:184`, `Facts.tsx:273`, `Analysis.tsx:95`, `Export.tsx:106`
 
-```tsx
-// Add state at top of DocumentViewer
-const [sheetOpen, setSheetOpen] = useState(false);
-
-// Change outer wrapper
-<div className="relative flex flex-col lg:flex-row h-full overflow-hidden">
-
-  {/* Document panel */}
-  <div className="flex-1 flex flex-col bg-[var(--color-surface-2)] overflow-hidden min-h-0">
-    ...existing...
-  </div>
-
-  {/* Fact panel */}
-  <div className={`
-    w-full lg:w-80 flex-shrink-0 bg-white
-    border-t lg:border-t-0 lg:border-l border-[var(--color-border)]
-    overflow-y-auto
-    fixed bottom-0 left-0 right-0 z-40
-    lg:relative lg:z-auto
-    transition-transform duration-300 ease-out
-    max-h-[60vh] lg:max-h-none
-    ${sheetOpen ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'}
-  `}>
-    <div
-      className="lg:hidden flex justify-center py-3 cursor-pointer"
-      onClick={() => setSheetOpen(false)}
-      role="button"
-      aria-label={lang === 'hi' ? 'बंद करें' : 'Close panel'}
-    >
-      <div className="w-10 h-1 rounded-full bg-[var(--color-border-2)]" />
-    </div>
-    ...existing fact panel content...
-  </div>
-
-  {/* FAB — mobile only */}
-  <button
-    onClick={() => setSheetOpen(o => !o)}
-    aria-label={sheetOpen
-      ? (lang === 'hi' ? 'पैनल बंद करें' : 'Close panel')
-      : (lang === 'hi' ? 'तथ्य जोड़ें / लिंक करें' : 'Link facts')}
-    className="lg:hidden fixed bottom-20 right-4 z-50 w-12 h-12 rounded-full bg-[var(--color-amber)] text-[var(--color-navy)] font-bold text-xl shadow-[var(--shadow-lg)] flex items-center justify-center transition-transform"
-  >
-    {sheetOpen ? '✕' : '⊕'}
-  </button>
-</div>
-```
-
----
-
-### FIX-12 · Sticky CTA pattern — all 6 screens
-
-**Files:** `DisputeEntry.tsx` (WhatHappened + Intake), `Evidence.tsx` (EvidenceLocker), `Facts.tsx`, `Analysis.tsx` (Timeline), `Export.tsx` (ExportPreview)  
-**Covers:** MOB-04
-
-Replace each inline `<div className="mt-6 flex gap-3">` CTA block with the sticky pattern. Apply before the closing `</PageWrapper>`:
+Pattern to apply to each CTA block:
 
 ```tsx
-{/* Prevents content from hiding behind sticky bar on mobile */}
+{/* Spacer */}
 <div className="h-20 md:hidden" aria-hidden="true" />
 
 {/* Sticky CTA */}
@@ -494,74 +537,62 @@ Replace each inline `<div className="mt-6 flex gap-3">` CTA block with the stick
   flex gap-3 z-30
   shadow-[0_-2px_8px_rgba(0,0,0,0.06)] md:shadow-none
 ">
-  <Button variant="secondary" onClick={onBack} className="flex-shrink-0">
-    {lang === 'hi' ? 'वापस' : 'Back'}
-  </Button>
-  <Button onClick={handleContinue} fullWidth>
+  {showBack && (
+    <Button variant="secondary" onClick={onBack} className="flex-shrink-0">
+      {lang === 'hi' ? 'वापस' : 'Back'}
+    </Button>
+  )}
+  <Button variant="amber" onClick={handleContinue} fullWidth>
     {/* screen-specific label */}
   </Button>
 </div>
 ```
 
-For `WhatHappened` (no Back button), omit the secondary button and use `fullWidth` only.
+Screens: `WhatHappened` (no back), `Intake`, `EvidenceLocker`, `FactList`, `Timeline`, `ExportPreview`.
 
 ---
 
-## P2 — Visual and UX polish
+## P2 — High UX / Medium Mobile
 
----
+### FIX-21 · UX-01 — Drop zone drag-active uses navy instead of amber
 
-### FIX-13 · Fact card — 4px state-coded left border
-
-**File:** `src/screens/Facts.tsx`  
-**Covers:** UX-04
-
-Add before the fact card `<div>`:
+**File:** `src/screens/Evidence.tsx:87`
 
 ```tsx
-function factBorderClass(fact: Fact): string {
-  if (fact.confirmed)                     return 'border-[var(--color-border)] border-l-[var(--color-success)] border-l-4';
-  if (fact.provenance === 'uncertain')    return 'border-[var(--color-border)] border-l-[var(--color-warning)] border-l-4';
-  if (fact.provenance === 'corrected')    return 'border-[var(--color-border)] border-l-[var(--color-navy)] border-l-4';
-  if (fact.provenance === 'not-relevant') return 'border-[var(--color-border)] opacity-50';
-  return 'border-[var(--color-border)]';
-}
-```
+// BEFORE
+? 'border-[var(--color-navy-mid)] bg-[var(--color-navy)]/5'
 
-Update card `className`:
-
-```tsx
-<div className={`bg-white rounded-[var(--radius-lg)] border p-4 transition-colors ${factBorderClass(fact)}`}>
+// AFTER
+? 'border-[var(--color-amber)] bg-[var(--color-amber-50)]'
 ```
 
 ---
 
-### FIX-14 · U06 drop zone — amber drag-active state
+### FIX-22 · UX-02 — Uploading state shows no progress bar
 
-**File:** `src/screens/Evidence.tsx:54`  
-**Covers:** UX-01
-
-```tsx
-${dragging
-  ? 'border-[var(--color-amber)] bg-[var(--color-amber-50)]'
-  : 'border-[var(--color-border-2)] hover:border-[var(--color-navy-mid)] hover:bg-[var(--color-surface-2)]'
-}
-```
-
----
-
-### FIX-15 · U06 uploading state — add progress bar
-
-**File:** `src/screens/Evidence.tsx`  
-**Covers:** UX-02
+**File:** `src/screens/Evidence.tsx:168–172`
 
 ```tsx
-// Replace scanning block with:
+// BEFORE — only scanning has bar
+{ev.status === 'scanning' && (
+  <div className="mt-2 h-1 bg-[var(--color-surface-2)] rounded-full overflow-hidden">
+    <div className="h-full bg-[var(--color-amber)] rounded-full animate-pulse" style={{ width: '60%' }} />
+  </div>
+)}
+
+// AFTER — both states get bar
 {(ev.status === 'uploading' || ev.status === 'scanning') && (
   <div className="mt-2 h-1 bg-[var(--color-surface-2)] rounded-full overflow-hidden">
     <div
       className="h-full bg-[var(--color-amber)] rounded-full animate-pulse"
-      style={{ width: ev.status === 'uploading' ? '35%' : '70%' }}
+      style={{ width: ev.status === 'uploading' ? '35%' : '65%' }}
+      role="progressbar"
+      aria-valuenow={ev.status === 'uploading' ? 35 : 65}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label={ev.status === 'uploading'
+        ? (lang === 'hi' ? 'अपलोड हो रहा है' : 'Uploading')
+        : (lang === 'hi' ? 'स्कैन हो रहा है' : 'Scanning')}
     />
   </div>
 )}
@@ -569,12 +600,31 @@ ${dragging
 
 ---
 
-### FIX-16 · U16 export summary — 3-column stat card grid
+### FIX-23 · UX-04 — Fact cards missing state-coded 4px left border
 
-**File:** `src/screens/Export.tsx`  
-**Covers:** UX-07
+**File:** `src/screens/Facts.tsx:198`
 
-Replace the `grid grid-cols-2` key-value block with:
+```tsx
+// Helper
+function factBorderClass(fact: Fact): string {
+  if (fact.confirmed)                       return 'border-[var(--color-border)] border-l-4 border-l-[var(--color-success)]';
+  if (fact.provenance === 'uncertain')      return 'border-[var(--color-border)] border-l-4 border-l-[var(--color-warning)]';
+  if (fact.provenance === 'corrected')      return 'border-[var(--color-border)] border-l-4 border-l-[var(--color-navy)]';
+  if (fact.provenance === 'not-relevant')   return 'border-[var(--color-border)] opacity-50';
+  return 'border-[var(--color-border)]';
+}
+
+// Usage (line 198):
+<div className={`bg-white rounded-[var(--radius-lg)] border p-4 transition-colors ${factBorderClass(fact)}`}>
+```
+
+---
+
+### FIX-24 · UX-07 — Export summary uses 2-col key-value, not 3-col stat cards
+
+**File:** `src/screens/Export.tsx:86–104`
+
+Replace the existing `div.bg-surface-2` block with:
 
 ```tsx
 <div className="grid grid-cols-3 gap-3 mb-6">
@@ -583,9 +633,10 @@ Replace the `grid grid-cols-2` key-value block with:
     { value: readyDocs.length,      label: lang === 'hi' ? 'दस्तावेज़' : 'Documents' },
     { value: dispute.parties.length,label: lang === 'hi' ? 'पक्षकार' : 'Parties' },
   ].map(({ value, label }) => (
-    <div key={label} className="bg-white rounded-[var(--radius-md)] border border-[var(--color-border)] shadow-[var(--shadow-sm)] p-4 text-center">
+    <div key={label}
+      className="bg-white rounded-[var(--radius-md)] border border-[var(--color-border)] shadow-[var(--shadow-sm)] p-4 text-center">
       <div className="text-2xl font-bold text-[var(--color-navy)]">{value}</div>
-      <div className="text-xs text-[var(--color-muted)] mt-1">{label}</div>
+      <div className="text-xs text-[var(--color-muted)] mt-1 leading-tight">{label}</div>
     </div>
   ))}
 </div>
@@ -593,106 +644,94 @@ Replace the `grid grid-cols-2` key-value block with:
 
 ---
 
-### FIX-17 · Fact card inline edit textarea — add `aria-label`
+### FIX-25 · MOB-03 — DocumentViewer fact panel stacks full-height, needs bottom sheet on mobile
 
-**File:** `src/screens/Facts.tsx`  
-**Covers:** ACC-11
-
-```tsx
-<textarea
-  value={editText}
-  onChange={e => setEditText(e.target.value)}
-  aria-label={lang === 'hi' ? 'तथ्य सुधारें' : 'Edit fact statement'}
-  placeholder={lang === 'hi' ? 'तथ्य सुधारें…' : 'Edit fact statement…'}
-  autoFocus
-  className="..."
-/>
-```
-
----
-
-### FIX-18 · Language toggle — add `aria-pressed` and expanded names
-
-**File:** `src/components/Shell.tsx` (sidebar ~88, mobile ~168)  
-**Covers:** ACC-12
+**File:** `src/screens/Evidence.tsx:250`
 
 ```tsx
-// Sidebar language buttons
-<button
-  onClick={() => setLang('en')}
-  aria-label="Switch to English"
-  aria-pressed={lang === 'en'}
-  className={`flex-1 py-1.5 rounded text-xs font-semibold transition-colors
-    ${lang === 'en' ? 'bg-white/20 text-white' : 'text-white/40 hover:text-white/70'}`}
->EN</button>
-<button
-  onClick={() => setLang('hi')}
-  aria-label="हिंदी में बदलें"
-  aria-pressed={lang === 'hi'}
-  className={`flex-1 py-1.5 rounded text-xs font-semibold transition-colors
-    ${lang === 'hi' ? 'bg-white/20 text-white' : 'text-white/40 hover:text-white/70'}`}
->हिं</button>
+// Add near top of DocumentViewer component:
+const [sheetOpen, setSheetOpen] = useState(false);
 
-// Mobile top bar — same aria attributes, different visual classes
-```
-
----
-
-### FIX-19 · U05 date+precision — narrow precision column
-
-**File:** `src/screens/DisputeEntry.tsx`  
-**Covers:** UX-09
-
-```tsx
-// Both date+precision grid pairs:
-<div className="grid grid-cols-1 sm:grid-cols-[1fr_128px] gap-3 sm:gap-2">
-  <Input label={...} ... />
-  <Select label={t(lang, 'datePrecision')} ... className="sm:self-end" />
-</div>
-```
-
----
-
-### FIX-20 · U17 hash — add copy button
-
-**File:** `src/screens/Export.tsx`  
-**Covers:** UX-08
-
-```tsx
-// Replace hash row inside integrity manifest:
-<div className="px-4 py-2.5">
-  <p className="text-xs text-[var(--color-muted)] mb-1">
-    {lang === 'hi' ? 'अखंडता हैश' : 'Integrity hash'}
-  </p>
-  <div className="flex items-center gap-2 bg-[var(--color-surface-2)] rounded px-2 py-1.5">
-    <code className="text-xs text-[var(--color-ink-2)] font-mono break-all flex-1 select-all">
-      {mockHash}
-    </code>
-    <button
-      onClick={() => navigator.clipboard?.writeText(mockHash)}
-      aria-label={lang === 'hi' ? 'हैश कॉपी करें' : 'Copy hash'}
-      title={lang === 'hi' ? 'कॉपी करें' : 'Copy'}
-      className="flex-shrink-0 p-1 text-[var(--color-muted)] hover:text-[var(--color-navy)] transition-colors rounded"
-    >
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.3"/>
-        <path d="M2 10V2h8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-      </svg>
-    </button>
+// Outer wrapper:
+<div className="relative flex flex-col lg:flex-row h-full max-h-full overflow-hidden">
+  {/* Document panel (unchanged) */}
+  <div className="flex-1 flex flex-col bg-[var(--color-surface-2)] overflow-hidden">
+    {/* ...existing content... */}
   </div>
+
+  {/* Fact panel — bottom sheet on mobile */}
+  <div className={`
+    w-full lg:w-80 flex-shrink-0 bg-white
+    border-t lg:border-t-0 lg:border-l border-[var(--color-border)]
+    overflow-y-auto
+    fixed bottom-0 left-0 right-0 z-40
+    lg:relative lg:z-auto
+    transition-transform duration-300 ease-out
+    max-h-[65vh] lg:max-h-none rounded-t-2xl lg:rounded-none
+    ${sheetOpen ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'}
+  `}>
+    <div
+      className="lg:hidden flex justify-center py-3 cursor-pointer"
+      role="button"
+      aria-label={lang === 'hi' ? 'बंद करें' : 'Close panel'}
+      onClick={() => setSheetOpen(false)}
+    >
+      <div className="w-10 h-1 rounded-full bg-[var(--color-border-2)]" />
+    </div>
+    {/* ...existing fact panel content unchanged... */}
+  </div>
+
+  {/* FAB — mobile only */}
+  <button
+    onClick={() => setSheetOpen(o => !o)}
+    aria-label={sheetOpen
+      ? (lang === 'hi' ? 'पैनल बंद करें' : 'Close panel')
+      : (lang === 'hi' ? 'तथ्य लिंक करें' : 'Link facts')}
+    className="lg:hidden fixed bottom-20 right-4 z-50 w-12 h-12 rounded-full
+      bg-[var(--color-amber)] text-[var(--color-navy)] font-bold text-xl
+      shadow-[var(--shadow-lg)] flex items-center justify-center"
+  >
+    {sheetOpen ? '✕' : '+'}
+  </button>
 </div>
 ```
 
 ---
 
-## P3 — Low-impact polish
+### FIX-26 · MOB-05 — `WhatHappened` textarea too tall on mobile
+
+**File:** `src/screens/DisputeEntry.tsx:57`
+
+```tsx
+// BEFORE
+className="min-h-64 text-base leading-relaxed"
+
+// AFTER
+className="min-h-40 md:min-h-64 text-base leading-relaxed"
+```
 
 ---
 
-### FIX-21 · Timeline line — increase to 2px
+### FIX-27 · MOB-06 — Facts action row wraps to 3+ lines on 375px
 
-**File:** `src/screens/Analysis.tsx`  
-**Covers:** UX-06
+**File:** `src/screens/Facts.tsx:241`
+
+```tsx
+// BEFORE
+<div className="flex flex-wrap gap-1.5">
+
+// AFTER — 2×2 grid on mobile, flex row on md+
+<div className="grid grid-cols-2 gap-1.5 md:flex md:flex-wrap md:gap-1.5">
+  {/* existing buttons unchanged, add className="min-h-[44px] md:min-h-8" to each */}
+```
+
+---
+
+## P3 — Low Priority / Polish
+
+### FIX-28 · UX-06 — Timeline line is 1px, slightly off-centre
+
+**File:** `src/screens/Analysis.tsx:51`
 
 ```tsx
 // BEFORE
@@ -704,65 +743,76 @@ Replace the `grid grid-cols-2` key-value block with:
 
 ---
 
-### FIX-22 · U08 — confirmed badge / action divider
+### FIX-29 · UX-08 — U17 hash missing copy button
 
-**File:** `src/screens/Facts.tsx`  
-**Covers:** UX-05
+**File:** `src/screens/Export.tsx:172–175`
 
 ```tsx
-<div className="flex flex-wrap gap-1.5 items-center pt-2 border-t border-[var(--color-border)]">
-  {fact.confirmed
-    ? <><Badge variant="success">✓ {t(lang, 'confirmed')}</Badge><span aria-hidden="true" className="text-[var(--color-border-2)] mx-0.5">|</span></>
-    : <Button size="sm" variant="primary" className="min-h-[44px] md:min-h-0" onClick={...}>✓ {t(lang, 'confirmFact')}</Button>
-  }
-  ...remaining buttons...
+// BEFORE
+<code className="text-xs text-[var(--color-ink-2)] font-mono break-all block bg-[var(--color-surface-2)] px-2 py-1.5 rounded">
+  {mockHash}
+</code>
+
+// AFTER
+<div className="flex items-center gap-2 bg-[var(--color-surface-2)] rounded px-2 py-1.5">
+  <code className="text-xs text-[var(--color-ink-2)] font-mono break-all flex-1 select-all">
+    {mockHash}
+  </code>
+  <button
+    onClick={() => navigator.clipboard?.writeText(mockHash)}
+    aria-label={lang === 'hi' ? 'हैश कॉपी करें' : 'Copy hash'}
+    className="flex-shrink-0 p-1.5 min-h-[44px] min-w-[44px] flex items-center justify-center
+      text-[var(--color-muted)] hover:text-[var(--color-navy)] transition-colors rounded"
+  >
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.3"/>
+      <path d="M2 10V2h8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+    </svg>
+  </button>
 </div>
 ```
 
 ---
 
-## Commit instructions (when GitHub access is restored)
+### FIX-30 · UX-09 — Date+precision grid equal columns, spec wants fixed 128px precision
 
-```bash
-git checkout -b fix/a050-accessibility-ux-mobile
+**File:** `src/screens/DisputeEntry.tsx:246, 261`
 
-# Stage only source and docs
-git add src/components/ui.tsx
-git add src/components/Shell.tsx
-git add src/screens/Evidence.tsx
-git add src/screens/Facts.tsx
-git add src/screens/DisputeEntry.tsx
-git add src/screens/Analysis.tsx
-git add src/screens/Export.tsx
-git add docs/ai/tool-output/figma/A-050/
+```tsx
+// BEFORE (both instances)
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-git commit -m "fix(a050): accessibility, mobile, and UX gaps from A-043 audit
-
-- ACC-01: Select label/htmlFor association
-- ACC-02: Toggle aria-label
-- ACC-03: Checkbox real input element
-- ACC-04: File input aria-hidden removed
-- ACC-05: StepBar aria-label
-- ACC-06: Fact action touch targets 44px
-- ACC-07/08: DocumentViewer button labels
-- ACC-09: Timeline ol/li semantics
-- ACC-10: Card Space key activation
-- ACC-11: Edit textarea label
-- ACC-12/13: Language toggle and bottom nav labels
-- ACC-14: Radio group real input elements
-- MOB-01/02: Mobile step indicator + dispute nav strip
-- MOB-03: DocumentViewer bottom sheet + FAB
-- MOB-04: Sticky CTA pattern all 6 screens
-- MOB-05: U04 textarea responsive min-height
-- MOB-06: U08 action row 2x2 grid on mobile
-- UX-01: Drop zone amber drag-active
-- UX-02: Upload progress bar
-- UX-04: Fact card state-coded left border
-- UX-07: U16 3-column stat card grid
-"
-
-git push origin fix/a050-accessibility-ux-mobile
-# Then open draft PR against main
+// AFTER
+<div className="grid grid-cols-1 sm:grid-cols-[1fr_128px] gap-4 sm:gap-2">
+  {/* date Input: unchanged */}
+  {/* precision Select: add className="sm:self-end" */}
+</div>
 ```
 
-**Current status:** `GH_TOKEN` is invalid. Apply fixes locally and push manually, or supply a valid token.
+---
+
+### FIX-31 · UX-05 — Confirmed badge inline with action buttons, no separator
+
+**File:** `src/screens/Facts.tsx:242`
+
+Wrap entire action row in a `pt-2 border-t` container and separate the confirmed Badge from action buttons with a `|` divider. Full fix in `ux-gaps.md:UX-05`.
+
+---
+
+### FIX-32 · UX-03 — Fact link panel shows no ProvenanceBadge per fact
+
+**File:** `src/screens/Evidence.tsx:311`
+
+Add a `<ProvenanceBadge type={fact.provenance} lang={lang} />` below each fact statement in the link panel. Full fix in `ux-gaps.md:UX-03`.
+
+---
+
+## Fix count summary
+
+| Priority | Count | IDs |
+|----------|-------|-----|
+| P0 — Critical accessibility | 5 | FIX-01…05 |
+| P1 — High accessibility + high mobile | 15 | FIX-06…20 |
+| P2 — High UX / medium mobile | 7 | FIX-21…27 |
+| P3 — Low / polish | 5 | FIX-28…32 |
+| **Total** | **32** | |
