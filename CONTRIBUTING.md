@@ -147,10 +147,10 @@ The founder reports only "CC done", "Gemini done", "Lovable done" or "Figma done
 1. **Commit** the work with explicit paths and a tagged subject: `[TOOL:<TOOL>][TASK:<task-id>] <type>(<scope>): <summary>` (tools: `claude-code`, `gemini`, `lovable`, `figma`).
 2. **Push** the branch.
 3. **Write** `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` and `SUMMARY.md`.
-4. **Update** [`docs/ai/CURRENT_STATE.json`](docs/ai/CURRENT_STATE.json) and [`docs/ai/NEXT_TASK.json`](docs/ai/NEXT_TASK.json).
+4. **Update** [`docs/ai/CURRENT_STATE.json`](docs/ai/CURRENT_STATE.json) and [`docs/ai/NEXT_TASK.json`](docs/ai/NEXT_TASK.json) — both are **canonical** (A-044-R2).
 5. Run `node scripts/ai/state.mjs generate` and `check`, **commit and push the state**, confirm a clean worktree and green CI.
 
-`task-gate` enforces it: a missing, malformed, stale or contradictory handoff fails CI, and so does unrecorded work after the latest completion. Paths, schema, recovery and examples: [`docs/ai/README.md`](docs/ai/README.md).
+`task-gate` enforces it: CI fails on a missing HANDOFF, a stale CURRENT_STATE, a stale NEXT_TASK, missing task ownership, a malformed or contradictory handoff, and unrecorded work after the latest completion. `node scripts/ai/state.mjs status` shows the last completion per tool, active tasks, the next awaited output and the next recommended assignment. Paths, schema, recovery and examples: [`docs/ai/README.md`](docs/ai/README.md).
 
 ### State limitations honestly
 

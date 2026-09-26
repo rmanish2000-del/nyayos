@@ -5,6 +5,21 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-26 — AI operating system: canonical state, ownership and staleness gates, status command (A-044-R2)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**
+
+### Added
+
+- `node scripts/ai/state.mjs status [--json]`: last completed task per tool, active tasks, next awaited output, next recommended assignment.
+- Blocked handoffs (ownership of work not in the repository); Gemini A-047 recorded as blocked — repository handoff missing (registered OPEN).
+
+### Changed
+
+- `CURRENT_STATE.json` and `NEXT_TASK.json` are canonical (`authority: canonical`); `tools.<tool>` is fully derived. CI also fails on missing task ownership and a stale NEXT_TASK. Registry A-044-R2 REVIEW, A-047 OPEN.
+
+---
+
 ## 2026-09-26 — Tool handoff system completed and repaired (A-044-R)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**

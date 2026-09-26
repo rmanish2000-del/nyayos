@@ -16,7 +16,18 @@ M365 Copilot then reads GitHub, not chat, and finds everything in this folder.
 | Which output is awaited next | `CURRENT_STATE.json` → `awaited_outputs` (order 1 first) |
 | Which assignment should follow | `NEXT_TASK.json` |
 
-Start with the generated one-page view: [`STATUS_SUMMARY.md`](STATUS_SUMMARY.md).
+Start with one command, or the generated page:
+
+```bash
+node scripts/ai/state.mjs status          # last completed task per tool, active tasks, next awaited output, next recommended assignment
+node scripts/ai/state.mjs status --json   # the same, machine-readable
+```
+
+[`STATUS_SUMMARY.md`](STATUS_SUMMARY.md) carries the same block at the top.
+
+## Canonical state (A-044-R2)
+
+**`CURRENT_STATE.json` and `NEXT_TASK.json` are canonical** (`"authority": "canonical"`). They are the operating state every tool reads first and **every tool updates on every task**. Within them, everything that can be derived is derived and checked by CI: `tools.<tool>` (status, reason, latest completion, commit and handoff), `latest_completion` and the registry counts. A stale or hand-set value fails CI. The status registry keeps its role for the task lifecycle (OPEN, REVIEW, CANONICAL), and CI keeps the two consistent. Neither may contradict the other.
 
 ## Files
 
@@ -27,7 +38,7 @@ Start with the generated one-page view: [`STATUS_SUMMARY.md`](STATUS_SUMMARY.md)
 | [`NEXT_TASK.json`](NEXT_TASK.json) | Task ID (null until the founder issues it), assigned tool, priority, dependencies, ready flag, repository baseline, required inputs, expected outputs, environment, deployment permission | Tool completing a task |
 | [`DECISIONS.json`](DECISIONS.json), [`RISKS.json`](RISKS.json) | Decisions (Decision Log, A-032 §9 candidates, rulings in briefs); risks (Risk Register) and engineering residuals | `generate` for derived parts; residuals and rulings by hand |
 | [`schemas/`](schemas/) | `handoff.schema.json`, `current-state.schema.json`, `next-task.schema.json`, `decisions.schema.json`, `risks.schema.json` | Changed only with the validator |
-| `tool-output/<tool>/<task-id>/HANDOFF.json` | The machine-readable handoff for one task | The tool that did the task |
+| `tool-output/<tool>/<task-id>/HANDOFF.json` | The machine-readable handoff and **ownership record** for one task: `completed`, `partial`, `failed`, or `blocked` (work not in the repository: null commit, `blocked_reason`) | The tool that did or owns the task |
 | `tool-output/<tool>/<task-id>/SUMMARY.md` | The human-readable handoff for the same task (must name the task ID) | The tool that did the task |
 | `tool-output/<tool>/<task-id>/…` | Optional attachments of the handoff (screenshots, reports), e.g. `lovable/A-043/screenshots/` | The tool that did the task |
 
@@ -81,8 +92,10 @@ node --test scripts/ai/state.test.mjs
 - a handoff's `task_id`/`tool` do not match its path, or a task is claimed by two tools;
 - `baseline_commit` or `completion_commit` is missing, not in repository history, or not in order, or the completion commit lacks its tag;
 - the file lists differ from the git diff, or an evidence path or commit does not exist;
-- the registry marks a task REVIEW or CANONICAL (from A-042 on) and no completed handoff exists;
-- `CURRENT_STATE.json` is stale (per-tool latest completion, `latest_completion`, registry counts or `last_updated`), or `STATUS_SUMMARY.md` differs from a fresh render;
+- the registry marks a task REVIEW or CANONICAL (from A-042 on) and no completed handoff exists (**HANDOFF missing**);
+- a registry task from A-042 on has no `HANDOFF.json` under any tool and is not in `active_tasks` (**task ownership missing**);
+- `NEXT_TASK.json` does not follow the latest completion (`after`) or was updated before it (**NEXT_TASK stale**);
+- `CURRENT_STATE.json` is stale (**CURRENT_STATE stale**): any `tools.<tool>` field, `latest_completion`, the registry counts or `last_updated` differs from what the handoffs and registry give; or `STATUS_SUMMARY.md` differs from a fresh render;
 - state contradicts itself: a completed task that is still active, blocked or awaited; a tool marked active that has no active task; NEXT_TASK marked ready with unsatisfied dependencies; NEXT_TASK not following the latest completion;
 - on a pull request, any file other than the state files (`CURRENT_STATE`, `NEXT_TASK`, `DECISIONS`, `RISKS`, `STATUS_SUMMARY`, anything inside a task's handoff directory, and the registry-generated founder views) changed after the latest completion commit ("unrecorded work");
 - a deployment is recorded as production, or as deployed without being allowed.
@@ -98,7 +111,9 @@ node --test scripts/ai/state.test.mjs
 | `completion_commit subject must start with …` | Re-commit the work with the tag. Never rewrite pushed history on shared branches: make a new tagged commit and point `completion_commit` at it |
 | `duplicate task ownership` / `unknown tool identifier` | Keep the task under the one tool that did it; delete the other directory |
 | `contradictory state` | Remove completed tasks from `active_tasks`, `blocked_tasks` and `awaited_outputs`; fix `NEXT_TASK.ready` |
-| A tool's output exists only outside GitHub | Do **not** write a completed handoff. Set `tools.<tool>.status` to `blocked` with reason `repository handoff missing`, and list the task in `blocked_tasks` |
+| A tool's output exists only outside GitHub | Do **not** write a completed handoff. Write a **blocked** `HANDOFF.json` (`status: blocked`, `completion_commit: null`, `completed_at: null`, empty file lists, `blocked_reason: "repository handoff missing"`), keep the registry task OPEN, list it in `blocked_tasks`, and run `generate`: the tool shows as blocked. Example: `gemini/A-047` |
+| `task ownership missing` | Write the task's `HANDOFF.json` under the tool that owns it (blocked if the work is not in the repository), or list it in `active_tasks` while work is in progress |
+| `NEXT_TASK stale` | Update `NEXT_TASK.json`: `after` = the latest completion, `updated` = now |
 
 ## Examples
 
@@ -138,4 +153,4 @@ A Lovable staging build records `"deployment": { "allowed": true, "environment":
 
 ## Current records
 
-Claude Code handoffs for A-042 and A-044 were backfilled from repository evidence and are marked `backfill`. Gemini has no records. Lovable's earlier staging builds (the latest registry task is A-026) and the Figma package (A-008) have no repository handoff. They are recorded as `blocked` with reason "repository handoff missing", and no completion is claimed for them.
+Backfilled into this structure: Claude Code A-042 and A-044 (from repository evidence), Lovable A-043 (converted from Lovable's own handoff, facts unchanged) and Gemini A-047 (a **blocked** ownership record: no A-047 commit exists on any branch, so no completion is claimed). Lovable's earlier staging builds (A-011 to A-026) predate the protocol and have no handoffs. The Figma package (A-008) is blocked as "repository handoff missing".

@@ -2,16 +2,32 @@
 
 # NyayOS — AI status summary
 
-Read this page first. Updated **2026-09-26T16:49:42Z**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.
+Read this page first. Updated **2026-09-26T17:33:59Z**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.
+
+## At a glance
+
+Output of `node scripts/ai/state.mjs status`:
+
+```text
+Last completed task per tool:
+  claude-code  A-044-R   1c08043  idle
+  gemini       —         —        blocked — A-047: repository handoff missing — Gemini A-047 output exists only outside GitHub
+  lovable      A-043     9d23842  idle
+  figma        —         —        blocked — A-008: Figma MVP Design Package never supplied to the repository (repository handoff missing).
+Latest completion overall: A-044-R by claude-code (1c08043)
+Active tasks: none
+Next awaited output: #1 (not issued) from founder — Merge-readiness decision on draft PR #2, with D-035 (incl. the F01 sign-in method) and D-036
+Next recommended assignment: (ID to be issued) — Wave W1 — staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI (claude-code, P1, not ready) — blocked by: Founder merge-readiness review and merge of PR #2 (founder); FD-02 hosting / India-region decision (founder); D-035 (including the F01 sign-in method) and D-036 (founder)
+```
 
 ## By tool
 
 | Tool | Status | Latest completed task | Completion commit | Handoff | Note |
 |---|---|---|---|---|---|
 | `claude-code` | idle | A-044-R | `1c080432d6d183e98073da2aa4e89b33ab85c734` | [docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json](tool-output/claude-code/A-044-R/HANDOFF.json) |  |
-| `gemini` | no_records | — | — | — | No Gemini task has been issued or recorded in the repository. |
+| `gemini` | blocked | — | — | — | A-047: repository handoff missing — Gemini A-047 output exists only outside GitHub |
 | `lovable` | idle | A-043 | `9d238423949eabea28452e4e6a924186a94030c4` | [docs/ai/tool-output/lovable/A-043/HANDOFF.json](tool-output/lovable/A-043/HANDOFF.json) |  |
-| `figma` | blocked | — | — | — | repository handoff missing — Figma V2 / MVP Design Package (A-008) is OPEN and was never supplied to the repository. |
+| `figma` | blocked | — | — | — | A-008: Figma MVP Design Package never supplied to the repository (repository handoff missing). |
 
 ## Latest completion
 
@@ -83,9 +99,10 @@ Rollback: git revert --no-edit $(git log --format=%H --grep='^\[TOOL:CLAUDE-CODE
 | # | Task | Owner | Output | Ready | Waiting on |
 |---|---|---|---|---|---|
 | 1 | (not issued) | `founder` | Merge-readiness decision on draft PR #2, with D-035 (incl. the F01 sign-in method) and D-036 | yes |  |
-| 2 | A-008 | `figma` | Figma MVP Design Package V1 with frames mapped to U01-U21, handed off at docs/ai/tool-output/figma/A-008/ | no | Founder to supply or commission the package |
-| 3 | (not issued) | `claude-code` | A-043 design conformance review and re-baseline of the A-041 traceability addendum | no | The A-008 design package |
-| 4 | (not issued) | `claude-code` | Wave W1: staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI | no | PR #2 merge and the FD-02 hosting decision |
+| 2 | A-047 | `gemini` | A-047 output committed to the repository with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json | yes |  |
+| 3 | A-008 | `figma` | Figma MVP Design Package V1 with frames mapped to U01-U21, handed off at docs/ai/tool-output/figma/A-008/ | no | Founder to supply or commission the package |
+| 4 | (not issued) | `claude-code` | A-043 design conformance review and re-baseline of the A-041 traceability addendum | no | The A-008 design package |
+| 5 | (not issued) | `claude-code` | Wave W1: staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI | no | PR #2 merge and the FD-02 hosting decision |
 
 ## Next assignment
 
@@ -103,7 +120,7 @@ Next integration task: Merge draft PR #2 (FM-A foundation and A-043 MVP UI) into
 
 Phase: FM-A foundation and the A-043 MVP Wave-1 UI (synthetic data) on a feature branch (draft PR #2), awaiting the founder's merge-readiness review and design conformance input; no environment exists.
 
-feature/fma-foundation-v1 (draft PR #2, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), the U01-U21 traceability addendum, Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, and the repository-centric tool handoff system (A-044, A-044-R). Every fix A-032 required before merge is closed; nothing is deployed and no environment exists.
+feature/fma-foundation-v1 (draft PR #2, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), the U01-U21 traceability addendum, Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, and the repository-centric tool handoff system (A-044, A-044-R, A-044-R2), whose CURRENT_STATE and NEXT_TASK are canonical. Every fix A-032 required before merge is closed; nothing is deployed and no environment exists.
 
 | | |
 |---|---|
@@ -117,6 +134,7 @@ Active: none.
 
 Blocked:
 
+- A-047 (`gemini`): repository handoff missing — Gemini A-047 output exists only outside GitHub.
 - A-008 (`figma`): Figma MVP Design Package never supplied to the repository (repository handoff missing).
 - A-012 (`founder`): Production build and deployment are not allowed: FA-002 not granted.
 
@@ -137,6 +155,8 @@ Blocked:
 | OI-11 | finding | The A-041 U01-U21 traceability addendum records statuses from before A-043's MVP UI (U04-U09, U16, U17); it needs re-baselining against A-043. | — |
 | OI-12 | founder decision | F01 sign-in method: A-043 shows a Google sign-in entry, while the Scope Sheet specifies email/password + OTP (addendum C-01). | D-035 |
 | OI-13 | finding | Lovable A-043 tests time out locally on Windows and one U06 test hits a jsdom SubtleCrypto.digest type difference; CI (ubuntu) passes 233/233. A local-environment robustness fix belongs to a Lovable follow-up. | — |
+| OI-14 | dependency | Gemini A-047 is reported done but nothing is in the repository; recorded as blocked (repository handoff missing) until Gemini commits its output and handoff. | — |
+| OI-15 | finding | Draft PR #3 (A-050, branch fix/a050-accessibility-ux-mobile, cut from main 6c6b478) writes docs/ai/tool-output/figma/A-050/ outside this branch and audits paths (src/components/ui.tsx, src/screens/*.tsx) that do not exist under app/; A-050 is not registered here and has no handoff on this branch. | — |
 
 ## Decisions awaiting the founder
 
@@ -165,3 +185,4 @@ Top five (Risk Register): Unsupported claims · Sensitive-data leakage · Episte
 - A-043 — `lovable` — completed — [docs/ai/tool-output/lovable/A-043/HANDOFF.json](tool-output/lovable/A-043/HANDOFF.json)
 - A-044 — `claude-code` — completed — [docs/ai/tool-output/claude-code/A-044/HANDOFF.json](tool-output/claude-code/A-044/HANDOFF.json)
 - A-044-R — `claude-code` — completed — [docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json](tool-output/claude-code/A-044-R/HANDOFF.json)
+- A-047 — `gemini` — blocked — [docs/ai/tool-output/gemini/A-047/HANDOFF.json](tool-output/gemini/A-047/HANDOFF.json)

@@ -17,6 +17,8 @@
  *   node scripts/ai/state.mjs generate            rewrite derived fields and STATUS_SUMMARY.md
  *   node scripts/ai/state.mjs check               validate everything; exit 1 on any finding
  *   node scripts/ai/state.mjs check --head <sha>  also fail on unrecorded work after the latest completion (pull requests)
+ *   node scripts/ai/state.mjs status [--json]     one-command AI status: last completion per tool, active tasks,
+ *                                                 next awaited output, next recommended assignment
  *
  * NYAYOS_AI_ROOT overrides the repository root (used by scripts/ai/state.test.mjs fixtures).
  * No dependencies. Node >= 18. Requires git.
@@ -210,19 +212,32 @@ function scanHandoffs() {
 
 function completedHandoffs(handoffs) {
   return handoffs
-    .filter((h) => h.data?.status === "completed" && typeof h.data.completed_at === "string")
+    .filter((h) => h.data?.status === "completed" && typeof h.data.completed_at === "string" && SHA_RE.test(h.data.completion_commit ?? ""))
     .sort((a, b) => Date.parse(a.data.completed_at) - Date.parse(b.data.completed_at) || compareIds(a.id, b.id));
 }
 
-function deriveToolState(handoffs) {
+/**
+ * Per-tool state is fully derived (A-044-R2): latest completion from the completed handoffs; status
+ * from active_tasks, blocked handoffs and blocked_tasks. Nothing in CURRENT_STATE.tools is hand-set.
+ */
+function deriveToolState(handoffs, cur) {
   const done = completedHandoffs(handoffs);
   const perTool = {};
   for (const tool of TOOLS) {
     const mine = done.filter((h) => h.tool === tool);
     const last = mine[mine.length - 1];
-    perTool[tool] = last
-      ? { latest_completed_task: last.id, latest_completion_commit: last.data.completion_commit, handoff: last.path }
-      : { latest_completed_task: null, latest_completion_commit: null, handoff: null };
+    const blocked = new Map();
+    for (const h of handoffs) if (h.tool === tool && h.data?.status === "blocked") blocked.set(h.id, `${h.id}: ${h.data.blocked_reason ?? "blocked"}`);
+    for (const b of cur?.blocked_tasks ?? []) if (b.owner === tool && !blocked.has(b.task_id)) blocked.set(b.task_id, `${b.task_id}: ${b.reason}`);
+    const active = (cur?.active_tasks ?? []).some((a) => a.tool === tool);
+    const status = active ? "active" : blocked.size ? "blocked" : last ? "idle" : "no_records";
+    perTool[tool] = {
+      status,
+      latest_completed_task: last ? last.id : null,
+      latest_completion_commit: last ? last.data.completion_commit : null,
+      handoff: last ? last.path : null,
+      reason: status === "blocked" ? [...blocked.values()].join("; ") : status === "no_records" ? "No handoff recorded in the repository." : null,
+    };
   }
   const last = done[done.length - 1];
   const latest = last
@@ -240,8 +255,22 @@ function validateHandoff(h, schema, reg, tip, add) {
   const task = reg.tasks.find((t) => t.id === h.id);
   if (!task) add(`${where}: ${h.id} is not in the status registry`);
   else if (d.status === "completed" && !["REVIEW", "CANONICAL"].includes(task.status)) add(`${where}: status completed but the registry says ${task.status}`);
+  else if (d.status === "blocked" && !["OPEN", "IN_PROGRESS"].includes(task.status)) add(`${where}: status blocked but the registry says ${task.status}`);
   const b = d.baseline_commit, c = d.completion_commit;
   if (!commitExists(b)) add(`${where}: baseline_commit ${b ?? "(missing)"} does not exist in repository history`);
+  if (d.status === "blocked") {
+    if (!d.blocked_reason) add(`${where}: a blocked handoff needs blocked_reason`);
+    if (c === null) {
+      // Ownership record for work that is not in the repository: nothing to diff, nothing completed.
+      if (d.completed_at !== null) add(`${where}: a blocked handoff without a commit must have completed_at null`);
+      for (const k of ["files_created", "files_modified", "files_deleted"]) if ((d[k] ?? []).length) add(`${where}: a blocked handoff without a commit cannot list ${k}`);
+      return;
+    }
+  } else {
+    if (c === null) { add(`${where}: completion_commit is required for status ${d.status}`); return; }
+    if (!(d.evidence ?? []).length) add(`${where}: evidence is required for status ${d.status}`);
+    if (typeof d.completed_at !== "string") add(`${where}: completed_at is required for status ${d.status}`);
+  }
   if (!commitExists(c)) { add(`${where}: completion_commit ${c ?? "(missing)"} does not exist in repository history`); return; }
   if (!isAncestor(c, tip)) add(`${where}: completion_commit ${c} is not in the history of ${tip}`);
   if (commitExists(b) && !isAncestor(b, c)) add(`${where}: baseline_commit is not an ancestor of completion_commit`);
@@ -282,6 +311,44 @@ function validateHandoff(h, schema, reg, tip, add) {
 }
 
 // ---------------------------------------------------------------------------
+// AI status (one command: node scripts/ai/state.mjs status [--json])
+// ---------------------------------------------------------------------------
+function statusReport(handoffs = scanHandoffs().handoffs) {
+  const cur = readJson(FILES.current);
+  const next = readJson(FILES.next);
+  const { perTool, latest } = deriveToolState(handoffs, cur);
+  const awaited = [...cur.awaited_outputs].sort((a, b) => a.order - b.order);
+  return {
+    last_completed_by_tool: Object.fromEntries(TOOLS.map((t) => [t, {
+      status: perTool[t].status, task_id: perTool[t].latest_completed_task, commit: perTool[t].latest_completion_commit,
+      handoff: perTool[t].handoff, note: perTool[t].reason,
+    }])),
+    latest_completion: latest,
+    active_tasks: cur.active_tasks,
+    next_awaited_output: awaited[0] ?? null,
+    next_recommended_assignment: {
+      task_id: next.task_id, title: next.title, tool: next.assigned_tool, priority: next.priority, ready: next.ready,
+      blocked_by: next.dependencies.filter((d) => !d.satisfied).map((d) => `${d.item} (${d.owner})`),
+    },
+  };
+}
+
+function formatStatus(s) {
+  const L = ["Last completed task per tool:"];
+  for (const t of TOOLS) {
+    const x = s.last_completed_by_tool[t];
+    L.push(`  ${t.padEnd(12)} ${(x.task_id ?? "—").padEnd(9)} ${x.commit ? x.commit.slice(0, 7) : "—      "}  ${x.status}${x.note ? ` — ${x.note}` : ""}`);
+  }
+  L.push(`Latest completion overall: ${s.latest_completion ? `${s.latest_completion.task_id} by ${s.latest_completion.tool} (${s.latest_completion.completion_commit.slice(0, 7)})` : "none"}`);
+  L.push(`Active tasks: ${s.active_tasks.length ? s.active_tasks.map((a) => `${a.task_id} (${a.tool}, ${a.status})`).join("; ") : "none"}`);
+  const n = s.next_awaited_output;
+  L.push(`Next awaited output: ${n ? `#${n.order} ${n.task_id ?? "(not issued)"} from ${n.owner} — ${n.output}${n.ready ? "" : ` [waiting on: ${n.waiting_on ?? "dependencies"}]`}` : "none"}`);
+  const r = s.next_recommended_assignment;
+  L.push(`Next recommended assignment: ${r.task_id ?? "(ID to be issued)"} — ${r.title} (${r.tool}, ${r.priority}, ${r.ready ? "ready" : "not ready"})${r.blocked_by.length ? ` — blocked by: ${r.blocked_by.join("; ")}` : ""}`);
+  return L.join("\n");
+}
+
+// ---------------------------------------------------------------------------
 // Status summary
 // ---------------------------------------------------------------------------
 function renderSummary(handoffs) {
@@ -297,6 +364,7 @@ function renderSummary(handoffs) {
   add("<!-- AUTO-GENERATED by scripts/ai/state.mjs from docs/ai/*.json, the handoffs and the status registry. DO NOT EDIT BY HAND. Run: node scripts/ai/state.mjs generate -->", "");
   add("# NyayOS — AI status summary", "");
   add(`Read this page first. Updated **${cur.last_updated}**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.`, "");
+  add("## At a glance", "", "Output of `node scripts/ai/state.mjs status`:", "", "```text", formatStatus(statusReport(handoffs)), "```", "");
   add("## By tool", "");
   add("| Tool | Status | Latest completed task | Completion commit | Handoff | Note |", "|---|---|---|---|---|---|");
   for (const t of TOOLS) {
@@ -378,14 +446,8 @@ function generate() {
   const { handoffs } = scanHandoffs();
   const cur = readJson(FILES.current);
   cur.derived = deriveRegistry();
-  const { perTool, latest } = deriveToolState(handoffs);
-  const activeTools = new Set(cur.active_tasks.map((a) => a.tool));
-  for (const t of TOOLS) {
-    const s = { ...(cur.tools?.[t] ?? { status: "no_records", reason: "no repository handoff yet" }), ...perTool[t] };
-    if (activeTools.has(t)) { s.status = "active"; s.reason = null; }
-    else if (s.status === "active") { s.status = s.latest_completed_task ? "idle" : "no_records"; s.reason = s.latest_completed_task ? null : "no repository handoff yet"; }
-    cur.tools = { ...(cur.tools ?? {}), [t]: { status: s.status, latest_completed_task: s.latest_completed_task, latest_completion_commit: s.latest_completion_commit, handoff: s.handoff, reason: s.reason ?? null } };
-  }
+  const { perTool, latest } = deriveToolState(handoffs, cur);
+  cur.tools = perTool;
   cur.latest_completion = latest;
   writeJson(FILES.current, cur);
   const dec = readJson(FILES.decisions);
@@ -444,12 +506,22 @@ function check({ head } = {}) {
     }
   }
 
+  // 4b. every task from the protocol start onward has an owner: a HANDOFF.json under exactly one tool
+  //     (completed, partial, failed or blocked), or an entry in CURRENT_STATE.active_tasks
+  const activeIds = new Set(cur.active_tasks.map((a) => a.task_id));
+  for (const t of reg.tasks) {
+    if (idKey(t.id)[0] >= PROTOCOL_FIRST_TASK && t.status !== "SUPERSEDED" && !owners.has(t.id) && !activeIds.has(t.id)) {
+      add(`task ownership missing: registry task ${t.id} (${t.status}) has no docs/ai/tool-output/<tool>/${t.id}/HANDOFF.json and is not in CURRENT_STATE.active_tasks`);
+    }
+  }
+  for (const a of cur.active_tasks) if (owners.has(a.task_id) && owners.get(a.task_id) !== a.tool) add(`task ownership conflict: ${a.task_id} is active for ${a.tool} but its handoff belongs to ${owners.get(a.task_id)}`);
+
   // 5. derived content is current (stale CURRENT_STATE fails)
   if (!same(cur.derived, deriveRegistry())) add(`${FILES.current}: "derived" is stale against ${SOURCES.registry} — run: node scripts/ai/state.mjs generate`);
-  const { perTool, latest } = deriveToolState(handoffs);
+  const { perTool, latest } = deriveToolState(handoffs, cur);
   for (const t of TOOLS) {
     const s = cur.tools[t];
-    for (const k of ["latest_completed_task", "latest_completion_commit", "handoff"]) {
+    for (const k of ["status", "latest_completed_task", "latest_completion_commit", "handoff", "reason"]) {
       if (s[k] !== perTool[t][k]) add(`${FILES.current}: tools.${t}.${k} is stale (${s[k]} ≠ ${perTool[t][k]}) — run generate`);
     }
   }
@@ -486,7 +558,8 @@ function check({ head } = {}) {
   if (cur.next_integration_task.task_id && completed.has(cur.next_integration_task.task_id)) add(`contradictory state: next_integration_task ${cur.next_integration_task.task_id} is already completed`);
 
   // 7. NEXT_TASK follows the latest completion and is consistent
-  if (latest && next.after !== latest.task_id) add(`${FILES.next}: "after" is ${next.after}; must be the latest completion ${latest.task_id}`);
+  if (latest && next.after !== latest.task_id) add(`NEXT_TASK stale: ${FILES.next} "after" is ${next.after}; must be the latest completion ${latest.task_id}`);
+  if (latest && Date.parse(next.updated) < Date.parse(latest.completed_at)) add(`NEXT_TASK stale: ${FILES.next} was last updated before the latest completion (${latest.task_id})`);
   if (next.task_id && (completed.has(next.task_id) || ["REVIEW", "CANONICAL"].includes(regStatus.get(next.task_id)))) add(`contradictory state: NEXT_TASK ${next.task_id} is already completed`);
   if (next.ready && next.dependencies.some((d) => !d.satisfied)) add(`contradictory state: NEXT_TASK is ready but has unsatisfied dependencies`);
   if (!commitExists(next.repository_baseline.commit) || !isAncestor(next.repository_baseline.commit, tip)) add(`${FILES.next}: repository_baseline.commit is not in the history of ${tip}`);
@@ -522,6 +595,10 @@ const hi = rest.indexOf("--head");
 const head = hi >= 0 ? rest[hi + 1] : undefined;
 if (hi >= 0 && !/^[0-9a-f]{7,40}$/.test(head ?? "")) { console.error("--head needs a commit SHA"); process.exit(2); }
 if (cmd === "generate") generate();
+else if (cmd === "status") {
+  const s = statusReport();
+  console.log(rest.includes("--json") ? JSON.stringify(s, null, 2) : formatStatus(s));
+}
 else if (cmd === "check") {
   const f = check({ head });
   if (f.length) {
@@ -534,6 +611,6 @@ else if (cmd === "check") {
   console.log(`ai-state: clean — latest completion ${lc ? `${lc.task_id} by ${lc.tool} at ${lc.completion_commit.slice(0, 7)}` : "none"}; ` +
     `${TOOLS.map((t) => `${t}=${cur.tools[t].latest_completed_task ?? cur.tools[t].status}`).join(", ")}${head ? `; no unrecorded work up to ${head.slice(0, 7)}` : ""}`);
 } else {
-  console.error("usage: node scripts/ai/state.mjs generate | check [--head <sha>]");
+  console.error("usage: node scripts/ai/state.mjs generate | status [--json] | check [--head <sha>]");
   process.exit(2);
 }

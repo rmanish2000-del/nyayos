@@ -80,7 +80,7 @@ function fixture({ untagged = null } = {}) {
   });
   const idle = { status: "idle", latest_completed_task: null, latest_completion_commit: null, handoff: null, reason: null };
   put(dir, "docs/ai/CURRENT_STATE.json", {
-    $schema: "./schemas/current-state.schema.json", schema_version: "2.0", project: "NyayOS",
+    $schema: "./schemas/current-state.schema.json", schema_version: "2.0", project: "NyayOS", authority: "canonical",
     last_updated: new Date(last + 60_000).toISOString(), current_phase: "Fixture phase for validator tests",
     canonical_branch: "main", working_branch: "work", current_pr: { number: null, url: null, draft: true, merged: false },
     deployment: { allowed: false, environment: "none", status: "not_deployed", url: null, note: "fixture" },
@@ -91,7 +91,7 @@ function fixture({ untagged = null } = {}) {
     summary: "Fixture repository for scripts/ai/state.test.mjs", open_items: [], derived: {},
   });
   put(dir, "docs/ai/NEXT_TASK.json", {
-    $schema: "./schemas/next-task.schema.json", schema_version: "2.0", updated: new Date(last + 60_000).toISOString(),
+    $schema: "./schemas/next-task.schema.json", schema_version: "2.0", authority: "canonical", updated: new Date(last + 60_000).toISOString(),
     after: "A-053", task_id: "A-054", title: "Fixture next task", assigned_tool: "claude-code", priority: "P1",
     dependencies: [], ready: true, repository_baseline: { branch: "work", commit: prev },
     required_inputs: ["work/claude-code.txt"], expected_outputs: ["docs/ai/tool-output/claude-code/A-054/HANDOFF.json"],
@@ -254,6 +254,73 @@ test("handoff attachments committed after the completion are not unrecorded work
   git(dir, "commit", "-q", "-m", "[TOOL:FIGMA][TASK:A-053] chore(ai-state): add handoff attachment");
   const r = run(dir, "check", "--head", git(dir, "rev-parse", "HEAD"));
   assert.equal(r.code, 0, r.out);
+});
+
+// ---------------------------------------------------------------- A-044-R2: canonical state, ownership, staleness, status
+const blockedHandoff = (id, tool, baseline) => ({
+  schema_version: "1.0", project: "NyayOS", task_id: id, tool, status: "blocked", branch: "work",
+  baseline_commit: baseline, completion_commit: null, completed_at: null, files_created: [], files_modified: [],
+  tests: [], evidence: [], limitations: [], risks: [], rollback: "nothing committed yet",
+  deployment: { allowed: false, environment: "none", status: "not_deployed", url: null },
+  next_recommendation: { task_id: id, tool, reason: "commit the output and complete the handoff" },
+  blocked_reason: "repository handoff missing",
+});
+
+test("status command reports last completion per tool, active tasks, next awaited output and next assignment", () => {
+  const text = run(valid.dir, "status");
+  assert.equal(text.code, 0, text.out);
+  assert.match(text.out, /claude-code\s+A-050\s+[0-9a-f]{7}\s+active/);
+  assert.match(text.out, /figma\s+A-053/);
+  assert.match(text.out, /Active tasks: A-054 \(claude-code, issued\)/);
+  assert.match(text.out, /Next awaited output: #1 A-054 from claude-code/);
+  assert.match(text.out, /Next recommended assignment: A-054 — Fixture next task \(claude-code, P1, ready\)/);
+  const json = JSON.parse(run(valid.dir, "status", "--json").out);
+  assert.equal(json.last_completed_by_tool.gemini.task_id, "A-051");
+  assert.equal(json.latest_completion.task_id, "A-053");
+  assert.equal(json.next_awaited_output.task_id, "A-054");
+  assert.equal(json.next_recommended_assignment.task_id, "A-054");
+});
+
+test("blocked handoff without a commit records ownership and makes the tool blocked", () => {
+  const { dir } = fixture();
+  edit(dir, "docs/founder/NYAYOS_STATUS_REGISTRY.json", (r) => { r.tasks.push({ id: "A-057", title: "outside the repo", status: "OPEN", tool: "Gemini" }); });
+  put(dir, "docs/ai/tool-output/gemini/A-057/HANDOFF.json", blockedHandoff("A-057", "gemini", git(dir, "rev-parse", "HEAD")));
+  put(dir, "docs/ai/tool-output/gemini/A-057/SUMMARY.md", "# A-057 blocked\n");
+  run(dir, "generate");
+  const r = run(dir, "check");
+  assert.equal(r.code, 0, r.out);
+  const s = JSON.parse(run(dir, "status", "--json").out);
+  assert.equal(s.last_completed_by_tool.gemini.status, "blocked");
+  assert.equal(s.last_completed_by_tool.gemini.task_id, "A-051");
+});
+
+test("blocked handoff cannot claim files without a commit", () => {
+  const { dir } = fixture();
+  edit(dir, "docs/founder/NYAYOS_STATUS_REGISTRY.json", (r) => { r.tasks.push({ id: "A-057", title: "outside the repo", status: "OPEN", tool: "Gemini" }); });
+  put(dir, "docs/ai/tool-output/gemini/A-057/HANDOFF.json", { ...blockedHandoff("A-057", "gemini", git(dir, "rev-parse", "HEAD")), files_created: ["work/gemini.txt"] });
+  put(dir, "docs/ai/tool-output/gemini/A-057/SUMMARY.md", "# A-057 blocked\n");
+  run(dir, "generate");
+  fails(dir, /a blocked handoff without a commit cannot list files_created/);
+});
+
+test("task ownership missing fails", () => {
+  const { dir } = fixture();
+  edit(dir, "docs/founder/NYAYOS_STATUS_REGISTRY.json", (r) => { r.tasks.push({ id: "A-056", title: "nobody owns this", status: "OPEN", tool: "Gemini" }); });
+  run(dir, "generate");
+  fails(dir, /task ownership missing: registry task A-056 \(OPEN\)/);
+});
+
+test("stale NEXT_TASK fails", () => {
+  const { dir } = fixture();
+  edit(dir, "docs/ai/NEXT_TASK.json", (n) => { n.updated = "2020-01-01T00:00:00Z"; });
+  run(dir, "generate");
+  fails(dir, /NEXT_TASK stale: .* last updated before the latest completion/);
+});
+
+test("hand-set tool status fails as stale CURRENT_STATE", () => {
+  const { dir } = fixture();
+  edit(dir, "docs/ai/CURRENT_STATE.json", (c) => { c.tools.figma.status = "blocked"; c.tools.figma.reason = "set by hand"; });
+  fails(dir, /tools\.figma\.status is stale/);
 });
 
 test("a production deployment can never be recorded", () => {

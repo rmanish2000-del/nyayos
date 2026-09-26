@@ -1130,6 +1130,49 @@
       "updated": "2026-09-26",
       "superseded_by": null,
       "notes": "Baseline c1c49d5 (latest remote; A-043/A-043-R by Lovable landed during the work and were integrated). Handoffs move to docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json + SUMMARY.md (schema handoff.schema.json: status, commits, completed_at, exact file lists, tests, evidence, limitations, risks, rollback, deployment, next_recommendation). CURRENT_STATE 2.0 records per-tool latest completion (derived from handoffs), active/blocked tasks, awaited outputs in order, PR, deployment and next integration task; NEXT_TASK 2.0 records the next tool assignment. state.mjs check rejects unknown tools, duplicate ownership, completions without HANDOFF.json, commits not in history, file lists that differ from git, missing [TOOL:x][TASK:y] commit tags, contradictory or stale state, and (on pull requests) unrecorded work. scripts/ai/state.test.mjs builds throwaway git fixtures for all four tools and every failure mode; task-gate runs the tests and the check. A-042 and A-044 (Claude Code) handoffs backfilled from repository evidence; Lovable's A-043 handoff converted to the schema with content unchanged. No Gemini or Figma record fabricated."
+    },
+    {
+      "id": "A-047",
+      "title": "Gemini assignment A-047 — issued outside this repository; output not committed",
+      "type": "research",
+      "status": "OPEN",
+      "owner": "Gemini",
+      "tool": "Gemini — assignment issued outside the repository (brief not in GitHub)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [],
+      "planned_inputs": [],
+      "outputs": [],
+      "evidence": null,
+      "updated": "2026-09-26",
+      "superseded_by": null,
+      "notes": "Registered by A-044-R2 on the founder's instruction to backfill Gemini A-047. No commit, file or brief for A-047 exists on any branch of the repository, so no completion is recorded: docs/ai/tool-output/gemini/A-047/HANDOFF.json is a blocked ownership record (repository handoff missing). Type 'research' is assumed. When Gemini commits its output, it replaces the blocked handoff with a completed one and this task moves to REVIEW."
+    },
+    {
+      "id": "A-044-R2",
+      "title": "Fix the AI operating system itself — canonical CURRENT_STATE/NEXT_TASK, derived tool state, ownership and staleness gates, status command",
+      "type": "governance",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — repository automation (docs/ai, validator, tests, CI; no application code, SQL or deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-029",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "scripts/ai/state.mjs",
+        "scripts/ai/state.test.mjs",
+        "docs/ai/README.md",
+        "docs/ai/schemas/handoff.schema.json",
+        "docs/ai/schemas/current-state.schema.json",
+        "docs/ai/schemas/next-task.schema.json",
+        "docs/ai/tool-output/gemini/A-047/HANDOFF.json"
+      ],
+      "evidence": "scripts/ai/state.test.mjs",
+      "updated": "2026-09-26",
+      "superseded_by": null,
+      "notes": "Baseline 14e9f1b. No task ID was issued for this follow-up ('fix the operating system itself'); recorded as the second remediation of A-044. CURRENT_STATE.json and NEXT_TASK.json declare authority 'canonical' and every tool updates them. tools.<tool> is fully derived (status, reason, latest completion) from handoffs, active_tasks and blocked_tasks. CI now also fails on task ownership missing (every registry task from A-042 on needs a HANDOFF.json under one tool or an active_tasks entry) and on a stale NEXT_TASK (after or updated older than the latest completion). Blocked handoffs record ownership of work that is not in the repository (null commit, blocked_reason). New command: node scripts/ai/state.mjs status [--json]. Backfill: Claude A-042, A-044 and Lovable A-043 already in the structure; Gemini A-047 recorded as blocked (repository handoff missing) because no repository evidence exists."
     }
   ]
 }

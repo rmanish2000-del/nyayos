@@ -2,104 +2,295 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "docs/ai/schemas/handoff.schema.json",
   "title": "NyayOS tool handoff",
-  "description": "docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json — one per task, written by the tool that did the work. Validated by scripts/ai/state.mjs: the tool and task ID must match the path, both commits must exist in history, the file lists must equal the git diff baseline_commit..completion_commit, and (unless 'backfill' is set) the completion commit subject must start with [TOOL:<TOOL>][TASK:<task-id>].",
+  "description": "docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json — one per task, the ownership record of the tool that did (or was assigned) the task. Validated by scripts/ai/state.mjs: tool and task ID must match the path; for completed, partial and failed handoffs both commits must exist in history, the file lists must equal git diff baseline_commit..completion_commit, evidence is required and (unless 'backfill' is set) the completion commit subject starts with [TOOL:<TOOL>][TASK:<task-id>]. A blocked handoff records ownership of work that is not in the repository: completion_commit and completed_at are null, file lists are empty and blocked_reason is required.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "project", "task_id", "tool", "status", "branch", "baseline_commit", "completion_commit", "completed_at",
-    "files_created", "files_modified", "tests", "evidence", "limitations", "risks", "rollback", "deployment", "next_recommendation"],
+  "required": [
+    "schema_version",
+    "project",
+    "task_id",
+    "tool",
+    "status",
+    "branch",
+    "baseline_commit",
+    "completion_commit",
+    "completed_at",
+    "files_created",
+    "files_modified",
+    "tests",
+    "evidence",
+    "limitations",
+    "risks",
+    "rollback",
+    "deployment",
+    "next_recommendation"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
-    "schema_version": { "const": "1.0" },
-    "project": { "const": "NyayOS" },
-    "task_id": { "$ref": "#/$defs/task_id" },
-    "tool": { "$ref": "#/$defs/tool" },
-    "status": { "enum": ["completed", "partial", "blocked", "failed"] },
-    "branch": { "type": "string", "minLength": 1 },
-    "baseline_commit": { "$ref": "#/$defs/sha" },
-    "completion_commit": { "$ref": "#/$defs/sha" },
-    "completed_at": { "$ref": "#/$defs/timestamp" },
-    "files_created": { "$ref": "#/$defs/paths" },
-    "files_modified": { "$ref": "#/$defs/paths" },
-    "files_deleted": { "$ref": "#/$defs/paths" },
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "project": {
+      "const": "NyayOS"
+    },
+    "task_id": {
+      "$ref": "#/$defs/task_id"
+    },
+    "tool": {
+      "$ref": "#/$defs/tool"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "partial",
+        "blocked",
+        "failed"
+      ]
+    },
+    "branch": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseline_commit": {
+      "$ref": "#/$defs/sha"
+    },
+    "completion_commit": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "completed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "files_created": {
+      "$ref": "#/$defs/paths"
+    },
+    "files_modified": {
+      "$ref": "#/$defs/paths"
+    },
+    "files_deleted": {
+      "$ref": "#/$defs/paths"
+    },
     "tests": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["name", "command", "result"],
+        "required": [
+          "name",
+          "command",
+          "result"
+        ],
         "properties": {
-          "name": { "type": "string", "minLength": 3 },
-          "command": { "type": "string", "minLength": 1 },
-          "result": { "enum": ["pass", "fail", "skipped"] },
-          "detail": { "type": "string" }
+          "name": {
+            "type": "string",
+            "minLength": 3
+          },
+          "command": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result": {
+            "enum": [
+              "pass",
+              "fail",
+              "skipped"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          }
         }
       }
     },
     "evidence": {
       "type": "array",
-      "minItems": 1,
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["description", "ref"],
+        "required": [
+          "description",
+          "ref"
+        ],
         "properties": {
-          "description": { "type": "string", "minLength": 5 },
-          "ref": { "type": "string", "minLength": 3, "description": "Repository path (must exist), commit SHA (must exist) or https URL" }
+          "description": {
+            "type": "string",
+            "minLength": 5
+          },
+          "ref": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Repository path (must exist), commit SHA (must exist) or https URL"
+          }
         }
       }
     },
-    "limitations": { "type": "array", "items": { "type": "string", "minLength": 5 } },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
     "risks": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["description", "severity"],
+        "required": [
+          "description",
+          "severity"
+        ],
         "properties": {
-          "description": { "type": "string", "minLength": 5 },
-          "severity": { "enum": ["critical", "high", "medium", "low"] },
-          "ref": { "type": "string", "pattern": "^(RES-\\d{2}|R\\d{2})$" }
+          "description": {
+            "type": "string",
+            "minLength": 5
+          },
+          "severity": {
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "ref": {
+            "type": "string",
+            "pattern": "^(RES-\\d{2}|R\\d{2})$"
+          }
         }
       }
     },
-    "rollback": { "type": "string", "minLength": 10 },
+    "rollback": {
+      "type": "string",
+      "minLength": 10
+    },
     "deployment": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["allowed", "environment", "status", "url"],
+      "required": [
+        "allowed",
+        "environment",
+        "status",
+        "url"
+      ],
       "properties": {
-        "allowed": { "type": "boolean" },
-        "environment": { "enum": ["none", "staging"], "description": "Production is never a valid value (FA-002 not granted)" },
-        "status": { "enum": ["not_deployed", "deployed"] },
-        "url": { "type": ["string", "null"], "pattern": "^https://\\S+$" }
+        "allowed": {
+          "type": "boolean"
+        },
+        "environment": {
+          "enum": [
+            "none",
+            "staging"
+          ],
+          "description": "Production is never a valid value (FA-002 not granted)"
+        },
+        "status": {
+          "enum": [
+            "not_deployed",
+            "deployed"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://\\S+$"
+        }
       }
     },
     "next_recommendation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["task_id", "tool", "reason"],
+      "required": [
+        "task_id",
+        "tool",
+        "reason"
+      ],
       "properties": {
-        "task_id": { "type": ["string", "null"], "pattern": "^A-\\d{3}(-R\\d?)?$" },
-        "tool": { "enum": ["claude-code", "gemini", "lovable", "figma", "founder"] },
-        "reason": { "type": "string", "minLength": 10 }
+        "task_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^A-\\d{3}(-R\\d?)?$"
+        },
+        "tool": {
+          "enum": [
+            "claude-code",
+            "gemini",
+            "lovable",
+            "figma",
+            "founder"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 10
+        }
       }
     },
     "backfill": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["reason", "source"],
+      "required": [
+        "reason",
+        "source"
+      ],
       "description": "Only for handoffs reconstructed from repository evidence for work that predates the protocol; exempts the commit-message tag rule",
       "properties": {
-        "reason": { "type": "string", "minLength": 10 },
-        "source": { "type": "string", "minLength": 5 }
+        "reason": {
+          "type": "string",
+          "minLength": 10
+        },
+        "source": {
+          "type": "string",
+          "minLength": 5
+        }
       }
+    },
+    "blocked_reason": {
+      "type": "string",
+      "minLength": 5,
+      "description": "Required when status is blocked, e.g. 'repository handoff missing'"
     }
   },
   "$defs": {
-    "task_id": { "type": "string", "pattern": "^A-\\d{3}(-R\\d?)?$" },
-    "tool": { "enum": ["claude-code", "gemini", "lovable", "figma"] },
-    "sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-    "timestamp": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$" },
-    "paths": { "type": "array", "items": { "type": "string", "pattern": "^[^/\\s][^\\s]*$" } }
+    "task_id": {
+      "type": "string",
+      "pattern": "^A-\\d{3}(-R\\d?)?$"
+    },
+    "tool": {
+      "enum": [
+        "claude-code",
+        "gemini",
+        "lovable",
+        "figma"
+      ]
+    },
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "paths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[^/\\s][^\\s]*$"
+      }
+    }
   }
 }

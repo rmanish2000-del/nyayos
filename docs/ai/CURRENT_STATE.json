@@ -2,7 +2,8 @@
   "$schema": "./schemas/current-state.schema.json",
   "schema_version": "2.0",
   "project": "NyayOS",
-  "last_updated": "2026-09-26T16:49:42Z",
+  "authority": "canonical",
+  "last_updated": "2026-09-26T17:33:59Z",
   "current_phase": "FM-A foundation and the A-043 MVP Wave-1 UI (synthetic data) on a feature branch (draft PR #2), awaiting the founder's merge-readiness review and design conformance input; no environment exists.",
   "canonical_branch": "main",
   "working_branch": "feature/fma-foundation-v1",
@@ -28,11 +29,11 @@
       "reason": null
     },
     "gemini": {
-      "status": "no_records",
+      "status": "blocked",
       "latest_completed_task": null,
       "latest_completion_commit": null,
       "handoff": null,
-      "reason": "No Gemini task has been issued or recorded in the repository."
+      "reason": "A-047: repository handoff missing — Gemini A-047 output exists only outside GitHub"
     },
     "lovable": {
       "status": "idle",
@@ -46,7 +47,7 @@
       "latest_completed_task": null,
       "latest_completion_commit": null,
       "handoff": null,
-      "reason": "repository handoff missing — Figma V2 / MVP Design Package (A-008) is OPEN and was never supplied to the repository."
+      "reason": "A-008: Figma MVP Design Package never supplied to the repository (repository handoff missing)."
     }
   },
   "latest_completion": {
@@ -58,6 +59,11 @@
   },
   "active_tasks": [],
   "blocked_tasks": [
+    {
+      "task_id": "A-047",
+      "owner": "gemini",
+      "reason": "repository handoff missing — Gemini A-047 output exists only outside GitHub."
+    },
     {
       "task_id": "A-008",
       "owner": "figma",
@@ -79,6 +85,13 @@
     },
     {
       "order": 2,
+      "task_id": "A-047",
+      "owner": "gemini",
+      "output": "A-047 output committed to the repository with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json",
+      "ready": true
+    },
+    {
+      "order": 3,
       "task_id": "A-008",
       "owner": "figma",
       "output": "Figma MVP Design Package V1 with frames mapped to U01-U21, handed off at docs/ai/tool-output/figma/A-008/",
@@ -86,7 +99,7 @@
       "waiting_on": "Founder to supply or commission the package"
     },
     {
-      "order": 3,
+      "order": 4,
       "task_id": null,
       "owner": "claude-code",
       "output": "A-043 design conformance review and re-baseline of the A-041 traceability addendum",
@@ -94,7 +107,7 @@
       "waiting_on": "The A-008 design package"
     },
     {
-      "order": 4,
+      "order": 5,
       "task_id": null,
       "owner": "claude-code",
       "output": "Wave W1: staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI",
@@ -107,7 +120,7 @@
     "owner": "founder",
     "description": "Merge draft PR #2 (FM-A foundation and A-043 MVP UI) into main after the merge-readiness review."
   },
-  "summary": "feature/fma-foundation-v1 (draft PR #2, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), the U01-U21 traceability addendum, Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, and the repository-centric tool handoff system (A-044, A-044-R). Every fix A-032 required before merge is closed; nothing is deployed and no environment exists.",
+  "summary": "feature/fma-foundation-v1 (draft PR #2, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), the U01-U21 traceability addendum, Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, and the repository-centric tool handoff system (A-044, A-044-R, A-044-R2), whose CURRENT_STATE and NEXT_TASK are canonical. Every fix A-032 required before merge is closed; nothing is deployed and no environment exists.",
   "open_items": [
     {
       "id": "OI-01",
@@ -182,27 +195,38 @@
       "id": "OI-13",
       "kind": "finding",
       "description": "Lovable A-043 tests time out locally on Windows and one U06 test hits a jsdom SubtleCrypto.digest type difference; CI (ubuntu) passes 233/233. A local-environment robustness fix belongs to a Lovable follow-up."
+    },
+    {
+      "id": "OI-14",
+      "kind": "dependency",
+      "description": "Gemini A-047 is reported done but nothing is in the repository; recorded as blocked (repository handoff missing) until Gemini commits its output and handoff."
+    },
+    {
+      "id": "OI-15",
+      "kind": "finding",
+      "description": "Draft PR #3 (A-050, branch fix/a050-accessibility-ux-mobile, cut from main 6c6b478) writes docs/ai/tool-output/figma/A-050/ outside this branch and audits paths (src/components/ui.tsx, src/screens/*.tsx) that do not exist under app/; A-050 is not registered here and has no handoff on this branch."
     }
   ],
   "derived": {
     "source": "docs/founder/NYAYOS_STATUS_REGISTRY.json",
     "registry_updated": "2026-09-26",
-    "task_count": 46,
+    "task_count": 48,
     "by_status": {
-      "OPEN": 6,
+      "OPEN": 7,
       "IN_PROGRESS": 0,
-      "REVIEW": 13,
+      "REVIEW": 14,
       "CANONICAL": 27,
       "SUPERSEDED": 0
     },
-    "highest_task_id": "A-044-R",
+    "highest_task_id": "A-047",
     "open_tasks": [
       "A-008",
       "A-009",
       "A-012",
       "A-015",
       "A-016",
-      "A-028"
+      "A-028",
+      "A-047"
     ],
     "in_progress_tasks": [],
     "review_tasks": [
@@ -218,10 +242,11 @@
       "A-042",
       "A-043",
       "A-044",
-      "A-044-R"
+      "A-044-R",
+      "A-044-R2"
     ],
     "registry_latest_by_tool": {
-      "claude-code": "A-044-R",
+      "claude-code": "A-044-R2",
       "gemini": null,
       "lovable": "A-043",
       "figma": null

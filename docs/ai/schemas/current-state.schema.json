@@ -2,63 +2,182 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "docs/ai/schemas/current-state.schema.json",
   "title": "NyayOS CURRENT_STATE",
-  "description": "docs/ai/CURRENT_STATE.json. 'tools', 'latest_completion' and 'derived' must equal what scripts/ai/state.mjs derives from the handoffs and the status registry (stale state fails CI); the rest is maintained by the tool completing a task.",
+  "description": "docs/ai/CURRENT_STATE.json. 'tools', 'latest_completion' and 'derived' must equal what scripts/ai/state.mjs derives from the handoffs and the status registry (stale state fails CI); the rest is maintained by the tool completing a task. Canonical (A-044-R2): every tool updates it on every task.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "schema_version", "project", "last_updated", "current_phase", "canonical_branch", "working_branch", "current_pr", "deployment",
-    "tools", "latest_completion", "active_tasks", "blocked_tasks", "awaited_outputs", "next_integration_task", "summary", "open_items", "derived"],
+  "required": [
+    "$schema",
+    "schema_version",
+    "authority",
+    "project",
+    "last_updated",
+    "current_phase",
+    "canonical_branch",
+    "working_branch",
+    "current_pr",
+    "deployment",
+    "tools",
+    "latest_completion",
+    "active_tasks",
+    "blocked_tasks",
+    "awaited_outputs",
+    "next_integration_task",
+    "summary",
+    "open_items",
+    "derived"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
-    "schema_version": { "const": "2.0" },
-    "project": { "const": "NyayOS" },
-    "last_updated": { "$ref": "#/$defs/timestamp" },
-    "current_phase": { "type": "string", "minLength": 10 },
-    "canonical_branch": { "type": "string", "minLength": 1 },
-    "working_branch": { "type": "string", "minLength": 1 },
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0"
+    },
+    "authority": {
+      "const": "canonical",
+      "description": "CURRENT_STATE is the canonical operating state for every tool (A-044-R2). CI keeps it consistent with the handoffs and the status registry."
+    },
+    "project": {
+      "const": "NyayOS"
+    },
+    "last_updated": {
+      "$ref": "#/$defs/timestamp"
+    },
+    "current_phase": {
+      "type": "string",
+      "minLength": 10
+    },
+    "canonical_branch": {
+      "type": "string",
+      "minLength": 1
+    },
+    "working_branch": {
+      "type": "string",
+      "minLength": 1
+    },
     "current_pr": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["number", "url", "draft", "merged"],
+      "required": [
+        "number",
+        "url",
+        "draft",
+        "merged"
+      ],
       "properties": {
-        "number": { "type": ["integer", "null"], "minimum": 1 },
-        "url": { "type": ["string", "null"], "pattern": "^https://github\\.com/\\S+/pull/\\d+$" },
-        "draft": { "type": "boolean" },
-        "merged": { "type": "boolean" }
+        "number": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://github\\.com/\\S+/pull/\\d+$"
+        },
+        "draft": {
+          "type": "boolean"
+        },
+        "merged": {
+          "type": "boolean"
+        }
       }
     },
     "deployment": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["allowed", "environment", "status", "url", "note"],
+      "required": [
+        "allowed",
+        "environment",
+        "status",
+        "url",
+        "note"
+      ],
       "properties": {
-        "allowed": { "type": "boolean" },
-        "environment": { "enum": ["none", "staging"] },
-        "status": { "enum": ["not_deployed", "deployed"] },
-        "url": { "type": ["string", "null"], "pattern": "^https://\\S+$" },
-        "note": { "type": "string" }
+        "allowed": {
+          "type": "boolean"
+        },
+        "environment": {
+          "enum": [
+            "none",
+            "staging"
+          ]
+        },
+        "status": {
+          "enum": [
+            "not_deployed",
+            "deployed"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://\\S+$"
+        },
+        "note": {
+          "type": "string"
+        }
       }
     },
     "tools": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["claude-code", "gemini", "lovable", "figma"],
+      "required": [
+        "claude-code",
+        "gemini",
+        "lovable",
+        "figma"
+      ],
       "properties": {
-        "claude-code": { "$ref": "#/$defs/tool_state" },
-        "gemini": { "$ref": "#/$defs/tool_state" },
-        "lovable": { "$ref": "#/$defs/tool_state" },
-        "figma": { "$ref": "#/$defs/tool_state" }
+        "claude-code": {
+          "$ref": "#/$defs/tool_state"
+        },
+        "gemini": {
+          "$ref": "#/$defs/tool_state"
+        },
+        "lovable": {
+          "$ref": "#/$defs/tool_state"
+        },
+        "figma": {
+          "$ref": "#/$defs/tool_state"
+        }
       }
     },
     "latest_completion": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "additionalProperties": false,
-      "required": ["task_id", "tool", "completion_commit", "completed_at", "handoff"],
+      "required": [
+        "task_id",
+        "tool",
+        "completion_commit",
+        "completed_at",
+        "handoff"
+      ],
       "properties": {
-        "task_id": { "$ref": "#/$defs/task_id" },
-        "tool": { "$ref": "#/$defs/tool" },
-        "completion_commit": { "$ref": "#/$defs/sha" },
-        "completed_at": { "$ref": "#/$defs/timestamp" },
-        "handoff": { "type": "string" }
+        "task_id": {
+          "$ref": "#/$defs/task_id"
+        },
+        "tool": {
+          "$ref": "#/$defs/tool"
+        },
+        "completion_commit": {
+          "$ref": "#/$defs/sha"
+        },
+        "completed_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "handoff": {
+          "type": "string"
+        }
       }
     },
     "active_tasks": {
@@ -66,11 +185,24 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["task_id", "tool", "status"],
+        "required": [
+          "task_id",
+          "tool",
+          "status"
+        ],
         "properties": {
-          "task_id": { "$ref": "#/$defs/task_id" },
-          "tool": { "$ref": "#/$defs/tool" },
-          "status": { "enum": ["issued", "in_progress"] }
+          "task_id": {
+            "$ref": "#/$defs/task_id"
+          },
+          "tool": {
+            "$ref": "#/$defs/tool"
+          },
+          "status": {
+            "enum": [
+              "issued",
+              "in_progress"
+            ]
+          }
         }
       }
     },
@@ -79,11 +211,22 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["task_id", "owner", "reason"],
+        "required": [
+          "task_id",
+          "owner",
+          "reason"
+        ],
         "properties": {
-          "task_id": { "$ref": "#/$defs/task_id" },
-          "owner": { "$ref": "#/$defs/owner" },
-          "reason": { "type": "string", "minLength": 5 }
+          "task_id": {
+            "$ref": "#/$defs/task_id"
+          },
+          "owner": {
+            "$ref": "#/$defs/owner"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5
+          }
         }
       }
     },
@@ -93,92 +236,299 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["order", "task_id", "owner", "output", "ready"],
+        "required": [
+          "order",
+          "task_id",
+          "owner",
+          "output",
+          "ready"
+        ],
         "properties": {
-          "order": { "type": "integer", "minimum": 1 },
-          "task_id": { "type": ["string", "null"], "pattern": "^A-\\d{3}(-R\\d?)?$" },
-          "owner": { "$ref": "#/$defs/owner" },
-          "output": { "type": "string", "minLength": 5 },
-          "ready": { "type": "boolean" },
-          "waiting_on": { "type": "string" }
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "task_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^A-\\d{3}(-R\\d?)?$"
+          },
+          "owner": {
+            "$ref": "#/$defs/owner"
+          },
+          "output": {
+            "type": "string",
+            "minLength": 5
+          },
+          "ready": {
+            "type": "boolean"
+          },
+          "waiting_on": {
+            "type": "string"
+          }
         }
       }
     },
     "next_integration_task": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["task_id", "owner", "description"],
+      "required": [
+        "task_id",
+        "owner",
+        "description"
+      ],
       "properties": {
-        "task_id": { "type": ["string", "null"], "pattern": "^A-\\d{3}(-R\\d?)?$" },
-        "owner": { "$ref": "#/$defs/owner" },
-        "description": { "type": "string", "minLength": 10 }
+        "task_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^A-\\d{3}(-R\\d?)?$"
+        },
+        "owner": {
+          "$ref": "#/$defs/owner"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10
+        }
       }
     },
-    "summary": { "type": "string", "minLength": 20 },
+    "summary": {
+      "type": "string",
+      "minLength": 20
+    },
     "open_items": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "kind", "description"],
+        "required": [
+          "id",
+          "kind",
+          "description"
+        ],
         "properties": {
-          "id": { "type": "string", "pattern": "^OI-\\d{2}$" },
-          "kind": { "enum": ["founder_decision", "finding", "residual", "dependency"] },
-          "description": { "type": "string", "minLength": 10 },
-          "decision": { "type": "string", "pattern": "^D-\\d{3}$" },
-          "risk": { "type": "string", "pattern": "^RES-\\d{2}$" }
+          "id": {
+            "type": "string",
+            "pattern": "^OI-\\d{2}$"
+          },
+          "kind": {
+            "enum": [
+              "founder_decision",
+              "finding",
+              "residual",
+              "dependency"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 10
+          },
+          "decision": {
+            "type": "string",
+            "pattern": "^D-\\d{3}$"
+          },
+          "risk": {
+            "type": "string",
+            "pattern": "^RES-\\d{2}$"
+          }
         }
       }
     },
     "derived": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["source", "registry_updated", "task_count", "by_status", "highest_task_id", "open_tasks", "in_progress_tasks", "review_tasks", "registry_latest_by_tool"],
+      "required": [
+        "source",
+        "registry_updated",
+        "task_count",
+        "by_status",
+        "highest_task_id",
+        "open_tasks",
+        "in_progress_tasks",
+        "review_tasks",
+        "registry_latest_by_tool"
+      ],
       "properties": {
-        "source": { "const": "docs/founder/NYAYOS_STATUS_REGISTRY.json" },
-        "registry_updated": { "type": ["string", "null"] },
-        "task_count": { "type": "integer", "minimum": 0 },
+        "source": {
+          "const": "docs/founder/NYAYOS_STATUS_REGISTRY.json"
+        },
+        "registry_updated": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "task_count": {
+          "type": "integer",
+          "minimum": 0
+        },
         "by_status": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["OPEN", "IN_PROGRESS", "REVIEW", "CANONICAL", "SUPERSEDED"],
+          "required": [
+            "OPEN",
+            "IN_PROGRESS",
+            "REVIEW",
+            "CANONICAL",
+            "SUPERSEDED"
+          ],
           "properties": {
-            "OPEN": { "type": "integer" }, "IN_PROGRESS": { "type": "integer" }, "REVIEW": { "type": "integer" },
-            "CANONICAL": { "type": "integer" }, "SUPERSEDED": { "type": "integer" }
+            "OPEN": {
+              "type": "integer"
+            },
+            "IN_PROGRESS": {
+              "type": "integer"
+            },
+            "REVIEW": {
+              "type": "integer"
+            },
+            "CANONICAL": {
+              "type": "integer"
+            },
+            "SUPERSEDED": {
+              "type": "integer"
+            }
           }
         },
-        "highest_task_id": { "$ref": "#/$defs/task_id" },
-        "open_tasks": { "type": "array", "items": { "$ref": "#/$defs/task_id" } },
-        "in_progress_tasks": { "type": "array", "items": { "$ref": "#/$defs/task_id" } },
-        "review_tasks": { "type": "array", "items": { "$ref": "#/$defs/task_id" } },
+        "highest_task_id": {
+          "$ref": "#/$defs/task_id"
+        },
+        "open_tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/task_id"
+          }
+        },
+        "in_progress_tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/task_id"
+          }
+        },
+        "review_tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/task_id"
+          }
+        },
         "registry_latest_by_tool": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["claude-code", "gemini", "lovable", "figma"],
+          "required": [
+            "claude-code",
+            "gemini",
+            "lovable",
+            "figma"
+          ],
           "properties": {
-            "claude-code": { "type": ["string", "null"] }, "gemini": { "type": ["string", "null"] },
-            "lovable": { "type": ["string", "null"] }, "figma": { "type": ["string", "null"] }
+            "claude-code": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "gemini": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "lovable": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "figma": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
           }
         }
       }
     }
   },
   "$defs": {
-    "task_id": { "type": "string", "pattern": "^A-\\d{3}(-R\\d?)?$" },
-    "tool": { "enum": ["claude-code", "gemini", "lovable", "figma"] },
-    "owner": { "enum": ["claude-code", "gemini", "lovable", "figma", "founder"] },
-    "sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-    "timestamp": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$" },
+    "task_id": {
+      "type": "string",
+      "pattern": "^A-\\d{3}(-R\\d?)?$"
+    },
+    "tool": {
+      "enum": [
+        "claude-code",
+        "gemini",
+        "lovable",
+        "figma"
+      ]
+    },
+    "owner": {
+      "enum": [
+        "claude-code",
+        "gemini",
+        "lovable",
+        "figma",
+        "founder"
+      ]
+    },
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+    },
     "tool_state": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status", "latest_completed_task", "latest_completion_commit", "handoff", "reason"],
+      "required": [
+        "status",
+        "latest_completed_task",
+        "latest_completion_commit",
+        "handoff",
+        "reason"
+      ],
       "properties": {
-        "status": { "enum": ["idle", "active", "blocked", "no_records"] },
-        "latest_completed_task": { "type": ["string", "null"], "pattern": "^A-\\d{3}(-R\\d?)?$" },
-        "latest_completion_commit": { "type": ["string", "null"], "pattern": "^[0-9a-f]{40}$" },
-        "handoff": { "type": ["string", "null"] },
-        "reason": { "type": ["string", "null"] }
+        "status": {
+          "enum": [
+            "idle",
+            "active",
+            "blocked",
+            "no_records"
+          ]
+        },
+        "latest_completed_task": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^A-\\d{3}(-R\\d?)?$"
+        },
+        "latest_completion_commit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "handoff": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     }
   }

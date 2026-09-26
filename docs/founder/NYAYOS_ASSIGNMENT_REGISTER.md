@@ -683,3 +683,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Lovable's earlier staging builds and the Figma package have no repository handoff and are recorded as blocked, not completed; Gemini has no records. The validator proves commits are in the checked-out history, not which remote received them. Test fixtures are synthetic |
 | **Rollback** | `git revert` the A-044-R completion and state commits (listed in `docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json`) |
 | **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json` |
+
+---
+
+### A-044-R2 — Fix the AI operating system itself
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-044-R2 (no ID was issued for this follow-up; recorded as the second remediation of A-044) |
+| **Owner / tool** | Claude Code — repository automation |
+| **Purpose** | Make `CURRENT_STATE.json` and `NEXT_TASK.json` canonical, make every tool update them, fail CI on a missing HANDOFF, stale CURRENT_STATE, stale NEXT_TASK or missing task ownership, add a one-command AI status, and backfill Lovable A-043, Gemini A-047 and Claude A-042/A-044 into the structure |
+| **Gate** | FA-001. No deployment, no production, no merge |
+| **Deployment allowed** | **NOT ALLOWED** |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | `authority: canonical` in both state files; `tools.<tool>` fully derived; ownership and NEXT_TASK-staleness gates; blocked handoffs (null commit, `blocked_reason`); `node scripts/ai/state.mjs status [--json]`; Gemini A-047 recorded as a blocked ownership record (registered OPEN) because no repository evidence exists |
+| **Evidence** | `node --test scripts/ai/state.test.mjs`; `node scripts/ai/state.mjs check --head <head>`; task-gate on PR #2 |
+| **Limitations** | Gemini A-047's content is unknown here; its registry type is assumed. Draft PR #3 (A-050, another branch) is recorded as an open item, not integrated |
+| **Rollback** | See `docs/ai/tool-output/claude-code/A-044-R2/HANDOFF.json` |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044-R2/HANDOFF.json` |
