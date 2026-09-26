@@ -1078,6 +1078,32 @@
       "updated": "2026-09-26",
       "superseded_by": null,
       "notes": "Baseline fc74038. docs/ai/ holds CURRENT_STATE, NEXT_TASK, DECISIONS and RISKS (JSON Schemas in docs/ai/schemas/) and tool-output/claude-code|figma|lovable|gemini handoff directories. scripts/ai/state.mjs generate rewrites the derived fields (registry counts; Decision Log D-001–D-030; A-032 §9 candidates D-031–D-036; Risk Register R01–R30 and top five); check enforces files, schema validity, derived-field sync, and that the registry's newest assignment is recorded in CURRENT_STATE with a pushed commit in history, a well-formed tool handoff and a NEXT_TASK that follows it. The check is a step of the required task-gate job (checkout with full history). Completion protocol (commit, push, CURRENT_STATE, tool handoff, NEXT_TASK) added to CONTRIBUTING §5, the PR template and the Operating System §28; each assignment ends with a work commit and a state commit. Validator negative controls (schema, stale derived field, NEXT_TASK lag, handoff/commit mismatch, commit not in history) all detected. A-042 handoff backfilled. No product code, SQL or migration changed. Assignment ID A-043 is not registered in this repository. — Re-issued brief (same day): added the standard handoff schema (docs/ai/schemas/handoff.schema.json, incl. a Deployment field that can never be production), the generated docs/ai/STATUS_SUMMARY.md (the page M365 Copilot reads instead of founder copy/paste; check fails if stale or hand-edited), docs/ai/TOOL_OUTPUT_CONTRACT.md (what every tool reads, writes and never does), and a pull-request rule (check --head) that fails on unrecorded work: after the recorded commit only state files may change."
+    },
+    {
+      "id": "A-043",
+      "title": "MVP Wave-1 UI implementation — U01 Google entry, U04–U09, U16, U17 on seeded synthetic data",
+      "type": "implementation",
+      "status": "REVIEW",
+      "owner": "Lovable",
+      "tool": "Lovable — MVP UI implementation (staging only; no deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-029",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "app/src/mvp/",
+        "app/src/components/mvp/",
+        "app/src/routes/login.tsx",
+        "app/src/routes/disputes.tsx",
+        "app/tests/mvp.test.tsx",
+        "docs/ai/tool-output/lovable/A-043.md"
+      ],
+      "evidence": "docs/ai/tool-output/lovable/A-043.md",
+      "updated": "2026-09-26",
+      "superseded_by": null,
+      "notes": "Baseline fc74038 on feature/fma-foundation-v1. Screens: U01 Google login entry (not connected; synthetic personas), dispute list, U04 new + stored account, U05 deterministic intake, U06 locker (type/size checks, in-browser SHA-256, no upload), U07 viewer with manual page linking, U08 fact review (FactCard), U09 timeline (five precisions, filters, date edit), U16 preview with omissions and privacy check, U17 manifest with no-AI and integrity statements and A-037 stale notice. Seed: founder, normal, reviewer (grants disabled), deleted (refused), cross-tenant (blocked). Validation: Vitest all green incl. 34 A-043 tests; tsc; eslint 0 errors; build; Playwright 390/834/1280 no overflow, zero console errors. REVIEW not CANONICAL: Figma MVP Design Package V1 (A-008) not supplied, so design conformance is unverified. No backend, schema, dependency or deployment change."
     }
   ]
 }

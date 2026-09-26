@@ -55,7 +55,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <span className="sr-only">{loadingLabel}</span>
         </>
       ) : null}
-      <span className={cn(loading && "opacity-70")}>{children}</span>
+      <span className={cn("inline-flex items-center gap-2", loading && "opacity-70")}>
+        {children}
+      </span>
     </button>
   ),
 );

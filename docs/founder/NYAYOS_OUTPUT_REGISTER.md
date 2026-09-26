@@ -197,3 +197,13 @@ These are **policy statements, not case material**. They were left unchanged bec
 | `docs/product/NYAYOS_FM0_CONCIERGE_DECK_V1_TEXT.md` | Derived (A-032) — verbatim text extract of a gitignored `.pptx` | source sha256 `904f5081ab7f6b94…`; 25 slides |
 
 **Not produced:** any code change. Fixes are listed, not applied.
+
+## A-043 outputs — 26 September 2026 (branch `feature/fma-foundation-v1`)
+
+| Output | Status | Notes |
+|---|---|---|
+| `app/src/mvp/` | Produced (A-043) | Seed fixtures, access rules, preview store, export manifest and staleness helpers |
+| `app/src/components/mvp/` | Produced (A-043) | Reusable states, fields, frame, header, guard, document row, screens U01 entry, U04–U09, U16, U17 |
+| `app/src/routes/login.tsx`, `app/src/routes/disputes*.tsx` | Produced (A-043) | Routed Wave-1 screens |
+| `app/tests/mvp.test.tsx` | Produced (A-043) | 34 tests |
+| `docs/ai/tool-output/lovable/A-043.md` | Produced (A-043) | Handoff, gaps, rollback |

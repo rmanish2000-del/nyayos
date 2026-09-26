@@ -647,3 +647,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Rollback** | `git revert` the A-044 work and state commits |
 | **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044.md` |
 | **Re-issued brief (26 Sep 2026)** | Added: standard handoff schema `docs/ai/schemas/handoff.schema.json` (with `Deployment`, never production); generated `docs/ai/STATUS_SUMMARY.md` (replaces founder copy/paste); `docs/ai/TOOL_OUTPUT_CONTRACT.md`; pull-request rule `check --head` failing on unrecorded work after the recorded commit |
+
+---
+
+### A-043 — MVP Wave-1 UI implementation
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-043 |
+| **Owner / tool** | Lovable — MVP UI implementation |
+| **Purpose** | Google login entry and routing; U04, U05, U06, U07, U08, U09, U16, U17 on seeded synthetic data |
+| **Gate** | FA-001 (staging only). Production NOT ALLOWED |
+| **Deployment allowed** | Staging only; nothing deployed by this assignment |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | Routed screens under `/login` and `/disputes/...`; five seeded personas; no backend, storage, scan or model call |
+| **Evidence** | `docs/ai/tool-output/lovable/A-043.md`; `app/tests/mvp.test.tsx` (34); Vitest, tsc, eslint 0 errors, build; Playwright 390/834/1280 |
+| **Limitations** | Figma MVP Design Package V1 not supplied (conformance unverified); Google sign-in not connected; no storage/scan; JSON manifest only; screen reader pass owed |
+| **Rollback** | `git revert` the A-043 commit (additive UI only) |
+| **Handoff back to M365 Copilot** | Record A-043 REVIEW; supply the Figma package for a conformance review; decide F01 sign-in method |
