@@ -2,8 +2,8 @@
   "$schema": "./schemas/next-task.schema.json",
   "schema_version": "2.0",
   "authority": "canonical",
-  "updated": "2026-09-26T16:49:42Z",
-  "after": "A-044-R",
+  "updated": "2026-09-26T17:53:58Z",
+  "after": "A-044-R2",
   "task_id": null,
   "title": "Wave W1 — staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI",
   "assigned_tool": "claude-code",
@@ -28,7 +28,7 @@
   "ready": false,
   "repository_baseline": {
     "branch": "feature/fma-foundation-v1",
-    "commit": "1c080432d6d183e98073da2aa4e89b33ab85c734"
+    "commit": "02f2f9576c19fd065c88debcafd9a3e614e9f990"
   },
   "required_inputs": [
     "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md",

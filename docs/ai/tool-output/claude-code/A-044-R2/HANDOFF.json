@@ -1,0 +1,109 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-044-R2",
+  "tool": "claude-code",
+  "status": "completed",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "14e9f1b816be77e1775c881724c08584f2c7b259",
+  "completion_commit": "02f2f9576c19fd065c88debcafd9a3e614e9f990",
+  "completed_at": "2026-09-26T17:53:58Z",
+  "files_created": [
+    "docs/ai/tool-output/gemini/A-047/HANDOFF.json",
+    "docs/ai/tool-output/gemini/A-047/SUMMARY.md"
+  ],
+  "files_modified": [
+    "CONTRIBUTING.md",
+    "NYAYOS_OPERATING_SYSTEM.md",
+    "docs/INDEX.md",
+    "docs/ai/CURRENT_STATE.json",
+    "docs/ai/NEXT_TASK.json",
+    "docs/ai/README.md",
+    "docs/ai/STATUS_SUMMARY.md",
+    "docs/ai/schemas/current-state.schema.json",
+    "docs/ai/schemas/handoff.schema.json",
+    "docs/ai/schemas/next-task.schema.json",
+    "docs/ai/tool-output/gemini/README.md",
+    "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+    "docs/founder/NYAYOS_CHANGELOG.md",
+    "docs/founder/NYAYOS_DEPENDENCY_GRAPH.md",
+    "docs/founder/NYAYOS_STATUS_DASHBOARD.md",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.md",
+    "scripts/ai/state.mjs",
+    "scripts/ai/state.test.mjs"
+  ],
+  "files_deleted": [],
+  "tests": [
+    {
+      "name": "handoff validator tests",
+      "command": "node --test scripts/ai/state.test.mjs",
+      "result": "pass",
+      "detail": "31/31, incl. status command, blocked handoff ownership, blocked handoff cannot claim files, task ownership missing, stale NEXT_TASK, hand-set tool status"
+    },
+    {
+      "name": "repository state check",
+      "command": "node scripts/ai/state.mjs check --head <state commit>",
+      "result": "pass"
+    },
+    {
+      "name": "status command",
+      "command": "node scripts/ai/state.mjs status",
+      "result": "pass",
+      "detail": "claude-code A-044-R2, lovable A-043, gemini blocked (A-047), figma blocked (A-008)"
+    },
+    {
+      "name": "registry",
+      "command": "node scripts/governance/registry.mjs validate; generate --check",
+      "result": "pass",
+      "detail": "48 tasks, 0 errors"
+    }
+  ],
+  "evidence": [
+    {
+      "description": "validator and status command",
+      "ref": "scripts/ai/state.mjs"
+    },
+    {
+      "description": "validator tests",
+      "ref": "scripts/ai/state.test.mjs"
+    },
+    {
+      "description": "canonical-state documentation",
+      "ref": "docs/ai/README.md"
+    },
+    {
+      "description": "Gemini A-047 blocked ownership record",
+      "ref": "docs/ai/tool-output/gemini/A-047/HANDOFF.json"
+    },
+    {
+      "description": "completion commit",
+      "ref": "02f2f9576c19fd065c88debcafd9a3e614e9f990"
+    }
+  ],
+  "limitations": [
+    "No task ID was issued for this follow-up; recorded as A-044-R2 (second remediation of A-044).",
+    "Gemini A-047: no commit, file or brief exists on any branch, so it is registered OPEN with a blocked ownership record and no completion is claimed; its registry type is assumed.",
+    "Draft PR #3 (A-050, another branch) is recorded as an open item, not integrated.",
+    "Application code is unchanged; Vitest was not re-run for this task (CI dependency-check covers app/ changes only)."
+  ],
+  "risks": [
+    {
+      "description": "Gemini A-047 output exists only outside GitHub until Gemini commits it",
+      "severity": "medium"
+    }
+  ],
+  "rollback": "git revert --no-edit $(git log --format=%H --grep='^\\[TOOL:CLAUDE-CODE\\]\\[TASK:A-044-R2\\]' 14e9f1b816be77e1775c881724c08584f2c7b259..HEAD) — reverts, newest first, the A-044-R2 state commit and 02f2f9576c19fd065c88debcafd9a3e614e9f990; no force push",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": null,
+    "tool": "founder",
+    "reason": "Founder merge-readiness review of draft PR #2 with D-035 and D-036; Gemini to commit its A-047 output with a completed handoff."
+  }
+}
