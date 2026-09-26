@@ -21,7 +21,7 @@
     "status": "REVIEW",
     "tool": "claude-code",
     "baseline": "fc740380eb6282d3b6a174b8a01a93e7528bddd8",
-    "commit": "6ef934925d59bb7317da9e4b82e38ea8b23b077a",
+    "commit": "f185743a8d5eea45641fe158d462ab9ecf8d00b8",
     "pushed": true,
     "handoff": "docs/ai/tool-output/claude-code/A-044.md"
   },

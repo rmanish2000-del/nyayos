@@ -22,7 +22,7 @@ FM-A foundation on feature/fma-foundation-v1 (draft PR #2, unmerged): domain lay
 | Assignment | **A-044** — Repository-centric AI operating system — docs/ai state, tool handoffs, validator and completion protocol |
 | Status | REVIEW |
 | Tool | `claude-code` |
-| Baseline → commit | `fc740380eb6282d3b6a174b8a01a93e7528bddd8` → `6ef934925d59bb7317da9e4b82e38ea8b23b077a` (pushed) |
+| Baseline → commit | `fc740380eb6282d3b6a174b8a01a93e7528bddd8` → `f185743a8d5eea45641fe158d462ab9ecf8d00b8` (pushed) |
 | Handoff | [docs/ai/tool-output/claude-code/A-044.md](tool-output/claude-code/A-044.md) |
 
 ## Next
