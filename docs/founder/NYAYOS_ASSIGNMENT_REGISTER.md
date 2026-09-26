@@ -610,3 +610,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Evidence is static reading at the baseline; the Figma FM-A package was never supplied, so no screen has prototype design evidence; m-1 stays open because SQL changes were out of scope; D-035 and D-036 are founder decisions |
 | **Rollback** | `git revert` the A-041 commit |
 | **Handoff back to M365 Copilot** | Record A-041 REVIEW; every A-032 critical and major finding is closed; remaining: m-1 and other minors, D-035 / D-036, and the A-040 residuals (object-storage deletion, account tenant row) |
+
+---
+
+### A-042 — Minor finding m-1 closure
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-042 |
+| **Owner / tool** | Claude Code — security implementation |
+| **Purpose** | Close A-032 m-1: no client may change dispute status directly; status changes only through a server-controlled path |
+| **Gate** | FA-001 (staging only). Deployment, production access and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** `0008` executed only on disposable local PostgreSQL 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | Reproduced on `0001`–`0007` (owner and editor each set status directly). Migration `0008_dispute_status_authorization.sql`: revoke `UPDATE (status)` on `disputes` from `nyayos_authenticated` (title and category label edits kept); trigger `deletion_requests_dispute_status` (definer, pinned search path) sets `deletion_requested` on a dispute-scope request and `active` on undo when no other request is open, auditing the undo as `deletion.undone` in the same transaction; the purge worker never sets status |
+| **Evidence** | `db/tests/dispute_status_0001.sql` 21/21, failing on the baseline; negative controls (re-grant, missing undo audit) detected; smoke 87/87; deletion purge 55/55 with one A-040 assertion updated for the intended undo side effects; deletion scope 28/28; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency matrix 5/5; purge race 3/3; Vitest 199/199; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | Status is driven only by dispute-scope requests; document and account requests leave dispute status unchanged, and their undo is not audited (pre-existing, outside m-1). `deleted` is never set in FM-A. A-032 minors m-2 to m-12 remain open as non-blocking follow-ups |
+| **Rollback** | `git revert` the A-042 commit; disposable databases only: the statements in the `0008` header |
+| **Handoff back to M365 Copilot** | Record A-042 REVIEW; every A-032 fix required before merge is closed; next is the founder's merge-readiness review |

@@ -274,7 +274,7 @@
         "eslint": "0 errors (11 pre-existing warnings)",
         "build": "pass",
         "schema_lint": "clean (39 tables; deletion graph and purge order parity)",
-        "migration_smoke": "85/85 PASS with 0001-0007 on disposable local postgres:16-alpine (synthetic data; containers destroyed; no environment); deletion purge 55/55; purge race 3/3; deletion scope 28/28; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency 5/5"
+        "migration_smoke": "87/87 PASS with 0001-0008 on disposable local postgres:16-alpine (synthetic data; containers destroyed; no environment); dispute status 21/21; deletion purge 55/55; purge race 3/3; deletion scope 28/28; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency 5/5"
       },
       "not_done": "Figma FM-A UI import (package missing); server functions; auth; storage; scan adapter; any database",
       "review": {
@@ -323,8 +323,25 @@
         ],
         "A-041": {
           "M-8": "closed (U01–U21 traceability addendum; documentation only)",
-          "m-1": "open (SQL grant change out of A-041 scope)"
-        }
+          "m-1": "closed by A-042"
+        },
+        "A-042": {
+          "m-1": "closed (0008: status not client-writable; follows the deletion workflow; reproduced on baseline first)"
+        },
+        "A-032_merge_blocking_open": [],
+        "A-032_minor_open_non_blocking": [
+          "m-2",
+          "m-3",
+          "m-4",
+          "m-5",
+          "m-6",
+          "m-7",
+          "m-8",
+          "m-9",
+          "m-10",
+          "m-11",
+          "m-12"
+        ]
       },
       "ui_traceability": {
         "document": "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md",

@@ -449,4 +449,14 @@ select 'CHECK M3_audit_and_ledger_immutable_for_everyone ' || case when
   and (select count(*) from pg_trigger where not tgisinternal and tgfoid = 'nyayos.tg_forbid_delete_unless_purge()'::regprocedure
      and tgrelid in ('nyayos.document_versions'::regclass, 'nyayos.user_corrections'::regclass)) = 2 then 'PASS' else 'FAIL' end;
 
+-- ---------------------------------------------------------------- A-042 dispute status (requires 0008)
+select 'CHECK M1_status_not_client_updatable ' || case when
+  not has_column_privilege('nyayos_authenticated', 'nyayos.disputes', 'status', 'UPDATE')
+  and has_column_privilege('nyayos_authenticated', 'nyayos.disputes', 'title', 'UPDATE')
+  and has_column_privilege('nyayos_authenticated', 'nyayos.disputes', 'category_label', 'UPDATE') then 'PASS' else 'FAIL' end;
+select 'CHECK M1_status_follows_deletion_workflow_trigger ' || case when exists (
+  select 1 from pg_trigger t join pg_proc p on p.oid = t.tgfoid
+  where t.tgrelid = 'nyayos.deletion_requests'::regclass and not t.tgisinternal and p.proname = 'tg_dispute_status_from_deletion'
+    and p.prosecdef and p.proconfig::text like '%search_path=pg_catalog, nyayos%') then 'PASS' else 'FAIL' end;
+
 select 'CHECK no_authenticated_write_grant_on_canonical ' || case when (select count(*) from information_schema.role_table_grants where table_schema='nyayos' and grantee='nyayos_authenticated' and privilege_type in ('INSERT','UPDATE','DELETE') and table_name in ('dispute_statements','entities','entity_source_forms','events','date_assertions','propositions','evidence_items','evidence_relations','contradictions','missing_evidence','issues','next_steps','user_corrections','audit_events','document_versions')) = 0 then 'PASS' else 'FAIL' end;

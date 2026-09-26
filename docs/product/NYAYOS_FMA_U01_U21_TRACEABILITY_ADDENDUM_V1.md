@@ -593,6 +593,8 @@ Limitations, stated as required by A-041:
 
 **A-032 m-1 remains open.** `db/migrations/0001_fma_foundation.sql` still grants `update (title, status, category_label) on nyayos.disputes to nyayos_authenticated`, so an owner or editor can set `status` directly. A-041 may not change SQL. The fix is still a one-line grant change in a new migration.
 
+**Update (A-042, 26 Sep 2026):** m-1 is now closed by `db/migrations/0008_dispute_status_authorization.sql`. Dispute status is no longer client-writable and follows the deletion workflow only; see `db/tests/dispute_status_0001.sql`.
+
 ## 9. Limitations of this addendum
 
 - **Evidence is static.** Statuses were read from code at the baseline; no screen was run, because none exists.

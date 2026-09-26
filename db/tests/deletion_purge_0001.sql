@@ -367,8 +367,13 @@ update nyayos.deletion_requests set state = 'undone' where id = (select ru from 
 reset role;
 select pg_temp.snap('t1');
 select 'CHECK M3_undo_window_rejects_purge ' || case when pg_temp.r('R1_window') = 'undo_window_active' and pg_temp.r('RB_window') = 'undo_window_active'
-  and not exists (select 1 from pg_temp.deleted('t0', 't1')) and not exists (select 1 from pg_temp.added('t0', 't1'))
-  and (select count(*) from pg_temp.changed('t0', 't1')) = 1 then 'PASS' else 'FAIL' end;   -- the only change is the requester's own undo
+  and not exists (select 1 from pg_temp.deleted('t0', 't1'))
+  -- the only changes are the requester's own undo: the request row, the dispute status it restores
+  -- (A-042, migration 0008) and the deletion.undone audit event written with it
+  and (select string_agg(tn || ':' || rid, ',' order by tn) from pg_temp.changed('t0', 't1'))
+      = 'deletion_requests:' || (select ru from s)::text || ',disputes:' || (select d3 from s)::text
+  and (select string_agg(tn, ',') from pg_temp.added('t0', 't1')) = 'audit_events'
+  and exists (select 1 from nyayos.audit_events where action = 'deletion.undone' and resource_id = (select ru from s)::text) then 'PASS' else 'FAIL' end;
 -- time passes: every undo window closes (test-only clock move)
 update nyayos.deletion_requests set undo_until = now() - interval '1 minute' where state in ('requested', 'undone');
 select pg_temp.snap('t2');

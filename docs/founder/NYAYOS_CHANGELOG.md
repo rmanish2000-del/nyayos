@@ -5,6 +5,21 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-26 — Dispute status server-controlled: A-032 m-1 closed (A-042)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0008` not applied to any environment.**
+
+### Added
+
+- `db/migrations/0008_dispute_status_authorization.sql` — clients lose `UPDATE (status)` on disputes; status follows the deletion workflow only (request, undo) through a server-side trigger, with the undo audited.
+- `db/tests/dispute_status_0001.sql` (21 checks; reproduces m-1 on the baseline). Smoke +2 checks.
+
+### Changed
+
+- One A-040 purge-suite assertion now expects the undo's status change and `deletion.undone` event. A-032 report records m-1 closed; registry A-042 REVIEW.
+
+---
+
 ## 2026-09-26 — U01–U21 traceability addendum: A-032 M-8 closed (A-041)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Documentation only: no code, SQL, migration or test changed. Nothing deployed or merged.**
