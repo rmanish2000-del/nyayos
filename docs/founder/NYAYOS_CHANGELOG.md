@@ -5,6 +5,18 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-27 — Canonical integration: Figma A-063 audit validated, Lovable fix specification issued (A-064)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed.**
+
+### Added
+
+- `docs/ai/tool-output/figma/A-063/` — Figma's A-043 audit, cherry-picked unchanged from draft PR #3 (`dbc415f` → `76b6eb6`). Registry A-063 REVIEW.
+- `docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md` — every A-063 finding checked against the code; A-050 and A-057 rejected (all cited paths nonexistent). Registry A-064 REVIEW.
+- `docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md` — the only A-043 fix list (F-01 to F-10), issued to Lovable as A-065 (OPEN, after the PR #2 merge).
+
+---
+
 ## 2026-09-27 — Repository state reconciliation: Gemini A-047 is a placeholder only (A-062)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed.**

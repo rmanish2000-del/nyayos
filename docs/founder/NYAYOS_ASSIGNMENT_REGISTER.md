@@ -733,3 +733,45 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `node scripts/ai/state.mjs status`; `node --test scripts/ai/state.test.mjs`; `docs/ai/tool-output/gemini/A-047/HANDOFF.json` |
 | **Limitations** | Only repository contents can be inspected; any Gemini output held outside GitHub remains invisible until committed |
 | **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-062/HANDOFF.json` |
+
+---
+
+### A-063 — A-043 implementation audit (Figma)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-063 |
+| **Owner / tool** | Figma — implementation audit (documentation only) |
+| **Purpose** | Audit the A-043 MVP Wave-1 UI for completeness, accessibility and mobile behaviour |
+| **Status** | **REVIEW — 27 September 2026** |
+| **Result** | Committed on draft PR #3 (`dbc415f`); integrated onto `feature/fma-foundation-v1` unchanged as `76b6eb6` by A-064 and validated finding by finding. Accepted items are specified for Lovable as A-065 |
+| **Evidence** | `docs/ai/tool-output/figma/A-063/` |
+| **Limitations** | Several line anchors did not match the audited code; the simulated-scan fix (FIX-C003) and the `role="button"` drop zone (FIX-m005) were rejected. See `docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md` |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/figma/A-063/HANDOFF.json` |
+
+---
+
+### A-064 — Canonical integration and branch cleanup
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-064 |
+| **Owner / tool** | Claude Code — audit validation and fix specification |
+| **Purpose** | Bring the valid Figma PR #3 audit onto the working branch against the actual A-043 files, reject findings that cite nonexistent paths, and write one canonical fix specification for Lovable |
+| **Status** | **REVIEW — 27 September 2026** |
+| **Result** | A-050 and A-057 rejected (0 of 7 and 0 of 9 cited paths exist). A-063 integrated and validated: 7 accepted, 4 reassigned, 2 merged, 1 fix rejected. Fix specification F-01 to F-10 issued as A-065. PR #2 merge readiness unchanged |
+| **Evidence** | `docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md`; `docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md` |
+| **Limitations** | PR #3 was not merged, changed or closed; the founder should close it unmerged |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-064/HANDOFF.json` |
+
+---
+
+### A-065 — A-043 canonical fixes (Lovable)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-065 |
+| **Owner / tool** | Lovable — UI fixes |
+| **Purpose** | Implement F-01 to F-10 of `docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md` |
+| **Status** | **OPEN — issued 27 September 2026; starts after the founder merges PR #2** |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/lovable/A-065/HANDOFF.json` |

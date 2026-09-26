@@ -1222,6 +1222,71 @@
       "updated": "2026-09-27",
       "superseded_by": null,
       "notes": "Baseline 14c5ea0. A-062 re-inspection (27 Sep 2026): docs/ai/tool-output/gemini/A-047/ holds only this blocked ownership placeholder, written by Claude Code under A-044-R2 (commit 02f2f95). No Gemini commit, output file or evidence exists on any branch (feature/fma-foundation-v1, main, fix/a050-accessibility-ux-mobile, governance/status-update) or in any pull request. Verdict: placeholder only — not a valid or partial completion; the blocked status is correct. The reported inconsistency was one of presentation: the directory's existence read as a completion. Fix: blocked handoffs without a commit are now reported as 'placeholder only, no output committed' in tools.<tool>.reason, the status command and STATUS_SUMMARY; CURRENT_STATE open items and awaited outputs say so explicitly. No blocked status was removed, because removing it would claim a completion the repository does not contain. Also recorded: draft PR #3 now additionally carries a Figma-namespace A-057 audit (unregistered, no handoff)."
+    },
+    {
+      "id": "A-063",
+      "title": "A-043 implementation audit (Figma) — integrated from draft PR #3 and validated by A-064",
+      "type": "review",
+      "status": "REVIEW",
+      "owner": "Figma",
+      "tool": "Figma — implementation audit of the A-043 MVP UI (documentation only; no code changes)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-029",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/ai/tool-output/figma/A-063/findings.md",
+        "docs/ai/tool-output/figma/A-063/accessibility.md",
+        "docs/ai/tool-output/figma/A-063/mobile-audit.md",
+        "docs/ai/tool-output/figma/A-063/developer-fixes.md"
+      ],
+      "evidence": "docs/ai/tool-output/figma/A-063/findings.md",
+      "updated": "2026-09-27",
+      "superseded_by": null,
+      "notes": "Audit of A-043 at 14c5ea0 committed on draft PR #3 as dbc415f (author: founder, 27 Sep 2026), cherry-picked unchanged onto feature/fma-foundation-v1 as 76b6eb6 by A-064. 18 of 19 cited paths exist (the missing one is a proposed new route). Validated finding by finding in docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md: 7 findings accepted (2 with a changed fix), 4 reassigned (backend and Google sign-in to W1/FD-02, root route to a founder decision, contrast and screen-reader passes to verification), 2 merged as duplicates, the simulated-scan fix FIX-C003 rejected (violates the no-promotion-without-clean-verdict rule), several line anchors corrected. Accepted items became A-065."
+    },
+    {
+      "id": "A-064",
+      "title": "Canonical integration and branch cleanup — Figma A-063 integrated and validated, A-050/A-057 rejected, canonical A-043 fix specification for Lovable",
+      "type": "review",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — audit validation and fix specification (documentation only; no application code, SQL, merge or deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-029",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md",
+        "docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md"
+      ],
+      "evidence": "docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md",
+      "updated": "2026-09-27",
+      "superseded_by": null,
+      "notes": "Baseline ca41bf1. No task ID was issued; A-064 was the next free ID after the founder-named A-063. Draft PR #3 audits: A-050 (0 of 7 cited paths exist) and A-057 (0 of 9) rejected in full; A-063 (18 of 19) cherry-picked as 76b6eb6 (original dbc415f, authorship kept) and validated against app/ at ca41bf1 (identical to the audited 14c5ea0). Output: docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md (F-01 to F-10, issued to Lovable as A-065). PR #2 merge readiness re-verified; unchanged. PR #3 not merged, changed or closed — the founder should close it unmerged."
+    },
+    {
+      "id": "A-065",
+      "title": "A-043 canonical fixes (F-01 to F-10) — post-login return path, skip-link targets, document language, and minor accessibility and mobile fixes",
+      "type": "implementation",
+      "status": "OPEN",
+      "owner": "Lovable",
+      "tool": "Lovable — UI fixes on a branch from main after the PR #2 merge (no backend, auth provider, SQL or deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [],
+      "planned_inputs": [
+        "A-043",
+        "A-064"
+      ],
+      "outputs": [],
+      "evidence": "docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md",
+      "updated": "2026-09-27",
+      "superseded_by": null,
+      "notes": "Issued by A-064. Specification: docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md. Starts after the founder merges PR #2 with a merge commit; branch fix/a065-a043-canonical-fixes from main; completion commit tagged [TOOL:LOVABLE][TASK:A-065] with docs/ai/tool-output/lovable/A-065/HANDOFF.json. Must not add any path that marks a document ready without a scan."
     }
   ]
 }
