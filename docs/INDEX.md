@@ -59,13 +59,12 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | Document | Type | Contents |
 |---|---|---|
 | [STATUS_SUMMARY.md](ai/STATUS_SUMMARY.md) | **Generated** — A-044 | One-page status: last assignment and handoff, next task, open items, pending decisions, residual risks. **Read first** |
-| [TOOL_OUTPUT_CONTRACT.md](ai/TOOL_OUTPUT_CONTRACT.md) | Maintainer — A-044 | What every tool reads, writes and never does; standard handoff (`schemas/handoff.schema.json`) |
-| [README.md](ai/README.md) | Maintainer — A-044 | Completion protocol (commit · push · CURRENT_STATE · tool handoff · NEXT_TASK), handoff format, validator rules |
-| [CURRENT_STATE.json](ai/CURRENT_STATE.json) | Maintained per assignment; `derived` generated | Branch, PR, deployment, last completed assignment with its commit and handoff, open items, registry counts |
+| [README.md](ai/README.md) | Maintainer — A-044, A-044-R | How each tool reports completion ("CC done", "Gemini done", "Lovable done", "Figma done"), output paths, commit tags, validation, recovery, examples |
+| [CURRENT_STATE.json](ai/CURRENT_STATE.json) | Maintained per task; per-tool state generated | Per-tool latest completion and commit, active and blocked tasks, awaited outputs in order, PR, deployment |
 | [NEXT_TASK.json](ai/NEXT_TASK.json) | Maintained per assignment | Recommended next assignment (the founder issues assignments) |
 | [DECISIONS.json](ai/DECISIONS.json) | `logged`/`candidates` generated | Decision Log entries, A-032 §9 candidates, rulings given in briefs |
 | [RISKS.json](ai/RISKS.json) | `risks` generated | Risk Register rows and top five; engineering residuals |
-| [tool-output/](ai/tool-output/) | Per tool | Handoffs: `claude-code/`, `figma/`, `lovable/`, `gemini/` |
+| [tool-output/](ai/tool-output/) | Per tool, per task | `<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` for `claude-code`, `gemini`, `lovable`, `figma` |
 
 ## `/docs/founder` — governance and continuity
 

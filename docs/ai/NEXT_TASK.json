@@ -1,64 +1,50 @@
 {
-  "$schema": "./schemas/next_task.schema.json",
-  "schema_version": "1.0",
-  "updated": "2026-09-26",
-  "after": "A-044",
-  "recommended": {
-    "id": null,
-    "kind": "founder_action",
-    "title": "Merge-readiness review of draft PR #2 (FM-A foundation)",
-    "owner": "Founder",
-    "tool": "founder",
-    "rationale": "Every A-032 fix required before merge is closed (A-033, A-033-R, A-038, A-039, A-040, A-041, A-042) and the repository now carries its own operating state (A-044). Merging makes the foundation canonical and unblocks wave W1.",
-    "inputs": [
-      "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
-      "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md",
-      "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md"
-    ],
-    "gate": "Founder decision; merge is the founder's action",
-    "deployment_allowed": false
-  },
-  "alternatives": [
+  "$schema": "./schemas/next-task.schema.json",
+  "schema_version": "2.0",
+  "updated": "2026-09-26T15:56:38Z",
+  "after": "A-044-R",
+  "task_id": null,
+  "title": "Wave W1 — staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI",
+  "assigned_tool": "claude-code",
+  "priority": "P1",
+  "dependencies": [
     {
-      "id": null,
-      "kind": "assignment",
-      "title": "Wave W1 — staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI",
-      "owner": "Claude Code",
-      "tool": "claude-code",
-      "rationale": "First build step after merge per the A-030 gap report §7; turns the database foundation into a running staging environment.",
-      "inputs": [
-        "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md"
-      ],
-      "gate": "FA-001 staging only; requires FD-02 hosting decision",
-      "deployment_allowed": false
+      "item": "Founder merge-readiness review and merge of PR #2",
+      "owner": "founder",
+      "satisfied": false
     },
     {
-      "id": null,
-      "kind": "founder_action",
-      "title": "Record D-031/D-032 in the Decision Log and decide D-035/D-036",
-      "owner": "Founder",
-      "tool": "founder",
-      "rationale": "Two rulings live only in an assignment brief; two candidate decisions gate the deck-versus-Scope-Sheet conflicts and the A-030 defaults.",
-      "inputs": [
-        "docs/ai/DECISIONS.json",
-        "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md"
-      ],
-      "gate": "Founder decision",
-      "deployment_allowed": false
+      "item": "FD-02 hosting / India-region decision",
+      "owner": "founder",
+      "satisfied": false
+    },
+    {
+      "item": "D-035 (including the F01 sign-in method) and D-036",
+      "owner": "founder",
+      "satisfied": false
     }
   ],
-  "blocked_by": [
-    {
-      "item": "D-035 and D-036 founder decisions",
-      "owner": "founder"
-    },
-    {
-      "item": "FD-02 hosting / India-region decision (blocks wave W1)",
-      "owner": "founder"
-    },
-    {
-      "item": "Figma MVP Design Package V1 (A-008) for A-043 design conformance review — see docs/ai/tool-output/lovable/A-043/SUMMARY.md",
-      "owner": "founder"
-    }
-  ]
+  "ready": false,
+  "repository_baseline": {
+    "branch": "feature/fma-foundation-v1",
+    "commit": "c1c49d535da1125982b48a728d7125c62159213c"
+  },
+  "required_inputs": [
+    "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md",
+    "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md",
+    "db/README.md",
+    "docs/ai/tool-output/lovable/A-043/HANDOFF.json"
+  ],
+  "expected_outputs": [
+    "Staging database with migrations 0001-0008 applied (synthetic data only)",
+    "Auth adapter and server functions A01, A02, A28",
+    "Smoke suite running in CI against a Postgres service",
+    "docs/ai/tool-output/claude-code/<task-id>/HANDOFF.json and SUMMARY.md"
+  ],
+  "environment": "Staging only under FA-001; no staging environment is provisioned yet",
+  "deployment_permission": {
+    "allowed": false,
+    "environment": "none"
+  },
+  "rationale": "First build step after the merge per the A-030 gap report: it turns the verified database foundation into a running staging environment behind the A-043 UI. The founder issues the task ID and grants staging deployment when ready."
 }

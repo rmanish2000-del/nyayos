@@ -395,9 +395,12 @@
     }
   },
   "ai_state": {
+    "summary": "docs/ai/STATUS_SUMMARY.md",
     "current_state": "docs/ai/CURRENT_STATE.json",
     "next_task": "docs/ai/NEXT_TASK.json",
+    "handoffs": "docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json",
     "validator": "node scripts/ai/state.mjs check",
-    "since": "A-044"
+    "tests": "node --test scripts/ai/state.test.mjs",
+    "since": "A-044-R"
   }
 }

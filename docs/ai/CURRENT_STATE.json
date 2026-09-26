@@ -1,36 +1,118 @@
 {
-  "$schema": "./schemas/current_state.schema.json",
-  "schema_version": "1.0",
-  "updated": "2026-09-26",
-  "repository": "rmanish2000-del/nyayos",
+  "$schema": "./schemas/current-state.schema.json",
+  "schema_version": "2.0",
+  "project": "NyayOS",
+  "last_updated": "2026-09-26T15:56:38Z",
+  "current_phase": "FM-A foundation and the A-043 MVP Wave-1 UI (synthetic data) on a feature branch (draft PR #2), awaiting the founder's merge-readiness review and design conformance input; no environment exists.",
+  "canonical_branch": "main",
   "working_branch": "feature/fma-foundation-v1",
-  "pull_request": {
+  "current_pr": {
     "number": 2,
+    "url": "https://github.com/rmanish2000-del/nyayos/pull/2",
     "draft": true,
     "merged": false
   },
   "deployment": {
     "allowed": false,
-    "deployed": false,
-    "environments": [],
-    "note": "FA-001 permits staging builds only; FA-002 (production) not granted. No database environment exists: migrations 0001-0008 have run only on disposable local containers."
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null,
+    "note": "FA-001 permits staging builds only; FA-002 (production) not granted. Migrations 0001-0008 have run only on disposable local containers; A-043 runs on seeded synthetic fixtures with no backend."
   },
-  "last_assignment": {
-    "id": "A-044",
-    "title": "Repository-centric AI operating system — docs/ai state, tool handoffs, validator and completion protocol",
-    "status": "REVIEW",
-    "tool": "claude-code",
-    "baseline": "fc740380eb6282d3b6a174b8a01a93e7528bddd8",
-    "commit": "f185743a8d5eea45641fe158d462ab9ecf8d00b8",
-    "pushed": true,
-    "handoff": "docs/ai/tool-output/claude-code/A-044.md"
+  "tools": {
+    "claude-code": {
+      "status": "idle",
+      "latest_completed_task": "A-044",
+      "latest_completion_commit": "f185743a8d5eea45641fe158d462ab9ecf8d00b8",
+      "handoff": "docs/ai/tool-output/claude-code/A-044/HANDOFF.json",
+      "reason": null
+    },
+    "gemini": {
+      "status": "no_records",
+      "latest_completed_task": null,
+      "latest_completion_commit": null,
+      "handoff": null,
+      "reason": "No Gemini task has been issued or recorded in the repository."
+    },
+    "lovable": {
+      "status": "idle",
+      "latest_completed_task": "A-043",
+      "latest_completion_commit": "9d238423949eabea28452e4e6a924186a94030c4",
+      "handoff": "docs/ai/tool-output/lovable/A-043/HANDOFF.json",
+      "reason": null
+    },
+    "figma": {
+      "status": "blocked",
+      "latest_completed_task": null,
+      "latest_completion_commit": null,
+      "handoff": null,
+      "reason": "repository handoff missing — Figma V2 / MVP Design Package (A-008) is OPEN and was never supplied to the repository."
+    }
   },
-  "summary": "FM-A foundation on feature/fma-foundation-v1 (draft PR #2, unmerged): domain layer, migrations 0001-0008, deletion lifecycle through a verified purge worker, the U01-U21 traceability addendum, and (A-044) this repository-centric AI operating system with an enforced completion protocol. Every fix A-032 listed as required before merge is closed; no screen is READY (PARTIAL 4, MISSING 17); nothing is deployed and no environment exists. A-043 adds the Wave-1 UI (U01 Google entry, U04–U09, U16, U17) on synthetic fixtures only; Figma MVP Design Package V1 not supplied, so design conformance is unverified. Next is the founder's merge-readiness review.",
+  "latest_completion": {
+    "task_id": "A-043",
+    "tool": "lovable",
+    "completion_commit": "9d238423949eabea28452e4e6a924186a94030c4",
+    "completed_at": "2026-09-26T20:47:06+05:30",
+    "handoff": "docs/ai/tool-output/lovable/A-043/HANDOFF.json"
+  },
+  "active_tasks": [],
+  "blocked_tasks": [
+    {
+      "task_id": "A-008",
+      "owner": "figma",
+      "reason": "Figma MVP Design Package never supplied to the repository (repository handoff missing)."
+    },
+    {
+      "task_id": "A-012",
+      "owner": "founder",
+      "reason": "Production build and deployment are not allowed: FA-002 not granted."
+    }
+  ],
+  "awaited_outputs": [
+    {
+      "order": 1,
+      "task_id": null,
+      "owner": "founder",
+      "output": "Merge-readiness decision on draft PR #2, with D-035 (incl. the F01 sign-in method) and D-036",
+      "ready": true
+    },
+    {
+      "order": 2,
+      "task_id": "A-008",
+      "owner": "figma",
+      "output": "Figma MVP Design Package V1 with frames mapped to U01-U21, handed off at docs/ai/tool-output/figma/A-008/",
+      "ready": false,
+      "waiting_on": "Founder to supply or commission the package"
+    },
+    {
+      "order": 3,
+      "task_id": null,
+      "owner": "claude-code",
+      "output": "A-043 design conformance review and re-baseline of the A-041 traceability addendum",
+      "ready": false,
+      "waiting_on": "The A-008 design package"
+    },
+    {
+      "order": 4,
+      "task_id": null,
+      "owner": "claude-code",
+      "output": "Wave W1: staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI",
+      "ready": false,
+      "waiting_on": "PR #2 merge and the FD-02 hosting decision"
+    }
+  ],
+  "next_integration_task": {
+    "task_id": null,
+    "owner": "founder",
+    "description": "Merge draft PR #2 (FM-A foundation and A-043 MVP UI) into main after the merge-readiness review."
+  },
+  "summary": "feature/fma-foundation-v1 (draft PR #2, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), the U01-U21 traceability addendum, Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, and the repository-centric tool handoff system (A-044, A-044-R). Every fix A-032 required before merge is closed; nothing is deployed and no environment exists.",
   "open_items": [
     {
       "id": "OI-01",
       "kind": "dependency",
-      "description": "Founder merge-readiness review of draft PR #2 (A-030 and follow-ups A-033…A-042 and A-044 are REVIEW)."
+      "description": "Founder merge-readiness review of draft PR #2 (A-030, A-033…A-044 and A-044-R are REVIEW)."
     },
     {
       "id": "OI-02",
@@ -83,21 +165,32 @@
     {
       "id": "OI-10",
       "kind": "dependency",
-      "description": "A-043 MVP Wave-1 UI (Lovable, REVIEW, commit 9d238423, handoff docs/ai/tool-output/lovable/A-043.md) awaits design conformance review: Figma MVP Design Package V1 (A-008) not supplied. Normalized handoff (A-043-R): docs/ai/tool-output/lovable/A-043/HANDOFF.json."
+      "description": "A-043 MVP Wave-1 UI (Lovable, REVIEW, completion commit 9d238423, handoff docs/ai/tool-output/lovable/A-043/HANDOFF.json) awaits a design conformance review: the Figma MVP Design Package V1 (A-008) has not been supplied."
+    },
+    {
+      "id": "OI-11",
+      "kind": "finding",
+      "description": "The A-041 U01-U21 traceability addendum records statuses from before A-043's MVP UI (U04-U09, U16, U17); it needs re-baselining against A-043."
+    },
+    {
+      "id": "OI-12",
+      "kind": "founder_decision",
+      "description": "F01 sign-in method: A-043 shows a Google sign-in entry, while the Scope Sheet specifies email/password + OTP (addendum C-01).",
+      "decision": "D-035"
     }
   ],
   "derived": {
     "source": "docs/founder/NYAYOS_STATUS_REGISTRY.json",
     "registry_updated": "2026-09-26",
-    "task_count": 45,
+    "task_count": 46,
     "by_status": {
       "OPEN": 6,
       "IN_PROGRESS": 0,
-      "REVIEW": 12,
+      "REVIEW": 13,
       "CANONICAL": 27,
       "SUPERSEDED": 0
     },
-    "highest_task_id": "A-044",
+    "highest_task_id": "A-044-R",
     "open_tasks": [
       "A-008",
       "A-009",
@@ -119,7 +212,14 @@
       "A-041",
       "A-042",
       "A-043",
-      "A-044"
-    ]
+      "A-044",
+      "A-044-R"
+    ],
+    "registry_latest_by_tool": {
+      "claude-code": "A-044-R",
+      "gemini": null,
+      "lovable": "A-043",
+      "figma": null
+    }
   }
 }

@@ -140,19 +140,17 @@ Assignment ID · Tool and **exact mode** · Purpose · Input files · Expected o
 
 **An assignment is not complete until its Evidence field points at a committed artefact.**
 
-### Completion protocol — `docs/ai/` (A-044, required for every assignment)
+### Completion protocol — `docs/ai/` (A-044, corrected by A-044-R; required for every task and every tool)
 
-Every tool (Claude Code, Figma, Lovable, Gemini) finishes every assignment with these five steps, in order:
+The founder reports only "CC done", "Gemini done", "Lovable done" or "Figma done". Everything else is read from the repository, so every tool finishes every task like this:
 
-1. **Commit** the work (explicit paths; the task registered in the status registry).
+1. **Commit** the work with explicit paths and a tagged subject: `[TOOL:<TOOL>][TASK:<task-id>] <type>(<scope>): <summary>` (tools: `claude-code`, `gemini`, `lovable`, `figma`).
 2. **Push** the branch.
-3. **Update [`docs/ai/CURRENT_STATE.json`](docs/ai/CURRENT_STATE.json)**: `last_assignment` records the assignment, the pushed work-commit SHA and the handoff path.
-4. **Write the tool handoff** `docs/ai/tool-output/<tool>/<A-nnn>.md`.
-5. **Update [`docs/ai/NEXT_TASK.json`](docs/ai/NEXT_TASK.json)** with the recommended next assignment.
+3. **Write** `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` and `SUMMARY.md`.
+4. **Update** [`docs/ai/CURRENT_STATE.json`](docs/ai/CURRENT_STATE.json) and [`docs/ai/NEXT_TASK.json`](docs/ai/NEXT_TASK.json).
+5. Run `node scripts/ai/state.mjs generate` and `check`, **commit and push the state**, confirm a clean worktree and green CI.
 
-Then run `node scripts/ai/state.mjs generate` and `check`, commit the state update and push it. `task-gate` runs the same check: it fails with "assignment state not recorded" until steps 3–5 are pushed. Format and rules: [`docs/ai/README.md`](docs/ai/README.md).
-
-Read [`docs/ai/STATUS_SUMMARY.md`](docs/ai/STATUS_SUMMARY.md) (generated) before starting. Handoff format and per-tool rules: [`docs/ai/TOOL_OUTPUT_CONTRACT.md`](docs/ai/TOOL_OUTPUT_CONTRACT.md). On pull requests the check also fails on **unrecorded work** — any change after the recorded commit other than the state files.
+`task-gate` enforces it: a missing, malformed, stale or contradictory handoff fails CI, and so does unrecorded work after the latest completion. Paths, schema, recovery and examples: [`docs/ai/README.md`](docs/ai/README.md).
 
 ### State limitations honestly
 

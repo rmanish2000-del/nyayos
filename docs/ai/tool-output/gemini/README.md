@@ -1,7 +1,12 @@
-# `docs/ai/tool-output/gemini/`
+# `docs/ai/tool-output/gemini/` — Gemini
 
-Gemini — research or review assignments. Record sources and what was verified versus reported.
+Output namespace of the `gemini` tool. One directory per task this tool completed:
 
-One file per assignment run by this tool, named by assignment ID (`A-nnn.md`), in the standard handoff format of the [tool output contract](../../TOOL_OUTPUT_CONTRACT.md) (schema: [`handoff.schema.json`](../../schemas/handoff.schema.json)). Write it after the work commit is pushed (completion protocol steps 3–5), then commit and push the state update.
+```text
+docs/ai/tool-output/gemini/<task-id>/HANDOFF.json   machine-readable (schema: docs/ai/schemas/handoff.schema.json)
+docs/ai/tool-output/gemini/<task-id>/SUMMARY.md     human-readable; must name the task ID
+```
 
-`node scripts/ai/state.mjs check` validates every handoff here: required `**Assignment:**`, `**Tool:**`, `**Status:**`, `**Branch:**`, `**Baseline:**`, `**Commit:**`, `**Pushed:**`, `**Deployment:**` lines (`none` or `staging: https://…`; never production) and `## Result`, `## Evidence`, `## Limitations`, `## Next` sections; the ID must be registered and the tool must match this directory.
+Completion commits start with `[TOOL:GEMINI][TASK:<task-id>]`. When the task is done, the founder tells M365 Copilot only "Gemini done".
+
+Protocol, recovery and examples: [`docs/ai/README.md`](../../README.md).

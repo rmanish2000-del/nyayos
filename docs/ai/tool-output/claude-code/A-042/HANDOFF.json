@@ -1,0 +1,142 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-042",
+  "tool": "claude-code",
+  "status": "completed",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "13765b9b97be2dc06942711373c203f7f2b7ed42",
+  "completion_commit": "fc740380eb6282d3b6a174b8a01a93e7528bddd8",
+  "completed_at": "2026-09-26T19:50:14+05:30",
+  "files_created": [
+    "db/migrations/0008_dispute_status_authorization.sql",
+    "db/tests/dispute_status_0001.sql"
+  ],
+  "files_modified": [
+    "NYAYOS_STATUS.json",
+    "db/README.md",
+    "db/tests/deletion_purge_0001.sql",
+    "db/tests/smoke_0001.sql",
+    "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
+    "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+    "docs/founder/NYAYOS_CHANGELOG.md",
+    "docs/founder/NYAYOS_DEPENDENCY_GRAPH.md",
+    "docs/founder/NYAYOS_STATUS_DASHBOARD.md",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.md",
+    "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md"
+  ],
+  "files_deleted": [],
+  "tests": [
+    {
+      "name": "dispute status suite",
+      "command": "psql -f db/tests/dispute_status_0001.sql (fresh disposable container, 0001-0008)",
+      "result": "pass",
+      "detail": "21/21; fails on 0001-0007 (reproduction)"
+    },
+    {
+      "name": "negative controls",
+      "command": "re-grant UPDATE (status); remove the undo audit",
+      "result": "pass",
+      "detail": "both detected"
+    },
+    {
+      "name": "smoke suite",
+      "command": "psql -f db/tests/smoke_0001.sql",
+      "result": "pass",
+      "detail": "87/87"
+    },
+    {
+      "name": "deletion purge suite",
+      "command": "psql -f db/tests/deletion_purge_0001.sql",
+      "result": "pass",
+      "detail": "55/55"
+    },
+    {
+      "name": "deletion scope suite",
+      "command": "psql -f db/tests/deletion_scope_0001.sql",
+      "result": "pass",
+      "detail": "28/28"
+    },
+    {
+      "name": "deletion authz suite",
+      "command": "psql -f db/tests/deletion_authz_0001.sql",
+      "result": "pass",
+      "detail": "25/25"
+    },
+    {
+      "name": "audit atomicity and hash vectors",
+      "command": "psql -f db/tests/audit_atomicity_0001.sql; db/tests/audit_hash_vectors_v1.sql",
+      "result": "pass",
+      "detail": "21/21; 16/16"
+    },
+    {
+      "name": "concurrency",
+      "command": "db/tests/audit_concurrency_matrix.sh; db/tests/deletion_purge_concurrency.sh",
+      "result": "pass",
+      "detail": "5/5; 3/3"
+    },
+    {
+      "name": "application checks",
+      "command": "npx vitest run; npx tsc --noEmit; npx eslint .; npm run build",
+      "result": "pass",
+      "detail": "199/199; 0 lint errors"
+    },
+    {
+      "name": "schema lint",
+      "command": "node scripts/db/schema-lint.mjs",
+      "result": "pass"
+    },
+    {
+      "name": "PR #2 checks",
+      "command": "task-gate, dependency-check, schema-lint on fc74038",
+      "result": "pass"
+    }
+  ],
+  "evidence": [
+    {
+      "description": "m-1 test suite",
+      "ref": "db/tests/dispute_status_0001.sql"
+    },
+    {
+      "description": "migration closing m-1",
+      "ref": "db/migrations/0008_dispute_status_authorization.sql"
+    },
+    {
+      "description": "A-032 post-fix table records m-1 closed",
+      "ref": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md"
+    },
+    {
+      "description": "completion commit",
+      "ref": "fc740380eb6282d3b6a174b8a01a93e7528bddd8"
+    }
+  ],
+  "limitations": [
+    "Dispute status is driven only by dispute-scope requests; undo of document or account requests is not audited (pre-existing).",
+    "Migrations have run only on disposable local containers; no environment exists."
+  ],
+  "risks": [
+    {
+      "description": "A-032 minor findings m-2 to m-12 remain open as non-blocking follow-ups",
+      "severity": "low",
+      "ref": "RES-03"
+    }
+  ],
+  "rollback": "git revert fc740380eb6282d3b6a174b8a01a93e7528bddd8; on a disposable database also run the three statements in the 0008 header",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": null,
+    "tool": "founder",
+    "reason": "Founder merge-readiness review of draft PR #2: every fix A-032 required before merge is closed."
+  },
+  "backfill": {
+    "reason": "A-042 completed before the per-task HANDOFF.json protocol (A-044-R); reconstructed from repository evidence",
+    "source": "git 13765b9..fc74038, status registry A-042, assignment register A-042"
+  }
+}

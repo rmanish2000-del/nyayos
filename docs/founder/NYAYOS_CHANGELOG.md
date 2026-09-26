@@ -5,6 +5,22 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-26 — Tool handoff system completed and repaired (A-044-R)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**
+
+### Added
+
+- Per-task handoffs `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` (schema `docs/ai/schemas/handoff.schema.json`); tagged completion commits `[TOOL:<TOOL>][TASK:<task-id>]`.
+- `CURRENT_STATE.json` 2.0 (per-tool latest completion, active and blocked tasks, awaited outputs in order) and `NEXT_TASK.json` 2.0; schemas `current-state.schema.json` and `next-task.schema.json`.
+- `scripts/ai/state.test.mjs` — 24 tests over throwaway git fixtures (all four tools; every failure mode).
+
+### Changed
+
+- `scripts/ai/state.mjs` enforces tool ownership, commit history, exact file lists, commit tags and stale or contradictory state; `task-gate` runs the tests and the check. A-042 and A-044 handoffs backfilled; Markdown handoffs, `TOOL_OUTPUT_CONTRACT.md` and the underscore-named schemas removed. Registry A-044-R REVIEW.
+
+---
+
 ## 2026-09-26 — AI operating system completed: summary, contract, handoff schema (A-044 re-issue)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**

@@ -5,7 +5,7 @@
 #      CANONICAL tasks have evidence; started tasks have no unresolved planned inputs);
 #   2. the generated governance documents are in sync with the registry;
 #   3. a pull request references at least one assignment ID (A-nnn) in its body;
-#   4. the AI operating state (docs/ai) is valid and records the newest assignment (A-044).
+#   4. the tool handoffs under docs/ai are complete, valid and consistent with git (A-044, A-044-R).
 #
 # Required status check on `main` (branch protection). Job name must stay `task-gate`.
 # Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md
@@ -44,7 +44,10 @@ jobs:
       - name: Generated governance documents are in sync with the registry
         run: node scripts/governance/registry.mjs generate --check
 
-      - name: AI operating state recorded (docs/ai — completion protocol)
+      - name: Handoff validator tests (docs/ai protocol, synthetic git fixtures)
+        run: node --test scripts/ai/state.test.mjs
+
+      - name: AI handoffs recorded (docs/ai — no missing, malformed, stale or contradictory handoff)
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |

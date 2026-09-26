@@ -1063,21 +1063,18 @@
         "docs/ai/NEXT_TASK.json",
         "docs/ai/DECISIONS.json",
         "docs/ai/RISKS.json",
-        "docs/ai/schemas/current_state.schema.json",
-        "docs/ai/schemas/next_task.schema.json",
         "docs/ai/schemas/decisions.schema.json",
         "docs/ai/schemas/risks.schema.json",
         "scripts/ai/state.mjs",
         ".github/workflows/task-gate.yml",
         "CONTRIBUTING.md",
         "docs/ai/STATUS_SUMMARY.md",
-        "docs/ai/TOOL_OUTPUT_CONTRACT.md",
         "docs/ai/schemas/handoff.schema.json"
       ],
       "evidence": "scripts/ai/state.mjs",
       "updated": "2026-09-26",
       "superseded_by": null,
-      "notes": "Baseline fc74038. docs/ai/ holds CURRENT_STATE, NEXT_TASK, DECISIONS and RISKS (JSON Schemas in docs/ai/schemas/) and tool-output/claude-code|figma|lovable|gemini handoff directories. scripts/ai/state.mjs generate rewrites the derived fields (registry counts; Decision Log D-001–D-030; A-032 §9 candidates D-031–D-036; Risk Register R01–R30 and top five); check enforces files, schema validity, derived-field sync, and that the registry's newest assignment is recorded in CURRENT_STATE with a pushed commit in history, a well-formed tool handoff and a NEXT_TASK that follows it. The check is a step of the required task-gate job (checkout with full history). Completion protocol (commit, push, CURRENT_STATE, tool handoff, NEXT_TASK) added to CONTRIBUTING §5, the PR template and the Operating System §28; each assignment ends with a work commit and a state commit. Validator negative controls (schema, stale derived field, NEXT_TASK lag, handoff/commit mismatch, commit not in history) all detected. A-042 handoff backfilled. No product code, SQL or migration changed. Assignment ID A-043 is not registered in this repository. — Re-issued brief (same day): added the standard handoff schema (docs/ai/schemas/handoff.schema.json, incl. a Deployment field that can never be production), the generated docs/ai/STATUS_SUMMARY.md (the page M365 Copilot reads instead of founder copy/paste; check fails if stale or hand-edited), docs/ai/TOOL_OUTPUT_CONTRACT.md (what every tool reads, writes and never does), and a pull-request rule (check --head) that fails on unrecorded work: after the recorded commit only state files may change."
+      "notes": "Baseline fc74038. docs/ai/ holds CURRENT_STATE, NEXT_TASK, DECISIONS and RISKS (JSON Schemas in docs/ai/schemas/) and tool-output/claude-code|figma|lovable|gemini handoff directories. scripts/ai/state.mjs generate rewrites the derived fields (registry counts; Decision Log D-001–D-030; A-032 §9 candidates D-031–D-036; Risk Register R01–R30 and top five); check enforces files, schema validity, derived-field sync, and that the registry's newest assignment is recorded in CURRENT_STATE with a pushed commit in history, a well-formed tool handoff and a NEXT_TASK that follows it. The check is a step of the required task-gate job (checkout with full history). Completion protocol (commit, push, CURRENT_STATE, tool handoff, NEXT_TASK) added to CONTRIBUTING §5, the PR template and the Operating System §28; each assignment ends with a work commit and a state commit. Validator negative controls (schema, stale derived field, NEXT_TASK lag, handoff/commit mismatch, commit not in history) all detected. A-042 handoff backfilled. No product code, SQL or migration changed. Assignment ID A-043 is not registered in this repository. — Re-issued brief (same day): added the standard handoff schema (docs/ai/schemas/handoff.schema.json, incl. a Deployment field that can never be production), the generated docs/ai/STATUS_SUMMARY.md (the page M365 Copilot reads instead of founder copy/paste; check fails if stale or hand-edited), docs/ai/TOOL_OUTPUT_CONTRACT.md (what every tool reads, writes and never does), and a pull-request rule (check --head) that fails on unrecorded work: after the recorded commit only state files may change. — Corrected by A-044-R: Markdown handoffs, the separate contract and the underscore-named schemas were replaced by per-task HANDOFF.json/SUMMARY.md, docs/ai/README.md and current-state/next-task schemas."
     },
     {
       "id": "A-043",
@@ -1098,12 +1095,41 @@
         "app/src/routes/login.tsx",
         "app/src/routes/disputes.tsx",
         "app/tests/mvp.test.tsx",
-        "docs/ai/tool-output/lovable/A-043.md"
+        "docs/ai/tool-output/lovable/A-043/REPORT.md"
       ],
-      "evidence": "docs/ai/tool-output/lovable/A-043.md",
+      "evidence": "docs/ai/tool-output/lovable/A-043/HANDOFF.json",
       "updated": "2026-09-26",
       "superseded_by": null,
-      "notes": "Baseline fc74038 on feature/fma-foundation-v1. Screens: U01 Google login entry (not connected; synthetic personas), dispute list, U04 new + stored account, U05 deterministic intake, U06 locker (type/size checks, in-browser SHA-256, no upload), U07 viewer with manual page linking, U08 fact review (FactCard), U09 timeline (five precisions, filters, date edit), U16 preview with omissions and privacy check, U17 manifest with no-AI and integrity statements and A-037 stale notice. Seed: founder, normal, reviewer (grants disabled), deleted (refused), cross-tenant (blocked). Validation: Vitest all green incl. 34 A-043 tests; tsc; eslint 0 errors; build; Playwright 390/834/1280 no overflow, zero console errors. REVIEW not CANONICAL: Figma MVP Design Package V1 (A-008) not supplied, so design conformance is unverified. No backend, schema, dependency or deployment change."
+      "notes": "Baseline fc74038 on feature/fma-foundation-v1. Screens: U01 Google login entry (not connected; synthetic personas), dispute list, U04 new + stored account, U05 deterministic intake, U06 locker (type/size checks, in-browser SHA-256, no upload), U07 viewer with manual page linking, U08 fact review (FactCard), U09 timeline (five precisions, filters, date edit), U16 preview with omissions and privacy check, U17 manifest with no-AI and integrity statements and A-037 stale notice. Seed: founder, normal, reviewer (grants disabled), deleted (refused), cross-tenant (blocked). Validation: Vitest all green incl. 34 A-043 tests; tsc; eslint 0 errors; build; Playwright 390/834/1280 no overflow, zero console errors. REVIEW not CANONICAL: Figma MVP Design Package V1 (A-008) not supplied, so design conformance is unverified. No backend, schema, dependency or deployment change. — A-044-R: handoff converted to the standard schema (content unchanged); A-043.md moved to docs/ai/tool-output/lovable/A-043/REPORT.md."
+    },
+    {
+      "id": "A-044-R",
+      "title": "Complete and repair the repository-centric tool handoff system (per-task HANDOFF.json, per-tool ownership, CI enforcement)",
+      "type": "governance",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — repository automation protocol correction (docs/ai, validator, tests, CI; no application code, SQL or deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-029",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/ai/README.md",
+        "docs/ai/CURRENT_STATE.json",
+        "docs/ai/NEXT_TASK.json",
+        "docs/ai/schemas/handoff.schema.json",
+        "docs/ai/schemas/current-state.schema.json",
+        "docs/ai/schemas/next-task.schema.json",
+        "scripts/ai/state.mjs",
+        "scripts/ai/state.test.mjs",
+        ".github/workflows/task-gate.yml"
+      ],
+      "evidence": "scripts/ai/state.test.mjs",
+      "updated": "2026-09-26",
+      "superseded_by": null,
+      "notes": "Baseline c1c49d5 (latest remote; A-043/A-043-R by Lovable landed during the work and were integrated). Handoffs move to docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json + SUMMARY.md (schema handoff.schema.json: status, commits, completed_at, exact file lists, tests, evidence, limitations, risks, rollback, deployment, next_recommendation). CURRENT_STATE 2.0 records per-tool latest completion (derived from handoffs), active/blocked tasks, awaited outputs in order, PR, deployment and next integration task; NEXT_TASK 2.0 records the next tool assignment. state.mjs check rejects unknown tools, duplicate ownership, completions without HANDOFF.json, commits not in history, file lists that differ from git, missing [TOOL:x][TASK:y] commit tags, contradictory or stale state, and (on pull requests) unrecorded work. scripts/ai/state.test.mjs builds throwaway git fixtures for all four tools and every failure mode; task-gate runs the tests and the check. A-042 and A-044 (Claude Code) handoffs backfilled from repository evidence; Lovable's A-043 handoff converted to the schema with content unchanged. No Gemini or Figma record fabricated."
     }
   ]
 }

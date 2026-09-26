@@ -1,0 +1,108 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-044",
+  "tool": "claude-code",
+  "status": "completed",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "fc740380eb6282d3b6a174b8a01a93e7528bddd8",
+  "completion_commit": "f185743a8d5eea45641fe158d462ab9ecf8d00b8",
+  "completed_at": "2026-09-26T20:37:16+05:30",
+  "files_created": [
+    "docs/ai/CURRENT_STATE.json",
+    "docs/ai/DECISIONS.json",
+    "docs/ai/NEXT_TASK.json",
+    "docs/ai/README.md",
+    "docs/ai/RISKS.json",
+    "docs/ai/STATUS_SUMMARY.md",
+    "docs/ai/TOOL_OUTPUT_CONTRACT.md",
+    "docs/ai/schemas/current_state.schema.json",
+    "docs/ai/schemas/decisions.schema.json",
+    "docs/ai/schemas/handoff.schema.json",
+    "docs/ai/schemas/next_task.schema.json",
+    "docs/ai/schemas/risks.schema.json",
+    "docs/ai/tool-output/claude-code/A-042.md",
+    "docs/ai/tool-output/claude-code/A-044.md",
+    "docs/ai/tool-output/claude-code/README.md",
+    "docs/ai/tool-output/figma/README.md",
+    "docs/ai/tool-output/gemini/README.md",
+    "docs/ai/tool-output/lovable/README.md",
+    "scripts/ai/state.mjs"
+  ],
+  "files_modified": [
+    ".github/pull_request_template.md",
+    ".github/workflows/task-gate.yml",
+    "CONTRIBUTING.md",
+    "NYAYOS_OPERATING_SYSTEM.md",
+    "NYAYOS_STATUS.json",
+    "docs/INDEX.md",
+    "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+    "docs/founder/NYAYOS_CHANGELOG.md",
+    "docs/founder/NYAYOS_DEPENDENCY_GRAPH.md",
+    "docs/founder/NYAYOS_STATUS_DASHBOARD.md",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.md"
+  ],
+  "files_deleted": [],
+  "tests": [
+    {
+      "name": "AI state validator",
+      "command": "node scripts/ai/state.mjs check",
+      "result": "pass",
+      "detail": "at state commit b4a1f03"
+    },
+    {
+      "name": "validator negative controls",
+      "command": "schema break, stale derived field, NEXT_TASK lag, handoff/commit mismatch, unknown commit, hand-edited summary, production deployment, section order",
+      "result": "pass",
+      "detail": "all detected"
+    },
+    {
+      "name": "registry",
+      "command": "node scripts/governance/registry.mjs validate; generate --check",
+      "result": "pass"
+    },
+    {
+      "name": "PR #2 task-gate",
+      "command": "GitHub Actions task-gate on b4a1f03",
+      "result": "pass",
+      "detail": "work commits 6ef9349 and f185743 failed until their state commits, as designed"
+    }
+  ],
+  "evidence": [
+    {
+      "description": "validator",
+      "ref": "scripts/ai/state.mjs"
+    },
+    {
+      "description": "completion commit",
+      "ref": "f185743a8d5eea45641fe158d462ab9ecf8d00b8"
+    },
+    {
+      "description": "first work commit",
+      "ref": "6ef934925d59bb7317da9e4b82e38ea8b23b077a"
+    }
+  ],
+  "limitations": [
+    "Handoffs were one Markdown file per task with no machine-readable file lists; corrected by A-044-R.",
+    "Commit messages carried no tool/task tag; corrected by A-044-R."
+  ],
+  "risks": [],
+  "rollback": "git revert b4a1f038b7dcf728de0955a5e2363f7b9e1b2693 f185743a8d5eea45641fe158d462ab9ecf8d00b8 488d62174f3909456894755016d4e9d75173c799 6ef934925d59bb7317da9e4b82e38ea8b23b077a",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": "A-044-R",
+    "tool": "claude-code",
+    "reason": "Complete and repair the handoff system: per-task HANDOFF.json, per-tool ownership, CI enforcement."
+  },
+  "backfill": {
+    "reason": "A-044 completed before the per-task HANDOFF.json protocol it was corrected into (A-044-R); reconstructed from repository evidence",
+    "source": "git fc74038..f185743 (work 6ef9349 and f185743; state 488d621 and b4a1f03), status registry A-044"
+  }
+}

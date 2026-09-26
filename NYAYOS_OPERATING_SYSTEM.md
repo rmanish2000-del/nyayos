@@ -314,8 +314,7 @@ Appended, not edited: §§ 1–26 describe `main` at `6c6b478` and remain accura
 |---|---|---|
 | Machine-readable project state for every tool | **VERIFIED** | [`docs/ai/`](docs/ai/README.md): `CURRENT_STATE.json`, `NEXT_TASK.json`, `DECISIONS.json`, `RISKS.json`, JSON Schemas |
 | Generated status summary | **VERIFIED** | [`docs/ai/STATUS_SUMMARY.md`](docs/ai/STATUS_SUMMARY.md) — the page M365 Copilot reads; replaces founder copy/paste |
-| Tool output contract and handoff schema | **VERIFIED** | [`docs/ai/TOOL_OUTPUT_CONTRACT.md`](docs/ai/TOOL_OUTPUT_CONTRACT.md), `docs/ai/schemas/handoff.schema.json` |
-| Per-tool handoffs | **VERIFIED** | `docs/ai/tool-output/claude-code/`, `figma/`, `lovable/`, `gemini/` — one `A-nnn.md` per assignment |
+| Per-tool, per-task handoffs (A-044-R) | **VERIFIED** | `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` (`claude-code`, `gemini`, `lovable`, `figma`); schema `docs/ai/schemas/handoff.schema.json`; tagged completion commits `[TOOL:x][TASK:y]`; the founder reports only "<tool> done" — [`docs/ai/README.md`](docs/ai/README.md) |
 | Validator | **VERIFIED** | `scripts/ai/state.mjs check`: files exist, schema validity, derived fields in sync with the registry, Decision Log, A-032 §9 and Risk Register, last assignment recorded with a pushed commit and handoff, NEXT_TASK follows it. Runs in the required `task-gate` job |
 | Completion protocol | **REQUIRED** from A-044 onward | 1 commit · 2 push · 3 update `CURRENT_STATE` · 4 write the tool handoff · 5 update `NEXT_TASK` — then a state commit, pushed. [`CONTRIBUTING.md` §5](CONTRIBUTING.md) |
 

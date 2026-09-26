@@ -8,7 +8,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ○ OPEN | ◐ IN_PROGRESS | ◑ REVIEW | ● CANONICAL | ⊘ SUPERSEDED | Total |
 |---:|---:|---:|---:|---:|---:|
-| 6 | 0 | 12 | 27 | 0 | 45 |
+| 6 | 0 | 13 | 27 | 0 | 46 |
 
 ## In flight
 
@@ -26,6 +26,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-042 | Minor finding m-1 closure — dispute status server-controlled; closes A-032 m-1 | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-044 | Repository-centric AI operating system — docs/ai state, tool handoffs, validator and completion protocol | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-043 | MVP Wave-1 UI implementation — U01 Google entry, U04–U09, U16, U17 on seeded synthetic data | ◑ REVIEW | Lovable | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
+| A-044-R | Complete and repair the repository-centric tool handoff system (per-task HANDOFF.json, per-tool ownership, CI enforcement) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 
 ## Ready to start — all inputs canonical, nothing planned outstanding
 
@@ -79,6 +80,7 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 
 | ID | Title | Status | Owner | Gate | Updated |
 |---|---|---|---|---|---|
+| A-044-R | Complete and repair the repository-centric tool handoff system (per-task HANDOFF.json, per-tool ownership, CI enforcement) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-043 | MVP Wave-1 UI implementation — U01 Google entry, U04–U09, U16, U17 on seeded synthetic data | ◑ REVIEW | Lovable | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-044 | Repository-centric AI operating system — docs/ai state, tool handoffs, validator and completion protocol | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
 | A-042 | Minor finding m-1 closure — dispute status server-controlled; closes A-032 m-1 | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-26 |
@@ -86,7 +88,6 @@ This is the **machine view**. The founder's curated view — north stars, phase,
 | A-032 | Independent review and merge-readiness audit of A-030 (PR #2, feature/fma-foundation-v1) | ● CANONICAL | Claude Code | — | 2026-09-26 |
 | A-040 | Deletion purge worker V1 — server-controlled purge from the A-039 enumeration; closes A-032 M-3 | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
 | A-039 | Complete deletion scope graph — explicit graph and read-only enumeration; closes A-032 M-6 | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
-| A-038 | Audit atomicity and hash interoperability fix pack — closes A-032 M-2 and M-7 (founder decision D-031) | ◑ REVIEW | Claude Code | FA-001 (staging build allowed; production NOT allowed) | 2026-09-24 |
 
 ---
 Regenerate: `node scripts/governance/registry.mjs generate` · Validate: `node scripts/governance/registry.mjs validate` · Graph: [NYAYOS_DEPENDENCY_GRAPH.md](NYAYOS_DEPENDENCY_GRAPH.md) · Registry: [NYAYOS_STATUS_REGISTRY.md](NYAYOS_STATUS_REGISTRY.md)

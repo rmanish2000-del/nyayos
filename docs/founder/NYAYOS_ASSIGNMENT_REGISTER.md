@@ -645,7 +645,7 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `node scripts/ai/state.mjs check` clean after the state commit; five negative controls detected; registry validates; task-gate on PR #2 |
 | **Limitations** | Commit and push are enforced indirectly (the recorded SHA must be in history and the handoff says pushed); the validator cannot prove a push to a specific remote. Handoff content quality is not checked beyond required fields and sections. Registry `tool` stays free text; `docs/ai` uses four tool slugs. A-043 is not registered in this repository. The A-042 handoff is backfilled |
 | **Rollback** | `git revert` the A-044 work and state commits |
-| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044.md` |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044/HANDOFF.json` (moved there by A-044-R; originally `A-044.md`) |
 | **Re-issued brief (26 Sep 2026)** | Added: standard handoff schema `docs/ai/schemas/handoff.schema.json` (with `Deployment`, never production); generated `docs/ai/STATUS_SUMMARY.md` (replaces founder copy/paste); `docs/ai/TOOL_OUTPUT_CONTRACT.md`; pull-request rule `check --head` failing on unrecorded work after the recorded commit |
 
 ---
@@ -665,3 +665,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Figma MVP Design Package V1 not supplied (conformance unverified); Google sign-in not connected; no storage/scan; JSON manifest only; screen reader pass owed |
 | **Rollback** | `git revert` the A-043 commit (additive UI only) |
 | **Handoff back to M365 Copilot** | Record A-043 REVIEW; supply the Figma package for a conformance review; decide F01 sign-in method |
+
+---
+
+### A-044-R — Complete and repair the repository-centric tool handoff system
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-044-R |
+| **Owner / tool** | Claude Code — repository automation protocol correction |
+| **Purpose** | Let M365 Copilot learn from GitHub alone, after "CC done", "Gemini done", "Lovable done" or "Figma done", which tool finished which task, the commit, files, validations, risks, the awaited output and the next assignment |
+| **Gate** | FA-001. No deployment, no production, no merge |
+| **Deployment allowed** | **NOT ALLOWED.** Repository files, a validator, tests and a CI step only |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | Handoffs at `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` (schema `handoff.schema.json`); `CURRENT_STATE.json` 2.0 with per-tool latest completion, active and blocked tasks, awaited outputs; `NEXT_TASK.json` 2.0; `scripts/ai/state.mjs` rejects unknown tools, duplicate ownership, completions without a handoff, commits outside history, untagged completion commits, file lists that differ from git, stale or contradictory state and unrecorded work; `scripts/ai/state.test.mjs` (24 tests over throwaway git fixtures for all four tools); both run in `task-gate`. A-042 and A-044 handoffs backfilled; Markdown handoffs, the separate contract and the underscore-named schemas removed |
+| **Evidence** | `node --test scripts/ai/state.test.mjs` 24/24; `node scripts/ai/state.mjs check --head <head>` clean after the state commit; task-gate on PR #2 |
+| **Limitations** | Lovable's earlier staging builds and the Figma package have no repository handoff and are recorded as blocked, not completed; Gemini has no records. The validator proves commits are in the checked-out history, not which remote received them. Test fixtures are synthetic |
+| **Rollback** | `git revert` the A-044-R completion and state commits (listed in `docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json`) |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json` |

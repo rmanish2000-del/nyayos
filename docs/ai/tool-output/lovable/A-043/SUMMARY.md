@@ -1,6 +1,6 @@
 # A-043 — MVP Wave-1 UI implementation — Summary
 
-Normalized by A-043-R. Tool: Lovable. Status: REVIEW. Branch `feature/fma-foundation-v1`. Completion commit `9d238423949eabea28452e4e6a924186a94030c4`. Detailed handoff: [`../A-043.md`](../A-043.md); machine-readable: [`HANDOFF.json`](HANDOFF.json).
+Normalized by A-043-R. Tool: Lovable. Status: REVIEW. Branch `feature/fma-foundation-v1`. Completion commit `9d238423949eabea28452e4e6a924186a94030c4`. Detailed handoff: [`REPORT.md`](REPORT.md) (moved from `../A-043.md` by A-044-R); machine-readable: [`HANDOFF.json`](HANDOFF.json).
 
 ## Objective
 
