@@ -40,7 +40,7 @@ Blocked by:
 
 - D-035 and D-036 founder decisions (founder)
 - FD-02 hosting / India-region decision (blocks wave W1) (founder)
-- Figma MVP Design Package V1 (A-008) for A-043 design conformance review (founder)
+- Figma MVP Design Package V1 (A-008) for A-043 design conformance review — see docs/ai/tool-output/lovable/A-043/SUMMARY.md (founder)
 
 ## Open items
 
@@ -55,7 +55,7 @@ Blocked by:
 | OI-07 | finding | A-032 minor findings m-2 to m-12 remain open as non-blocking follow-ups. | RES-03 |
 | OI-08 | dependency | Figma FM-A package (A-008) never supplied; no screen has prototype design evidence. | RES-04 |
 | OI-09 | dependency | FD-02 hosting / India-region decision open; no staging database exists. | RES-05 |
-| OI-10 | dependency | A-043 MVP Wave-1 UI (Lovable, REVIEW, commit 9d238423, handoff docs/ai/tool-output/lovable/A-043.md) awaits design conformance review: Figma MVP Design Package V1 (A-008) not supplied. | — |
+| OI-10 | dependency | A-043 MVP Wave-1 UI (Lovable, REVIEW, commit 9d238423, handoff docs/ai/tool-output/lovable/A-043.md) awaits design conformance review: Figma MVP Design Package V1 (A-008) not supplied. Normalized handoff (A-043-R): docs/ai/tool-output/lovable/A-043/HANDOFF.json. | — |
 
 ## Registry
 

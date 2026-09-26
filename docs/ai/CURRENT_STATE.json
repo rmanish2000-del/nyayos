@@ -83,7 +83,7 @@
     {
       "id": "OI-10",
       "kind": "dependency",
-      "description": "A-043 MVP Wave-1 UI (Lovable, REVIEW, commit 9d238423, handoff docs/ai/tool-output/lovable/A-043.md) awaits design conformance review: Figma MVP Design Package V1 (A-008) not supplied."
+      "description": "A-043 MVP Wave-1 UI (Lovable, REVIEW, commit 9d238423, handoff docs/ai/tool-output/lovable/A-043.md) awaits design conformance review: Figma MVP Design Package V1 (A-008) not supplied. Normalized handoff (A-043-R): docs/ai/tool-output/lovable/A-043/HANDOFF.json."
     }
   ],
   "derived": {
