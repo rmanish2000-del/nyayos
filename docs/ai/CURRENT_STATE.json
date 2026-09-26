@@ -2,7 +2,7 @@
   "$schema": "./schemas/current-state.schema.json",
   "schema_version": "2.0",
   "project": "NyayOS",
-  "last_updated": "2026-09-26T15:56:38Z",
+  "last_updated": "2026-09-26T16:49:42Z",
   "current_phase": "FM-A foundation and the A-043 MVP Wave-1 UI (synthetic data) on a feature branch (draft PR #2), awaiting the founder's merge-readiness review and design conformance input; no environment exists.",
   "canonical_branch": "main",
   "working_branch": "feature/fma-foundation-v1",
@@ -22,9 +22,9 @@
   "tools": {
     "claude-code": {
       "status": "idle",
-      "latest_completed_task": "A-044",
-      "latest_completion_commit": "f185743a8d5eea45641fe158d462ab9ecf8d00b8",
-      "handoff": "docs/ai/tool-output/claude-code/A-044/HANDOFF.json",
+      "latest_completed_task": "A-044-R",
+      "latest_completion_commit": "1c080432d6d183e98073da2aa4e89b33ab85c734",
+      "handoff": "docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json",
       "reason": null
     },
     "gemini": {
@@ -50,11 +50,11 @@
     }
   },
   "latest_completion": {
-    "task_id": "A-043",
-    "tool": "lovable",
-    "completion_commit": "9d238423949eabea28452e4e6a924186a94030c4",
-    "completed_at": "2026-09-26T20:47:06+05:30",
-    "handoff": "docs/ai/tool-output/lovable/A-043/HANDOFF.json"
+    "task_id": "A-044-R",
+    "tool": "claude-code",
+    "completion_commit": "1c080432d6d183e98073da2aa4e89b33ab85c734",
+    "completed_at": "2026-09-26T16:49:42Z",
+    "handoff": "docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json"
   },
   "active_tasks": [],
   "blocked_tasks": [
@@ -177,6 +177,11 @@
       "kind": "founder_decision",
       "description": "F01 sign-in method: A-043 shows a Google sign-in entry, while the Scope Sheet specifies email/password + OTP (addendum C-01).",
       "decision": "D-035"
+    },
+    {
+      "id": "OI-13",
+      "kind": "finding",
+      "description": "Lovable A-043 tests time out locally on Windows and one U06 test hits a jsdom SubtleCrypto.digest type difference; CI (ubuntu) passes 233/233. A local-environment robustness fix belongs to a Lovable follow-up."
     }
   ],
   "derived": {

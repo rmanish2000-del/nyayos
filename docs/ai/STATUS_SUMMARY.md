@@ -2,81 +2,81 @@
 
 # NyayOS — AI status summary
 
-Read this page first. Updated **2026-09-26T15:56:38Z**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.
+Read this page first. Updated **2026-09-26T16:49:42Z**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.
 
 ## By tool
 
 | Tool | Status | Latest completed task | Completion commit | Handoff | Note |
 |---|---|---|---|---|---|
-| `claude-code` | idle | A-044 | `f185743a8d5eea45641fe158d462ab9ecf8d00b8` | [docs/ai/tool-output/claude-code/A-044/HANDOFF.json](tool-output/claude-code/A-044/HANDOFF.json) |  |
+| `claude-code` | idle | A-044-R | `1c080432d6d183e98073da2aa4e89b33ab85c734` | [docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json](tool-output/claude-code/A-044-R/HANDOFF.json) |  |
 | `gemini` | no_records | — | — | — | No Gemini task has been issued or recorded in the repository. |
 | `lovable` | idle | A-043 | `9d238423949eabea28452e4e6a924186a94030c4` | [docs/ai/tool-output/lovable/A-043/HANDOFF.json](tool-output/lovable/A-043/HANDOFF.json) |  |
 | `figma` | blocked | — | — | — | repository handoff missing — Figma V2 / MVP Design Package (A-008) is OPEN and was never supplied to the repository. |
 
 ## Latest completion
 
-**A-043** by `lovable` — commit `9d238423949eabea28452e4e6a924186a94030c4`, completed 2026-09-26T20:47:06+05:30. Handoff: [docs/ai/tool-output/lovable/A-043/HANDOFF.json](tool-output/lovable/A-043/HANDOFF.json) · summary: [docs/ai/tool-output/lovable/A-043/SUMMARY.md](tool-output/lovable/A-043/SUMMARY.md).
+**A-044-R** by `claude-code` — commit `1c080432d6d183e98073da2aa4e89b33ab85c734`, completed 2026-09-26T16:49:42Z. Handoff: [docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json](tool-output/claude-code/A-044-R/HANDOFF.json) · summary: [docs/ai/tool-output/claude-code/A-044-R/SUMMARY.md](tool-output/claude-code/A-044-R/SUMMARY.md).
 
-Files: 36 created, 10 modified, 0 deleted.
+Files: 8 created, 24 modified, 6 deleted.
 
 ```text
-+ app/src/components/mvp/dispute-frame.tsx
-+ app/src/components/mvp/document-row.tsx
-+ app/src/components/mvp/google-button.tsx
-+ app/src/components/mvp/preview-header.tsx
-+ app/src/components/mvp/require-session.tsx
-+ app/src/components/mvp/screens/dispute-list-screen.tsx
-+ app/src/components/mvp/screens/document-viewer-screen.tsx
-+ app/src/components/mvp/screens/evidence-locker-screen.tsx
-+ app/src/components/mvp/screens/export-screens.tsx
-+ app/src/components/mvp/screens/fact-review-screen.tsx
-+ app/src/components/mvp/screens/intake-screen.tsx
-+ app/src/components/mvp/screens/login-screen.tsx
-+ app/src/components/mvp/screens/timeline-screen.tsx
-+ app/src/components/mvp/screens/what-happened-screen.tsx
-+ app/src/components/mvp/states.tsx
-+ app/src/components/mvp/text-field.tsx
-+ app/src/components/mvp/use-dispute.ts
-+ app/src/mvp/access.ts
-+ app/src/mvp/export.ts
-+ app/src/mvp/fixtures.ts
-+ app/src/mvp/store.tsx
-+ app/src/mvp/view-model.ts
-+ app/src/routes/disputes.$disputeId.documents.$documentId.tsx
-+ app/src/routes/disputes.$disputeId.evidence.tsx
-+ app/src/routes/disputes.$disputeId.export.index.tsx
-+ app/src/routes/disputes.$disputeId.export.result.tsx
-+ app/src/routes/disputes.$disputeId.facts.tsx
-+ app/src/routes/disputes.$disputeId.index.tsx
-+ app/src/routes/disputes.$disputeId.intake.tsx
-+ app/src/routes/disputes.$disputeId.timeline.tsx
-+ app/src/routes/disputes.$disputeId.tsx
-+ app/src/routes/disputes.index.tsx
-+ app/src/routes/disputes.new.tsx
-+ app/src/routes/disputes.tsx
-+ app/src/routes/login.tsx
-+ app/tests/mvp.test.tsx
-~ app/src/components/nyayos/button.tsx
-~ app/src/routeTree.gen.ts
-~ app/src/routes/__root.tsx
-~ app/src/routes/index.tsx
-… 6 more in the handoff
++ docs/ai/schemas/current-state.schema.json
++ docs/ai/schemas/next-task.schema.json
++ docs/ai/tool-output/claude-code/A-042/HANDOFF.json
++ docs/ai/tool-output/claude-code/A-042/SUMMARY.md
++ docs/ai/tool-output/claude-code/A-044/HANDOFF.json
++ docs/ai/tool-output/claude-code/A-044/SUMMARY.md
++ docs/ai/tool-output/lovable/A-043/REPORT.md
++ scripts/ai/state.test.mjs
+~ .github/pull_request_template.md
+~ .github/workflows/task-gate.yml
+~ CONTRIBUTING.md
+~ NYAYOS_OPERATING_SYSTEM.md
+~ NYAYOS_STATUS.json
+~ docs/INDEX.md
+~ docs/ai/CURRENT_STATE.json
+~ docs/ai/NEXT_TASK.json
+~ docs/ai/README.md
+~ docs/ai/STATUS_SUMMARY.md
+~ docs/ai/schemas/handoff.schema.json
+~ docs/ai/tool-output/claude-code/README.md
+~ docs/ai/tool-output/figma/README.md
+~ docs/ai/tool-output/gemini/README.md
+~ docs/ai/tool-output/lovable/A-043/HANDOFF.json
+~ docs/ai/tool-output/lovable/A-043/SUMMARY.md
+~ docs/ai/tool-output/lovable/README.md
+~ docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md
+~ docs/founder/NYAYOS_CHANGELOG.md
+~ docs/founder/NYAYOS_DEPENDENCY_GRAPH.md
+~ docs/founder/NYAYOS_STATUS_DASHBOARD.md
+~ docs/founder/NYAYOS_STATUS_REGISTRY.json
+~ docs/founder/NYAYOS_STATUS_REGISTRY.md
+~ scripts/ai/state.mjs
+- docs/ai/TOOL_OUTPUT_CONTRACT.md
+- docs/ai/schemas/current_state.schema.json
+- docs/ai/schemas/next_task.schema.json
+- docs/ai/tool-output/claude-code/A-042.md
+- docs/ai/tool-output/claude-code/A-044.md
+- docs/ai/tool-output/lovable/A-043.md
 ```
 
 | Validation | Result |
 |---|---|
-| vitest | pass — 233 passed, 0 failed in 19 files; A-043 suite app/tests/mvp.test.tsx (34 tests) |
+| handoff validator tests | pass — 25/25: valid claude-code, gemini, lovable and figma handoffs; unknown tool; missing task ID; missing and invalid commit; untagged commit; missing and omitted output paths; missing HANDOFF.json; registry completion without handoff; duplicate ownership; contradictory state (x2); stale state (x2); hand-edited summary; unrecorded work; handoff attachments; production deployment; required workflow with --head |
+| repository state check | pass — run before the state commit was pushed |
+| registry | pass — 46 tasks, 0 errors |
+| schema lint | pass |
 | typecheck | pass |
-| lint | pass — pass (0 errors; pre-existing react-refresh warnings) |
-| build | pass |
-| playwright | pass — sign-in to export result; cross-tenant URL blocked; keyboard focus order; single h1 True; horizontal overflow False; console errors 0 |
+| vitest (CI) | pass — 233/233 on ubuntu; application code unchanged by A-044-R |
+| vitest (local Windows) | fail — Lovable A-043 tests: timeouts above the 5 s default and one jsdom SubtleCrypto.digest type error in tests/mvp.test.tsx (U06); 47/48 of the two affected files pass with --testTimeout=30000; not caused by A-044-R (no app/ change); passes in CI |
+| task-gate on completion commit 3455003 | fail — expected: completion without HANDOFF.json and unrecorded work until this state commit |
 
 Risks left by this task:
 
-- medium: Design conformance unverified: the Figma MVP Design Package V1 (A-008) was not supplied (RES-04)
-- medium: Client-side access rules mirror, but do not replace, server/RLS enforcement; no auth provider is connected
+- low: A tool that ignores the protocol is caught only when its pull request runs task-gate; direct pushes to the feature branch show red CI until recorded
+- medium: A-043 UI design conformance unverified until the Figma package (A-008) arrives (RES-04)
 
-Rollback: git revert c1c49d535da1125982b48a728d7125c62159213c 2c77b163fa57df0bbab1b88ec119e6185ec80637 9d238423949eabea28452e4e6a924186a94030c4
+Rollback: git revert --no-edit $(git log --format=%H --grep='^\[TOOL:CLAUDE-CODE\]\[TASK:A-044-R\]' 34550033562f05ec267c46b9042c494f62e87b56^..HEAD) — reverts, newest first, the A-044-R state commit, 1c080432d6d183e98073da2aa4e89b33ab85c734 and 34550033562f05ec267c46b9042c494f62e87b56, restoring the A-044 Markdown handoffs and the previous validator; no force push
 
 ## Awaited outputs (in order)
 
@@ -89,7 +89,7 @@ Rollback: git revert c1c49d535da1125982b48a728d7125c62159213c 2c77b163fa57df0bba
 
 ## Next assignment
 
-**(ID to be issued by the founder) — Wave W1 — staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI** · tool `claude-code` · P1 · not ready · baseline `feature/fma-foundation-v1@c1c49d5` · environment: Staging only under FA-001; no staging environment is provisioned yet · deployment not allowed.
+**(ID to be issued by the founder) — Wave W1 — staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI** · tool `claude-code` · P1 · not ready · baseline `feature/fma-foundation-v1@1c08043` · environment: Staging only under FA-001; no staging environment is provisioned yet · deployment not allowed.
 
 > First build step after the merge per the A-030 gap report: it turns the verified database foundation into a running staging environment behind the A-043 UI. The founder issues the task ID and grants staging deployment when ready.
 
@@ -136,6 +136,7 @@ Blocked:
 | OI-10 | dependency | A-043 MVP Wave-1 UI (Lovable, REVIEW, completion commit 9d238423, handoff docs/ai/tool-output/lovable/A-043/HANDOFF.json) awaits a design conformance review: the Figma MVP Design Package V1 (A-008) has not been supplied. | — |
 | OI-11 | finding | The A-041 U01-U21 traceability addendum records statuses from before A-043's MVP UI (U04-U09, U16, U17); it needs re-baselining against A-043. | — |
 | OI-12 | founder decision | F01 sign-in method: A-043 shows a Google sign-in entry, while the Scope Sheet specifies email/password + OTP (addendum C-01). | D-035 |
+| OI-13 | finding | Lovable A-043 tests time out locally on Windows and one U06 test hits a jsdom SubtleCrypto.digest type difference; CI (ubuntu) passes 233/233. A local-environment robustness fix belongs to a Lovable follow-up. | — |
 
 ## Decisions awaiting the founder
 
@@ -163,3 +164,4 @@ Top five (Risk Register): Unsupported claims · Sensitive-data leakage · Episte
 - A-042 — `claude-code` — completed — [docs/ai/tool-output/claude-code/A-042/HANDOFF.json](tool-output/claude-code/A-042/HANDOFF.json)
 - A-043 — `lovable` — completed — [docs/ai/tool-output/lovable/A-043/HANDOFF.json](tool-output/lovable/A-043/HANDOFF.json)
 - A-044 — `claude-code` — completed — [docs/ai/tool-output/claude-code/A-044/HANDOFF.json](tool-output/claude-code/A-044/HANDOFF.json)
+- A-044-R — `claude-code` — completed — [docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json](tool-output/claude-code/A-044-R/HANDOFF.json)
