@@ -2,20 +2,59 @@
   "$schema": "./schemas/next_task.schema.json",
   "schema_version": "1.0",
   "updated": "2026-09-26",
-  "after": "A-042",
+  "after": "A-044",
   "recommended": {
     "id": null,
     "kind": "founder_action",
     "title": "Merge-readiness review of draft PR #2 (FM-A foundation)",
     "owner": "Founder",
     "tool": "founder",
-    "rationale": "Every A-032 fix required before merge is closed (A-033, A-033-R, A-038, A-039, A-040, A-041, A-042). The branch holds eleven REVIEW assignments; merging makes the foundation canonical and unblocks wave W1.",
-    "inputs": ["docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md", "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md", "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md"],
+    "rationale": "Every A-032 fix required before merge is closed (A-033, A-033-R, A-038, A-039, A-040, A-041, A-042) and the repository now carries its own operating state (A-044). Merging makes the foundation canonical and unblocks wave W1.",
+    "inputs": [
+      "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
+      "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md",
+      "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md"
+    ],
     "gate": "Founder decision; merge is the founder's action",
     "deployment_allowed": false
   },
-  "alternatives": [],
+  "alternatives": [
+    {
+      "id": null,
+      "kind": "assignment",
+      "title": "Wave W1 — staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI",
+      "owner": "Claude Code",
+      "tool": "claude-code",
+      "rationale": "First build step after merge per the A-030 gap report §7; turns the database foundation into a running staging environment.",
+      "inputs": [
+        "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md"
+      ],
+      "gate": "FA-001 staging only; requires FD-02 hosting decision",
+      "deployment_allowed": false
+    },
+    {
+      "id": null,
+      "kind": "founder_action",
+      "title": "Record D-031/D-032 in the Decision Log and decide D-035/D-036",
+      "owner": "Founder",
+      "tool": "founder",
+      "rationale": "Two rulings live only in an assignment brief; two candidate decisions gate the deck-versus-Scope-Sheet conflicts and the A-030 defaults.",
+      "inputs": [
+        "docs/ai/DECISIONS.json",
+        "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md"
+      ],
+      "gate": "Founder decision",
+      "deployment_allowed": false
+    }
+  ],
   "blocked_by": [
-    { "item": "D-035 and D-036 founder decisions", "owner": "founder" }
+    {
+      "item": "D-035 and D-036 founder decisions",
+      "owner": "founder"
+    },
+    {
+      "item": "FD-02 hosting / India-region decision (blocks wave W1)",
+      "owner": "founder"
+    }
   ]
 }

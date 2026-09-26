@@ -16,21 +16,21 @@
     "note": "FA-001 permits staging builds only; FA-002 (production) not granted. No database environment exists: migrations 0001-0008 have run only on disposable local containers."
   },
   "last_assignment": {
-    "id": "A-042",
-    "title": "Minor finding m-1 closure — dispute status server-controlled; closes A-032 m-1",
+    "id": "A-044",
+    "title": "Repository-centric AI operating system — docs/ai state, tool handoffs, validator and completion protocol",
     "status": "REVIEW",
     "tool": "claude-code",
-    "baseline": "13765b9b97be2dc06942711373c203f7f2b7ed42",
-    "commit": "fc740380eb6282d3b6a174b8a01a93e7528bddd8",
+    "baseline": "fc740380eb6282d3b6a174b8a01a93e7528bddd8",
+    "commit": "6ef934925d59bb7317da9e4b82e38ea8b23b077a",
     "pushed": true,
-    "handoff": "docs/ai/tool-output/claude-code/A-042.md"
+    "handoff": "docs/ai/tool-output/claude-code/A-044.md"
   },
-  "summary": "FM-A foundation on feature/fma-foundation-v1 (draft PR #2, unmerged): domain layer, migrations 0001-0008, deletion lifecycle through a verified purge worker, and the U01-U21 traceability addendum. Every fix A-032 listed as required before merge is closed; no screen is READY (PARTIAL 4, MISSING 17); nothing is deployed and no environment exists. Next is the founder's merge-readiness review.",
+  "summary": "FM-A foundation on feature/fma-foundation-v1 (draft PR #2, unmerged): domain layer, migrations 0001-0008, deletion lifecycle through a verified purge worker, the U01-U21 traceability addendum, and (A-044) this repository-centric AI operating system with an enforced completion protocol. Every fix A-032 listed as required before merge is closed; no screen is READY (PARTIAL 4, MISSING 17); nothing is deployed and no environment exists. Next is the founder's merge-readiness review.",
   "open_items": [
     {
       "id": "OI-01",
       "kind": "dependency",
-      "description": "Founder merge-readiness review of draft PR #2 (A-030 and follow-ups A-033…A-042 are REVIEW)."
+      "description": "Founder merge-readiness review of draft PR #2 (A-030 and follow-ups A-033…A-042 and A-044 are REVIEW)."
     },
     {
       "id": "OI-02",
