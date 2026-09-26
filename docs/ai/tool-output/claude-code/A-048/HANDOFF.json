@@ -1,0 +1,183 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-048",
+  "tool": "claude-code",
+  "status": "completed",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "92be7c79b58640cfabfef36a23d5080b24d93cff",
+  "completion_commit": "3edecc8b89c8da9ec89809787c6a8192cbf74e15",
+  "completed_at": "2026-09-26T18:51:46Z",
+  "files_created": [
+    "docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md"
+  ],
+  "files_modified": [
+    "docs/INDEX.md",
+    "docs/ai/CURRENT_STATE.json",
+    "docs/ai/DECISIONS.json",
+    "docs/ai/NEXT_TASK.json",
+    "docs/ai/STATUS_SUMMARY.md",
+    "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+    "docs/founder/NYAYOS_CHANGELOG.md",
+    "docs/founder/NYAYOS_DECISION_LOG_V1.md",
+    "docs/founder/NYAYOS_DEPENDENCY_GRAPH.md",
+    "docs/founder/NYAYOS_STATUS_DASHBOARD.md",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.md",
+    "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md"
+  ],
+  "files_deleted": [],
+  "tests": [
+    {
+      "name": "audit concurrency matrix",
+      "command": "db/tests/audit_concurrency_matrix.sh (fresh container)",
+      "result": "pass",
+      "detail": "5/5, chain intact"
+    },
+    {
+      "name": "purge race",
+      "command": "db/tests/deletion_purge_concurrency.sh",
+      "result": "pass",
+      "detail": "3/3"
+    },
+    {
+      "name": "smoke",
+      "command": "psql -f db/tests/smoke_0001.sql",
+      "result": "pass",
+      "detail": "87/87"
+    },
+    {
+      "name": "dispute status",
+      "command": "psql -f db/tests/dispute_status_0001.sql",
+      "result": "pass",
+      "detail": "21/21"
+    },
+    {
+      "name": "deletion authz / scope / purge",
+      "command": "psql -f db/tests/deletion_{authz,scope,purge}_0001.sql",
+      "result": "pass",
+      "detail": "25/25, 28/28, 55/55"
+    },
+    {
+      "name": "audit atomicity / hash vectors",
+      "command": "psql -f db/tests/audit_atomicity_0001.sql; audit_hash_vectors_v1.sql",
+      "result": "pass",
+      "detail": "21/21 (5 deliberate fault injections), 16/16"
+    },
+    {
+      "name": "vitest (CI)",
+      "command": "dependency-check job on 92be7c7",
+      "result": "pass",
+      "detail": "233/233"
+    },
+    {
+      "name": "vitest (local Windows)",
+      "command": "npx vitest run --testTimeout=30000",
+      "result": "fail",
+      "detail": "232/233: A-043 U06 test hits a jsdom SubtleCrypto.digest buffer-type difference locally; passes in CI"
+    },
+    {
+      "name": "typecheck",
+      "command": "npx tsc --noEmit -p app",
+      "result": "pass"
+    },
+    {
+      "name": "lint",
+      "command": "npx eslint app",
+      "result": "pass",
+      "detail": "0 errors, 13 warnings (2 added by A-043)"
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "result": "pass"
+    },
+    {
+      "name": "schema lint",
+      "command": "node scripts/db/schema-lint.mjs",
+      "result": "pass"
+    },
+    {
+      "name": "handoff validator tests",
+      "command": "node --test scripts/ai/state.test.mjs",
+      "result": "pass",
+      "detail": "31/31"
+    },
+    {
+      "name": "registry",
+      "command": "node scripts/governance/registry.mjs validate; generate --check",
+      "result": "pass",
+      "detail": "49 tasks, 0 errors"
+    },
+    {
+      "name": "addendum validation",
+      "command": "paths, identifiers, IDs and statuses in the rebaselined addendum",
+      "result": "pass",
+      "detail": "83 paths, 237 identifiers; PARTIAL 11, MISSING 10"
+    },
+    {
+      "name": "PR #2 diff scan",
+      "command": "task-gate private/secret guards; key patterns; deploy and env files; external URLs",
+      "result": "pass",
+      "detail": "205 files; none found"
+    },
+    {
+      "name": "PR #3 textual merge",
+      "command": "git merge-tree --write-tree PR #2 head vs fix/a050-accessibility-ux-mobile",
+      "result": "pass",
+      "detail": "no textual conflict; semantic conflicts in the report"
+    }
+  ],
+  "evidence": [
+    {
+      "description": "merge readiness report",
+      "ref": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md"
+    },
+    {
+      "description": "decisions D-031, D-032, D-035, D-036",
+      "ref": "docs/founder/NYAYOS_DECISION_LOG_V1.md"
+    },
+    {
+      "description": "rebaselined U01-U21 addendum (§10)",
+      "ref": "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md"
+    },
+    {
+      "description": "completion commit",
+      "ref": "3edecc8b89c8da9ec89809787c6a8192cbf74e15"
+    }
+  ],
+  "limitations": [
+    "No task ID was issued; A-048 was the next free ID.",
+    "PR #2 left draft: marking it ready and merging are the founder's actions. Repository merge-method settings were not changed; the report requires a merge commit.",
+    "Local Windows Vitest 232/233 (A-043 U06 jsdom difference); CI 233/233.",
+    "PR #3 was analysed, not merged or modified."
+  ],
+  "risks": [
+    {
+      "description": "A squash or rebase merge of PR #2 would drop the handoff commit SHAs from main and turn task-gate red",
+      "severity": "high"
+    },
+    {
+      "description": "D-035 points C-02, C-03 and C-05 remain open; the Scope Sheet governs them until decided",
+      "severity": "low"
+    },
+    {
+      "description": "Google Login has no provider yet (FD-02); no screen is READY",
+      "severity": "medium",
+      "ref": "RES-05"
+    }
+  ],
+  "rollback": "git revert --no-edit $(git log --format=%H --grep='^\\[TOOL:CLAUDE-CODE\\]\\[TASK:A-048\\]' 92be7c79b58640cfabfef36a23d5080b24d93cff..HEAD) — reverts, newest first, the A-048 state commit and 3edecc8b89c8da9ec89809787c6a8192cbf74e15; decisions then disappear from the Decision Log and the addendum returns to its A-041 statuses; no force push",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": null,
+    "tool": "founder",
+    "reason": "Mark PR #2 ready and merge it with a merge commit (report §6), then issue wave W1 (Google Login adapter and staging database) once FD-02 is decided."
+  }
+}

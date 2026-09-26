@@ -2,8 +2,8 @@
   "$schema": "./schemas/next-task.schema.json",
   "schema_version": "2.0",
   "authority": "canonical",
-  "updated": "2026-09-26T17:53:58Z",
-  "after": "A-044-R2",
+  "updated": "2026-09-26T18:51:46Z",
+  "after": "A-048",
   "task_id": null,
   "title": "Wave W1 — staging database with migrations applied, Google Login auth adapter, A01/A02/A28, smoke suite in CI",
   "assigned_tool": "claude-code",
@@ -28,7 +28,7 @@
   "ready": false,
   "repository_baseline": {
     "branch": "feature/fma-foundation-v1",
-    "commit": "02f2f9576c19fd065c88debcafd9a3e614e9f990"
+    "commit": "3edecc8b89c8da9ec89809787c6a8192cbf74e15"
   },
   "required_inputs": [
     "db/README.md",
