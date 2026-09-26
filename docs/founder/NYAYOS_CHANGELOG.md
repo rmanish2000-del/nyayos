@@ -13,7 +13,7 @@ Newest first. One entry per commit or per material decision.
 
 - Per-task handoffs `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` (schema `docs/ai/schemas/handoff.schema.json`); tagged completion commits `[TOOL:<TOOL>][TASK:<task-id>]`.
 - `CURRENT_STATE.json` 2.0 (per-tool latest completion, active and blocked tasks, awaited outputs in order) and `NEXT_TASK.json` 2.0; schemas `current-state.schema.json` and `next-task.schema.json`.
-- `scripts/ai/state.test.mjs` — 24 tests over throwaway git fixtures (all four tools; every failure mode).
+- `scripts/ai/state.test.mjs` — 25 tests over throwaway git fixtures (all four tools; every failure mode).
 
 ### Changed
 

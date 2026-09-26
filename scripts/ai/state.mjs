@@ -59,7 +59,7 @@ const STATE_PATHS = [
   /^docs\/ai\/NEXT_TASK\.json$/,
   /^docs\/ai\/(DECISIONS|RISKS)\.json$/,
   /^docs\/ai\/STATUS_SUMMARY\.md$/,
-  /^docs\/ai\/tool-output\/(claude-code|gemini|lovable|figma)\/A-\d{3}(-R\d?)?\/(HANDOFF\.json|SUMMARY\.md)$/,
+  /^docs\/ai\/tool-output\/(claude-code|gemini|lovable|figma)\/A-\d{3}(-R\d?)?\/.+$/, // HANDOFF.json, SUMMARY.md and attachments (e.g. screenshots)
   /^docs\/founder\/NYAYOS_(STATUS_REGISTRY\.md|DEPENDENCY_GRAPH\.md|STATUS_DASHBOARD\.md|CHANGELOG\.md)$/,
 ];
 const ID_RE = /^A-(\d{3})(-R(\d?))?$/;

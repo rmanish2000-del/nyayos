@@ -29,6 +29,7 @@ Start with the generated one-page view: [`STATUS_SUMMARY.md`](STATUS_SUMMARY.md)
 | [`schemas/`](schemas/) | `handoff.schema.json`, `current-state.schema.json`, `next-task.schema.json`, `decisions.schema.json`, `risks.schema.json` | Changed only with the validator |
 | `tool-output/<tool>/<task-id>/HANDOFF.json` | The machine-readable handoff for one task | The tool that did the task |
 | `tool-output/<tool>/<task-id>/SUMMARY.md` | The human-readable handoff for the same task (must name the task ID) | The tool that did the task |
+| `tool-output/<tool>/<task-id>/…` | Optional attachments of the handoff (screenshots, reports), e.g. `lovable/A-043/screenshots/` | The tool that did the task |
 
 The governance sources stay authoritative: the [status registry](../founder/NYAYOS_STATUS_REGISTRY.json) for task status, the [Decision Log](../founder/NYAYOS_DECISION_LOG_V1.md), the [Risk Register](../founder/NYAYOS_RISK_REGISTER_V1.md) and the [Founder Authorization Record](../founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) for gates. This folder is checked against them and never overrides them.
 
@@ -83,7 +84,7 @@ node --test scripts/ai/state.test.mjs
 - the registry marks a task REVIEW or CANONICAL (from A-042 on) and no completed handoff exists;
 - `CURRENT_STATE.json` is stale (per-tool latest completion, `latest_completion`, registry counts or `last_updated`), or `STATUS_SUMMARY.md` differs from a fresh render;
 - state contradicts itself: a completed task that is still active, blocked or awaited; a tool marked active that has no active task; NEXT_TASK marked ready with unsatisfied dependencies; NEXT_TASK not following the latest completion;
-- on a pull request, any file other than the state files changed after the latest completion commit ("unrecorded work");
+- on a pull request, any file other than the state files (`CURRENT_STATE`, `NEXT_TASK`, `DECISIONS`, `RISKS`, `STATUS_SUMMARY`, anything inside a task's handoff directory, and the registry-generated founder views) changed after the latest completion commit ("unrecorded work");
 - a deployment is recorded as production, or as deployed without being allowed.
 
 ## Recovery procedure

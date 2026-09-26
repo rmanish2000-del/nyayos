@@ -57,7 +57,7 @@ function fixture({ untagged = null } = {}) {
   git(dir, "commit", "-q", "-m", "init");
   const commits = {};
   let prev = git(dir, "rev-parse", "HEAD");
-  const t0 = Date.now();
+  let last = 0;
   TOOLS.forEach((t, i) => {
     put(dir, `work/${t}.txt`, `${t} output\n`);
     git(dir, "add", `work/${t}.txt`); // explicit paths only: the protocol forbids sweeping in other tasks' files
@@ -65,9 +65,11 @@ function fixture({ untagged = null } = {}) {
     git(dir, "commit", "-q", "-m", msg);
     const c = git(dir, "rev-parse", "HEAD");
     commits[t] = { baseline: prev, completion: c };
+    // completed_at follows the commit's own timestamp (never earlier), strictly increasing across tools
+    last = Math.max(last + 1000, Date.parse(git(dir, "log", "-1", "--format=%cI", c)) + 1000);
     put(dir, handoffPath(t), {
       schema_version: "1.0", project: "NyayOS", task_id: TASK[t], tool: t, status: "completed", branch: "work",
-      baseline_commit: prev, completion_commit: c, completed_at: new Date(t0 + (i + 5) * 1000).toISOString(),
+      baseline_commit: prev, completion_commit: c, completed_at: new Date(last).toISOString(),
       files_created: [`work/${t}.txt`], files_modified: [], tests: [{ name: "fixture test", command: "true", result: "pass" }],
       evidence: [{ description: "fixture output", ref: `work/${t}.txt` }], limitations: [], risks: [],
       rollback: `git revert ${c}`, deployment: { allowed: false, environment: "none", status: "not_deployed", url: null },
@@ -79,7 +81,7 @@ function fixture({ untagged = null } = {}) {
   const idle = { status: "idle", latest_completed_task: null, latest_completion_commit: null, handoff: null, reason: null };
   put(dir, "docs/ai/CURRENT_STATE.json", {
     $schema: "./schemas/current-state.schema.json", schema_version: "2.0", project: "NyayOS",
-    last_updated: new Date(t0 + 60_000).toISOString(), current_phase: "Fixture phase for validator tests",
+    last_updated: new Date(last + 60_000).toISOString(), current_phase: "Fixture phase for validator tests",
     canonical_branch: "main", working_branch: "work", current_pr: { number: null, url: null, draft: true, merged: false },
     deployment: { allowed: false, environment: "none", status: "not_deployed", url: null, note: "fixture" },
     tools: Object.fromEntries(TOOLS.map((t) => [t, { ...idle }])), latest_completion: null,
@@ -89,7 +91,7 @@ function fixture({ untagged = null } = {}) {
     summary: "Fixture repository for scripts/ai/state.test.mjs", open_items: [], derived: {},
   });
   put(dir, "docs/ai/NEXT_TASK.json", {
-    $schema: "./schemas/next-task.schema.json", schema_version: "2.0", updated: new Date(t0 + 60_000).toISOString(),
+    $schema: "./schemas/next-task.schema.json", schema_version: "2.0", updated: new Date(last + 60_000).toISOString(),
     after: "A-053", task_id: "A-054", title: "Fixture next task", assigned_tool: "claude-code", priority: "P1",
     dependencies: [], ready: true, repository_baseline: { branch: "work", commit: prev },
     required_inputs: ["work/claude-code.txt"], expected_outputs: ["docs/ai/tool-output/claude-code/A-054/HANDOFF.json"],
@@ -243,6 +245,15 @@ test("unrecorded work after the latest completion fails on pull requests", () =>
   git(dir, "add", "-A");
   git(dir, "commit", "-q", "-m", "[TOOL:CLAUDE-CODE][TASK:A-054] feat: work without a handoff");
   fails(dir, /unrecorded work after A-053's completion commit/, "--head", git(dir, "rev-parse", "HEAD"));
+});
+
+test("handoff attachments committed after the completion are not unrecorded work", () => {
+  const { dir } = fixture();
+  put(dir, "docs/ai/tool-output/figma/A-053/screenshots/frame-u04.txt", "attachment\n");
+  git(dir, "add", "-A");
+  git(dir, "commit", "-q", "-m", "[TOOL:FIGMA][TASK:A-053] chore(ai-state): add handoff attachment");
+  const r = run(dir, "check", "--head", git(dir, "rev-parse", "HEAD"));
+  assert.equal(r.code, 0, r.out);
 });
 
 test("a production deployment can never be recorded", () => {
