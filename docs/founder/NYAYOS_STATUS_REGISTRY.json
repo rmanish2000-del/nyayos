@@ -1,7 +1,7 @@
 {
   "$comment": "NyayOS canonical status registry. MACHINE SOURCE OF TRUTH for task status and dependencies. Edited by hand or by the maintainer; validated and rendered by scripts/governance/registry.mjs. Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md.",
   "version": 1,
-  "updated": "2026-09-24",
+  "updated": "2026-09-26",
   "statuses": [
     "OPEN",
     "IN_PROGRESS",
@@ -738,9 +738,9 @@
         "docs/product/NYAYOS_FM0_CONCIERGE_DECK_V1_TEXT.md"
       ],
       "evidence": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
-      "updated": "2026-09-24",
+      "updated": "2026-09-26",
       "superseded_by": null,
-      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open. — 24 Sep 2026: C-1 and C-2 CLOSED with adversarial execution evidence under A-033-R (C-1 required migration 0004). No A-032 critical finding remains; majors M-2, M-3, M-6, M-7 and the M-8 documentation addendum remain open. — 24 Sep 2026: M-2 and M-7 CLOSED with execution evidence under A-038 (cross-runtime golden vectors; fault-injected rollback). Open majors: M-3, M-6, M-8 documentation addendum. — 24 Sep 2026: M-6 CLOSED with execution evidence under A-039 (explicit graph, oracle-verified enumeration). Open: M-3 (purge path, D-032) and M-8 documentation addendum; minor m-1. — 24 Sep 2026: M-3 CLOSED with execution evidence under A-040 (server-controlled purge worker from the A-039 enumeration; D-032). Open: M-8 documentation addendum; minor m-1; new A-040 residuals (object-storage blob deletion; account purge keeps the personal tenant row)."
+      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open. — 24 Sep 2026: C-1 and C-2 CLOSED with adversarial execution evidence under A-033-R (C-1 required migration 0004). No A-032 critical finding remains; majors M-2, M-3, M-6, M-7 and the M-8 documentation addendum remain open. — 24 Sep 2026: M-2 and M-7 CLOSED with execution evidence under A-038 (cross-runtime golden vectors; fault-injected rollback). Open majors: M-3, M-6, M-8 documentation addendum. — 24 Sep 2026: M-6 CLOSED with execution evidence under A-039 (explicit graph, oracle-verified enumeration). Open: M-3 (purge path, D-032) and M-8 documentation addendum; minor m-1. — 24 Sep 2026: M-3 CLOSED with execution evidence under A-040 (server-controlled purge worker from the A-039 enumeration; D-032). Open: M-8 documentation addendum; minor m-1; new A-040 residuals (object-storage blob deletion; account purge keeps the personal tenant row). — 26 Sep 2026: M-8 CLOSED under A-041 (U01–U21 traceability addendum; every numbering reconciled; conflicts recorded with Scope Sheet precedence). All A-032 critical and major findings are now closed. Open: minor m-1 (direct status update grant) and the other minors; founder decisions D-035/D-036."
     },
     {
       "id": "A-033",
@@ -989,6 +989,33 @@
       "updated": "2026-09-24",
       "superseded_by": null,
       "notes": "Baseline 2067073. Founder decision D-032 (server-controlled purge path) with the A-032 §9 pattern. Migration 0007 (append-only; no table created or altered; not applied to any environment): purge_deletion_request(request) — SECURITY DEFINER (justified: no role holds a DELETE grant, so this audited function is the only deletion path; it also reads RLS-hidden rows), pinned search_path with pg_temp last, EXECUTE only for nyayos_service_deletion. It locks the request; refuses nonexistent/unauthorised (one uniform result), undone, undo-window-active and legal-hold requests without writing; runs the A-039 enumerate_deletion_scope() as the requester so authority is re-verified; deletes only purge_candidate rows, children first, keyed by enumerated ids and the request's tenant, with an exact-count check per table; an orphan closure keeps any candidate still referenced by a surviving row (every catalogue foreign key, source_ref document/version/location/statement ids, export manifests, job payloads, item targets) plus the subtree of a kept document and the access rows of a kept dispute or tenant; completes as purged (content-free tombstone + deletion.purged) or incomplete (deletion.incomplete, no tombstone, retried later); audit in the same transaction; reruns idempotent. document_versions/user_corrections accept DELETE only inside an active purge; audit_events, audit_anchors, deletion_ledger immutable. Evidence: deletion_purge 55/55 (whole-database before/after snapshots per purge; independent orphan oracle) with 7 negative controls each detected; purge race 3/3 (one purge per request at every isolation level); smoke 85/85; deletion_scope 28/28; deletion_authz 25/25; atomicity 21/21; vectors 16/16; concurrency matrix 5/5; Vitest 199/199; tsc, eslint 0 errors, build, schema-lint (purge-order parity, negative control) clean. Open: object-storage blob deletion (no storage exists, FD-02); account purge keeps the personal tenant row (retained deletion_requests and consents reference it by foreign key) — founder decision."
+    },
+    {
+      "id": "A-041",
+      "title": "U01–U21 documentation addendum and final A-032 closure — authoritative traceability map; closes M-8",
+      "type": "governance",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — documentation closure and traceability reconciliation (no code, SQL, migration or test change)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-010",
+        "A-029",
+        "A-031",
+        "A-032",
+        "A-034"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md",
+        "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
+        "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md",
+        "docs/INDEX.md"
+      ],
+      "evidence": "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md",
+      "updated": "2026-09-26",
+      "superseded_by": null,
+      "notes": "Baseline 495d1fd. Documentation only: no application code, SQL, migration or test changed. The addendum maps each Scope Sheet screen U01–U21 (exactly once) to purpose, user action, code/component, API/server dependency, database dependency, security controls, status, tests, copy keys, design evidence, deferred work and limitations. Status at the baseline: READY 0, PARTIAL 4 (U06, U08, U09, U10: prototype components on mock data), MISSING 17; U03 reconciled from the A-030 PARTIAL to MISSING under a stricter definition. Cross-maps every alternative numbering or grouping: FM-A Product & User Flow deck U01–U21 (corrects A-032 §6: deck U11 Fact Linking also maps to U07); Figma Brief V2 §1–18 (five sections NOT APPLICABLE to FM-A); Figma FM-A prototype package UNVERIFIED (never supplied, A-008); A-030/A-032/A-034/A-035 reports; showcase and workspace groupings in code. Fifteen content conflicts recorded with decisions (Scope Sheet governs; D-035/D-036 remain founder decisions). U18 records A-039/A-040 deletion behaviour with the four required limitations. Validation: every cited path and identifier exists, internal links resolve, statuses from the allowed set, IDs exactly once (validator negative controls fail as expected). m-1 remains open (SQL change not allowed)."
     }
   ]
 }

@@ -212,7 +212,7 @@
     ],
     "prior_next_assignment_closed": "A-010 delivered (CANONICAL 23 Sep 2026)"
   },
-  "last_verified_at": "2026-09-24",
+  "last_verified_at": "2026-09-26",
   "evidence_packages": [
     {
       "name": "Operating system directive (consolidated)",
@@ -306,9 +306,7 @@
         "A-032_critical_open": 0,
         "C-1": "closed by 0004 (A-033 fix was incomplete)",
         "C-2": "closed (re-verified)",
-        "A-032_major_open": [
-          "M-8 documentation addendum"
-        ],
+        "A-032_major_open": [],
         "A-038": {
           "M-2": "closed (cross-runtime golden vectors)",
           "M-7": "closed (fault-injected rollback)"
@@ -322,7 +320,23 @@
         "A-040_residuals": [
           "object-storage blob deletion (no storage exists; FD-02)",
           "account purge keeps the personal tenant row (FK from retained records) — founder decision"
-        ]
+        ],
+        "A-041": {
+          "M-8": "closed (U01–U21 traceability addendum; documentation only)",
+          "m-1": "open (SQL grant change out of A-041 scope)"
+        }
+      },
+      "ui_traceability": {
+        "document": "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md",
+        "READY": 0,
+        "PARTIAL": [
+          "U06",
+          "U08",
+          "U09",
+          "U10"
+        ],
+        "MISSING": 17,
+        "note": "Scope Sheet IDs govern; no screen is production-ready; no environment exists"
       }
     }
   ],

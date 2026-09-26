@@ -592,3 +592,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Object-storage blobs (document originals, export files) are not deleted: no storage exists (FD-02) and the rows holding their paths are purged, so blob deletion must be designed before storage is provisioned. Account purge keeps the personal tenant row, and the own membership with it, because retained `deletion_requests` and `consents` reference it by foreign key; the tenant name therefore persists (founder decision). No scheduler invokes the worker (server runtime not built). Closure reads whole tables (FM-A volumes). Legal hold remains manual configuration (OL-06) |
 | **Rollback** | `git revert` the A-040 commit; disposable databases only: the statements listed in the `0007` header |
 | **Handoff back to M365 Copilot** | Record A-040 REVIEW; A-032 critical 0 and majors closed except the M-8 documentation addendum; decide the two residuals (blob deletion design; account tenant retention) |
+
+---
+
+### A-041 — U01–U21 documentation addendum and final A-032 closure
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-041 |
+| **Owner / tool** | Claude Code — documentation closure and traceability reconciliation |
+| **Purpose** | Close A-032 M-8: one authoritative U01–U21 map with evidence, and reconcile every alternative screen numbering, without changing product behaviour |
+| **Gate** | FA-001 (staging only). Deployment, production access, database writes and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** Documentation only; no database touched |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | `docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md`: canonical matrix (each ID once; READY 0 · PARTIAL 4 · MISSING 17), per-screen detail with twelve fields, cross-maps for the deck, Figma Brief V2, the absent Figma package, repository reports and code groupings, fifteen content conflicts with decisions, U18 deletion limitations, M-8 closure record. A-032 §0, A-030 gap report pointer and `docs/INDEX.md` updated |
+| **Evidence** | Validator: 21 matrix rows and 21 detail sections, allowed statuses only, every cited path and identifier present, internal links resolve, no private terms; negative controls (missing row, bad path) fail. No code, SQL, migration or test changed; typecheck, Vitest, lint, build and schema-lint re-run unchanged |
+| **Limitations** | Evidence is static reading at the baseline; the Figma FM-A package was never supplied, so no screen has prototype design evidence; m-1 stays open because SQL changes were out of scope; D-035 and D-036 are founder decisions |
+| **Rollback** | `git revert` the A-041 commit |
+| **Handoff back to M365 Copilot** | Record A-041 REVIEW; every A-032 critical and major finding is closed; remaining: m-1 and other minors, D-035 / D-036, and the A-040 residuals (object-storage deletion, account tenant row) |

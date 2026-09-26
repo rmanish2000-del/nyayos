@@ -5,6 +5,20 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-26 — U01–U21 traceability addendum: A-032 M-8 closed (A-041)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Documentation only: no code, SQL, migration or test changed. Nothing deployed or merged.**
+
+### Added
+
+- `docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md` — authoritative U01–U21 map under Scope Sheet IDs: status READY 0 · PARTIAL 4 · MISSING 17 with file-level evidence, cross-maps for every alternative numbering, fifteen content conflicts with decisions, and the U18 deletion limitations.
+
+### Changed
+
+- A-032 review §0 records M-8 closed and m-1 open; A-030 gap report gains an addendum pointer (U03 reconciled to MISSING); `docs/INDEX.md` lists the addendum. Registry A-041 REVIEW.
+
+---
+
 ## 2026-09-24 — Deletion purge worker: A-032 M-3 closed (A-040)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0007` not applied to any environment.**

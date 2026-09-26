@@ -219,3 +219,14 @@ Effort is not estimated in days: the Scope Sheet forbids implementation claims a
 1. **Founder:** review and merge `feature/fma-foundation-v1` by pull request (A-030 → CANONICAL on merge); decide **FD-02** (hosting/region) and confirm the Scope Sheet numbering, `document_reference_policy = block`, and the content-free tombstone as decisions (D-031…D-033 candidates).
 2. **Then W1** as the single next build assignment: staging database with `0001` applied, auth adapter, A01/A02/A28, `requirePurpose` middleware, and the smoke suite promoted into CI with a Postgres service container.
 3. **In parallel, non-blocking:** locate or re-export the Figma FM-A package (A-008) so W2 can start from the design rather than from canonical copy alone; native-speaker review of the Hindi strings in `copy.ts`.
+
+---
+
+## Addendum pointer (A-041, 26 September 2026)
+
+The authoritative U01–U21 traceability map is now [NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md](../product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md). It closes A-032 M-8. Read §4 of this report with it:
+
+- **U03 Dashboard** is **MISSING** in the addendum (this report said PARTIAL). The navigation shell renders none of U03's required states or copy.
+- Statuses for the other twenty screens are unchanged: PARTIAL U06, U08, U09, U10; MISSING the rest.
+- Screens now carry the A-036 duplicate indicator (U06, component not wired), the A-037 stale-output warning (U17, component not mounted) and the A-039/A-040 deletion foundation (U18, database only).
+- The FM-A Product & User Flow deck numbering and the Figma Brief V2 sections are cross-mapped to the Scope Sheet IDs used here. The Scope Sheet numbering in this report stays authoritative.
