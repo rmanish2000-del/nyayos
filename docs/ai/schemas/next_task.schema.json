@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "docs/ai/schemas/next_task.schema.json",
+  "title": "NyayOS NEXT_TASK",
+  "description": "The recommended next assignment, written by the tool that completed 'after'. A recommendation only: the founder issues assignments and their IDs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "updated", "after", "recommended", "alternatives", "blocked_by"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0" },
+    "updated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "after": { "type": "string", "pattern": "^A-\\d{3}(-R\\d?)?$" },
+    "recommended": { "$ref": "#/$defs/task" },
+    "alternatives": { "type": "array", "items": { "$ref": "#/$defs/task" } },
+    "blocked_by": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["item", "owner"],
+        "properties": {
+          "item": { "type": "string", "minLength": 5 },
+          "owner": { "enum": ["founder", "counsel", "tool"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "title", "owner", "tool", "rationale", "inputs", "gate", "deployment_allowed"],
+      "properties": {
+        "id": { "type": ["string", "null"], "pattern": "^A-\\d{3}(-R\\d?)?$" },
+        "kind": { "enum": ["assignment", "founder_action"] },
+        "title": { "type": "string", "minLength": 5 },
+        "owner": { "type": "string", "minLength": 2 },
+        "tool": { "enum": ["claude-code", "figma", "lovable", "gemini", "claude-chat", "m365-copilot", "founder"] },
+        "rationale": { "type": "string", "minLength": 10 },
+        "inputs": { "type": "array", "items": { "type": "string" } },
+        "gate": { "type": "string" },
+        "deployment_allowed": { "type": "boolean" }
+      }
+    }
+  }
+}

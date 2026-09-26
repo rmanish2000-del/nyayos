@@ -305,3 +305,16 @@ Appended, not edited: §§ 1–26 describe `main` at `6c6b478` and remain accura
 | Figma FM-A UI (U01–U21) imported | **NOT DONE** | Package not supplied and not found anywhere; A-008 OPEN |
 | Deployment / production | **NOT ALLOWED — unchanged** | FA-001 staging only; FA-002 not granted |
 | Next priority | — | Founder review and merge of the branch; FD-02 hosting decision; then wave W1 (`docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md` §7) |
+
+---
+
+## 28. Addendum — 26 September 2026 (A-044): repository-centric AI operating system
+
+| Element | Status | Where |
+|---|---|---|
+| Machine-readable project state for every tool | **VERIFIED** | [`docs/ai/`](docs/ai/README.md): `CURRENT_STATE.json`, `NEXT_TASK.json`, `DECISIONS.json`, `RISKS.json`, JSON Schemas |
+| Per-tool handoffs | **VERIFIED** | `docs/ai/tool-output/claude-code/`, `figma/`, `lovable/`, `gemini/` — one `A-nnn.md` per assignment |
+| Validator | **VERIFIED** | `scripts/ai/state.mjs check`: files exist, schema validity, derived fields in sync with the registry, Decision Log, A-032 §9 and Risk Register, last assignment recorded with a pushed commit and handoff, NEXT_TASK follows it. Runs in the required `task-gate` job |
+| Completion protocol | **REQUIRED** from A-044 onward | 1 commit · 2 push · 3 update `CURRENT_STATE` · 4 write the tool handoff · 5 update `NEXT_TASK` — then a state commit, pushed. [`CONTRIBUTING.md` §5](CONTRIBUTING.md) |
+
+The governance sources keep their authority (§ 26): the status registry for status, the Decision Log for decisions, the Founder Authorization Record for gates. `docs/ai/` summarises them for tools and is checked against them.

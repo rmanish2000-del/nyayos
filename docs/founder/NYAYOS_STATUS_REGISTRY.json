@@ -1043,6 +1043,38 @@
       "updated": "2026-09-26",
       "superseded_by": null,
       "notes": "Baseline 13765b9. Reproduced on 0001-0007: dispute owner and same-tenant editor each set disputes.status directly (1 row each); status UPDATE grant present. Migration 0008 (append-only; no table created or altered; not applied to any environment): revoke UPDATE (status) on disputes from nyayos_authenticated (title and category_label edits kept); status follows the deletion workflow only via SECURITY DEFINER trigger deletion_requests_dispute_status (pinned search_path): dispute-scope request sets deletion_requested, undo restores active unless another request is open, undo audited as deletion.undone in the same transaction; purge never sets status (complete removes the row, incomplete stays deletion_requested). Evidence: dispute_status 21/21 (fails on the baseline: reproduction), 2 negative controls (re-grant; no undo audit) detected; smoke 87/87; deletion_purge 55/55 (one A-040 assertion updated to expect the undo's status change and audit event); deletion_scope 28/28; deletion_authz 25/25; atomicity 21/21; vectors 16/16; audit concurrency matrix 5/5; purge race 3/3; Vitest 199/199; tsc, eslint 0 errors, build, schema-lint clean. Every A-032 fix listed as required before merge (§8) is now closed; minors m-2 to m-12 remain tracked, non-blocking follow-ups."
+    },
+    {
+      "id": "A-044",
+      "title": "Repository-centric AI operating system — docs/ai state, tool handoffs, validator and completion protocol",
+      "type": "governance",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — governance tooling (documentation, JSON state, Node validator, CI step; no product code, SQL or deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-029",
+        "A-032"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/ai/README.md",
+        "docs/ai/CURRENT_STATE.json",
+        "docs/ai/NEXT_TASK.json",
+        "docs/ai/DECISIONS.json",
+        "docs/ai/RISKS.json",
+        "docs/ai/schemas/current_state.schema.json",
+        "docs/ai/schemas/next_task.schema.json",
+        "docs/ai/schemas/decisions.schema.json",
+        "docs/ai/schemas/risks.schema.json",
+        "scripts/ai/state.mjs",
+        ".github/workflows/task-gate.yml",
+        "CONTRIBUTING.md"
+      ],
+      "evidence": "scripts/ai/state.mjs",
+      "updated": "2026-09-26",
+      "superseded_by": null,
+      "notes": "Baseline fc74038. docs/ai/ holds CURRENT_STATE, NEXT_TASK, DECISIONS and RISKS (JSON Schemas in docs/ai/schemas/) and tool-output/claude-code|figma|lovable|gemini handoff directories. scripts/ai/state.mjs generate rewrites the derived fields (registry counts; Decision Log D-001–D-030; A-032 §9 candidates D-031–D-036; Risk Register R01–R30 and top five); check enforces files, schema validity, derived-field sync, and that the registry's newest assignment is recorded in CURRENT_STATE with a pushed commit in history, a well-formed tool handoff and a NEXT_TASK that follows it. The check is a step of the required task-gate job (checkout with full history). Completion protocol (commit, push, CURRENT_STATE, tool handoff, NEXT_TASK) added to CONTRIBUTING §5, the PR template and the Operating System §28; each assignment ends with a work commit and a state commit. Validator negative controls (schema, stale derived field, NEXT_TASK lag, handoff/commit mismatch, commit not in history) all detected. A-042 handoff backfilled. No product code, SQL or migration changed. Assignment ID A-043 is not registered in this repository."
     }
   ]
 }

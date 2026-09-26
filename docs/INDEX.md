@@ -54,6 +54,17 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 ---
 
+## `/docs/ai` — repository-centric AI operating system (A-044)
+
+| Document | Type | Contents |
+|---|---|---|
+| [README.md](ai/README.md) | Maintainer — A-044 | Completion protocol (commit · push · CURRENT_STATE · tool handoff · NEXT_TASK), handoff format, validator rules |
+| [CURRENT_STATE.json](ai/CURRENT_STATE.json) | Maintained per assignment; `derived` generated | Branch, PR, deployment, last completed assignment with its commit and handoff, open items, registry counts |
+| [NEXT_TASK.json](ai/NEXT_TASK.json) | Maintained per assignment | Recommended next assignment (the founder issues assignments) |
+| [DECISIONS.json](ai/DECISIONS.json) | `logged`/`candidates` generated | Decision Log entries, A-032 §9 candidates, rulings given in briefs |
+| [RISKS.json](ai/RISKS.json) | `risks` generated | Risk Register rows and top five; engineering residuals |
+| [tool-output/](ai/tool-output/) | Per tool | Handoffs: `claude-code/`, `figma/`, `lovable/`, `gemini/` |
+
 ## `/docs/founder` — governance and continuity
 
 | Document | Type | Authority |

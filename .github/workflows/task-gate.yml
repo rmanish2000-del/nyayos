@@ -4,7 +4,8 @@
 #   1. the status registry validates (only CANONICAL tasks may be inputs; no cycles;
 #      CANONICAL tasks have evidence; started tasks have no unresolved planned inputs);
 #   2. the generated governance documents are in sync with the registry;
-#   3. a pull request references at least one assignment ID (A-nnn) in its body.
+#   3. a pull request references at least one assignment ID (A-nnn) in its body;
+#   4. the AI operating state (docs/ai) is valid and records the newest assignment (A-044).
 #
 # Required status check on `main` (branch protection). Job name must stay `task-gate`.
 # Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md
@@ -30,6 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # docs/ai check proves recorded commits are in history
 
       - uses: actions/setup-node@v4
         with:
@@ -40,6 +43,9 @@ jobs:
 
       - name: Generated governance documents are in sync with the registry
         run: node scripts/governance/registry.mjs generate --check
+
+      - name: AI operating state recorded (docs/ai — completion protocol)
+        run: node scripts/ai/state.mjs check
 
       - name: Pull request references an assignment ID
         if: github.event_name == 'pull_request'

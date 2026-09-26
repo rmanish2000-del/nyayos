@@ -393,5 +393,11 @@
       "A-037 Stale Output Detection V1": "REVIEW on branch",
       "next": "Contradiction Registry surfacing (needs W1 server layer and a founder decision on typed conflict kinds)"
     }
+  },
+  "ai_state": {
+    "current_state": "docs/ai/CURRENT_STATE.json",
+    "next_task": "docs/ai/NEXT_TASK.json",
+    "validator": "node scripts/ai/state.mjs check",
+    "since": "A-044"
   }
 }

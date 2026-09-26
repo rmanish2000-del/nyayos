@@ -1,0 +1,296 @@
+{
+  "$schema": "./schemas/risks.schema.json",
+  "schema_version": "1.0",
+  "source": "docs/founder/NYAYOS_RISK_REGISTER_V1.md",
+  "risks": [
+    {
+      "id": "R01",
+      "risk": "Unsupported legal/procedural claim",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "source-required generation; citation audit; refusal",
+      "trigger": "any high-impact unsupported claim"
+    },
+    {
+      "id": "R02",
+      "risk": "Cross-tenant data leakage",
+      "severity": "Critical",
+      "likelihood": "Low/unknown",
+      "control": "RLS + server authorization + signed URLs",
+      "trigger": "any unauthorized read"
+    },
+    {
+      "id": "R03",
+      "risk": "User mistakes extraction for fact",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "provenance + confirmation UI",
+      "trigger": "high correction/confusion rate"
+    },
+    {
+      "id": "R04",
+      "risk": "OCR corrupts important evidence",
+      "severity": "High",
+      "likelihood": "High",
+      "control": "confidence + source location + human confirmation",
+      "trigger": "critical-field accuracy below threshold"
+    },
+    {
+      "id": "R05",
+      "risk": "AI resolves contradiction",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "flag-only contradiction logic",
+      "trigger": "system chooses source without basis"
+    },
+    {
+      "id": "R06",
+      "risk": "Prompt injection in documents",
+      "severity": "Critical",
+      "likelihood": "High",
+      "control": "data/instruction separation; closed tools; no arbitrary code",
+      "trigger": "malicious test succeeds"
+    },
+    {
+      "id": "R07",
+      "risk": "Fabricated citation/source",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "authoritative corpus + source verification",
+      "trigger": "citation audit failure"
+    },
+    {
+      "id": "R08",
+      "risk": "False deadline",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "verified-deadline gate",
+      "trigger": "generated deadline not source-supported"
+    },
+    {
+      "id": "R09",
+      "risk": "Private case appears in public demo",
+      "severity": "Critical",
+      "likelihood": "Low",
+      "control": "separate sandbox tenant; demo fixture data",
+      "trigger": "any exposure"
+    },
+    {
+      "id": "R10",
+      "risk": "Product drifts into legal representation",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "prohibited-task controls; copy review",
+      "trigger": "autonomous legal action"
+    },
+    {
+      "id": "R11",
+      "risk": "Wrong issue classification",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "alternatives + uncertainty + human confirmation",
+      "trigger": "false classification changes user action"
+    },
+    {
+      "id": "R12",
+      "risk": "Low user activation",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "progressive disclosure; “What happened?”",
+      "trigger": "<40% pilot intake completion"
+    },
+    {
+      "id": "R13",
+      "risk": "Low willingness to pay",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "paid pilots before scale",
+      "trigger": "<10% qualified prospects accept tested paid offer"
+    },
+    {
+      "id": "R14",
+      "risk": "Individual-advocate economics fail",
+      "severity": "High",
+      "likelihood": "High",
+      "control": "business/FPO payer hypothesis",
+      "trigger": ">50% of qualified business users prefer free-only"
+    },
+    {
+      "id": "R15",
+      "risk": "Vendor/OCR outage",
+      "severity": "Medium",
+      "likelihood": "Medium",
+      "control": "provider abstraction + retry",
+      "trigger": ">5% processing failures"
+    },
+    {
+      "id": "R16",
+      "risk": "Vector retrieval is weak",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "hybrid retrieval + evaluation",
+      "trigger": "citation recall fails threshold"
+    },
+    {
+      "id": "R17",
+      "risk": "Sensitive logs reveal PII",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "structured metadata; no full case text in audit logs",
+      "trigger": "leakage in log review"
+    },
+    {
+      "id": "R18",
+      "risk": "Deletion claim is false",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "auditable deletion workflow",
+      "trigger": "active data remains accessible"
+    },
+    {
+      "id": "R19",
+      "risk": "Backup retention misunderstood",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "explicit backup policy",
+      "trigger": "user sees deleted item after policy window"
+    },
+    {
+      "id": "R20",
+      "risk": "Reviewer sees unshared dispute",
+      "severity": "Critical",
+      "likelihood": "Low",
+      "control": "explicit share grants + RLS",
+      "trigger": "unauthorized reviewer read"
+    },
+    {
+      "id": "R21",
+      "risk": "Model vendor trains on data",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "contractual/technical no-training setting",
+      "trigger": "provider policy mismatch"
+    },
+    {
+      "id": "R22",
+      "risk": "Legal source becomes stale",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "version/date/source metadata",
+      "trigger": "outdated law displayed as current"
+    },
+    {
+      "id": "R23",
+      "risk": "Consumer launch scope expands too early",
+      "severity": "High",
+      "likelihood": "High",
+      "control": "bounded category taxonomy",
+      "trigger": ">1/3 roadmap consumed by new categories"
+    },
+    {
+      "id": "R24",
+      "risk": "Architecture complexity slows validation",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "deterministic orchestration; modular providers",
+      "trigger": "security/build work dominates user tests"
+    },
+    {
+      "id": "R25",
+      "risk": "Market thesis is wrong",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "user interviews + WTP + stop/pivot gates",
+      "trigger": "no repeat pain / no payer"
+    },
+    {
+      "id": "R26",
+      "risk": "“OS” messaging returns",
+      "severity": "Medium",
+      "likelihood": "Medium",
+      "control": "product copy review",
+      "trigger": "homepage becomes platform abstraction"
+    },
+    {
+      "id": "R27",
+      "risk": "Government infrastructure makes feature redundant",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "integrate rather than compete",
+      "trigger": "users cite existing workflow as sufficient"
+    },
+    {
+      "id": "R28",
+      "risk": "Lawyer solicitation/advertising constraints",
+      "severity": "High",
+      "likelihood": "Medium",
+      "control": "legal counsel review before acquisition channel",
+      "trigger": "growth depends on restricted lead-gen"
+    },
+    {
+      "id": "R29",
+      "risk": "Real-case data contaminated by development data",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "separate environments/tenants; no default training",
+      "trigger": "private file enters test corpus"
+    },
+    {
+      "id": "R30",
+      "risk": "Export misstates source status",
+      "severity": "Critical",
+      "likelihood": "Medium",
+      "control": "export schema includes provenance/status",
+      "trigger": "exported “fact” lacks status"
+    }
+  ],
+  "top_five": [
+    "Unsupported claims",
+    "Sensitive-data leakage",
+    "Epistemic confusion",
+    "Prompt injection",
+    "Commercial validation failure"
+  ],
+  "residuals": [
+    {
+      "id": "RES-01",
+      "residual": "Object-storage (blob) deletion is not designed or implemented; the purge removes database rows including storage paths, so blob deletion must exist before any storage is provisioned.",
+      "origin": "A-040",
+      "severity": "high",
+      "owner": "founder",
+      "status": "open"
+    },
+    {
+      "id": "RES-02",
+      "residual": "Account purge keeps the personal tenant row, its name and the own membership, because retained deletion_requests and consents reference the tenant by foreign key.",
+      "origin": "A-040",
+      "severity": "medium",
+      "owner": "founder",
+      "status": "open"
+    },
+    {
+      "id": "RES-03",
+      "residual": "A-032 minor findings m-2 to m-12 remain open as tracked, non-blocking follow-ups.",
+      "origin": "A-042",
+      "severity": "low",
+      "owner": "tool",
+      "status": "open"
+    },
+    {
+      "id": "RES-04",
+      "residual": "Figma FM-A package (A-008) was never supplied; screens would be built from canonical copy without design evidence.",
+      "origin": "A-041",
+      "severity": "medium",
+      "owner": "founder",
+      "status": "open"
+    },
+    {
+      "id": "RES-05",
+      "residual": "No environment exists (FD-02 hosting undecided); no migration has been applied anywhere and legal hold remains manual configuration.",
+      "origin": "A-040",
+      "severity": "medium",
+      "owner": "founder",
+      "status": "open"
+    }
+  ]
+}

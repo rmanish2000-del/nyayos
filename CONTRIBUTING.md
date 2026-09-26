@@ -140,6 +140,18 @@ Assignment ID · Tool and **exact mode** · Purpose · Input files · Expected o
 
 **An assignment is not complete until its Evidence field points at a committed artefact.**
 
+### Completion protocol — `docs/ai/` (A-044, required for every assignment)
+
+Every tool (Claude Code, Figma, Lovable, Gemini) finishes every assignment with these five steps, in order:
+
+1. **Commit** the work (explicit paths; the task registered in the status registry).
+2. **Push** the branch.
+3. **Update [`docs/ai/CURRENT_STATE.json`](docs/ai/CURRENT_STATE.json)**: `last_assignment` records the assignment, the pushed work-commit SHA and the handoff path.
+4. **Write the tool handoff** `docs/ai/tool-output/<tool>/<A-nnn>.md`.
+5. **Update [`docs/ai/NEXT_TASK.json`](docs/ai/NEXT_TASK.json)** with the recommended next assignment.
+
+Then run `node scripts/ai/state.mjs generate` and `check`, commit the state update and push it. `task-gate` runs the same check: it fails with "assignment state not recorded" until steps 3–5 are pushed. Format and rules: [`docs/ai/README.md`](docs/ai/README.md).
+
 ### State limitations honestly
 
 Every assignment row has a **Limitations** field. Fill it in. Unverified citations, missing inputs, assumptions made, checks not run — record them. An unstated limitation becomes a false decision three months later.

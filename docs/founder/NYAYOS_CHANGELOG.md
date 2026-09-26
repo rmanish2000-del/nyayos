@@ -5,6 +5,21 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-26 — Repository-centric AI operating system (A-044)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**
+
+### Added
+
+- `docs/ai/` — `CURRENT_STATE.json`, `NEXT_TASK.json`, `DECISIONS.json`, `RISKS.json` with JSON Schemas, and per-tool handoff directories (`claude-code`, `figma`, `lovable`, `gemini`).
+- `scripts/ai/state.mjs` — `generate` (derived fields from the registry, Decision Log, A-032 §9 and Risk Register) and `check` (existence, schema validity, derived-field sync, last assignment recorded with pushed commit, handoff and NEXT_TASK).
+
+### Changed
+
+- `task-gate` runs the check (full-history checkout). Completion protocol — commit, push, update CURRENT_STATE, write the tool handoff, update NEXT_TASK — added to `CONTRIBUTING.md`, the PR template and the Operating System §28. Registry A-044 REVIEW.
+
+---
+
 ## 2026-09-26 — Dispute status server-controlled: A-032 m-1 closed (A-042)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0008` not applied to any environment.**

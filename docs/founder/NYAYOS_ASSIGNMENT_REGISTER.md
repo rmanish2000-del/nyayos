@@ -628,3 +628,21 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Status is driven only by dispute-scope requests; document and account requests leave dispute status unchanged, and their undo is not audited (pre-existing, outside m-1). `deleted` is never set in FM-A. A-032 minors m-2 to m-12 remain open as non-blocking follow-ups |
 | **Rollback** | `git revert` the A-042 commit; disposable databases only: the statements in the `0008` header |
 | **Handoff back to M365 Copilot** | Record A-042 REVIEW; every A-032 fix required before merge is closed; next is the founder's merge-readiness review |
+
+---
+
+### A-044 — Repository-centric AI operating system
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-044 |
+| **Owner / tool** | Claude Code — governance tooling |
+| **Purpose** | Give every tool one repository-held state (`docs/ai/`), per-tool handoffs, validators, and a mandatory completion protocol |
+| **Gate** | FA-001. No deployment, no production, no merge |
+| **Deployment allowed** | **NOT ALLOWED.** Repository files and a CI step only |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | `docs/ai/` (`CURRENT_STATE.json`, `NEXT_TASK.json`, `DECISIONS.json`, `RISKS.json`, `schemas/`, `tool-output/claude-code|figma|lovable|gemini/`), `scripts/ai/state.mjs` (generate, check), check wired into `task-gate`, completion protocol in `CONTRIBUTING.md` §5, PR template and Operating System §28 |
+| **Evidence** | `node scripts/ai/state.mjs check` clean after the state commit; five negative controls detected; registry validates; task-gate on PR #2 |
+| **Limitations** | Commit and push are enforced indirectly (the recorded SHA must be in history and the handoff says pushed); the validator cannot prove a push to a specific remote. Handoff content quality is not checked beyond required fields and sections. Registry `tool` stays free text; `docs/ai` uses four tool slugs. A-043 is not registered in this repository. The A-042 handoff is backfilled |
+| **Rollback** | `git revert` the A-044 work and state commits |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044.md` |

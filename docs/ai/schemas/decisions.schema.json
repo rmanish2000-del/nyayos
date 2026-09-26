@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "docs/ai/schemas/decisions.schema.json",
+  "title": "NyayOS DECISIONS",
+  "description": "'logged' is regenerated from docs/founder/NYAYOS_DECISION_LOG_V1.md and 'candidates' from the A-032 review §9; 'rulings' records founder rulings given in assignment briefs that are not yet in the decision log.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "sources", "logged", "candidates", "rulings"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0" },
+    "sources": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "logged": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "log_status"],
+        "properties": {
+          "id": { "$ref": "#/$defs/decision_id" },
+          "title": { "type": "string", "minLength": 1 },
+          "log_status": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "question"],
+        "properties": {
+          "id": { "$ref": "#/$defs/decision_id" },
+          "question": { "type": "string", "minLength": 5 }
+        }
+      }
+    },
+    "rulings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "ruling", "source", "in_decision_log"],
+        "properties": {
+          "id": { "$ref": "#/$defs/decision_id" },
+          "ruling": { "type": "string", "minLength": 10 },
+          "source": { "type": "string", "minLength": 3 },
+          "in_decision_log": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "decision_id": { "type": "string", "pattern": "^D-\\d{3}$" }
+  }
+}

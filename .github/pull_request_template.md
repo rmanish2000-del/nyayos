@@ -43,6 +43,13 @@ in the title or body. Keep the ID here.
 - [ ] `NYAYOS_CHANGELOG.md` — entry (hand-written; status transitions are also auto-appended)
 - [ ] `NYAYOS_FOUNDER_DASHBOARD.md` — if phase, stage, risks or next actions changed
 
+## AI operating state (`docs/ai/`, completion protocol)
+
+- [ ] Work committed and pushed; then `CURRENT_STATE.json` records this assignment and the pushed work-commit SHA
+- [ ] Tool handoff written: `docs/ai/tool-output/<tool>/<A-nnn>.md`
+- [ ] `NEXT_TASK.json` updated (`after` = this assignment)
+- [ ] `node scripts/ai/state.mjs generate` and `check` run; state commit pushed
+
 ## Evidence
 
 <!-- Links: run URLs, screenshots, review sections. "It works" is not evidence. -->

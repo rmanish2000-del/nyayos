@@ -1,0 +1,21 @@
+{
+  "$schema": "./schemas/next_task.schema.json",
+  "schema_version": "1.0",
+  "updated": "2026-09-26",
+  "after": "A-042",
+  "recommended": {
+    "id": null,
+    "kind": "founder_action",
+    "title": "Merge-readiness review of draft PR #2 (FM-A foundation)",
+    "owner": "Founder",
+    "tool": "founder",
+    "rationale": "Every A-032 fix required before merge is closed (A-033, A-033-R, A-038, A-039, A-040, A-041, A-042). The branch holds eleven REVIEW assignments; merging makes the foundation canonical and unblocks wave W1.",
+    "inputs": ["docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md", "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md", "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md"],
+    "gate": "Founder decision; merge is the founder's action",
+    "deployment_allowed": false
+  },
+  "alternatives": [],
+  "blocked_by": [
+    { "item": "D-035 and D-036 founder decisions", "owner": "founder" }
+  ]
+}
