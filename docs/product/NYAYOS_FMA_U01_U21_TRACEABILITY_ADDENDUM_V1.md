@@ -26,7 +26,7 @@ Only these six status values are used.
 | Status | Meaning in this addendum |
 |---|---|
 | **READY** | The complete user-visible behaviour and every required supporting function exist and are evidenced end to end. **No screen qualifies at the baseline** |
-| **PARTIAL** | A NyayOS component renders part of the screen's required content or states, but it runs on local mock data and is not wired to the domain, a server function or the database |
+| **PARTIAL** | A NyayOS component renders part or all of the screen's required content or states, but it runs on local mock or synthetic data and is not wired to a server function or the database (A-048: A-043 screens use the domain layer's types and copy, so "domain" was dropped from this definition) |
 | **MISSING** | No NyayOS component renders any of the screen's required content or states, even where domain or database foundations exist |
 | **DEFERRED** | Deliberately postponed by the Scope Sheet or a founder decision (used for sub-elements, e.g. a feature flag that is off in FM-A) |
 | **NOT APPLICABLE** | The item does not belong to FM-A (used in the cross-map for out-of-scope material) |
@@ -57,29 +57,29 @@ Each canonical screen appears exactly once. Titles are the Scope Sheet §6 title
 
 | ID | Screen (Scope Sheet §6) | Status | Furthest layer reached | Primary repository evidence |
 |---|---|---|---|---|
-| U01 | Sign-up / sign-in / OTP | MISSING | Domain + database foundation | `identity.ts`; `sign_up_personal_tenant` |
+| U01 | Sign-up / sign-in / OTP | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/login-screen.tsx`; `identity.ts`; `sign_up_personal_tenant` |
 | U02 | Consent notice | MISSING | Domain + database foundation | `consent.ts`; `consents` RLS |
-| U03 | Dashboard | MISSING | Domain + database foundation | `dispute.ts`; `disputes_select_member` |
-| U04 | New dispute — "What happened?" | MISSING | Domain + database foundation | `create_dispute`; `what_happened_*` copy |
-| U05 | Intake | MISSING | Domain foundation | `nextQuestion`; `intake_questions` |
-| U06 | Evidence locker | PARTIAL | Prototype + domain + database foundation | `evidence-workspace.tsx`; `evidence.ts`; `find_duplicate_versions` |
-| U07 | Document viewer (with manual fact linking) | MISSING | Domain + database foundation | `DocumentLocation`; `document_locations` |
-| U08 | Fact list / confirmation | PARTIAL | Prototype + domain + database foundation | `fact-card.tsx`; `proposal.ts`; `propose_change` / `decide_proposal` |
-| U09 | Timeline | PARTIAL | Prototype + domain + database foundation | `timeline-event-card.tsx`; `DateAssertion` |
+| U03 | Dashboard | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/dispute-list-screen.tsx`; `dispute.ts`; `disputes_select_member` |
+| U04 | New dispute — "What happened?" | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/what-happened-screen.tsx`; `create_dispute`; `what_happened_*` copy |
+| U05 | Intake | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/intake-screen.tsx`; `nextQuestion`; `intake_questions` |
+| U06 | Evidence locker | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/evidence-locker-screen.tsx`; `evidence-workspace.tsx`; `evidence.ts`; `find_duplicate_versions` |
+| U07 | Document viewer (with manual fact linking) | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/document-viewer-screen.tsx`; `DocumentLocation`; `document_locations` |
+| U08 | Fact list / confirmation | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/fact-review-screen.tsx`; `fact-card.tsx`; `proposal.ts`; `propose_change` / `decide_proposal` |
+| U09 | Timeline | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/timeline-screen.tsx`; `timeline-event-card.tsx`; `DateAssertion` |
 | U10 | Parties | PARTIAL | Prototype + domain + database foundation | `party-card.tsx`; `EntitySourceForm` |
 | U11 | Evidence map | MISSING | Domain + database foundation | `validateEvidenceRelation`; `evidence_relations` |
 | U12 | Information to review (contradictions) | MISSING | Domain + database foundation | `validateContradiction`; `contradictions` |
 | U13 | What may still be useful (gaps) | MISSING | Domain + database foundation | `MissingEvidence`; `missing_evidence` |
 | U14 | File label (issue) | MISSING | Domain + database foundation | `Issue`; `issue_label_disclaimer` |
 | U15 | Next steps (user-entered) | MISSING | Domain + database foundation | `NextStep`; `next_step_date_label` |
-| U16 | Export preview / privacy check | MISSING | Domain foundation | `buildExportManifest`; `EXPORT_SECTIONS` |
-| U17 | Export result and integrity manifest | MISSING | Domain + database foundation; A-037 notice component not mounted | `ExportManifest`; `export_staleness`; `stale-output-notice.tsx` |
+| U16 | Export preview / privacy check | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/export-screens.tsx`; `buildExportManifest`; `EXPORT_SECTIONS` |
+| U17 | Export result and integrity manifest | PARTIAL | A-043 UI on synthetic fixtures + domain + database foundation | `app/src/components/mvp/screens/export-screens.tsx`; `ExportManifest`; `export_staleness`; `stale-output-notice.tsx` |
 | U18 | Delete flows | MISSING | Domain + database foundation, incl. verified purge worker | `deletion.ts`; `request_deletion`; `enumerate_deletion_scope`; `purge_deletion_request` |
 | U19 | My activity | MISSING | Domain + database foundation | `myActivity`; `audit_select_own_actions` |
 | U20 | Account and language settings; MFA enrolment | MISSING | Domain + database foundation | `Profile`; `Session` |
 | U21 | Trust & safety page | MISSING | Domain foundation (copy only) | `trust_ai_assists` copy |
 
-**Summary: READY 0 · PARTIAL 4 (U06, U08, U09, U10) · MISSING 17 · DEFERRED 0 · NOT APPLICABLE 0 · UNVERIFIED 0** at screen level. DEFERRED and UNVERIFIED appear on sub-elements in §4 and §5.
+**Summary (rebaselined against A-043 by A-048, 26 Sep 2026): READY 0 · PARTIAL 11 (U01, U03, U04, U05, U06, U07, U08, U09, U10, U16, U17) · MISSING 10 · DEFERRED 0 · NOT APPLICABLE 0 · UNVERIFIED 0** at screen level. A-041's original count was PARTIAL 4 · MISSING 17 (§10). DEFERRED and UNVERIFIED appear on sub-elements in §4 and §5.
 
 **Reconciliation with the A-030 gap report.** A-030 reported PARTIAL 5, counting U03 as PARTIAL because the navigation shell exists. Under the stricter definition in §2, `app-shell.tsx` renders none of U03's required states ("empty, active disputes") or copy ("Start a dispute"), so U03 is MISSING here. No other status changed.
 
@@ -94,17 +94,17 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 | Field | Evidence |
 |---|---|
 | Purpose | Authenticate a user and, on first sign-up, create their personal tenant (F01, F02) |
-| Expected user action | Sign up or sign in (email/password + OTP per F01); switch language; follow the privacy notice link |
-| Code / component | **None.** No NyayOS screen. The generic `app/src/components/ui/input-otp.tsx` primitive exists but is not used by any NyayOS component or route. Domain: `app/src/domain/identity.ts` (`Session`, `isSessionActive`, `revokeSession`, `createPersonalTenantOnSignUp`); `app/src/domain/config.ts` (`otp_max_attempts` [PROV]) |
+| Expected user action | Sign in with **Google** (MVP primary method, founder decision D-035, 26 Sep 2026; supersedes F01's email/password + OTP for the MVP); switch language; follow the privacy notice link |
+| Code / component | **A-043 (Lovable):** `app/src/routes/login.tsx` → `app/src/components/mvp/screens/login-screen.tsx` — Google sign-in **entry UI only, not connected** (no auth provider; FD-02): seeded synthetic personas stand in; shows `consent_no_ai`. Founder decision D-035 (26 Sep 2026) makes Google Login the MVP primary sign-in method. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **None.** No NyayOS screen. The generic `app/src/components/ui/input-otp.tsx` primitive exists but is not used by any NyayOS component or route. Domain: `app/src/domain/identity.ts` (`Session`, `isSessionActive`, `revokeSession`, `createPersonalTenantOnSignUp`); `app/src/domain/config.ts` (`otp_max_attempts` [PROV]) |
 | API / server dependency | A01 `signUp` / `signIn` / `signOut` / `revokeSessions` — **missing** (no auth provider; FD-02 hosting undecided). F19 rate limits — **missing** |
 | Database dependency | `profiles`, `tenants`, `tenant_memberships`; SQL `sign_up_personal_tenant` (`db/migrations/0001_fma_foundation.sql`, audited in `db/migrations/0005_audit_contract_and_atomicity.sql`) |
 | Security controls | S1 personal tenant boundary; S13 rate limits and server-side secrets (not implemented); no account-existence disclosure (not implemented); tenant type immutable (trigger) |
-| Status | **MISSING** — domain and database foundation only |
-| Test evidence | `app/tests/domain/dispute.test.ts` ("Sign-up creates exactly one personal tenant"); smoke `sign_up_A`, `sign_up_idempotent`, `sign_up_B`, `tenant_type_immutable` |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: MISSING — domain and database foundation only) |
+| Test evidence | `app/tests/mvp.test.tsx` ("Google login entry flow (U01)"; 233/233 in CI on PR #2); `app/tests/domain/dispute.test.ts` ("Sign-up creates exactly one personal tenant"); smoke `sign_up_A`, `sign_up_idempotent`, `sign_up_B`, `tenant_type_immutable` |
 | Copy keys | None exist for U01; the privacy-notice link and language switch have no copy or component |
 | Design evidence | Deck U01 Sign In + U02 OTP Verification; Figma Brief V2 has no sign-in section; Figma prototype UNVERIFIED (not supplied) |
 | Deferred work | Auth provider and OTP delivery (wave W1/W2 of the A-030 gap report); rate-limit implementation |
-| Contradiction / limitation | Deck specifies mobile-number OTP only and "no password storage"; Scope Sheet F01 specifies email/password + OTP. Scope Sheet governs (§6, C-01) |
+| Contradiction / limitation | Resolved by D-035 (26 Sep 2026): Google Login is the MVP primary sign-in, replacing both the deck's mobile OTP and F01's email/password + OTP (§6, C-01). A-043 shows the Google entry only; no provider is connected |
 
 ### U02 — Consent notice
 
@@ -129,12 +129,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | List the user's disputes and offer "Start a dispute" |
 | Expected user action | Open a dispute; start a new dispute |
-| Code / component | **No dashboard.** `app/src/components/nyayos/app-shell.tsx` is the showcase's navigation shell (sections Tokens, Components, Facts, Evidence, Parties, Navigation, Access). `app/src/components/nyayos/readiness-indicator.tsx` is a percentage primitive. Domain: `app/src/domain/dispute.ts` (`Dispute`), `app/src/domain/authz.ts` (`isDisputeMember`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.index.tsx` → `app/src/components/mvp/screens/dispute-list-screen.tsx` — "Your disputes" list with the empty state and "Start a dispute" on synthetic fixtures; the wider dashboard is out of A-043 scope. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **No dashboard.** `app/src/components/nyayos/app-shell.tsx` is the showcase's navigation shell (sections Tokens, Components, Facts, Evidence, Parties, Navigation, Access). `app/src/components/nyayos/readiness-indicator.tsx` is a percentage primitive. Domain: `app/src/domain/dispute.ts` (`Dispute`), `app/src/domain/authz.ts` (`isDisputeMember`) |
 | API / server dependency | Dispute list and A08 `getDisputeFile` — **missing** |
 | Database dependency | `disputes` (`disputes_select_member`), `dispute_roles`; SQL `is_dispute_member` |
 | Security controls | S1 tenant isolation; only members read a dispute |
-| Status | **MISSING** (reconciled from A-030 PARTIAL, see §3) |
-| Test evidence | `app/tests/foundation.test.tsx` (`ReadinessIndicator` only; the shell has no test); `app/tests/domain/authz.test.ts`; smoke `B_sees_no_disputes`, `is_dispute_member_owner` |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: MISSING (reconciled from A-030 PARTIAL, see §3)) |
+| Test evidence | `app/tests/mvp.test.tsx` ("dispute list"; 233/233 in CI on PR #2); `app/tests/foundation.test.tsx` (`ReadinessIndicator` only; the shell has no test); `app/tests/domain/authz.test.ts`; smoke `B_sees_no_disputes`, `is_dispute_member_owner` |
 | Copy keys | None; "Start a dispute" has no key |
 | Design evidence | Deck U04 Dashboard; Figma Brief V2 §2 Dashboard; prototype UNVERIFIED |
 | Deferred work | Wave W2 routes |
@@ -146,12 +146,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | Create a dispute and store the user's own account verbatim (F11) |
 | Expected user action | Name the dispute; describe the problem in their own words; save |
-| Code / component | **None.** Domain: `app/src/domain/dispute.ts` (`Dispute`, `DisputeStatement`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.new.tsx` → `app/src/components/mvp/screens/what-happened-screen.tsx` — headline and help copy (`what_happened_headline`, `what_happened_help`), validation, save to the local store. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **None.** Domain: `app/src/domain/dispute.ts` (`Dispute`, `DisputeStatement`) |
 | API / server dependency | A03 `createDispute` exists as SQL `create_dispute`; A04 `addStatement` is available through `propose_change` with target `dispute_statement`. No application server function |
 | Database dependency | `disputes`, `dispute_roles`, `dispute_statements`; SQL `create_dispute`, `propose_change`, `decide_proposal` (`0001`, re-issued with in-transaction audit in `0005`) |
 | Security controls | S1, S3 single-writer; audit atomic with the write (A-038, D-031) |
-| Status | **MISSING** |
-| Test evidence | Smoke `create_dispute`, `owner_role_row`, `A038_server_writes_are_audited`; `db/tests/audit_atomicity_0001.sql` |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: MISSING) |
+| Test evidence | `app/tests/mvp.test.tsx` ("U04 What happened"; 233/233 in CI on PR #2); Smoke `create_dispute`, `owner_role_row`, `A038_server_writes_are_audited`; `db/tests/audit_atomicity_0001.sql` |
 | Copy keys | `what_happened_headline`, `what_happened_help` |
 | Design evidence | Deck U05 Create Matter + U06 What Happened; Figma Brief V2 §2 New dispute; prototype UNVERIFIED |
 | Deferred work | Wave W2 routes |
@@ -163,12 +163,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | Deterministic, one-question-at-a-time intake with "why we ask", "I don't know", save and exit (F12) |
 | Expected user action | Answer, skip with "I don't know", go back, save and exit |
-| Code / component | **None.** Domain: `app/src/domain/dispute.ts` (`IntakeQuestion`, `BranchRule`, `nextQuestion`, `DONT_KNOW`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.$disputeId.intake.tsx` → `app/src/components/mvp/screens/intake-screen.tsx` — one question at a time with `intake_dont_know` and `intake_why_we_ask`; questions are synthetic. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **None.** Domain: `app/src/domain/dispute.ts` (`IntakeQuestion`, `BranchRule`, `nextQuestion`, `DONT_KNOW`) |
 | API / server dependency | A05 `getNextQuestion` — **missing** |
 | Database dependency | `intake_questions` (`intake_questions_select_all`); answers stored as `dispute_statements` |
 | Security controls | S3; no model call (FN-02); no statute names in questions (copy rule) |
-| Status | **MISSING** |
-| Test evidence | `app/tests/domain/dispute.test.ts` ("Deterministic intake … no model call, 'I don't know' preserved") |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: MISSING) |
+| Test evidence | `app/tests/mvp.test.tsx` ("U05 Intake"; 233/233 in CI on PR #2); `app/tests/domain/dispute.test.ts` ("Deterministic intake … no model call, 'I don't know' preserved") |
 | Copy keys | `intake_dont_know`, `intake_why_we_ask` |
 | Design evidence | Deck U07 Deterministic Intake; Figma Brief V2 §3 Intake screen; prototype UNVERIFIED |
 | Deferred work | Question set content: **DEFERRED** until FM-0 learnings (F12; A-030 gap report). Dynamic AI questions: **DEFERRED** (`ff_ai_questions` off) |
@@ -180,12 +180,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | Upload and hold the dispute's documents with label, type, status, pages, upload date and verification state (F06–F08) |
 | Expected user action | Upload a file; watch its state (uploading, scanning, rejected, ready); label, filter and open documents |
-| Code / component | **Prototype:** `app/src/components/nyayos/evidence-workspace.tsx` (screens `upload` and `locker`; sample data `INITIAL_EVIDENCE`; client-side extension and size checks only) and `app/src/components/nyayos/evidence-card.tsx` (A-036 optional `duplicateOf` chip). Shown on the showcase "Evidence" section. **Domain:** `app/src/domain/evidence.ts` (`QuarantineUpload`, `Document`, `DocumentVersion`, `acceptUpload`, `sniffMime`, `transitionUpload`, `replaceDocument`, `assertVersionImmutable`), `app/src/domain/duplicate.ts` (`assessDuplicate`, `findDuplicateVersions`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.$disputeId.evidence.tsx` → `app/src/components/mvp/screens/evidence-locker-screen.tsx` — file selection with type checks and SHA-256 fingerprints computed in the browser; nothing is uploaded, stored or scanned. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **Prototype:** `app/src/components/nyayos/evidence-workspace.tsx` (screens `upload` and `locker`; sample data `INITIAL_EVIDENCE`; client-side extension and size checks only) and `app/src/components/nyayos/evidence-card.tsx` (A-036 optional `duplicateOf` chip). Shown on the showcase "Evidence" section. **Domain:** `app/src/domain/evidence.ts` (`QuarantineUpload`, `Document`, `DocumentVersion`, `acceptUpload`, `sniffMime`, `transitionUpload`, `replaceDocument`, `assertVersionImmutable`), `app/src/domain/duplicate.ts` (`assessDuplicate`, `findDuplicateVersions`) |
 | API / server dependency | A09 `requestUpload`, A10 `completeUpload`, A11 scan worker, A12 promote, A13 reject, A15 `replaceDocument` — **all missing**. No storage bucket (FD-02) and no scan provider (FD-03) |
 | Database dependency | `quarantine_uploads`, `documents`, `document_versions` (write-once trigger), `custody_events`, `jobs`; SQL `find_duplicate_versions` (`db/migrations/0002_duplicate_lookup.sql`) |
 | Security controls | S5 write-once originals; S6 signed URLs (not implemented); SEC-HASH, SEC-UPL rules in the domain; duplicate lookup tenant-scoped and informational (A-036) |
-| Status | **PARTIAL** — prototype and foundations; nothing uploads, stores or scans a real file |
-| Test evidence | `app/tests/evidence.test.tsx` (`EvidenceCard`, "Evidence screens"); `app/tests/domain/evidence.test.ts`; `app/tests/domain/duplicate.test.ts`; smoke `DUP_*` (8 checks) |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: PARTIAL — prototype and foundations; nothing uploads, stores or scans a real file) |
+| Test evidence | `app/tests/mvp.test.tsx` ("U06 Evidence locker"; 233/233 in CI on PR #2); `app/tests/evidence.test.tsx` (`EvidenceCard`, "Evidence screens"); `app/tests/domain/evidence.test.ts`; `app/tests/domain/duplicate.test.ts`; smoke `DUP_*` (8 checks) |
 | Copy keys | `duplicate_detected` |
 | Design evidence | Deck U08 Evidence Locker + U09 Upload; Figma Brief V2 §4; [A-024 evidence conformance review](../design/NYAYOS_SPRINT3_EVIDENCE_CONFORMANCE_REVIEW_A024.md); prototype UNVERIFIED |
 | Deferred work | DOCX viewing (`ff_docx` off): **DEFERRED** |
@@ -197,12 +197,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | Read a stored document page by page and mark the page a fact comes from (F09, F10) |
 | Expected user action | Page through a document; enter link-a-fact mode; mark the source page |
-| Code / component | **None.** Domain: `app/src/domain/evidence.ts` (`DocumentVersion`, `DocumentLocation`, `Annotation`, `signedUrlTtlSeconds`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.$disputeId.documents.$documentId.tsx` → `app/src/components/mvp/screens/document-viewer-screen.tsx` — viewer states and link-a-fact mode with `mark_source_page`; synthetic documents. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **None.** Domain: `app/src/domain/evidence.ts` (`DocumentVersion`, `DocumentLocation`, `Annotation`, `signedUrlTtlSeconds`) |
 | API / server dependency | A14 `getDocumentUrl`, A16 `addLocation` / `annotate` — **missing** |
 | Database dependency | `document_versions`, `document_locations`, `annotations` |
 | Security controls | S6 short-TTL signed URLs (`signed_url_view_ttl_seconds` [PROV]); read-only rendering; S5 originals never altered |
-| Status | **MISSING** |
-| Test evidence | `app/tests/domain/evidence.test.ts` (write-once versions); no viewer test |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: MISSING) |
+| Test evidence | `app/tests/mvp.test.tsx` ("U07 Document viewer"; 233/233 in CI on PR #2); `app/tests/domain/evidence.test.ts` (write-once versions); no viewer test |
 | Copy keys | `mark_source_page` |
 | Design evidence | Deck U10 Document Viewer + U11 Fact Linking (source-page part); Figma Brief V2 has no viewer section; prototype UNVERIFIED |
 | Deferred work | DOCX (`ff_docx` off): **DEFERRED**; OCR-derived locations replaced by manual linking (F10) |
@@ -214,12 +214,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | Show every fact with source and status more prominent than the value; let the user confirm, correct, mark uncertain or not relevant (F13–F15) |
 | Expected user action | Confirm, mark uncertain, mark not relevant, correct with an optional reason, open the source |
-| Code / component | **Prototype:** `app/src/components/nyayos/fact-card.tsx`, `source-panel.tsx`, `status-chip.tsx`, `confidence-band.tsx`, `inline-correction-input.tsx`, `source-badge.tsx`, `date-badge.tsx` (all under `app/src/components/nyayos/`), rendered with static sample facts on the showcase "Facts" section. **Domain:** `app/src/domain/proposal.ts` (`proposeChange`, `decideProposal`, `ownerChange`, `buildVersionChain`, `reconcileHistory`), `app/src/domain/dispute.ts` (`Provenance`, `isProvenanceComplete`), `app/src/domain/enums.ts` (`VERIFICATION_STATUSES`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.$disputeId.facts.tsx` → `app/src/components/mvp/screens/fact-review-screen.tsx` — fact list with pending, confirmed, corrected, uncertain and not-relevant states, sources, and `contradiction_neutral` copy; confirmations stay in the local store. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **Prototype:** `app/src/components/nyayos/fact-card.tsx`, `source-panel.tsx`, `status-chip.tsx`, `confidence-band.tsx`, `inline-correction-input.tsx`, `source-badge.tsx`, `date-badge.tsx` (all under `app/src/components/nyayos/`), rendered with static sample facts on the showcase "Facts" section. **Domain:** `app/src/domain/proposal.ts` (`proposeChange`, `decideProposal`, `ownerChange`, `buildVersionChain`, `reconcileHistory`), `app/src/domain/dispute.ts` (`Provenance`, `isProvenanceComplete`), `app/src/domain/enums.ts` (`VERIFICATION_STATUSES`) |
 | API / server dependency | A06 `proposeChange` and A07 `decideProposal` exist as SQL `propose_change` / `decide_proposal`; A08 `getDisputeFile` — **missing**. The Fact Card is not wired to proposals |
 | Database dependency | Canonical tables (`events`, `propositions`, `evidence_items`, …), `proposals`, `user_corrections` (append-only); no authenticated write grant on canonical tables |
 | Security controls | S3 single writer; M-4 provenance guards (`created_by` server-set, `ai_extraction` refused, `source_ref` shape); correction history immutable |
-| Status | **PARTIAL** — conforming card prototype (A-021/A-022); no list screen; not wired |
-| Test evidence | `app/tests/fact-card.test.tsx`; `app/tests/foundation.test.tsx`; `app/tests/domain/proposal.test.ts`; smoke `proposal_pending`, `proposal_accepted`, `correction_v1_prev_null`, `correction_v2_prev_has_old_text`, `direct_update_denied`, `decide_twice_refused`, `no_authenticated_write_grant_on_canonical`, `M4_*` |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: PARTIAL — conforming card prototype (A-021/A-022); no list screen; not wired) |
+| Test evidence | `app/tests/mvp.test.tsx` ("U08 Fact review"; 233/233 in CI on PR #2); `app/tests/fact-card.test.tsx`; `app/tests/foundation.test.tsx`; `app/tests/domain/proposal.test.ts`; smoke `proposal_pending`, `proposal_accepted`, `correction_v1_prev_null`, `correction_v2_prev_has_old_text`, `direct_update_denied`, `decide_twice_refused`, `no_authenticated_write_grant_on_canonical`, `M4_*` |
 | Copy keys | None specific; status labels are component strings |
 | Design evidence | [A-021 Fact Card conformance review](../design/NYAYOS_FACT_CARD_CONFORMANCE_REVIEW_A021.md); deck U11–U14; Figma Brief V2 §5 Fact confirmation; prototype UNVERIFIED |
 | Deferred work | A-021 item 4 (contradiction actions on the card) belongs to U12 |
@@ -231,12 +231,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | Order events with date precision visible: exact, approximate, inferred, unknown, conflicting |
 | Expected user action | Read the chronology; open an event's source; set or adjust a date |
-| Code / component | **Prototype:** `app/src/components/nyayos/timeline-event-card.tsx`, `date-badge.tsx`, and the `timeline` screen of `parties-timeline-workspace.tsx` (sample data `INITIAL_EVENTS`). **Domain:** `app/src/domain/dispute.ts` (`Event`, `DateAssertion`, `markConflictingDates`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.$disputeId.timeline.tsx` → `app/src/components/mvp/screens/timeline-screen.tsx` — exact, approximate, inferred, unknown and conflicting dates; date required unless unknown. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **Prototype:** `app/src/components/nyayos/timeline-event-card.tsx`, `date-badge.tsx`, and the `timeline` screen of `parties-timeline-workspace.tsx` (sample data `INITIAL_EVENTS`). **Domain:** `app/src/domain/dispute.ts` (`Event`, `DateAssertion`, `markConflictingDates`) |
 | API / server dependency | A08 — **missing**; date changes go through A06/A07 (SQL exists) |
 | Database dependency | `events`, `date_assertions` |
 | Security controls | S3; inferred dates never styled as exact (copy rule) |
-| Status | **PARTIAL** |
-| Test evidence | `app/tests/parties-timeline.test.tsx` (`TimelineEventCard`, workspace); `app/tests/domain/dispute.test.ts` (canonical item rules) |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: PARTIAL) |
+| Test evidence | `app/tests/mvp.test.tsx` ("U09 Timeline"; 233/233 in CI on PR #2); `app/tests/parties-timeline.test.tsx` (`TimelineEventCard`, workspace); `app/tests/domain/dispute.test.ts` (canonical item rules) |
 | Copy keys | None specific |
 | Design evidence | Deck U15 Timeline; Figma Brief V2 §6 Timeline; prototype UNVERIFIED |
 | Deferred work | Wiring to `date_assertions` (A-034 gap analysis item 8) |
@@ -350,12 +350,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | List exactly what the export will contain before it is generated |
 | Expected user action | Review contents; generate |
-| Code / component | **None.** Domain: `app/src/domain/export.ts` (`buildExportManifest`, which records omissions), `app/src/domain/enums.ts` (`EXPORT_SECTIONS`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.$disputeId.export.index.tsx` → `app/src/components/mvp/screens/export-screens.tsx` — lists exactly what the export will contain before generation. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). **None.** Domain: `app/src/domain/export.ts` (`buildExportManifest`, which records omissions), `app/src/domain/enums.ts` (`EXPORT_SECTIONS`) |
 | API / server dependency | A19 `previewExport` — **missing** |
 | Database dependency | Reads the dispute file; no export row until generation |
 | Security controls | Export consent purpose (S8); owner/editor only |
-| Status | **MISSING** |
-| Test evidence | `app/tests/domain/export-deletion.test.ts` ("Export manifest (F16 …)") |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: MISSING) |
+| Test evidence | `app/tests/mvp.test.tsx` ("U16/U17 Export"; 233/233 in CI on PR #2); `app/tests/domain/export-deletion.test.ts` ("Export manifest (F16 …)") |
 | Copy keys | None specific |
 | Design evidence | Deck U20 Export Centre; Figma Brief V2 §16 Export center; prototype UNVERIFIED |
 | Deferred work | Wave W4 |
@@ -367,12 +367,12 @@ Paths are repository-relative. "Copy keys" are keys of `REQUIRED_COPY` in `app/s
 |---|---|
 | Purpose | Download the export; view the manifest, integrity scope statement, "No AI was used" statement, version and timestamp |
 | Expected user action | Download; view the manifest; see whether the export is out of date (A-037) |
-| Code / component | `app/src/components/nyayos/stale-output-notice.tsx` (A-037 stale-output warning; informational; tested; **not mounted on any route**). Domain: `app/src/domain/export.ts` (`ExportManifest`, `verifyManifestAgainstStored`, `NO_AI_STATEMENT_EN`, `INTEGRITY_SCOPE_STATEMENT_EN` and Hindi twins), `app/src/domain/staleness.ts` (`assessOutputStaleness`) |
+| Code / component | **A-043 (Lovable):** `app/src/routes/disputes.$disputeId.export.result.tsx` → `app/src/components/mvp/screens/export-screens.tsx` — result with the integrity scope statement and a JSON integrity manifest; no printable case file. Model: `app/src/mvp/store.tsx`, `app/src/mvp/fixtures.ts` (synthetic data only). `app/src/components/nyayos/stale-output-notice.tsx` (A-037 stale-output warning; informational; tested; **not mounted on any route**). Domain: `app/src/domain/export.ts` (`ExportManifest`, `verifyManifestAgainstStored`, `NO_AI_STATEMENT_EN`, `INTEGRITY_SCOPE_STATEMENT_EN` and Hindi twins), `app/src/domain/staleness.ts` (`assessOutputStaleness`) |
 | API / server dependency | A20 `generateExport`, A21 `getExportUrl`, A22 `deleteExport` — **missing**; staleness is SQL `export_staleness` (`db/migrations/0003_export_staleness.sql`) |
 | Database dependency | `exports`, `export_manifests` (member read policies) |
 | Security controls | Manifest hash in the audit chain (planned in A20); integrity statement minimal pending counsel (OL-08); staleness check read-only and scoped |
-| Status | **MISSING** — required U17 content has no component; the A-037 notice is an extra affordance, not the screen |
-| Test evidence | `app/tests/domain/export-deletion.test.ts`; `app/tests/domain/staleness.test.ts`; `app/tests/stale-output-notice.test.tsx`; smoke `STALE_*` (13 checks) |
+| Status | **PARTIAL** — A-043 UI on synthetic fixtures; no server function, auth provider or database connection (rebaselined by A-048; A-041 recorded: MISSING — required U17 content has no component; the A-037 notice is an extra affordance, not the screen) |
+| Test evidence | `app/tests/mvp.test.tsx` ("U16/U17 Export"; 233/233 in CI on PR #2); `app/tests/domain/export-deletion.test.ts`; `app/tests/domain/staleness.test.ts`; `app/tests/stale-output-notice.test.tsx`; smoke `STALE_*` (13 checks) |
 | Copy keys | `export_no_ai`, `stale_output_title`, `stale_output_stale`, `stale_output_unknown`, `stale_output_unreadable`, `stale_output_unchanged`, `stale_output_review` |
 | Design evidence | Deck U20 Export Centre; Figma Brief V2 §16 (footer conflicts, §6, C-15); prototype UNVERIFIED |
 | Deferred work | Export storage and download (depends on FD-02) |
@@ -538,14 +538,14 @@ Source: [NYAYOS_FIGMA_BRIEF_V2.md](../design/NYAYOS_FIGMA_BRIEF_V2.md). The brie
 
 ## 6. Content conflicts between sources
 
-The Scope Sheet governs every row. "Not adopted" means the other source's requirement is not part of FM-A and nothing in the repository implements it. A founder who wants to adopt one changes the Scope Sheet first. Candidate decision D-035 (A-032 §9) covers C-01 to C-05.
+The Scope Sheet governs every row. "Not adopted" means the other source's requirement is not part of FM-A and nothing in the repository implements it. A founder who wants to adopt one changes the Scope Sheet first. D-035 and D-036 were decided on 26 Sep 2026 for C-01 (Google Login) and C-04 (content-free tombstone) and ratify Scope Sheet numbering; C-02, C-03 and C-05 remain open under D-035.
 
 | # | Topic | Other source says | Scope Sheet / repository says | Decision |
 |---|---|---|---|---|
-| C-01 | Sign-in method | Deck: mobile OTP only, no password storage | F01: email/password + OTP | Scope Sheet governs; open founder decision D-035 |
+| C-01 | Sign-in method | Deck: mobile OTP only, no password storage | F01: email/password + OTP | **Decided (D-035, 26 Sep 2026): Google Login is the MVP primary sign-in method.** Neither source's method is adopted for the MVP; Scope Sheet numbering still controls |
 | C-02 | Reversibility of deletion | Deck: typed confirmation; "not reversible" | F17: undo window [PROV 7 days]; implemented in `request_deletion` and the undo policy | Scope Sheet governs; open founder decision D-035 |
 | C-03 | Confirmed-only timeline and export | Deck: only confirmed facts enter timeline or export | Not required; `buildExportManifest` includes every verification status | Scope Sheet governs; A-032's suggested `confirmedOnly` option is **not implemented**; open founder decision D-035 |
-| C-04 | Tombstone contents | Deck: matter identifier, time and actor; deletion receipt | OL-03 interim content-free tombstone (scope type, scope id, time; no actor) | Scope Sheet and Counsel Brief interim govern; open founder decisions D-035 / D-036 |
+| C-04 | Tombstone contents | Deck: matter identifier, time and actor; deletion receipt | OL-03 interim content-free tombstone (scope type, scope id, time; no actor) | **Decided (D-036, 26 Sep 2026): tombstones remain content-free.** The deck's actor field is not adopted |
 | C-05 | Party contact details | Deck U16 | Not in the Scope Sheet §4.3 data model | Not adopted |
 | C-06 | Consent withdrawal routes to deletion | Deck U03 / consent flow | Withdrawal blocks further processing (`requirePurpose`); no automatic routing | Not adopted |
 | C-07 | Meaning of "gaps" | Deck U18: unsupported, unconfirmed, undated, unused items | U13: missing evidence noted by the user; U12: contradictions | Scope Sheet governs; deck's structural counts not adopted as a screen |
@@ -601,3 +601,26 @@ Limitations, stated as required by A-041:
 - **No design evidence.** The Figma FM-A package was not available, so every "design evidence" row cites the deck extract and the Figma Brief V2 only.
 - **No compliance claim.** Security controls cite the Scope Sheet and the SEC tests that exist. Nothing here asserts legal, regulatory or deployment compliance.
 - **Hindi copy.** Hindi strings are working translations (A-032 m-11).
+
+## 10. Rebaseline against A-043 (A-048, 26 September 2026)
+
+Lovable's A-043 (completion commit `9d238423`, handoff `docs/ai/tool-output/lovable/A-043/HANDOFF.json`) built MVP Wave-1 screens on seeded synthetic fixtures, with no server function, auth provider or database. Under the §2 definitions they are **PARTIAL**, never READY.
+
+| ID | A-041 status | Now | Evidence |
+|---|---|---|---|
+| U01 | MISSING | PARTIAL | `app/src/routes/login.tsx`, `app/src/components/mvp/screens/login-screen.tsx` — Google entry UI only |
+| U03 | MISSING | PARTIAL | `app/src/routes/disputes.index.tsx`, `app/src/components/mvp/screens/dispute-list-screen.tsx` |
+| U04 | MISSING | PARTIAL | `app/src/routes/disputes.new.tsx`, `app/src/components/mvp/screens/what-happened-screen.tsx` |
+| U05 | MISSING | PARTIAL | `app/src/components/mvp/screens/intake-screen.tsx` |
+| U06 | PARTIAL | PARTIAL | `app/src/components/mvp/screens/evidence-locker-screen.tsx` (replaces the showcase prototype as the primary evidence) |
+| U07 | MISSING | PARTIAL | `app/src/components/mvp/screens/document-viewer-screen.tsx` |
+| U08 | PARTIAL | PARTIAL | `app/src/components/mvp/screens/fact-review-screen.tsx` (list screen now exists) |
+| U09 | PARTIAL | PARTIAL | `app/src/components/mvp/screens/timeline-screen.tsx` |
+| U16 | MISSING | PARTIAL | `app/src/components/mvp/screens/export-screens.tsx` (preview) |
+| U17 | MISSING | PARTIAL | `app/src/components/mvp/screens/export-screens.tsx` (result, JSON manifest only) |
+
+Unchanged: U02 (consent screen out of A-043 scope; the login screen shows `consent_no_ai` only), U10 (showcase prototype), U11–U15 and U18–U21 (no screens). U03 was MISSING in A-041 because the showcase shell rendered none of its states; A-043's dispute list renders the list, the empty state and "Start a dispute".
+
+Still owed before any screen can be READY: an auth provider (Google, per D-035), server functions A01–A28 and a database environment (FD-02); design conformance against the Figma package (A-008, not supplied); U02 consent; native Hindi review (A-032 m-11).
+
+Founder decisions recorded on 26 Sep 2026 (Decision Log D-035, D-036): Google Login is the MVP primary sign-in method; Scope Sheet numbering controls; `document_reference_policy` remains `block`; deletion tombstones remain content-free.

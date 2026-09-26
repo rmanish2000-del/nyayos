@@ -5,24 +5,24 @@
   "updated": "2026-09-26T17:53:58Z",
   "after": "A-044-R2",
   "task_id": null,
-  "title": "Wave W1 — staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI",
+  "title": "Wave W1 — staging database with migrations applied, Google Login auth adapter, A01/A02/A28, smoke suite in CI",
   "assigned_tool": "claude-code",
   "priority": "P1",
   "dependencies": [
     {
-      "item": "Founder merge-readiness review and merge of PR #2",
+      "item": "Founder merge of PR #2 (merge commit)",
       "owner": "founder",
       "satisfied": false
     },
     {
-      "item": "FD-02 hosting / India-region decision",
+      "item": "FD-02 hosting / India-region decision and the Google auth provider",
       "owner": "founder",
       "satisfied": false
     },
     {
-      "item": "D-035 (including the F01 sign-in method) and D-036",
+      "item": "D-035 sign-in method (Google Login) decided 26 Sep 2026",
       "owner": "founder",
-      "satisfied": false
+      "satisfied": true
     }
   ],
   "ready": false,
@@ -31,14 +31,16 @@
     "commit": "02f2f9576c19fd065c88debcafd9a3e614e9f990"
   },
   "required_inputs": [
-    "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md",
-    "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md",
     "db/README.md",
-    "docs/ai/tool-output/lovable/A-043/HANDOFF.json"
+    "docs/ai/tool-output/lovable/A-043/HANDOFF.json",
+    "docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md",
+    "docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md",
+    "docs/founder/NYAYOS_DECISION_LOG_V1.md",
+    "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md"
   ],
   "expected_outputs": [
     "Staging database with migrations 0001-0008 applied (synthetic data only)",
-    "Auth adapter and server functions A01, A02, A28",
+    "Google Login auth adapter and server functions A01, A02, A28",
     "Smoke suite running in CI against a Postgres service",
     "docs/ai/tool-output/claude-code/<task-id>/HANDOFF.json and SUMMARY.md"
   ],
@@ -47,5 +49,5 @@
     "allowed": false,
     "environment": "none"
   },
-  "rationale": "First build step after the merge per the A-030 gap report: it turns the verified database foundation into a running staging environment behind the A-043 UI. The founder issues the task ID and grants staging deployment when ready."
+  "rationale": "First build step after the merge: it turns the verified database foundation into a running staging environment behind the A-043 UI, using Google Login per D-035. The founder issues the task ID and grants staging deployment when ready."
 }

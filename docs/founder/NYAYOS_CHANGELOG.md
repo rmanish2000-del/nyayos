@@ -5,6 +5,21 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-27 — FM-A merge readiness and decision reconciliation (A-048)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft and unmerged. Nothing deployed.**
+
+### Added
+
+- `docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md` — PR #2 verified (205 files; all suites pass); PR #3 conflicts; integration procedure (merge commit only).
+- Decision Log: D-031, D-032 (A-038 rulings), D-035 partly (Google Login MVP primary sign-in; Scope Sheet numbering controls), D-036 (block policy; content-free tombstones).
+
+### Changed
+
+- U01–U21 addendum rebaselined against A-043: PARTIAL 11, MISSING 10, READY 0. Registry A-048 REVIEW.
+
+---
+
 ## 2026-09-26 — AI operating system: canonical state, ownership and staleness gates, status command (A-044-R2)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**

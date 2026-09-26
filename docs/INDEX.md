@@ -106,6 +106,7 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 | Document | Type | Contents |
 |---|---|---|
+| [NYAYOS_FMA_MERGE_READINESS_A048.md](architecture/NYAYOS_FMA_MERGE_READINESS_A048.md) | Maintainer — A-048 | **PR #2 merge readiness**: decisions D-035/D-036 recorded, A-041 rebaselined against A-043, whole-diff and test verification, PR #3 conflicts, integration procedure (merge commit only) |
 | [NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md](architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md) | Supplied — A-010, Claude Chat, 22 Sep 2026 (imported under A-030) | **Security & Data Architecture Spec V1 — CANONICAL.** Tenant model, RLS helpers, purpose-bound consent, evidence integrity, deletion lifecycle, audit architecture, threat model, SEC test suite. Governs the FM-A security foundation |
 | [NYAYOS_EXECUTIVE_ARCHITECTURE_DECK_V1_TEXT.md](architecture/NYAYOS_EXECUTIVE_ARCHITECTURE_DECK_V1_TEXT.md) | Derived — A-031 (text extract of a gitignored deck) | Executive architecture narrative. Its S1–S16 numbering differs from the Scope Sheet; see the A-030 gap report §3 |
 | [NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md](architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md) | Maintainer — A-030 | **Phase 1 assessment:** structure, architecture inventory, conflicts, integration strategy for `feature/fma-foundation-v1` |

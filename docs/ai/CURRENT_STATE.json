@@ -3,8 +3,8 @@
   "schema_version": "2.0",
   "project": "NyayOS",
   "authority": "canonical",
-  "last_updated": "2026-09-26T17:53:58Z",
-  "current_phase": "FM-A foundation and the A-043 MVP Wave-1 UI (synthetic data) on a feature branch (draft PR #2), awaiting the founder's merge-readiness review and design conformance input; no environment exists.",
+  "last_updated": "2026-09-26T18:45:58Z",
+  "current_phase": "FM-A foundation and the A-043 MVP UI verified merge-ready on draft PR #2 (A-048); awaiting the founder's merge. Founder decisions D-035 (Google Login, numbering) and D-036 recorded; no environment exists.",
   "canonical_branch": "main",
   "working_branch": "feature/fma-foundation-v1",
   "current_pr": {
@@ -80,14 +80,14 @@
       "order": 1,
       "task_id": null,
       "owner": "founder",
-      "output": "Merge-readiness decision on draft PR #2, with D-035 (incl. the F01 sign-in method) and D-036",
+      "output": "Mark PR #2 ready and merge it with a merge commit (A-048 report §6)",
       "ready": true
     },
     {
       "order": 2,
       "task_id": "A-047",
       "owner": "gemini",
-      "output": "A-047 output committed to the repository with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json",
+      "output": "A-047 output committed with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json",
       "ready": true
     },
     {
@@ -102,7 +102,7 @@
       "order": 4,
       "task_id": null,
       "owner": "claude-code",
-      "output": "A-043 design conformance review and re-baseline of the A-041 traceability addendum",
+      "output": "A-043 design conformance review against the Figma package",
       "ready": false,
       "waiting_on": "The A-008 design package"
     },
@@ -110,40 +110,28 @@
       "order": 5,
       "task_id": null,
       "owner": "claude-code",
-      "output": "Wave W1: staging database with migrations applied, auth adapter, A01/A02/A28, smoke suite in CI",
+      "output": "Wave W1: staging database with migrations applied, Google Login auth adapter, A01/A02/A28, smoke suite in CI",
       "ready": false,
-      "waiting_on": "PR #2 merge and the FD-02 hosting decision"
+      "waiting_on": "PR #2 merge and the FD-02 hosting / auth-provider decision"
     }
   ],
   "next_integration_task": {
     "task_id": null,
     "owner": "founder",
-    "description": "Merge draft PR #2 (FM-A foundation and A-043 MVP UI) into main after the merge-readiness review."
+    "description": "Merge PR #2 into main with a merge commit (not squash or rebase), then promote accepted REVIEW tasks to CANONICAL."
   },
-  "summary": "feature/fma-foundation-v1 (draft PR #2, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), the U01-U21 traceability addendum, Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, and the repository-centric tool handoff system (A-044, A-044-R, A-044-R2), whose CURRENT_STATE and NEXT_TASK are canonical. Every fix A-032 required before merge is closed; nothing is deployed and no environment exists.",
+  "summary": "feature/fma-foundation-v1 (draft PR #2, mergeable, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, the rebaselined U01-U21 addendum (PARTIAL 11, MISSING 10) and the canonical tool handoff system. A-048 verified the whole diff and every suite; merge with a merge commit. Nothing is deployed and no environment exists.",
   "open_items": [
     {
       "id": "OI-01",
       "kind": "dependency",
-      "description": "Founder merge-readiness review of draft PR #2 (A-030, A-033…A-044 and A-044-R are REVIEW)."
+      "description": "Founder merge of PR #2 after the A-048 merge-readiness review (docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md); merge with a merge commit, never squash or rebase."
     },
     {
       "id": "OI-02",
       "kind": "founder_decision",
-      "description": "Which document governs where the FM-A flow deck and the Scope Sheet disagree (addendum §6 C-01…C-05).",
+      "description": "D-035 still open for deletion reversibility (C-02), confirmed-only timeline/export (C-03) and party contact details (C-05); sign-in method and numbering were decided on 26 Sep 2026.",
       "decision": "D-035"
-    },
-    {
-      "id": "OI-03",
-      "kind": "founder_decision",
-      "description": "Ratify A-030 defaults: Scope Sheet numbering, document_reference_policy = block, content-free tombstone.",
-      "decision": "D-036"
-    },
-    {
-      "id": "OI-04",
-      "kind": "founder_decision",
-      "description": "D-031 and D-032 were ruled in the A-038 brief but are not yet written into the decision log.",
-      "decision": "D-031"
     },
     {
       "id": "OI-05",
@@ -181,17 +169,6 @@
       "description": "A-043 MVP Wave-1 UI (Lovable, REVIEW, completion commit 9d238423, handoff docs/ai/tool-output/lovable/A-043/HANDOFF.json) awaits a design conformance review: the Figma MVP Design Package V1 (A-008) has not been supplied."
     },
     {
-      "id": "OI-11",
-      "kind": "finding",
-      "description": "The A-041 U01-U21 traceability addendum records statuses from before A-043's MVP UI (U04-U09, U16, U17); it needs re-baselining against A-043."
-    },
-    {
-      "id": "OI-12",
-      "kind": "founder_decision",
-      "description": "F01 sign-in method: A-043 shows a Google sign-in entry, while the Scope Sheet specifies email/password + OTP (addendum C-01).",
-      "decision": "D-035"
-    },
-    {
       "id": "OI-13",
       "kind": "finding",
       "description": "Lovable A-043 tests time out locally on Windows and one U06 test hits a jsdom SubtleCrypto.digest type difference; CI (ubuntu) passes 233/233. A local-environment robustness fix belongs to a Lovable follow-up."
@@ -204,21 +181,21 @@
     {
       "id": "OI-15",
       "kind": "finding",
-      "description": "Draft PR #3 (A-050, branch fix/a050-accessibility-ux-mobile, cut from main 6c6b478) writes docs/ai/tool-output/figma/A-050/ outside this branch and audits paths (src/components/ui.tsx, src/screens/*.tsx) that do not exist under app/; A-050 is not registered here and has no handoff on this branch."
+      "description": "Draft PR #3 (A-050) conflicts with PR #2's handoff protocol (no HANDOFF.json, A-050 unregistered) and targets paths that do not exist under app/; not merged — see docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md §5."
     }
   ],
   "derived": {
     "source": "docs/founder/NYAYOS_STATUS_REGISTRY.json",
-    "registry_updated": "2026-09-26",
-    "task_count": 48,
+    "registry_updated": "2026-09-27",
+    "task_count": 49,
     "by_status": {
       "OPEN": 7,
       "IN_PROGRESS": 0,
-      "REVIEW": 14,
+      "REVIEW": 15,
       "CANONICAL": 27,
       "SUPERSEDED": 0
     },
-    "highest_task_id": "A-047",
+    "highest_task_id": "A-048",
     "open_tasks": [
       "A-008",
       "A-009",
@@ -243,10 +220,11 @@
       "A-043",
       "A-044",
       "A-044-R",
-      "A-044-R2"
+      "A-044-R2",
+      "A-048"
     ],
     "registry_latest_by_tool": {
-      "claude-code": "A-044-R2",
+      "claude-code": "A-048",
       "gemini": null,
       "lovable": "A-043",
       "figma": null

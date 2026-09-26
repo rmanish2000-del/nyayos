@@ -701,3 +701,20 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Gemini A-047's content is unknown here; its registry type is assumed. Draft PR #3 (A-050, another branch) is recorded as an open item, not integrated |
 | **Rollback** | See `docs/ai/tool-output/claude-code/A-044-R2/HANDOFF.json` |
 | **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044-R2/HANDOFF.json` |
+
+---
+
+### A-048 — FM-A merge readiness and decision reconciliation
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-048 (no ID was issued; next free ID claimed) |
+| **Owner / tool** | Claude Code — merge readiness review |
+| **Purpose** | Record the founder's decisions, rebaseline A-041 against A-043, verify PR #2's whole diff and every test, identify PR #3 conflicts without merging it, and prepare PR #2 for integration |
+| **Gate** | FA-001. No production, no merge, no deployment |
+| **Status** | **REVIEW — 27 September 2026** |
+| **Result** | Decision Log D-031, D-032, D-035 (partly), D-036; addendum rebaselined (PARTIAL 11, MISSING 10); report `docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md` (verdict: ready for the founder's merge with a merge commit); PR #3 conflicts documented |
+| **Evidence** | `docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md` §3–§5; DB suites, Vitest (CI), typecheck, lint, build, schema-lint, handoff validator |
+| **Limitations** | Local Windows Vitest 232/233 (A-043 U06 jsdom difference; CI 233/233). PR #2 left draft: marking it ready and merging are the founder's actions. Repository merge-method settings not changed |
+| **Rollback** | See `docs/ai/tool-output/claude-code/A-048/HANDOFF.json` |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-048/HANDOFF.json` |

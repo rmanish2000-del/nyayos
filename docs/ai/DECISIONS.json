@@ -156,6 +156,26 @@
       "id": "D-030",
       "title": "Security + Data Architecture Specification V1 is the next P0 work",
       "log_status": "Locked as sequencing"
+    },
+    {
+      "id": "D-031",
+      "title": "Audit atomicity: a canonical write and its audit record commit or roll back together",
+      "log_status": "Locked"
+    },
+    {
+      "id": "D-032",
+      "title": "Deletion purge runs only through a server-controlled path",
+      "log_status": "Locked"
+    },
+    {
+      "id": "D-035",
+      "title": "Where the FM-A flow deck and the Scope Sheet disagree (partly decided)",
+      "log_status": "Locked for sign-in method and numbering; other points open"
+    },
+    {
+      "id": "D-036",
+      "title": "A-030 foundation defaults ratified",
+      "log_status": "Locked"
     }
   ],
   "candidates": [
@@ -189,13 +209,13 @@
       "id": "D-031",
       "ruling": "A canonical write and its audit record must commit or roll back together in one transaction.",
       "source": "Founder brief for A-038 (24 Sep 2026); implemented by migration 0005",
-      "in_decision_log": false
+      "in_decision_log": true
     },
     {
       "id": "D-032",
       "ruling": "Deletion purge will use a server-controlled path (not implemented in A-038).",
       "source": "Founder brief for A-038 (24 Sep 2026); implemented by A-040, migration 0007",
-      "in_decision_log": false
+      "in_decision_log": true
     }
   ]
 }

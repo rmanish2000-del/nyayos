@@ -1,7 +1,7 @@
 {
   "$comment": "NyayOS canonical status registry. MACHINE SOURCE OF TRUTH for task status and dependencies. Edited by hand or by the maintainer; validated and rendered by scripts/governance/registry.mjs. Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md.",
   "version": 1,
-  "updated": "2026-09-26",
+  "updated": "2026-09-27",
   "statuses": [
     "OPEN",
     "IN_PROGRESS",
@@ -738,9 +738,9 @@
         "docs/product/NYAYOS_FM0_CONCIERGE_DECK_V1_TEXT.md"
       ],
       "evidence": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md",
-      "updated": "2026-09-26",
+      "updated": "2026-09-27",
       "superseded_by": null,
-      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open. — 24 Sep 2026: C-1 and C-2 CLOSED with adversarial execution evidence under A-033-R (C-1 required migration 0004). No A-032 critical finding remains; majors M-2, M-3, M-6, M-7 and the M-8 documentation addendum remain open. — 24 Sep 2026: M-2 and M-7 CLOSED with execution evidence under A-038 (cross-runtime golden vectors; fault-injected rollback). Open majors: M-3, M-6, M-8 documentation addendum. — 24 Sep 2026: M-6 CLOSED with execution evidence under A-039 (explicit graph, oracle-verified enumeration). Open: M-3 (purge path, D-032) and M-8 documentation addendum; minor m-1. — 24 Sep 2026: M-3 CLOSED with execution evidence under A-040 (server-controlled purge worker from the A-039 enumeration; D-032). Open: M-8 documentation addendum; minor m-1; new A-040 residuals (object-storage blob deletion; account purge keeps the personal tenant row). — 26 Sep 2026: M-8 CLOSED under A-041 (U01–U21 traceability addendum; every numbering reconciled; conflicts recorded with Scope Sheet precedence). All A-032 critical and major findings are now closed. Open: minor m-1 (direct status update grant) and the other minors; founder decisions D-035/D-036. — 26 Sep 2026: m-1 CLOSED with execution evidence under A-042 (migration 0008; reproduced on the baseline first). Every fix A-032 §8 required before merge is closed. Minors m-2 to m-12 remain tracked, non-blocking follow-ups; founder decisions D-035/D-036 open."
+      "notes": "Subject: A-030 at 63ac9f29 (a23faf85 + 63ac9f29), PR #2. Verdict: MERGE WITH FIXES. 2 critical, 8 major, 12 minor. Critical: audit hash chain forks under concurrent writers (verified by two-session experiment); deletion_requests insert policy accepts any scope_id incl. another tenant's dispute with client-chosen undo_until. Nine defects verified by execution on an ephemeral local Postgres 16.14 container (destroyed afterwards); two verified by a temporary Vitest probe (not committed). Scope compliance verified: no AI, legal, representation, marketplace or deployment code path; no dependency change. Two mandated decks (FM-A Product & User Flow, FM-0 Concierge) were not A-030 inputs; imported here as text extracts. The flow deck's U01–U21 numbering differs from the Scope Sheet's — cross-map in the report. — 23 Sep 2026: findings C-1, C-2, M-1, M-4, M-5 closed by A-033 (verified by re-running the probes); m-1 and the M-8 documentation addendum remain open. — 24 Sep 2026: C-1 and C-2 CLOSED with adversarial execution evidence under A-033-R (C-1 required migration 0004). No A-032 critical finding remains; majors M-2, M-3, M-6, M-7 and the M-8 documentation addendum remain open. — 24 Sep 2026: M-2 and M-7 CLOSED with execution evidence under A-038 (cross-runtime golden vectors; fault-injected rollback). Open majors: M-3, M-6, M-8 documentation addendum. — 24 Sep 2026: M-6 CLOSED with execution evidence under A-039 (explicit graph, oracle-verified enumeration). Open: M-3 (purge path, D-032) and M-8 documentation addendum; minor m-1. — 24 Sep 2026: M-3 CLOSED with execution evidence under A-040 (server-controlled purge worker from the A-039 enumeration; D-032). Open: M-8 documentation addendum; minor m-1; new A-040 residuals (object-storage blob deletion; account purge keeps the personal tenant row). — 26 Sep 2026: M-8 CLOSED under A-041 (U01–U21 traceability addendum; every numbering reconciled; conflicts recorded with Scope Sheet precedence). All A-032 critical and major findings are now closed. Open: minor m-1 (direct status update grant) and the other minors; founder decisions D-035/D-036. — 26 Sep 2026: m-1 CLOSED with execution evidence under A-042 (migration 0008; reproduced on the baseline first). Every fix A-032 §8 required before merge is closed. Minors m-2 to m-12 remain tracked, non-blocking follow-ups; founder decisions D-035/D-036 open. — 26/27 Sep 2026: D-035/D-036 decided and logged under A-048 (Google Login MVP sign-in; Scope Sheet numbering; block policy; content-free tombstones); D-031/D-032 logged."
     },
     {
       "id": "A-033",
@@ -1173,6 +1173,31 @@
       "updated": "2026-09-26",
       "superseded_by": null,
       "notes": "Baseline 14e9f1b. No task ID was issued for this follow-up ('fix the operating system itself'); recorded as the second remediation of A-044. CURRENT_STATE.json and NEXT_TASK.json declare authority 'canonical' and every tool updates them. tools.<tool> is fully derived (status, reason, latest completion) from handoffs, active_tasks and blocked_tasks. CI now also fails on task ownership missing (every registry task from A-042 on needs a HANDOFF.json under one tool or an active_tasks entry) and on a stale NEXT_TASK (after or updated older than the latest completion). Blocked handoffs record ownership of work that is not in the repository (null commit, blocked_reason). New command: node scripts/ai/state.mjs status [--json]. Backfill: Claude A-042, A-044 and Lovable A-043 already in the structure; Gemini A-047 recorded as blocked (repository handoff missing) because no repository evidence exists."
+    },
+    {
+      "id": "A-048",
+      "title": "FM-A merge readiness and decision reconciliation — decisions logged, A-041 rebaselined against A-043, PR #2 verified, PR #3 conflicts identified",
+      "type": "review",
+      "status": "REVIEW",
+      "owner": "Claude Code",
+      "tool": "Claude Code — merge readiness review and documentation (no application code, SQL, merge or deployment)",
+      "gate": "FA-001 (staging build allowed; production NOT allowed)",
+      "inputs": [
+        "A-029",
+        "A-031",
+        "A-032",
+        "A-034"
+      ],
+      "planned_inputs": [],
+      "outputs": [
+        "docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md",
+        "docs/founder/NYAYOS_DECISION_LOG_V1.md",
+        "docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md"
+      ],
+      "evidence": "docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md",
+      "updated": "2026-09-27",
+      "superseded_by": null,
+      "notes": "Baseline 92be7c7. No task ID was issued; A-048 was the next free ID. Decisions logged (26 Sep 2026): D-035 partly (Google Login MVP primary sign-in; Scope Sheet numbering controls; C-02, C-03, C-05 open), D-036 (Scope Sheet numbering, document_reference_policy = block, content-free tombstones), and the A-038 rulings D-031 and D-032. A-041 rebaselined against A-043: PARTIAL 11, MISSING 10, READY 0. PR #2: 205 files, mergeable CLEAN, secrets/private-data scans clean; DB suites all pass on fresh containers (smoke 87/87, dispute status 21/21, authz 25/25, scope 28/28, purge 55/55, atomicity 21/21, vectors 16/16, concurrency 5/5, purge race 3/3); Vitest 233/233 in CI (local Windows 232/233: A-043 U06 jsdom SubtleCrypto difference); typecheck, lint 0 errors, build, schema-lint clean. PR #3 (A-050): no textual conflict; protocol, target-path and ownership conflicts documented; not merged. Merge must use a merge commit (handoff SHAs must stay in main's history). PR #2 stays draft; nothing deployed."
     }
   ]
 }
