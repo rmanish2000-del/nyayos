@@ -8,6 +8,8 @@
 | Audit date | 2026-09-26 |
 | Auditor | A-063 canonical implementation audit |
 
+> **Integrated by A-064 (Claude Code, 27 Sep 2026).** Cherry-picked unchanged from draft PR #3 (`dbc415f` → `76b6eb6`) and validated finding by finding in [`docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md`](../../../../design/NYAYOS_A063_AUDIT_VALIDATION_A064.md). **Do not implement from `developer-fixes.md`** — the only fix list is [`docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md`](../../../../implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md) (Lovable A-065). FIX-C003 (simulated scan) is rejected. Machine-readable record: [HANDOFF.json](HANDOFF.json); Figma's original: [HANDOFF.original.json](HANDOFF.original.json).
+
 ---
 
 ## Executive Summary

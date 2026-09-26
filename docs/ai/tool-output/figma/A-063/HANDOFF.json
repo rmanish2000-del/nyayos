@@ -1,60 +1,94 @@
 {
-  "task": "A-063",
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-063",
+  "tool": "figma",
+  "status": "completed",
   "branch": "feature/fma-foundation-v1",
-  "baselineCommit": "9d238423949eabea28452e4e6a924186a94030c4",
-  "resolvedTipCommit": "14c5ea0bc4234f2055dda879d324398e99c46d4c",
-  "auditDate": "2026-09-26",
-  "totalFindings": 16,
-  "critical": 4,
-  "major": 5,
-  "minor": 7,
-  "completionEstimate": "72% (staging preview) / 35% (production readiness)",
-  "screensAudited": [
-    "U01 LoginScreen — FULL implementation",
-    "U04 NewDisputeScreen — FULL implementation",
-    "U04 WhatHappenedSummary — FULL implementation",
-    "U05 IntakeScreen — FULL implementation",
-    "U06 EvidenceLockerScreen — FULL implementation",
-    "U07 DocumentViewerScreen — FULL implementation",
-    "U08 FactReviewScreen — FULL implementation",
-    "U09 TimelineScreen — FULL implementation",
-    "U16 ExportPreviewScreen — FULL implementation",
-    "U17 ExportResultScreen — FULL implementation",
-    "DisputeListScreen — FULL implementation",
-    "DisputeFrame (step nav) — FULL implementation",
-    "RequireSession (auth guard) — FULL implementation"
+  "baseline_commit": "ca41bf1d85a4a6abaad8a89817f18b93f54f9638",
+  "completion_commit": "76b6eb6c8283e90fb224cf4eed89664092fcf899",
+  "completed_at": "2026-09-26T19:43:35Z",
+  "files_created": [
+    "docs/ai/tool-output/figma/A-063/HANDOFF.json",
+    "docs/ai/tool-output/figma/A-063/SUMMARY.md",
+    "docs/ai/tool-output/figma/A-063/accessibility.md",
+    "docs/ai/tool-output/figma/A-063/developer-fixes.md",
+    "docs/ai/tool-output/figma/A-063/findings.md",
+    "docs/ai/tool-output/figma/A-063/mobile-audit.md"
   ],
-  "noStubsFound": true,
-  "prohibitedCopyClear": true,
-  "prohibitedTermsChecked": [
-    "AI Lawyer", "AI Judge", "Predict", "Win", "Best lawyer",
-    "Replace your lawyer", "File automatically", "Legally verified",
-    "Court approved", "Evidence certified", "Admissible", "Guaranteed",
-    "marketplace", "ranking", "score"
+  "files_modified": [],
+  "files_deleted": [],
+  "tests": [
+    {
+      "name": "cited-path existence",
+      "command": "every app/ path cited in the A-063 files checked on feature/fma-foundation-v1",
+      "result": "pass",
+      "detail": "18 of 19 distinct paths exist; the missing app/src/routes/foundation.tsx is a route the audit proposes to create"
+    },
+    {
+      "name": "finding validation (A-064)",
+      "command": "each finding checked against app/ at ca41bf1",
+      "result": "pass",
+      "detail": "7 accepted (2 with a changed fix), 4 reassigned, 2 merged, FIX-C003 and FIX-m005 rejected; see docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md"
+    }
   ],
-  "prohibitedTermsFound": [],
-  "authSystem": "sessionStorage synthetic personas only — no Supabase, no Google OAuth",
-  "dbIntegration": "NONE — no supabase/ directory, no integrations/ directory, no client",
-  "routerSystem": "TanStack Router (file-based, SSR-capable)",
-  "stateManagement": "React Context (MvpProvider/useMvp) + sessionStorage",
-  "topBlockers": [
-    "C-001: No Supabase / real backend — all data in sessionStorage, lost on tab close",
-    "C-002: No real Google OAuth — auth is synthetic personas only",
-    "C-003: Uploaded files permanently stuck in awaiting-scan; U07 Document Viewer unreachable for user-added files",
-    "C-004: Post-login redirect not implemented — deep links break after authentication",
-    "M-002: Root / renders component showcase, not the app entry point"
+  "evidence": [
+    {
+      "description": "Figma findings",
+      "ref": "docs/ai/tool-output/figma/A-063/findings.md"
+    },
+    {
+      "description": "accessibility audit",
+      "ref": "docs/ai/tool-output/figma/A-063/accessibility.md"
+    },
+    {
+      "description": "mobile / tablet / desktop audit",
+      "ref": "docs/ai/tool-output/figma/A-063/mobile-audit.md"
+    },
+    {
+      "description": "Figma's original (non-schema) handoff",
+      "ref": "docs/ai/tool-output/figma/A-063/HANDOFF.original.json"
+    },
+    {
+      "description": "original commit on draft PR #3 (branch fix/a050-accessibility-ux-mobile)",
+      "ref": "https://github.com/rmanish2000-del/nyayos/pull/3"
+    },
+    {
+      "description": "integrated commit (cherry-pick of dbc415f)",
+      "ref": "76b6eb6c8283e90fb224cf4eed89664092fcf899"
+    },
+    {
+      "description": "A-064 validation record",
+      "ref": "docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md"
+    }
   ],
-  "accessibilityStatus": {
-    "landmarks": "PASS",
-    "skipToContent": "PARTIAL — link present, destination lacks tabIndex=-1",
-    "formLabels": "PASS",
-    "ariaLive": "PASS — minor improvement needed on evidence locker hashing announcement",
-    "touchTargets": "PASS — touch-target utility used throughout",
-    "reducedMotion": "PASS",
-    "contrastAudit": "NOT RUN — self-reported open item",
-    "screenReaderPass": "NOT RUN — self-reported open item",
-    "htmlLang": "FAIL — document lang not updated when Hindi is selected"
+  "limitations": [
+    "The audit was committed on draft PR #3 as dbc415f48410b928b8016bed9c4674851db87d73 (author: the founder, 2026-09-27T00:52:12+05:30) against tip 14c5ea0; app/ is identical at ca41bf1.",
+    "Several line anchors in the audit do not match the code (e.g. dispute-frame <main> at 63, not 44; __root <html> at 116, not 108); the canonical fix specification re-anchors them.",
+    "developer-fixes.md is superseded by docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md: FIX-C003 (timer-based scan promotion) and FIX-m005 (role=button drop zone) are rejected, and the 'compact buttons below 44 px' item is false (touch-target on the base button).",
+    "The completion estimates (72% staging preview / 35% production) are Figma's and were not re-derived."
+  ],
+  "risks": [
+    {
+      "description": "Following developer-fixes.md instead of the canonical specification would add a scan bypass (FIX-C003)",
+      "severity": "high"
+    }
+  ],
+  "rollback": "git revert --no-edit 76b6eb6c8283e90fb224cf4eed89664092fcf899 — removes the integrated audit files; no force push",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
   },
-  "nextTask": "Fix C-001 through C-004 before merging to main; FIX-C001 (post-login redirect) and FIX-C003 (scan simulation) have no backend dependency and can land immediately",
-  "outputDir": "docs/ai/tool-output/figma/A-063/"
+  "next_recommendation": {
+    "task_id": "A-065",
+    "tool": "lovable",
+    "reason": "Implement the validated fixes F-01 to F-10 from docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md after the founder merges PR #2."
+  },
+  "backfill": {
+    "reason": "Figma's audit was committed without the [TOOL:FIGMA][TASK:A-063] tag on draft PR #3 and was brought onto this branch by an unchanged cherry-pick (A-064); Claude Code recorded this handoff from repository evidence rather than tag a commit in Figma's name",
+    "source": "commit dbc415f48410b928b8016bed9c4674851db87d73 on branch fix/a050-accessibility-ux-mobile (draft PR #3); docs/ai/tool-output/figma/A-063/HANDOFF.original.json"
+  }
 }

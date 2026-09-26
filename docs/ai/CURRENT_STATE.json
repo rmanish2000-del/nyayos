@@ -3,8 +3,8 @@
   "schema_version": "2.0",
   "project": "NyayOS",
   "authority": "canonical",
-  "last_updated": "2026-09-26T19:15:46Z",
-  "current_phase": "FM-A foundation and the A-043 MVP UI verified merge-ready on draft PR #2 (A-048); awaiting the founder's merge. Founder decisions D-035 (Google Login, numbering) and D-036 recorded; no environment exists.",
+  "last_updated": "2026-09-26T19:43:35Z",
+  "current_phase": "FM-A foundation and the A-043 MVP UI verified merge-ready on draft PR #2 (A-048, re-verified by A-064); awaiting the founder's merge. Figma's A-063 audit integrated and validated; the canonical A-043 fix list is issued to Lovable as A-065. No environment exists.",
   "canonical_branch": "main",
   "working_branch": "feature/fma-foundation-v1",
   "current_pr": {
@@ -23,9 +23,9 @@
   "tools": {
     "claude-code": {
       "status": "idle",
-      "latest_completed_task": "A-062",
-      "latest_completion_commit": "1d2d2c72d2a17010394b02b85446b053701d185c",
-      "handoff": "docs/ai/tool-output/claude-code/A-062/HANDOFF.json",
+      "latest_completed_task": "A-064",
+      "latest_completion_commit": "50cc63eb30a24399c5de8865a858aacdd0215530",
+      "handoff": "docs/ai/tool-output/claude-code/A-064/HANDOFF.json",
       "reason": null
     },
     "gemini": {
@@ -36,7 +36,7 @@
       "reason": "A-047: placeholder only, no output committed — repository handoff missing — Gemini A-047 output exists only outside GitHub"
     },
     "lovable": {
-      "status": "idle",
+      "status": "active",
       "latest_completed_task": "A-043",
       "latest_completion_commit": "9d238423949eabea28452e4e6a924186a94030c4",
       "handoff": "docs/ai/tool-output/lovable/A-043/HANDOFF.json",
@@ -44,20 +44,26 @@
     },
     "figma": {
       "status": "blocked",
-      "latest_completed_task": null,
-      "latest_completion_commit": null,
-      "handoff": null,
+      "latest_completed_task": "A-063",
+      "latest_completion_commit": "76b6eb6c8283e90fb224cf4eed89664092fcf899",
+      "handoff": "docs/ai/tool-output/figma/A-063/HANDOFF.json",
       "reason": "A-008: Figma MVP Design Package never supplied to the repository (repository handoff missing)."
     }
   },
   "latest_completion": {
-    "task_id": "A-062",
+    "task_id": "A-064",
     "tool": "claude-code",
-    "completion_commit": "1d2d2c72d2a17010394b02b85446b053701d185c",
-    "completed_at": "2026-09-26T19:15:46Z",
-    "handoff": "docs/ai/tool-output/claude-code/A-062/HANDOFF.json"
+    "completion_commit": "50cc63eb30a24399c5de8865a858aacdd0215530",
+    "completed_at": "2026-09-26T19:43:35Z",
+    "handoff": "docs/ai/tool-output/claude-code/A-064/HANDOFF.json"
   },
-  "active_tasks": [],
+  "active_tasks": [
+    {
+      "task_id": "A-065",
+      "tool": "lovable",
+      "status": "issued"
+    }
+  ],
   "blocked_tasks": [
     {
       "task_id": "A-047",
@@ -80,18 +86,26 @@
       "order": 1,
       "task_id": null,
       "owner": "founder",
-      "output": "Mark PR #2 ready and merge it with a merge commit (A-048 report §6)",
+      "output": "Mark PR #2 ready and merge it with a merge commit (A-048 report §6; re-verified by A-064), then close draft PR #3 unmerged",
       "ready": true
     },
     {
       "order": 2,
+      "task_id": "A-065",
+      "owner": "lovable",
+      "output": "A-043 canonical fixes F-01 to F-10 (docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md) on fix/a065-a043-canonical-fixes from main, with docs/ai/tool-output/lovable/A-065/HANDOFF.json",
+      "ready": false,
+      "waiting_on": "The founder's merge of PR #2"
+    },
+    {
+      "order": 3,
       "task_id": "A-047",
       "owner": "gemini",
       "output": "A-047 output committed by Gemini with a completed docs/ai/tool-output/gemini/A-047/HANDOFF.json (the directory currently holds only a placeholder)",
       "ready": true
     },
     {
-      "order": 3,
+      "order": 4,
       "task_id": "A-008",
       "owner": "figma",
       "output": "Figma MVP Design Package V1 with frames mapped to U01-U21, handed off at docs/ai/tool-output/figma/A-008/",
@@ -99,7 +113,7 @@
       "waiting_on": "Founder to supply or commission the package"
     },
     {
-      "order": 4,
+      "order": 5,
       "task_id": null,
       "owner": "claude-code",
       "output": "A-043 design conformance review against the Figma package",
@@ -107,7 +121,7 @@
       "waiting_on": "The A-008 design package"
     },
     {
-      "order": 5,
+      "order": 6,
       "task_id": null,
       "owner": "claude-code",
       "output": "Wave W1: staging database with migrations applied, Google Login auth adapter, A01/A02/A28, smoke suite in CI",
@@ -120,7 +134,7 @@
     "owner": "founder",
     "description": "Merge PR #2 into main with a merge commit (not squash or rebase), then promote accepted REVIEW tasks to CANONICAL."
   },
-  "summary": "feature/fma-foundation-v1 (draft PR #2, mergeable, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, the rebaselined U01-U21 addendum (PARTIAL 11, MISSING 10) and the canonical tool handoff system. A-048 verified the whole diff and every suite; merge with a merge commit. Nothing is deployed and no environment exists.",
+  "summary": "feature/fma-foundation-v1 (draft PR #2, mergeable, unmerged) holds the FM-A foundation (domain layer, migrations 0001-0008, verified deletion lifecycle), Lovable's A-043 MVP Wave-1 UI on synthetic fixtures, the rebaselined U01-U21 addendum, the canonical tool handoff system and Figma's A-063 audit with its A-064 validation. Merge with a merge commit; then Lovable implements the canonical fix list (A-065). Nothing is deployed and no environment exists.",
   "open_items": [
     {
       "id": "OI-01",
@@ -181,21 +195,21 @@
     {
       "id": "OI-15",
       "kind": "finding",
-      "description": "Draft PR #3 (branch fix/a050-accessibility-ux-mobile) now carries Figma-namespace audits A-050 and A-057 (docs/ai/tool-output/figma/A-050/, A-057/): neither is registered or has a HANDOFF.json, and the A-050 fixes target paths that do not exist under app/. Not merged — see docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md §5."
+      "description": "Draft PR #3 (branch fix/a050-accessibility-ux-mobile): its A-063 audit is integrated on feature/fma-foundation-v1 (A-064, cherry-pick 76b6eb6); A-050 and A-057 are rejected (no cited path exists). PR #3 is superseded and would conflict after the PR #2 merge; the founder should close it unmerged. Its developer-fixes.md is superseded by docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md."
     }
   ],
   "derived": {
     "source": "docs/founder/NYAYOS_STATUS_REGISTRY.json",
     "registry_updated": "2026-09-27",
-    "task_count": 50,
+    "task_count": 53,
     "by_status": {
-      "OPEN": 7,
+      "OPEN": 8,
       "IN_PROGRESS": 0,
-      "REVIEW": 16,
+      "REVIEW": 18,
       "CANONICAL": 27,
       "SUPERSEDED": 0
     },
-    "highest_task_id": "A-062",
+    "highest_task_id": "A-065",
     "open_tasks": [
       "A-008",
       "A-009",
@@ -203,7 +217,8 @@
       "A-015",
       "A-016",
       "A-028",
-      "A-047"
+      "A-047",
+      "A-065"
     ],
     "in_progress_tasks": [],
     "review_tasks": [
@@ -222,13 +237,15 @@
       "A-044-R",
       "A-044-R2",
       "A-048",
-      "A-062"
+      "A-062",
+      "A-063",
+      "A-064"
     ],
     "registry_latest_by_tool": {
-      "claude-code": "A-062",
+      "claude-code": "A-064",
       "gemini": null,
       "lovable": "A-043",
-      "figma": null
+      "figma": "A-063"
     }
   }
 }

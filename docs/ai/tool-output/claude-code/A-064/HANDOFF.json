@@ -1,0 +1,107 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-064",
+  "tool": "claude-code",
+  "status": "completed",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "76b6eb6c8283e90fb224cf4eed89664092fcf899",
+  "completion_commit": "50cc63eb30a24399c5de8865a858aacdd0215530",
+  "completed_at": "2026-09-26T19:43:35Z",
+  "files_created": [
+    "docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md",
+    "docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md"
+  ],
+  "files_modified": [
+    "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+    "docs/founder/NYAYOS_CHANGELOG.md",
+    "docs/founder/NYAYOS_DEPENDENCY_GRAPH.md",
+    "docs/founder/NYAYOS_STATUS_DASHBOARD.md",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.md"
+  ],
+  "files_deleted": [],
+  "tests": [
+    {
+      "name": "PR #3 cited-path check",
+      "command": "every app/ path cited by the A-050, A-057 and A-063 files checked on feature/fma-foundation-v1",
+      "result": "pass",
+      "detail": "A-050 0/7 exist, A-057 0/9 exist (both rejected in full); A-063 18/19 (the missing one is a proposed new route)"
+    },
+    {
+      "name": "audited code identity",
+      "command": "git diff 14c5ea0 ca41bf1 -- app",
+      "result": "pass",
+      "detail": "empty: the audited code equals the baseline"
+    },
+    {
+      "name": "registry",
+      "command": "node scripts/governance/registry.mjs validate; generate --check",
+      "result": "pass",
+      "detail": "53 tasks, 0 errors, 0 warnings"
+    },
+    {
+      "name": "handoff validator tests",
+      "command": "node --test scripts/ai/state.test.mjs",
+      "result": "pass",
+      "detail": "31/31"
+    },
+    {
+      "name": "repository state check",
+      "command": "node scripts/ai/state.mjs check --head <state commit>",
+      "result": "pass"
+    },
+    {
+      "name": "PR #2 merge readiness",
+      "command": "gh pr view 2 --json mergeable,mergeStateStatus,isDraft; gh pr checks 2",
+      "result": "pass",
+      "detail": "see SUMMARY.md; no application, SQL or domain file changed since A-048"
+    }
+  ],
+  "evidence": [
+    {
+      "description": "finding-by-finding validation record",
+      "ref": "docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md"
+    },
+    {
+      "description": "canonical A-043 fix specification (Lovable A-065)",
+      "ref": "docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md"
+    },
+    {
+      "description": "integrated Figma audit",
+      "ref": "docs/ai/tool-output/figma/A-063/HANDOFF.json"
+    },
+    {
+      "description": "cherry-pick commit",
+      "ref": "76b6eb6c8283e90fb224cf4eed89664092fcf899"
+    },
+    {
+      "description": "completion commit",
+      "ref": "50cc63eb30a24399c5de8865a858aacdd0215530"
+    }
+  ],
+  "limitations": [
+    "Draft PR #3 was not merged, changed or closed; the founder should close it unmerged (its valid content is on this branch; it would conflict after the PR #2 merge).",
+    "No task ID was issued for this assignment; A-064 was the next free ID after the founder-named A-063.",
+    "The validation is static (code reading); no browser or screen-reader run was made. The contrast and screen-reader passes remain open (A-063 m-002)."
+  ],
+  "risks": [
+    {
+      "description": "Tools may still implement from PR #3's developer-fixes.md (includes a scan bypass) instead of the canonical specification",
+      "severity": "medium"
+    }
+  ],
+  "rollback": "git revert --no-edit $(git log --format=%H --grep='^\\[TOOL:CLAUDE-CODE\\]\\[TASK:A-064\\]' ca41bf1d85a4a6abaad8a89817f18b93f54f9638..HEAD) 76b6eb6c8283e90fb224cf4eed89664092fcf899 — reverts, newest first, the A-064 state commit, 50cc63eb30a24399c5de8865a858aacdd0215530 and the cherry-pick; no force push",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": "A-065",
+    "tool": "lovable",
+    "reason": "After the founder merges PR #2 with a merge commit, Lovable implements F-01 to F-10 on fix/a065-a043-canonical-fixes from main."
+  }
+}
