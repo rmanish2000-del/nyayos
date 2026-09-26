@@ -4,11 +4,13 @@
 
 | File | Holds | Maintained by |
 |---|---|---|
+| [`STATUS_SUMMARY.md`](STATUS_SUMMARY.md) | **Generated** one-page summary — read this first. No hand edits | `node scripts/ai/state.mjs generate` |
+| [`TOOL_OUTPUT_CONTRACT.md`](TOOL_OUTPUT_CONTRACT.md) | What every tool reads, writes and never does; the standard handoff | Changed only with the validator |
 | [`CURRENT_STATE.json`](CURRENT_STATE.json) | Where the project stands: branch, PR, deployment, the **last completed assignment** (commit, handoff), open items. `derived` = counts from the status registry | Tool completing an assignment; `derived` by the generator |
 | [`NEXT_TASK.json`](NEXT_TASK.json) | The recommended next assignment (a recommendation: the founder issues assignments and IDs) | Tool completing an assignment |
 | [`DECISIONS.json`](DECISIONS.json) | Founder decisions: `logged` (from the Decision Log), `candidates` (A-032 §9), `rulings` given in briefs but not yet logged | `logged`/`candidates` by the generator; `rulings` by hand |
 | [`RISKS.json`](RISKS.json) | Product risks (from the Risk Register) and engineering `residuals` left by assignments | `risks`/`top_five` by the generator; `residuals` by hand |
-| [`schemas/`](schemas/) | JSON Schemas for the four files | Changed only with the validator |
+| [`schemas/`](schemas/) | JSON Schemas for the four files and for the handoff (`handoff.schema.json`) | Changed only with the validator |
 | [`tool-output/<tool>/<A-nnn>.md`](tool-output/) | One handoff per assignment, in the directory of the tool that ran it: [`claude-code`](tool-output/claude-code/), [`figma`](tool-output/figma/), [`lovable`](tool-output/lovable/), [`gemini`](tool-output/gemini/) | The tool that ran the assignment |
 
 The governance sources remain authoritative: the [status registry](../founder/NYAYOS_STATUS_REGISTRY.json) for task status, the [Decision Log](../founder/NYAYOS_DECISION_LOG_V1.md) for decisions, the [Risk Register](../founder/NYAYOS_RISK_REGISTER_V1.md) for product risks, and the [Founder Authorization Record](../founder/NYAYOS_FOUNDER_AUTHORIZATION_RECORD.md) for gates. These files summarise them for tools; they never override them.
@@ -29,7 +31,7 @@ Because steps 3–5 record the SHA of the pushed work commit, every assignment e
 
 ## Handoff format
 
-File name: the assignment ID, e.g. `tool-output/claude-code/A-044.md`. Required lines and sections:
+Standard schema: [`schemas/handoff.schema.json`](schemas/handoff.schema.json); full contract: [`TOOL_OUTPUT_CONTRACT.md`](TOOL_OUTPUT_CONTRACT.md). File name: the assignment ID, e.g. `tool-output/claude-code/A-044.md`. Required lines and sections:
 
 ```markdown
 # A-nnn handoff — <title>
@@ -41,6 +43,7 @@ File name: the assignment ID, e.g. `tool-output/claude-code/A-044.md`. Required 
 **Baseline:** <40-character SHA the work started from>
 **Commit:** <40-character SHA of the pushed work commit>
 **Pushed:** yes
+**Deployment:** none | staging: https://…
 
 ## Result
 ## Evidence
@@ -54,10 +57,12 @@ File name: the assignment ID, e.g. `tool-output/claude-code/A-044.md`. Required 
 
 - any file above, a schema, a tool directory README or a governance source is missing;
 - a JSON file is invalid or does not match its schema;
+- `STATUS_SUMMARY.md` differs from a fresh render (stale or hand-edited);
 - a derived field is stale against its source (`CURRENT_STATE.derived` vs the registry; `DECISIONS.logged` vs the Decision Log; `DECISIONS.candidates` vs A-032 §9; `RISKS.risks`/`top_five` vs the Risk Register);
 - `CURRENT_STATE.last_assignment` is not the registry's newest task, or its title/status differ from the registry;
 - the recorded commit is not in the checked-out history, or the baseline is not its ancestor;
-- the handoff is missing, malformed, or disagrees with `CURRENT_STATE` (commit, baseline, status, branch);
+- a handoff does not match `schemas/handoff.schema.json` (including `Deployment`: never production), or the last one disagrees with `CURRENT_STATE` (commit, baseline, status, branch);
+- on pull requests (`check --head <sha>`): any file other than the state files changed after the recorded commit (**unrecorded work**);
 - `NEXT_TASK.after` is not the last assignment, or `NEXT_TASK` recommends an already-registered ID;
 - the working branch is not in `NYAYOS_STATUS.json`, or a ruling, open item or residual cites an unknown decision or residual.
 
@@ -66,4 +71,5 @@ Commands:
 ```bash
 node scripts/ai/state.mjs generate
 node scripts/ai/state.mjs check
+node scripts/ai/state.mjs check --head <pull-request head SHA>
 ```

@@ -45,7 +45,14 @@ jobs:
         run: node scripts/governance/registry.mjs generate --check
 
       - name: AI operating state recorded (docs/ai — completion protocol)
-        run: node scripts/ai/state.mjs check
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [ -n "$HEAD_SHA" ]; then
+            node scripts/ai/state.mjs check --head "$HEAD_SHA"   # pull request: also no unrecorded work
+          else
+            node scripts/ai/state.mjs check
+          fi
 
       - name: Pull request references an assignment ID
         if: github.event_name == 'pull_request'

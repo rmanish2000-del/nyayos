@@ -646,3 +646,4 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Limitations** | Commit and push are enforced indirectly (the recorded SHA must be in history and the handoff says pushed); the validator cannot prove a push to a specific remote. Handoff content quality is not checked beyond required fields and sections. Registry `tool` stays free text; `docs/ai` uses four tool slugs. A-043 is not registered in this repository. The A-042 handoff is backfilled |
 | **Rollback** | `git revert` the A-044 work and state commits |
 | **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044.md` |
+| **Re-issued brief (26 Sep 2026)** | Added: standard handoff schema `docs/ai/schemas/handoff.schema.json` (with `Deployment`, never production); generated `docs/ai/STATUS_SUMMARY.md` (replaces founder copy/paste); `docs/ai/TOOL_OUTPUT_CONTRACT.md`; pull-request rule `check --head` failing on unrecorded work after the recorded commit |

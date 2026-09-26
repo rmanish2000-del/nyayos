@@ -5,6 +5,21 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-26 — AI operating system completed: summary, contract, handoff schema (A-044 re-issue)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**
+
+### Added
+
+- `docs/ai/STATUS_SUMMARY.md` — generated one-page status for M365 Copilot and every tool (no founder copy/paste); `check` fails if stale or hand-edited.
+- `docs/ai/TOOL_OUTPUT_CONTRACT.md` and `docs/ai/schemas/handoff.schema.json` — the standard handoff, with a `Deployment` field that can never be production.
+
+### Changed
+
+- `task-gate` runs `state.mjs check --head <PR head>` on pull requests: work committed after the recorded commit fails until it is recorded.
+
+---
+
 ## 2026-09-26 — Repository-centric AI operating system (A-044)
 
 **Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**

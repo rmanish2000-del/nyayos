@@ -1069,12 +1069,15 @@
         "docs/ai/schemas/risks.schema.json",
         "scripts/ai/state.mjs",
         ".github/workflows/task-gate.yml",
-        "CONTRIBUTING.md"
+        "CONTRIBUTING.md",
+        "docs/ai/STATUS_SUMMARY.md",
+        "docs/ai/TOOL_OUTPUT_CONTRACT.md",
+        "docs/ai/schemas/handoff.schema.json"
       ],
       "evidence": "scripts/ai/state.mjs",
       "updated": "2026-09-26",
       "superseded_by": null,
-      "notes": "Baseline fc74038. docs/ai/ holds CURRENT_STATE, NEXT_TASK, DECISIONS and RISKS (JSON Schemas in docs/ai/schemas/) and tool-output/claude-code|figma|lovable|gemini handoff directories. scripts/ai/state.mjs generate rewrites the derived fields (registry counts; Decision Log D-001–D-030; A-032 §9 candidates D-031–D-036; Risk Register R01–R30 and top five); check enforces files, schema validity, derived-field sync, and that the registry's newest assignment is recorded in CURRENT_STATE with a pushed commit in history, a well-formed tool handoff and a NEXT_TASK that follows it. The check is a step of the required task-gate job (checkout with full history). Completion protocol (commit, push, CURRENT_STATE, tool handoff, NEXT_TASK) added to CONTRIBUTING §5, the PR template and the Operating System §28; each assignment ends with a work commit and a state commit. Validator negative controls (schema, stale derived field, NEXT_TASK lag, handoff/commit mismatch, commit not in history) all detected. A-042 handoff backfilled. No product code, SQL or migration changed. Assignment ID A-043 is not registered in this repository."
+      "notes": "Baseline fc74038. docs/ai/ holds CURRENT_STATE, NEXT_TASK, DECISIONS and RISKS (JSON Schemas in docs/ai/schemas/) and tool-output/claude-code|figma|lovable|gemini handoff directories. scripts/ai/state.mjs generate rewrites the derived fields (registry counts; Decision Log D-001–D-030; A-032 §9 candidates D-031–D-036; Risk Register R01–R30 and top five); check enforces files, schema validity, derived-field sync, and that the registry's newest assignment is recorded in CURRENT_STATE with a pushed commit in history, a well-formed tool handoff and a NEXT_TASK that follows it. The check is a step of the required task-gate job (checkout with full history). Completion protocol (commit, push, CURRENT_STATE, tool handoff, NEXT_TASK) added to CONTRIBUTING §5, the PR template and the Operating System §28; each assignment ends with a work commit and a state commit. Validator negative controls (schema, stale derived field, NEXT_TASK lag, handoff/commit mismatch, commit not in history) all detected. A-042 handoff backfilled. No product code, SQL or migration changed. Assignment ID A-043 is not registered in this repository. — Re-issued brief (same day): added the standard handoff schema (docs/ai/schemas/handoff.schema.json, incl. a Deployment field that can never be production), the generated docs/ai/STATUS_SUMMARY.md (the page M365 Copilot reads instead of founder copy/paste; check fails if stale or hand-edited), docs/ai/TOOL_OUTPUT_CONTRACT.md (what every tool reads, writes and never does), and a pull-request rule (check --head) that fails on unrecorded work: after the recorded commit only state files may change."
     }
   ]
 }

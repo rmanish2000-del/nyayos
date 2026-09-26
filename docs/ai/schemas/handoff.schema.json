@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "docs/ai/schemas/handoff.schema.json",
+  "title": "NyayOS tool handoff",
+  "description": "Standard handoff every tool writes to docs/ai/tool-output/<tool>/<A-nnn>.md. The file is Markdown; scripts/ai/state.mjs parses its **Field:** lines and ## sections into this object and validates it. Contract: docs/ai/TOOL_OUTPUT_CONTRACT.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["assignment", "tool", "status", "branch", "baseline", "commit", "pushed", "deployment", "sections"],
+  "properties": {
+    "assignment": { "type": "string", "pattern": "^A-\\d{3}(-R\\d?)?$" },
+    "tool": { "enum": ["claude-code", "figma", "lovable", "gemini"] },
+    "status": { "enum": ["OPEN", "IN_PROGRESS", "REVIEW", "CANONICAL", "SUPERSEDED"] },
+    "branch": { "type": "string", "minLength": 1 },
+    "baseline": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "pushed": { "const": "yes" },
+    "deployment": {
+      "type": "string",
+      "description": "'none', or 'staging: <https URL>' under FA-001. Production is never allowed (FA-002 not granted).",
+      "pattern": "^(none|staging: https://\\S+)$"
+    },
+    "sections": {
+      "type": "array",
+      "description": "Section headings present, in order of the contract.",
+      "const": ["Result", "Evidence", "Limitations", "Next"]
+    }
+  }
+}

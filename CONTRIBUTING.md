@@ -152,6 +152,8 @@ Every tool (Claude Code, Figma, Lovable, Gemini) finishes every assignment with 
 
 Then run `node scripts/ai/state.mjs generate` and `check`, commit the state update and push it. `task-gate` runs the same check: it fails with "assignment state not recorded" until steps 3–5 are pushed. Format and rules: [`docs/ai/README.md`](docs/ai/README.md).
 
+Read [`docs/ai/STATUS_SUMMARY.md`](docs/ai/STATUS_SUMMARY.md) (generated) before starting. Handoff format and per-tool rules: [`docs/ai/TOOL_OUTPUT_CONTRACT.md`](docs/ai/TOOL_OUTPUT_CONTRACT.md). On pull requests the check also fails on **unrecorded work** — any change after the recorded commit other than the state files.
+
 ### State limitations honestly
 
 Every assignment row has a **Limitations** field. Fill it in. Unverified citations, missing inputs, assumptions made, checks not run — record them. An unstated limitation becomes a false decision three months later.
