@@ -6,7 +6,7 @@ Read this page first. State as of **2026-09-26**. Sources: [CURRENT_STATE](CURRE
 
 ## Where we are
 
-FM-A foundation on feature/fma-foundation-v1 (draft PR #2, unmerged): domain layer, migrations 0001-0008, deletion lifecycle through a verified purge worker, the U01-U21 traceability addendum, and (A-044) this repository-centric AI operating system with an enforced completion protocol. Every fix A-032 listed as required before merge is closed; no screen is READY (PARTIAL 4, MISSING 17); nothing is deployed and no environment exists. Next is the founder's merge-readiness review.
+FM-A foundation on feature/fma-foundation-v1 (draft PR #2, unmerged): domain layer, migrations 0001-0008, deletion lifecycle through a verified purge worker, the U01-U21 traceability addendum, and (A-044) this repository-centric AI operating system with an enforced completion protocol. Every fix A-032 listed as required before merge is closed; no screen is READY (PARTIAL 4, MISSING 17); nothing is deployed and no environment exists. A-043 adds the Wave-1 UI (U01 Google entry, U04–U09, U16, U17) on synthetic fixtures only; Figma MVP Design Package V1 not supplied, so design conformance is unverified. Next is the founder's merge-readiness review.
 
 | | |
 |---|---|
@@ -40,6 +40,7 @@ Blocked by:
 
 - D-035 and D-036 founder decisions (founder)
 - FD-02 hosting / India-region decision (blocks wave W1) (founder)
+- Figma MVP Design Package V1 (A-008) for A-043 design conformance review (founder)
 
 ## Open items
 
@@ -54,12 +55,13 @@ Blocked by:
 | OI-07 | finding | A-032 minor findings m-2 to m-12 remain open as non-blocking follow-ups. | RES-03 |
 | OI-08 | dependency | Figma FM-A package (A-008) never supplied; no screen has prototype design evidence. | RES-04 |
 | OI-09 | dependency | FD-02 hosting / India-region decision open; no staging database exists. | RES-05 |
+| OI-10 | dependency | A-043 MVP Wave-1 UI (Lovable, REVIEW, commit 9d238423, handoff docs/ai/tool-output/lovable/A-043.md) awaits design conformance review: Figma MVP Design Package V1 (A-008) not supplied. | — |
 
 ## Registry
 
-44 tasks — CANONICAL 27 · REVIEW 11 · IN_PROGRESS 0 · OPEN 6 · SUPERSEDED 0. Newest: A-044.
+45 tasks — CANONICAL 27 · REVIEW 12 · IN_PROGRESS 0 · OPEN 6 · SUPERSEDED 0. Newest: A-044.
 
-- **In review:** A-030, A-033, A-033-R, A-036, A-037, A-038, A-039, A-040, A-041, A-042, A-044
+- **In review:** A-030, A-033, A-033-R, A-036, A-037, A-038, A-039, A-040, A-041, A-042, A-043, A-044
 - **Open:** A-008 (Figma V2 — Fact Card and journey design); A-009 (User interviews and WTP validation); A-012 (Production build / deployment); A-015 (Sprint 2 — Fact Card System build); A-016 (Typography decision → Decision Log (D-019)); A-028 (Print source corrections)
 
 ## Decisions awaiting the founder
@@ -89,6 +91,7 @@ Top five (Risk Register): Unsupported claims · Sensitive-data leakage · Episte
 ## Handoffs on record
 
 - [A-042](tool-output/claude-code/A-042.md) — `claude-code`
+- [A-043](tool-output/lovable/A-043.md) — `lovable`
 - [A-044](tool-output/claude-code/A-044.md) — `claude-code`
 
 ## Rules for the next tool

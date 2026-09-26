@@ -25,7 +25,7 @@
     "pushed": true,
     "handoff": "docs/ai/tool-output/claude-code/A-044.md"
   },
-  "summary": "FM-A foundation on feature/fma-foundation-v1 (draft PR #2, unmerged): domain layer, migrations 0001-0008, deletion lifecycle through a verified purge worker, the U01-U21 traceability addendum, and (A-044) this repository-centric AI operating system with an enforced completion protocol. Every fix A-032 listed as required before merge is closed; no screen is READY (PARTIAL 4, MISSING 17); nothing is deployed and no environment exists. Next is the founder's merge-readiness review.",
+  "summary": "FM-A foundation on feature/fma-foundation-v1 (draft PR #2, unmerged): domain layer, migrations 0001-0008, deletion lifecycle through a verified purge worker, the U01-U21 traceability addendum, and (A-044) this repository-centric AI operating system with an enforced completion protocol. Every fix A-032 listed as required before merge is closed; no screen is READY (PARTIAL 4, MISSING 17); nothing is deployed and no environment exists. A-043 adds the Wave-1 UI (U01 Google entry, U04–U09, U16, U17) on synthetic fixtures only; Figma MVP Design Package V1 not supplied, so design conformance is unverified. Next is the founder's merge-readiness review.",
   "open_items": [
     {
       "id": "OI-01",
@@ -79,16 +79,21 @@
       "kind": "dependency",
       "description": "FD-02 hosting / India-region decision open; no staging database exists.",
       "risk": "RES-05"
+    },
+    {
+      "id": "OI-10",
+      "kind": "dependency",
+      "description": "A-043 MVP Wave-1 UI (Lovable, REVIEW, commit 9d238423, handoff docs/ai/tool-output/lovable/A-043.md) awaits design conformance review: Figma MVP Design Package V1 (A-008) not supplied."
     }
   ],
   "derived": {
     "source": "docs/founder/NYAYOS_STATUS_REGISTRY.json",
     "registry_updated": "2026-09-26",
-    "task_count": 44,
+    "task_count": 45,
     "by_status": {
       "OPEN": 6,
       "IN_PROGRESS": 0,
-      "REVIEW": 11,
+      "REVIEW": 12,
       "CANONICAL": 27,
       "SUPERSEDED": 0
     },
@@ -113,6 +118,7 @@
       "A-040",
       "A-041",
       "A-042",
+      "A-043",
       "A-044"
     ]
   }
