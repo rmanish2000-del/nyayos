@@ -5,6 +5,304 @@ Newest first. One entry per commit or per material decision.
 
 **Format:** `## YYYY-MM-DD — <summary>` followed by Added / Changed / Decided / Blocked / Notes.
 
+## 2026-09-27 — Canonical integration: Figma A-063 audit validated, Lovable fix specification issued (A-064)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed.**
+
+### Added
+
+- `docs/ai/tool-output/figma/A-063/` — Figma's A-043 audit, cherry-picked unchanged from draft PR #3 (`dbc415f` → `76b6eb6`). Registry A-063 REVIEW.
+- `docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md` — every A-063 finding checked against the code; A-050 and A-057 rejected (all cited paths nonexistent). Registry A-064 REVIEW.
+- `docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md` — the only A-043 fix list (F-01 to F-10), issued to Lovable as A-065 (OPEN, after the PR #2 merge).
+
+---
+
+## 2026-09-27 — Repository state reconciliation: Gemini A-047 is a placeholder only (A-062)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed.**
+
+### Changed
+
+- `docs/ai/tool-output/gemini/A-047/` inspected: a blocked ownership placeholder, not a completion; blocked status confirmed and kept. Status output, `CURRENT_STATE` and `STATUS_SUMMARY` now label such records "placeholder only, no output committed". PR #3's new A-057 audit recorded. Registry A-062 REVIEW.
+
+---
+
+## 2026-09-27 — FM-A merge readiness and decision reconciliation (A-048)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft and unmerged. Nothing deployed.**
+
+### Added
+
+- `docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md` — PR #2 verified (205 files; all suites pass); PR #3 conflicts; integration procedure (merge commit only).
+- Decision Log: D-031, D-032 (A-038 rulings), D-035 partly (Google Login MVP primary sign-in; Scope Sheet numbering controls), D-036 (block policy; content-free tombstones).
+
+### Changed
+
+- U01–U21 addendum rebaselined against A-043: PARTIAL 11, MISSING 10, READY 0. Registry A-048 REVIEW.
+
+---
+
+## 2026-09-26 — AI operating system: canonical state, ownership and staleness gates, status command (A-044-R2)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**
+
+### Added
+
+- `node scripts/ai/state.mjs status [--json]`: last completed task per tool, active tasks, next awaited output, next recommended assignment.
+- Blocked handoffs (ownership of work not in the repository); Gemini A-047 recorded as blocked — repository handoff missing (registered OPEN).
+
+### Changed
+
+- `CURRENT_STATE.json` and `NEXT_TASK.json` are canonical (`authority: canonical`); `tools.<tool>` is fully derived. CI also fails on missing task ownership and a stale NEXT_TASK. Registry A-044-R2 REVIEW, A-047 OPEN.
+
+---
+
+## 2026-09-26 — Tool handoff system completed and repaired (A-044-R)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**
+
+### Added
+
+- Per-task handoffs `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` (schema `docs/ai/schemas/handoff.schema.json`); tagged completion commits `[TOOL:<TOOL>][TASK:<task-id>]`.
+- `CURRENT_STATE.json` 2.0 (per-tool latest completion, active and blocked tasks, awaited outputs in order) and `NEXT_TASK.json` 2.0; schemas `current-state.schema.json` and `next-task.schema.json`.
+- `scripts/ai/state.test.mjs` — 25 tests over throwaway git fixtures (all four tools; every failure mode).
+
+### Changed
+
+- `scripts/ai/state.mjs` enforces tool ownership, commit history, exact file lists, commit tags and stale or contradictory state; `task-gate` runs the tests and the check. A-042 and A-044 handoffs backfilled; Markdown handoffs, `TOOL_OUTPUT_CONTRACT.md` and the underscore-named schemas removed. Registry A-044-R REVIEW.
+
+---
+
+## 2026-09-26 — AI operating system completed: summary, contract, handoff schema (A-044 re-issue)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**
+
+### Added
+
+- `docs/ai/STATUS_SUMMARY.md` — generated one-page status for M365 Copilot and every tool (no founder copy/paste); `check` fails if stale or hand-edited.
+- `docs/ai/TOOL_OUTPUT_CONTRACT.md` and `docs/ai/schemas/handoff.schema.json` — the standard handoff, with a `Deployment` field that can never be production.
+
+### Changed
+
+- `task-gate` runs `state.mjs check --head <PR head>` on pull requests: work committed after the recorded commit fails until it is recorded.
+
+---
+
+## 2026-09-26 — Repository-centric AI operating system (A-044)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Governance tooling only; nothing deployed or merged.**
+
+### Added
+
+- `docs/ai/` — `CURRENT_STATE.json`, `NEXT_TASK.json`, `DECISIONS.json`, `RISKS.json` with JSON Schemas, and per-tool handoff directories (`claude-code`, `figma`, `lovable`, `gemini`).
+- `scripts/ai/state.mjs` — `generate` (derived fields from the registry, Decision Log, A-032 §9 and Risk Register) and `check` (existence, schema validity, derived-field sync, last assignment recorded with pushed commit, handoff and NEXT_TASK).
+
+### Changed
+
+- `task-gate` runs the check (full-history checkout). Completion protocol — commit, push, update CURRENT_STATE, write the tool handoff, update NEXT_TASK — added to `CONTRIBUTING.md`, the PR template and the Operating System §28. Registry A-044 REVIEW.
+
+---
+
+## 2026-09-26 — Dispute status server-controlled: A-032 m-1 closed (A-042)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0008` not applied to any environment.**
+
+### Added
+
+- `db/migrations/0008_dispute_status_authorization.sql` — clients lose `UPDATE (status)` on disputes; status follows the deletion workflow only (request, undo) through a server-side trigger, with the undo audited.
+- `db/tests/dispute_status_0001.sql` (21 checks; reproduces m-1 on the baseline). Smoke +2 checks.
+
+### Changed
+
+- One A-040 purge-suite assertion now expects the undo's status change and `deletion.undone` event. A-032 report records m-1 closed; registry A-042 REVIEW.
+
+---
+
+## 2026-09-26 — U01–U21 traceability addendum: A-032 M-8 closed (A-041)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Documentation only: no code, SQL, migration or test changed. Nothing deployed or merged.**
+
+### Added
+
+- `docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md` — authoritative U01–U21 map under Scope Sheet IDs: status READY 0 · PARTIAL 4 · MISSING 17 with file-level evidence, cross-maps for every alternative numbering, fifteen content conflicts with decisions, and the U18 deletion limitations.
+
+### Changed
+
+- A-032 review §0 records M-8 closed and m-1 open; A-030 gap report gains an addendum pointer (U03 reconciled to MISSING); `docs/INDEX.md` lists the addendum. Registry A-041 REVIEW.
+
+---
+
+## 2026-09-24 — Deletion purge worker: A-032 M-3 closed (A-040)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0007` not applied to any environment.**
+
+### Added
+
+- `db/migrations/0007_deletion_purge_worker.sql` — server-only `purge_deletion_request()` for the deletion service: consumes the A-039 enumeration as the requester, refuses undo-window, undone, legal-hold and unauthorised requests, deletes only purge candidates after an orphan closure, writes a content-free tombstone and an audit event in the same transaction, reruns idempotently.
+- `DELETION_PURGE_ORDER`, `purgeGate`, `purgeCandidates`, `purgeOutcome` and the `purge_incomplete` transition in `deletion.ts`; `deletion-purge.test.ts`; `db/tests/deletion_purge_0001.sql` (55 checks) and `db/tests/deletion_purge_concurrency.sh`. Smoke +3 checks.
+
+### Changed
+
+- `document_versions` and `user_corrections` accept DELETE only inside an active purge; UPDATE stays forbidden. schema-lint checks purge-order parity. Registry A-040 REVIEW; A-032 report records M-3 closed.
+
+---
+
+## 2026-09-24 — Deletion scope graph completed: A-032 M-6 closed (A-039)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0006` not applied to any environment. No purge.**
+
+### Added
+
+- `db/migrations/0006_deletion_scope_graph.sql` — explicit graph `deletion_graph_v1()` (every table decided) and read-only `enumerate_deletion_scope()` classifying every record as purge candidate, retained audit metadata, retained legal hold, blocked by active reference, outside request scope or configuration-controlled; manual `legal_hold_dispute_ids` configuration.
+- `DELETION_GRAPH` twin in `deletion.ts` with schema-lint parity; `deletion-graph.test.ts`; `db/tests/deletion_scope_0001.sql` (28 checks incl. a catalogue-driven completeness oracle and a zero-mutation fingerprint). Smoke +3 checks.
+
+### Changed
+
+- `tablesForScope` now derives from the graph instead of single scope columns. Registry A-039 REVIEW; A-032 report records M-6 closed.
+
+---
+
+## 2026-09-24 — Audit hash contract and audit atomicity: A-032 M-2 and M-7 closed (A-038)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0005` not applied to any environment.**
+
+### Added
+
+- `db/migrations/0005_audit_contract_and_atomicity.sql` — audit hash contract `nyayos-audit-v1` (shared with `app/src/domain/audit.ts`); the five single-writer server functions write their audit event in the same transaction (D-031); `verify_audit_chain` on the same contract. Removes a latent defect: the old SQL serialisation rendered `occurred_at` in the session time zone.
+- Golden vectors `db/tests/audit_hash_vectors_v1.json` (13; checked by SQL and Vitest), `audit_hash_vectors_v1.sql`, `audit_atomicity_0001.sql` (fault injection), `audit_interop_export.sql` and the PostgreSQL-written chain fixture verified by TypeScript. Concurrency matrix gains a server-function burst.
+
+### Changed
+
+- `audit.ts`: new canonicalisation, `normalizeAuditTimestamp`, `fromSqlAuditRow`; audit test fixtures use UUIDs. Smoke check `my_activity_own_rows_only` now asserts ownership rather than a fixed row count; new `A038_server_writes_are_audited`. Deletion-authz invariant count scoped to its own users.
+- Registry A-038 REVIEW; A-032 report post-fix block records M-2 and M-7 closed.
+
+---
+
+## 2026-09-24 — Critical remediation: A-032 C-1 completed, C-2 re-verified (A-033-R)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed or merged; `0004` not applied to any environment.**
+
+### Found
+
+- At `8489353` the audit chain still forked: under a REPEATABLE READ writer (snapshot older than the lock) and under a 10×5 READ COMMITTED burst (the identity default assigned `seq` before the lock, so sequence order drifted from chain order and the verifier falsely reported tampering). A-033's closure of C-1 was incomplete.
+- C-2 was genuinely closed: 25 adversarial checks pass at baseline.
+
+### Added
+
+- `db/migrations/0004_audit_chain_order.sql` — trigger assigns `seq` under the advisory lock; unique index on `audit_events.prev_hash`; USAGE on the sequence for the audit role. Rollback in the header.
+- `db/tests/audit_concurrency_matrix.sh` (RC / RR / SERIALIZABLE pairs + parallel burst) and `db/tests/deletion_authz_0001.sql` (cross-tenant, cross-dispute, role, bypass, deadline, leakage).
+- Smoke suite: 3 `C1R_*` checks (78/78). Registry ID pattern accepts an `-R` suffix.
+
+### Changed
+
+- Registry: A-033-R REVIEW; A-032 and A-033 notes; A-032 report post-fix block records C-1 closed by A-033-R.
+
+---
+
+## 2026-09-24 — Stale Output Detection V1 (A-037)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed; `0003` not applied to any environment.**
+
+### Added
+
+- `app/src/domain/staleness.ts` — version-only comparison of an export manifest against current canonical versions: CURRENT / STALE / UNKNOWN with per-entry reasons; missing or malformed data is UNKNOWN, never CURRENT; timestamps never read; nothing mutated.
+- `db/migrations/0003_export_staleness.sql` — SECURITY INVOKER, STABLE `export_staleness(uuid)`; lookups confined to the export's dispute; invisible and nonexistent exports both return zero rows. Rollback: `drop function if exists nyayos.export_staleness(uuid);`.
+- `StaleOutputNotice` — informational warning with counts and a review link; no regenerate control; states the export and originals are unchanged. Bilingual copy.
+- Tests: 12 domain, 4 component (Vitest 162/162); 13 smoke checks (75/75 with `0001`+`0002`+`0003`). Registry A-037 REVIEW.
+
+---
+
+## 2026-09-24 — Duplicate Detection V1 (A-036)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft. Nothing deployed; `0002` not applied to any environment.**
+
+### Added
+
+- `app/src/domain/duplicate.ts` — hash-level, tenant-scoped, informational duplicate detection (never merges, rejects or deletes); `duplicateAuditMetadata` (ids and counts only).
+- `db/migrations/0002_duplicate_lookup.sql` — index on `document_versions.sha256`; SECURITY INVOKER `find_duplicate_versions(text)` (RLS-scoped); `duplicate_detection_mode = inform`.
+- `EvidenceCard.duplicateOf` chip; bilingual `duplicate_detected` copy; `fillCopy` helper.
+- Tests: 8 domain, 1 component, 8 smoke checks (62/62 with `0001`+`0002`). Registry A-036 REVIEW.
+
+---
+
+## 2026-09-23 — WAVE0 implementation plan V1 (A-035)
+
+**Branch `feature/fma-foundation-v1`, plan only; no code.** Added `docs/implementation/A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md`: A-034 findings re-verified against code; per-item reuse (files, database objects, APIs, UI), new files, migration yes/no, risk and order for Duplicate Detection, Stale Output Detection, Contradiction Registry surfacing, Missing Material surfacing and Correction Propagation. FIRST BUILD ITEM: Duplicate Detection then Stale Output Detection. HIGHEST VALUE: Correction Propagation in re-flag form (founder confirmation requested). Imported the two backlog files as founder-named inputs into `docs/product/`; case handoffs not imported.
+
+---
+
+## 2026-09-23 — Gap analysis V1 against the validated backlog (A-034)
+
+**Branch `feature/fma-foundation-v1`, read-only analysis.** Added `NYAYOS_GAP_ANALYSIS_V1.md` (root, beside the operating system): feature, architecture, data-model, provenance, audit, document-processing, chronology, contradiction, isolation and versioning inventories at `afe4744`, compared against WAVE_0 and WAVE_1. Backlog definitions read from the untracked `NYAYOS_PRODUCT_VALIDATION/` folder (not committed; founder decision pending). Result: 3 ALREADY_EXISTS (Case Isolation, Date Precision, Stable Document IDs) · 6 PARTIALLY_EXISTS · 4 MISSING; implementation sequence and five lowest-effort/highest-value items; assumptions and risks recorded. No feature designed; no code changed.
+
+---
+
+## 2026-09-23 — A-030 critical fix pack: C-1, C-2, M-1, M-4, M-5 closed (A-033)
+
+**Branch `feature/fma-foundation-v1`, PR #2 still draft.** Fixes only; no redesign; no new documents; nothing deployed.
+
+### Changed
+
+- `db/migrations/0001_fma_foundation.sql` (unmerged; edited in place): advisory transaction lock serialises audit-chain writers (C-1); `request_deletion()` replaces the direct INSERT path on `deletion_requests` and verifies scope ownership (C-2); `decide_proposal` refuses identity keys, sets `created_by` server-side, refuses `ai_extraction`, validates `source_ref`; CHECK constraints for provenance shape (11 tables) and FM-A origin lock (10 tables) (M-4).
+- `app/src/domain`: order-independent consent check (M-1); `SERVER_CONTROLLED_KEYS` guard and AI-origin refusal in `proposeChange` (M-4); explicit `itemType` on canonical items, typed manifest entries, heuristic removed (M-5); `newDeletionRequest` verifies ownership (C-2 mirror).
+- Tests: 6 Vitest tests added; 13 smoke checks added (54/54 total PASS); `db/tests/audit_concurrency_0001.sh` two-session proof added and passing.
+- Registry: A-033 REVIEW; A-030 and A-032 notes updated. `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md` gains a post-fix status block.
+
+### Not changed
+
+Architecture, documents, `main`, environments. Open from A-032: m-1, M-8 addendum, D-031…D-036.
+
+---
+
+## 2026-09-23 — Independent merge-readiness review of A-030: MERGE WITH FIXES (A-032)
+
+**Branch `feature/fma-foundation-v1`, not `main`.** Review only; no code changed.
+
+### Added
+
+- **`docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md`** — fresh review of PR #2 at `63ac9f29`. Verdict **MERGE WITH FIXES**: 2 critical (audit hash chain forks under concurrent writers; deletion-request policy accepts any scope id with client-chosen undo window), 8 major (consent-withdrawal ordering, TS/SQL audit hash non-interoperability, no purge path for the deletion worker, client-settable provenance fields incl. `ai_extraction`, manifest item-type ambiguity, deletion enumeration misses tenant-scoped tables, audit not atomic with canonical writes, two conflicting U01–U21 numberings), 12 minor. Eleven defects verified by execution.
+- Text extracts of the **FM-A Product & User Flow** and **FM-0 Concierge** decks (mandated review inputs; not A-030 inputs).
+
+### Changed
+
+- Registry: A-032 added CANONICAL; A-030 note updated (remains REVIEW).
+
+### Not changed
+
+No fix applied to code or SQL; no deployment; no environment; `main` untouched.
+
+---
+
+## 2026-09-23 — FM-A foundation build on `feature/fma-foundation-v1`; specification set imported (A-030, A-031)
+
+**Branch, not `main`.** All changes below live on `feature/fma-foundation-v1` (from `main` at `6c6b478ffa1a811ba435d2891b0b3179a3a7043d`) and await a founder-reviewed pull request. No direct `main` commit.
+
+### Added
+
+- **Specifications imported unchanged (A-031, CANONICAL):** Security & Data Architecture Spec V1 (closes A-010 → CANONICAL), Fast Mode Strategy V1, FM-A Scope Sheet V1, Build Brief V2, Counsel Brief V1, FM-0 Concierge Pack V1; verbatim text extracts of the two executive decks (binaries gitignored).
+- **`docs/architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md`** — Phase 1 repository assessment, architecture inventory, conflict list, integration strategy.
+- **`app/src/domain/`** — 14 TypeScript modules: enums declared in full with FM-A-enabled subsets (CR-3); table registry and deletion allow-list (CR-4); [PROV] configuration; server-built request context; `isDisputeMember` / `grantAllows` (always false in FM-A, CR-2); consent enforcement with `aggregate_analytics` and `model_improvement` hard-locked (S8); personal-tenant sign-up; dispute core with the fixed provenance contract (CR-8); single-writer proposal → correction pipeline and version-chain rebuild (S3, Deck G2); evidence lifecycle state machine — no promotion without a clean verdict, no timeout promotion (S5); hash-chained, content-free audit (S7); export manifest that excludes and lists incomplete provenance (Deck G4); deletion lifecycle with honest status and content-free tombstones (S9, OL-03 interim); bilingual required copy and prohibited-wording guard (FN-16).
+- **`app/tests/domain/`** — 8 files, 79 tests. Suite total 132/132.
+- **`db/migrations/0001_fma_foundation.sql`** — 39 tables, RLS enabled + forced everywhere, helpers, single-writer functions, audit trigger, allow-list seed, self-check. **Not applied to any environment** (none exists); executed once on an ephemeral local Postgres 16.14 container with synthetic data — **`db/tests/smoke_0001.sql` 41/41 PASS**; three execution-only defects fixed before commit.
+- **`scripts/db/schema-lint.mjs`** + **`schema-lint`** workflow — static SEC-RLS-01 / SEC-DEL-06 and TypeScript/SQL twin parity.
+- **`docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md`** — U01–U21 READY / PARTIAL / MISSING, S1–S16 coverage with Scope-Sheet-vs-Deck numbering reconciliation, entity diagram, technical risks, implementation waves.
+
+### Changed
+
+- Registry: A-010 → **CANONICAL** (spec delivered and supplied as a build input); A-031 added CANONICAL; A-030 added **REVIEW**; A-008 note — Figma package not found.
+- `README.md`, `docs/INDEX.md`, `NYAYOS_STATUS.json`, `NYAYOS_OPERATING_SYSTEM.md` (addendum §27), `app/README.md`, `app/roadmap.md` updated to describe the branch state.
+
+### Found
+
+- **The Figma FM-A source handoff package does not exist** in Downloads, OneDrive, Desktop, Documents or any GitHub repository. Phase 2 (import U01–U21 UI) could not be executed; U01–U21 were mapped against the existing 17 components instead.
+- The Executive Architecture Deck and the FM-A Scope Sheet **number S1–S16 differently**; the Scope Sheet numbering is adopted and a cross-map is recorded.
+- The Deck's "reference-checked deletion" (block) and the Scope Sheet's SEC-DEL-01 (references removed) disagree; recorded as `document_reference_policy` [PROV], default `block`.
+- `app/src/lib/lovable-error-reporting.ts` is an editor-only telemetry shim (inert outside the Lovable preview); retained and documented, not a production claim.
+
+### Not changed
+
+No deployment, no production change, no database provisioned or written, no AI code path, no legal or procedural content, no marketplace or fee path. `main` untouched.
+
 ---
 
 ## 2026-09-22 — Operating system and status established; decisions D-019–D-030 reconciled (A-029)

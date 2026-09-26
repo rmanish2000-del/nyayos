@@ -1,0 +1,159 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-044-R",
+  "tool": "claude-code",
+  "status": "completed",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "c1c49d535da1125982b48a728d7125c62159213c",
+  "completion_commit": "1c080432d6d183e98073da2aa4e89b33ab85c734",
+  "completed_at": "2026-09-26T16:49:42Z",
+  "files_created": [
+    "docs/ai/schemas/current-state.schema.json",
+    "docs/ai/schemas/next-task.schema.json",
+    "docs/ai/tool-output/claude-code/A-042/HANDOFF.json",
+    "docs/ai/tool-output/claude-code/A-042/SUMMARY.md",
+    "docs/ai/tool-output/claude-code/A-044/HANDOFF.json",
+    "docs/ai/tool-output/claude-code/A-044/SUMMARY.md",
+    "docs/ai/tool-output/lovable/A-043/REPORT.md",
+    "scripts/ai/state.test.mjs"
+  ],
+  "files_modified": [
+    ".github/pull_request_template.md",
+    ".github/workflows/task-gate.yml",
+    "CONTRIBUTING.md",
+    "NYAYOS_OPERATING_SYSTEM.md",
+    "NYAYOS_STATUS.json",
+    "docs/INDEX.md",
+    "docs/ai/CURRENT_STATE.json",
+    "docs/ai/NEXT_TASK.json",
+    "docs/ai/README.md",
+    "docs/ai/STATUS_SUMMARY.md",
+    "docs/ai/schemas/handoff.schema.json",
+    "docs/ai/tool-output/claude-code/README.md",
+    "docs/ai/tool-output/figma/README.md",
+    "docs/ai/tool-output/gemini/README.md",
+    "docs/ai/tool-output/lovable/A-043/HANDOFF.json",
+    "docs/ai/tool-output/lovable/A-043/SUMMARY.md",
+    "docs/ai/tool-output/lovable/README.md",
+    "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+    "docs/founder/NYAYOS_CHANGELOG.md",
+    "docs/founder/NYAYOS_DEPENDENCY_GRAPH.md",
+    "docs/founder/NYAYOS_STATUS_DASHBOARD.md",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.md",
+    "scripts/ai/state.mjs"
+  ],
+  "files_deleted": [
+    "docs/ai/TOOL_OUTPUT_CONTRACT.md",
+    "docs/ai/schemas/current_state.schema.json",
+    "docs/ai/schemas/next_task.schema.json",
+    "docs/ai/tool-output/claude-code/A-042.md",
+    "docs/ai/tool-output/claude-code/A-044.md",
+    "docs/ai/tool-output/lovable/A-043.md"
+  ],
+  "tests": [
+    {
+      "name": "handoff validator tests",
+      "command": "node --test scripts/ai/state.test.mjs",
+      "result": "pass",
+      "detail": "25/25: valid claude-code, gemini, lovable and figma handoffs; unknown tool; missing task ID; missing and invalid commit; untagged commit; missing and omitted output paths; missing HANDOFF.json; registry completion without handoff; duplicate ownership; contradictory state (x2); stale state (x2); hand-edited summary; unrecorded work; handoff attachments; production deployment; required workflow with --head"
+    },
+    {
+      "name": "repository state check",
+      "command": "node scripts/ai/state.mjs check --head <state commit>",
+      "result": "pass",
+      "detail": "run before the state commit was pushed"
+    },
+    {
+      "name": "registry",
+      "command": "node scripts/governance/registry.mjs validate; generate --check",
+      "result": "pass",
+      "detail": "46 tasks, 0 errors"
+    },
+    {
+      "name": "schema lint",
+      "command": "node scripts/db/schema-lint.mjs",
+      "result": "pass"
+    },
+    {
+      "name": "typecheck",
+      "command": "npx tsc --noEmit -p app",
+      "result": "pass"
+    },
+    {
+      "name": "vitest (CI)",
+      "command": "dependency-check job, npm run test on 3455003",
+      "result": "pass",
+      "detail": "233/233 on ubuntu; application code unchanged by A-044-R"
+    },
+    {
+      "name": "vitest (local Windows)",
+      "command": "npx vitest run",
+      "result": "fail",
+      "detail": "Lovable A-043 tests: timeouts above the 5 s default and one jsdom SubtleCrypto.digest type error in tests/mvp.test.tsx (U06); 47/48 of the two affected files pass with --testTimeout=30000; not caused by A-044-R (no app/ change); passes in CI"
+    },
+    {
+      "name": "task-gate on completion commit 3455003",
+      "command": "GitHub Actions",
+      "result": "fail",
+      "detail": "expected: completion without HANDOFF.json and unrecorded work until this state commit"
+    }
+  ],
+  "evidence": [
+    {
+      "description": "validator",
+      "ref": "scripts/ai/state.mjs"
+    },
+    {
+      "description": "validator tests",
+      "ref": "scripts/ai/state.test.mjs"
+    },
+    {
+      "description": "protocol documentation",
+      "ref": "docs/ai/README.md"
+    },
+    {
+      "description": "handoff schema",
+      "ref": "docs/ai/schemas/handoff.schema.json"
+    },
+    {
+      "description": "first work commit (rebased onto Lovable's c1c49d5)",
+      "ref": "34550033562f05ec267c46b9042c494f62e87b56"
+    },
+    {
+      "description": "completion commit",
+      "ref": "1c080432d6d183e98073da2aa4e89b33ab85c734"
+    }
+  ],
+  "limitations": [
+    "Lovable pushed A-043 and A-043-R during the work; A-044-R was rebased onto them (no history rewritten on the remote) and converted Lovable's A-043 handoff to the standard schema with its facts unchanged; A-043.md moved to docs/ai/tool-output/lovable/A-043/REPORT.md.",
+    "Lovable's earlier staging builds (A-011 to A-026) have no handoffs and none were fabricated; Figma has no repository output (A-008 blocked); Gemini has no records.",
+    "The validator proves commits are in the checked-out history, not which remote received them.",
+    "Locally on Windows, Lovable's A-043 tests time out or hit a jsdom SubtleCrypto difference; CI passes 233/233."
+  ],
+  "risks": [
+    {
+      "description": "A tool that ignores the protocol is caught only when its pull request runs task-gate; direct pushes to the feature branch show red CI until recorded",
+      "severity": "low"
+    },
+    {
+      "description": "A-043 UI design conformance unverified until the Figma package (A-008) arrives",
+      "severity": "medium",
+      "ref": "RES-04"
+    }
+  ],
+  "rollback": "git revert --no-edit $(git log --format=%H --grep='^\\[TOOL:CLAUDE-CODE\\]\\[TASK:A-044-R\\]' 34550033562f05ec267c46b9042c494f62e87b56^..HEAD) — reverts, newest first, the A-044-R state commit, 1c080432d6d183e98073da2aa4e89b33ab85c734 and 34550033562f05ec267c46b9042c494f62e87b56, restoring the A-044 Markdown handoffs and the previous validator; no force push",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": null,
+    "tool": "founder",
+    "reason": "Founder merge-readiness review of draft PR #2, D-035 (incl. the F01 sign-in method) and D-036; supply the Figma package (A-008) for the A-043 design conformance review."
+  }
+}

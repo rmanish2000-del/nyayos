@@ -10,33 +10,196 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DisputesRouteImport } from './routes/disputes'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as DisputesIndexRouteImport } from './routes/disputes.index'
+import { Route as DisputesDisputeIdRouteImport } from './routes/disputes.$disputeId'
+import { Route as DisputesNewRouteImport } from './routes/disputes.new'
+import { Route as DisputesDisputeIdIndexRouteImport } from './routes/disputes.$disputeId.index'
+import { Route as DisputesDisputeIdEvidenceRouteImport } from './routes/disputes.$disputeId.evidence'
+import { Route as DisputesDisputeIdFactsRouteImport } from './routes/disputes.$disputeId.facts'
+import { Route as DisputesDisputeIdIntakeRouteImport } from './routes/disputes.$disputeId.intake'
+import { Route as DisputesDisputeIdTimelineRouteImport } from './routes/disputes.$disputeId.timeline'
+import { Route as DisputesDisputeIdDocumentsDocumentIdRouteImport } from './routes/disputes.$disputeId.documents.$documentId'
+import { Route as DisputesDisputeIdExportIndexRouteImport } from './routes/disputes.$disputeId.export.index'
+import { Route as DisputesDisputeIdExportResultRouteImport } from './routes/disputes.$disputeId.export.result'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DisputesRoute = DisputesRouteImport.update({
+  id: '/disputes',
+  path: '/disputes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DisputesIndexRoute = DisputesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DisputesRoute,
+} as any)
+const DisputesDisputeIdRoute = DisputesDisputeIdRouteImport.update({
+  id: '/$disputeId',
+  path: '/$disputeId',
+  getParentRoute: () => DisputesRoute,
+} as any)
+const DisputesNewRoute = DisputesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => DisputesRoute,
+} as any)
+const DisputesDisputeIdIndexRoute = DisputesDisputeIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DisputesDisputeIdRoute,
+} as any)
+const DisputesDisputeIdEvidenceRoute =
+  DisputesDisputeIdEvidenceRouteImport.update({
+    id: '/evidence',
+    path: '/evidence',
+    getParentRoute: () => DisputesDisputeIdRoute,
+  } as any)
+const DisputesDisputeIdFactsRoute = DisputesDisputeIdFactsRouteImport.update({
+  id: '/facts',
+  path: '/facts',
+  getParentRoute: () => DisputesDisputeIdRoute,
+} as any)
+const DisputesDisputeIdIntakeRoute = DisputesDisputeIdIntakeRouteImport.update({
+  id: '/intake',
+  path: '/intake',
+  getParentRoute: () => DisputesDisputeIdRoute,
+} as any)
+const DisputesDisputeIdTimelineRoute =
+  DisputesDisputeIdTimelineRouteImport.update({
+    id: '/timeline',
+    path: '/timeline',
+    getParentRoute: () => DisputesDisputeIdRoute,
+  } as any)
+const DisputesDisputeIdDocumentsDocumentIdRoute =
+  DisputesDisputeIdDocumentsDocumentIdRouteImport.update({
+    id: '/documents/$documentId',
+    path: '/documents/$documentId',
+    getParentRoute: () => DisputesDisputeIdRoute,
+  } as any)
+const DisputesDisputeIdExportIndexRoute =
+  DisputesDisputeIdExportIndexRouteImport.update({
+    id: '/export/',
+    path: '/export/',
+    getParentRoute: () => DisputesDisputeIdRoute,
+  } as any)
+const DisputesDisputeIdExportResultRoute =
+  DisputesDisputeIdExportResultRouteImport.update({
+    id: '/export/result',
+    path: '/export/result',
+    getParentRoute: () => DisputesDisputeIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/disputes': typeof DisputesRouteWithChildren
+  '/login': typeof LoginRoute
+  '/disputes/$disputeId': typeof DisputesDisputeIdRouteWithChildren
+  '/disputes/new': typeof DisputesNewRoute
+  '/disputes/': typeof DisputesIndexRoute
+  '/disputes/$disputeId/evidence': typeof DisputesDisputeIdEvidenceRoute
+  '/disputes/$disputeId/facts': typeof DisputesDisputeIdFactsRoute
+  '/disputes/$disputeId/intake': typeof DisputesDisputeIdIntakeRoute
+  '/disputes/$disputeId/timeline': typeof DisputesDisputeIdTimelineRoute
+  '/disputes/$disputeId/': typeof DisputesDisputeIdIndexRoute
+  '/disputes/$disputeId/documents/$documentId': typeof DisputesDisputeIdDocumentsDocumentIdRoute
+  '/disputes/$disputeId/export/result': typeof DisputesDisputeIdExportResultRoute
+  '/disputes/$disputeId/export/': typeof DisputesDisputeIdExportIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/disputes/new': typeof DisputesNewRoute
+  '/disputes': typeof DisputesIndexRoute
+  '/disputes/$disputeId/evidence': typeof DisputesDisputeIdEvidenceRoute
+  '/disputes/$disputeId/facts': typeof DisputesDisputeIdFactsRoute
+  '/disputes/$disputeId/intake': typeof DisputesDisputeIdIntakeRoute
+  '/disputes/$disputeId/timeline': typeof DisputesDisputeIdTimelineRoute
+  '/disputes/$disputeId': typeof DisputesDisputeIdIndexRoute
+  '/disputes/$disputeId/documents/$documentId': typeof DisputesDisputeIdDocumentsDocumentIdRoute
+  '/disputes/$disputeId/export/result': typeof DisputesDisputeIdExportResultRoute
+  '/disputes/$disputeId/export': typeof DisputesDisputeIdExportIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/disputes': typeof DisputesRouteWithChildren
+  '/login': typeof LoginRoute
+  '/disputes/$disputeId': typeof DisputesDisputeIdRouteWithChildren
+  '/disputes/new': typeof DisputesNewRoute
+  '/disputes/': typeof DisputesIndexRoute
+  '/disputes/$disputeId/evidence': typeof DisputesDisputeIdEvidenceRoute
+  '/disputes/$disputeId/facts': typeof DisputesDisputeIdFactsRoute
+  '/disputes/$disputeId/intake': typeof DisputesDisputeIdIntakeRoute
+  '/disputes/$disputeId/timeline': typeof DisputesDisputeIdTimelineRoute
+  '/disputes/$disputeId/': typeof DisputesDisputeIdIndexRoute
+  '/disputes/$disputeId/documents/$documentId': typeof DisputesDisputeIdDocumentsDocumentIdRoute
+  '/disputes/$disputeId/export/result': typeof DisputesDisputeIdExportResultRoute
+  '/disputes/$disputeId/export/': typeof DisputesDisputeIdExportIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/disputes'
+    | '/login'
+    | '/disputes/$disputeId'
+    | '/disputes/new'
+    | '/disputes/'
+    | '/disputes/$disputeId/evidence'
+    | '/disputes/$disputeId/facts'
+    | '/disputes/$disputeId/intake'
+    | '/disputes/$disputeId/timeline'
+    | '/disputes/$disputeId/'
+    | '/disputes/$disputeId/documents/$documentId'
+    | '/disputes/$disputeId/export/result'
+    | '/disputes/$disputeId/export/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/disputes/new'
+    | '/disputes'
+    | '/disputes/$disputeId/evidence'
+    | '/disputes/$disputeId/facts'
+    | '/disputes/$disputeId/intake'
+    | '/disputes/$disputeId/timeline'
+    | '/disputes/$disputeId'
+    | '/disputes/$disputeId/documents/$documentId'
+    | '/disputes/$disputeId/export/result'
+    | '/disputes/$disputeId/export'
+  id:
+    | '__root__'
+    | '/'
+    | '/disputes'
+    | '/login'
+    | '/disputes/$disputeId'
+    | '/disputes/new'
+    | '/disputes/'
+    | '/disputes/$disputeId/evidence'
+    | '/disputes/$disputeId/facts'
+    | '/disputes/$disputeId/intake'
+    | '/disputes/$disputeId/timeline'
+    | '/disputes/$disputeId/'
+    | '/disputes/$disputeId/documents/$documentId'
+    | '/disputes/$disputeId/export/result'
+    | '/disputes/$disputeId/export/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DisputesRoute: typeof DisputesRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +211,146 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/disputes': {
+      id: '/disputes'
+      path: '/disputes'
+      fullPath: '/disputes'
+      preLoaderRoute: typeof DisputesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disputes/': {
+      id: '/disputes/'
+      path: '/'
+      fullPath: '/disputes/'
+      preLoaderRoute: typeof DisputesIndexRouteImport
+      parentRoute: typeof DisputesRoute
+    }
+    '/disputes/$disputeId': {
+      id: '/disputes/$disputeId'
+      path: '/$disputeId'
+      fullPath: '/disputes/$disputeId'
+      preLoaderRoute: typeof DisputesDisputeIdRouteImport
+      parentRoute: typeof DisputesRoute
+    }
+    '/disputes/new': {
+      id: '/disputes/new'
+      path: '/new'
+      fullPath: '/disputes/new'
+      preLoaderRoute: typeof DisputesNewRouteImport
+      parentRoute: typeof DisputesRoute
+    }
+    '/disputes/$disputeId/': {
+      id: '/disputes/$disputeId/'
+      path: '/'
+      fullPath: '/disputes/$disputeId/'
+      preLoaderRoute: typeof DisputesDisputeIdIndexRouteImport
+      parentRoute: typeof DisputesDisputeIdRoute
+    }
+    '/disputes/$disputeId/evidence': {
+      id: '/disputes/$disputeId/evidence'
+      path: '/evidence'
+      fullPath: '/disputes/$disputeId/evidence'
+      preLoaderRoute: typeof DisputesDisputeIdEvidenceRouteImport
+      parentRoute: typeof DisputesDisputeIdRoute
+    }
+    '/disputes/$disputeId/facts': {
+      id: '/disputes/$disputeId/facts'
+      path: '/facts'
+      fullPath: '/disputes/$disputeId/facts'
+      preLoaderRoute: typeof DisputesDisputeIdFactsRouteImport
+      parentRoute: typeof DisputesDisputeIdRoute
+    }
+    '/disputes/$disputeId/intake': {
+      id: '/disputes/$disputeId/intake'
+      path: '/intake'
+      fullPath: '/disputes/$disputeId/intake'
+      preLoaderRoute: typeof DisputesDisputeIdIntakeRouteImport
+      parentRoute: typeof DisputesDisputeIdRoute
+    }
+    '/disputes/$disputeId/timeline': {
+      id: '/disputes/$disputeId/timeline'
+      path: '/timeline'
+      fullPath: '/disputes/$disputeId/timeline'
+      preLoaderRoute: typeof DisputesDisputeIdTimelineRouteImport
+      parentRoute: typeof DisputesDisputeIdRoute
+    }
+    '/disputes/$disputeId/documents/$documentId': {
+      id: '/disputes/$disputeId/documents/$documentId'
+      path: '/documents/$documentId'
+      fullPath: '/disputes/$disputeId/documents/$documentId'
+      preLoaderRoute: typeof DisputesDisputeIdDocumentsDocumentIdRouteImport
+      parentRoute: typeof DisputesDisputeIdRoute
+    }
+    '/disputes/$disputeId/export/': {
+      id: '/disputes/$disputeId/export/'
+      path: '/export'
+      fullPath: '/disputes/$disputeId/export/'
+      preLoaderRoute: typeof DisputesDisputeIdExportIndexRouteImport
+      parentRoute: typeof DisputesDisputeIdRoute
+    }
+    '/disputes/$disputeId/export/result': {
+      id: '/disputes/$disputeId/export/result'
+      path: '/export/result'
+      fullPath: '/disputes/$disputeId/export/result'
+      preLoaderRoute: typeof DisputesDisputeIdExportResultRouteImport
+      parentRoute: typeof DisputesDisputeIdRoute
+    }
   }
 }
 
+interface DisputesDisputeIdRouteChildren {
+  DisputesDisputeIdEvidenceRoute: typeof DisputesDisputeIdEvidenceRoute
+  DisputesDisputeIdFactsRoute: typeof DisputesDisputeIdFactsRoute
+  DisputesDisputeIdIntakeRoute: typeof DisputesDisputeIdIntakeRoute
+  DisputesDisputeIdTimelineRoute: typeof DisputesDisputeIdTimelineRoute
+  DisputesDisputeIdIndexRoute: typeof DisputesDisputeIdIndexRoute
+  DisputesDisputeIdDocumentsDocumentIdRoute: typeof DisputesDisputeIdDocumentsDocumentIdRoute
+  DisputesDisputeIdExportResultRoute: typeof DisputesDisputeIdExportResultRoute
+  DisputesDisputeIdExportIndexRoute: typeof DisputesDisputeIdExportIndexRoute
+}
+
+const DisputesDisputeIdRouteChildren: DisputesDisputeIdRouteChildren = {
+  DisputesDisputeIdEvidenceRoute: DisputesDisputeIdEvidenceRoute,
+  DisputesDisputeIdFactsRoute: DisputesDisputeIdFactsRoute,
+  DisputesDisputeIdIntakeRoute: DisputesDisputeIdIntakeRoute,
+  DisputesDisputeIdTimelineRoute: DisputesDisputeIdTimelineRoute,
+  DisputesDisputeIdIndexRoute: DisputesDisputeIdIndexRoute,
+  DisputesDisputeIdDocumentsDocumentIdRoute:
+    DisputesDisputeIdDocumentsDocumentIdRoute,
+  DisputesDisputeIdExportResultRoute: DisputesDisputeIdExportResultRoute,
+  DisputesDisputeIdExportIndexRoute: DisputesDisputeIdExportIndexRoute,
+}
+
+const DisputesDisputeIdRouteWithChildren =
+  DisputesDisputeIdRoute._addFileChildren(DisputesDisputeIdRouteChildren)
+
+interface DisputesRouteChildren {
+  DisputesDisputeIdRoute: typeof DisputesDisputeIdRouteWithChildren
+  DisputesNewRoute: typeof DisputesNewRoute
+  DisputesIndexRoute: typeof DisputesIndexRoute
+}
+
+const DisputesRouteChildren: DisputesRouteChildren = {
+  DisputesDisputeIdRoute: DisputesDisputeIdRouteWithChildren,
+  DisputesNewRoute: DisputesNewRoute,
+  DisputesIndexRoute: DisputesIndexRoute,
+}
+
+const DisputesRouteWithChildren = DisputesRoute._addFileChildren(
+  DisputesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DisputesRoute: DisputesRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

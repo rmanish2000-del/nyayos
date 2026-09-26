@@ -54,6 +54,18 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 
 ---
 
+## `/docs/ai` — repository-centric AI operating system (A-044)
+
+| Document | Type | Contents |
+|---|---|---|
+| [STATUS_SUMMARY.md](ai/STATUS_SUMMARY.md) | **Generated** — A-044 | One-page status: last assignment and handoff, next task, open items, pending decisions, residual risks. **Read first** |
+| [README.md](ai/README.md) | Maintainer — A-044, A-044-R | How each tool reports completion ("CC done", "Gemini done", "Lovable done", "Figma done"), output paths, commit tags, validation, recovery, examples |
+| [CURRENT_STATE.json](ai/CURRENT_STATE.json) | **Canonical** (A-044-R2); maintained per task; per-tool state generated | Per-tool latest completion and commit, active and blocked tasks, awaited outputs in order, PR, deployment |
+| [NEXT_TASK.json](ai/NEXT_TASK.json) | **Canonical** (A-044-R2); maintained per task | Recommended next assignment (the founder issues assignments) |
+| [DECISIONS.json](ai/DECISIONS.json) | `logged`/`candidates` generated | Decision Log entries, A-032 §9 candidates, rulings given in briefs |
+| [RISKS.json](ai/RISKS.json) | `risks` generated | Risk Register rows and top five; engineering residuals |
+| [tool-output/](ai/tool-output/) | Per tool, per task | `<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` for `claude-code`, `gemini`, `lovable`, `figma` |
+
 ## `/docs/founder` — governance and continuity
 
 | Document | Type | Authority |
@@ -80,12 +92,27 @@ When two documents disagree, **the higher tier wins.** Do not resolve a conflict
 | Document | Type | Contents |
 |---|---|---|
 | [NYAYOS_MASTER_PRODUCT_SPEC_V1.md](product/NYAYOS_MASTER_PRODUCT_SPEC_V1.md) | Supplied — A-006 | Canonical specification for the Dispute Readiness Engine |
+| [NYAYOS_PRODUCT_BACKLOG_V1.md](product/NYAYOS_PRODUCT_BACKLOG_V1.md) | Supplied — founder, 20 Sep 2026 (imported under A-035) | **Validated backlog:** WAVE_0 / WAVE_1 / WAVE_2, deferred list, product principle. Source: two sanitised case handoffs (not in the repository) |
+| [NYAYOS_VALIDATED_REQUIREMENTS_V1.md](product/NYAYOS_VALIDATED_REQUIREMENTS_V1.md) | Supplied — founder, 20 Sep 2026 (imported under A-035) | Validated P0 / P1 / deferred lists; founder evaluation complete |
+| [NYAYOS_FAST_MODE_STRATEGY_V1.md](product/NYAYOS_FAST_MODE_STRATEGY_V1.md) | Supplied — A-031, Claude Chat, 22 Sep 2026 | Fast Mode: FM-0 → FM-A → FM-B → FM-C → FM-D → FM-E; §7 security floor S1–S16; §14 convergence rules CR-1–CR-14 |
+| [NYAYOS_FM0_CONCIERGE_PACK_V1.md](product/NYAYOS_FM0_CONCIERGE_PACK_V1.md) | Supplied — A-031 | FM-0 concierge operating pack (no code) |
+| [NYAYOS_FMA_PRODUCT_USER_FLOW_DECK_V1_TEXT.md](product/NYAYOS_FMA_PRODUCT_USER_FLOW_DECK_V1_TEXT.md) | Derived — A-032 (text extract of a gitignored deck) | FM-A screen-by-screen flow. **Its U01–U21 numbering differs from the Scope Sheet**; Scope Sheet governs; cross-map in the A-041 addendum |
+| [NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md](product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md) | Maintainer — A-041 | **Authoritative U01–U21 traceability map** (Scope Sheet IDs): per-screen code, server, database, security, test, copy and design evidence; status READY 0 · PARTIAL 4 · MISSING 17; cross-map of every alternative numbering; content conflicts with decisions. Closes A-032 M-8 |
+| [NYAYOS_FM0_CONCIERGE_DECK_V1_TEXT.md](product/NYAYOS_FM0_CONCIERGE_DECK_V1_TEXT.md) | Derived — A-032 (text extract of a gitignored deck) | FM-0 concierge operating playbook |
+| [NYAYOS_EXECUTIVE_PRODUCT_VISION_DECK_V1_TEXT.md](product/NYAYOS_EXECUTIVE_PRODUCT_VISION_DECK_V1_TEXT.md) | Derived — A-031 (text extract of a gitignored deck) | Product vision v2 narrative, bilingual |
 | [NYAYOS_MVP_RECONCILIATION_V3.md](product/NYAYOS_MVP_RECONCILIATION_V3.md) | Maintainer — A-013 | **Tier 7 view.** Consolidates the MVP position at V3 under FA-001. No new product decisions. Superseded by any founder-held V3 |
 
 ## `/docs/architecture` — how it would be built
 
 | Document | Type | Contents |
 |---|---|---|
+| [NYAYOS_FMA_MERGE_READINESS_A048.md](architecture/NYAYOS_FMA_MERGE_READINESS_A048.md) | Maintainer — A-048 | **PR #2 merge readiness**: decisions D-035/D-036 recorded, A-041 rebaselined against A-043, whole-diff and test verification, PR #3 conflicts, integration procedure (merge commit only) |
+| [NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md](architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md) | Supplied — A-010, Claude Chat, 22 Sep 2026 (imported under A-030) | **Security & Data Architecture Spec V1 — CANONICAL.** Tenant model, RLS helpers, purpose-bound consent, evidence integrity, deletion lifecycle, audit architecture, threat model, SEC test suite. Governs the FM-A security foundation |
+| [NYAYOS_EXECUTIVE_ARCHITECTURE_DECK_V1_TEXT.md](architecture/NYAYOS_EXECUTIVE_ARCHITECTURE_DECK_V1_TEXT.md) | Derived — A-031 (text extract of a gitignored deck) | Executive architecture narrative. Its S1–S16 numbering differs from the Scope Sheet; see the A-030 gap report §3 |
+| [NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md](architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md) | Maintainer — A-030 | **Phase 1 assessment:** structure, architecture inventory, conflicts, integration strategy for `feature/fma-foundation-v1` |
+| [NYAYOS_GAP_ANALYSIS_V1.md](../NYAYOS_GAP_ANALYSIS_V1.md) | Maintainer — A-034 (root) | **Gap analysis:** repository inventory vs validated backlog WAVE_0 / WAVE_1 — 3 exist, 6 partial, 4 missing; sequence; lowest-effort items |
+| [NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md](architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md) | Maintainer — A-032 | **Independent review of A-030 / PR #2: MERGE WITH FIXES.** 2 critical · 8 major · 12 minor; required fixes; U01–U21 cross-map; risk rating |
+| [NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md](architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md) | Maintainer — A-030 | **Gap report:** U01–U21 READY / PARTIAL / MISSING · S1–S16 coverage · entity diagram · risks · implementation waves |
 | [NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md](architecture/NYAYOS_ECOSYSTEM_ARCHITECTURE_REVIEW_V1.md) | Supplied — Claude Chat, 22 Sep 2026 (imported under A-029) | **Strategy review:** Dispute File platform with professional-review layer; four MVP additions; permanent rejections; revenue, legal-conduct, privacy, domain architecture, nyayos.global, phased roadmap. Its L1–L10 enter only through founder-ratified Decision Log entries (D-019–D-030) |
 | [NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md](architecture/NYAYOS_SPRINT1_FOUNDATION_REVIEW_A014.md) | Maintainer — A-014 | **Sprint 1 review — EXECUTED (§ 11).** GO (conditional) for Sprint 2 on Sprint 1.1 State Completion; typography finding retracted; ranked findings |
 | [ARCHITECTURE_REVIEW.md](architecture/ARCHITECTURE_REVIEW.md) | Supplied — A-005 | TanStack Start / React 19 / Vite 7 on edge runtime; Supabase Postgres + Auth + Storage + RLS; pgvector; server-side AI gateway; append-only audit; closed tool catalog |
@@ -175,3 +202,7 @@ Exact commercial wedge boundary · pricing · retention period · OCR provider �
 | Schema, migrations, database resources, backend, infrastructure | Not yet authorized. Only the Sprint 1 frontend foundation is in `app/` |
 | `nyayos-sprint1-foundation.zip`, `app/node_modules`, `app/.output`, `app/.wrangler`, `app/package-lock.json` | Gitignored. Lockfile of record is `app/bun.lock` |
 | `NYAYOS_V1_REVISED_DELIVERABLES.zip` | Redundant — its contents are committed individually |
+| [A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md](implementation/A-035_WAVE0_IMPLEMENTATION_PLAN_V1.md) | Maintainer — A-035 | **Plan only.** Five backlog items: reuse, new files, migration, risk, order; first build item Duplicate Detection → Stale Output Detection |
+| [NYAYOS_FM_A_SCOPE_SHEET_V1.md](implementation/NYAYOS_FM_A_SCOPE_SHEET_V1.md) | Supplied — A-031, Claude Chat, 22 Sep 2026 | **FM-A Scope Sheet V1 — governs FM-A.** F01–F24, data model §4, API A01–A28, UI U01–U21, security S1–S16, tests, exit gate. Where the decks disagree, this sheet wins |
+| [NYAYOS_BUILD_BRIEF_V2.md](implementation/NYAYOS_BUILD_BRIEF_V2.md) | Supplied — A-031, Claude Chat | Build Brief V2 — milestones M0–M7, acceptance criteria, conventions (§3.3). FM-A is a strict subset (CR-1) |
+| [NYAYOS_COUNSEL_BRIEF_V1.md](founder/NYAYOS_COUNSEL_BRIEF_V1.md) | Supplied — A-031, Claude Chat | Counsel Brief V1 — open legal questions OL-01…OL-11, blocking matrix; **OL-01 and OL-04 block any pilot**. Not legal advice |

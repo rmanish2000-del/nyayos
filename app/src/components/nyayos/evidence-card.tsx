@@ -2,6 +2,7 @@ import {
   AlertCircle,
   Ban,
   CheckCircle2,
+  Copy,
   Clock,
   Eye,
   FileSearch,
@@ -55,6 +56,8 @@ export interface EvidenceCardProps {
   categoryConfirmed?: boolean;
   provenance: DocumentProvenance;
   extraction?: ExtractionSummary;
+  /** Duplicate Detection V1 (A-036): label of an identical document already stored. Informational only. */
+  duplicateOf?: string;
   progress?: number;
   message?: string;
   onCancel?: () => void;
@@ -121,6 +124,7 @@ export function EvidenceCard({
   categoryConfirmed,
   provenance,
   extraction,
+  duplicateOf,
   progress,
   message,
   onCancel,
@@ -188,6 +192,16 @@ export function EvidenceCard({
                   <span className="font-normal text-foreground/80">· confirmed</span>
                 ) : null}
               </span>
+              {duplicateOf ? (
+                <span
+                  data-testid={`${id}-duplicate`}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-warning bg-warning/10 px-2.5 py-1 text-xs font-medium text-foreground"
+                >
+                  <Copy aria-hidden="true" className="size-3.5" />
+                  <span className="sr-only">Identical file already stored: </span>
+                  Duplicate of {duplicateOf}
+                </span>
+              ) : null}
             </div>
           </div>
 

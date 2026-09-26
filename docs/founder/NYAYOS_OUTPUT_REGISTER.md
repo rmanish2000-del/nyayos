@@ -162,3 +162,48 @@ These are **policy statements, not case material**. They were left unchanged bec
 > **No NyayOS content was ever publicly visible.** The repository was empty for its entire public lifetime.
 >
 > **Standing constraint:** do not make this repository public without first completing a redaction review of the four documents above and recording the outcome as a decision in the decision log. See [CONTRIBUTING.md](../../CONTRIBUTING.md) § 2.
+
+---
+
+## A-030 / A-031 outputs — 23 September 2026 (branch `feature/fma-foundation-v1`, not yet on `main`)
+
+| Artefact | Origin | Notes |
+|---|---|---|
+| `docs/architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md` | Supplied (A-010, Claude Chat) — imported unchanged | sha256 `7dc6222b60547007…` |
+| `docs/implementation/NYAYOS_FM_A_SCOPE_SHEET_V1.md` | Supplied (A-031) — imported unchanged | sha256 `b7f8b59bc099cd7b…`; governs FM-A scope |
+| `docs/implementation/NYAYOS_BUILD_BRIEF_V2.md` | Supplied (A-031) — imported unchanged | sha256 `6b9003f9845ac9c8…` |
+| `docs/product/NYAYOS_FAST_MODE_STRATEGY_V1.md` | Supplied (A-031) — imported unchanged | sha256 `422e1e4a59e8a3a7…` |
+| `docs/product/NYAYOS_FM0_CONCIERGE_PACK_V1.md` | Supplied (A-031) — imported unchanged | sha256 `37da3870e6bd7dc2…` |
+| `docs/founder/NYAYOS_COUNSEL_BRIEF_V1.md` | Supplied (A-031) — imported unchanged | sha256 `80798c5b2c70b9d5…` |
+| `docs/architecture/NYAYOS_EXECUTIVE_ARCHITECTURE_DECK_V1_TEXT.md` | Derived (A-031) — verbatim text extract of a gitignored `.pptx` | source sha256 `dd6c03dd4584dd04…` |
+| `docs/product/NYAYOS_EXECUTIVE_PRODUCT_VISION_DECK_V1_TEXT.md` | Derived (A-031) — verbatim text extract of a gitignored `.pptx` | source sha256 `b9b911032475feff…` |
+| `docs/architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md` | Produced (A-030) | Phase 1 assessment, architecture inventory, conflicts, integration strategy |
+| `docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md` | Produced (A-030) | Phases 5–6: U01–U21 coverage, S1–S16 matrix, entity diagram, risks, waves |
+| `app/src/domain/*.ts` (14 modules) | Produced (A-030) | Framework-agnostic FM-A domain foundation; no I/O, no AI, no legal content |
+| `app/tests/domain/*.test.ts` (8 files, 79 tests) | Produced (A-030) | Role matrix, locked purposes, single-writer, upload state machine, audit tamper, manifest omissions, deletion honesty, copy guard |
+| `db/migrations/0001_fma_foundation.sql`, `db/README.md`, `db/tests/smoke_0001.sql` | Produced (A-030) | **Not applied to any environment.** Statically linted; executed once on an ephemeral local Postgres 16.14 container — 41/41 smoke checks PASS |
+| `scripts/db/schema-lint.mjs`, `.github/workflows/schema-lint.yml` | Produced (A-030) | Static SEC-RLS-01 / SEC-DEL-06; twin parity with `tables.ts` |
+
+**Not produced:** any Figma-derived UI (package missing), any server function, auth integration, storage bucket, scan adapter, staging database, or deployment.
+
+---
+
+## A-032 outputs — 23 September 2026 (branch `feature/fma-foundation-v1`)
+
+| Artefact | Origin | Notes |
+|---|---|---|
+| `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md` | Produced (A-032) | Independent review of A-030: findings table, S1–S16 and U01–U21 verification, merge recommendation (MERGE WITH FIXES), required fixes, risk rating |
+| `docs/product/NYAYOS_FMA_PRODUCT_USER_FLOW_DECK_V1_TEXT.md` | Derived (A-032) — verbatim text extract of a gitignored `.pptx` | source sha256 `489ccc68f7da158f…`; 47 slides; numbers U01–U21 differently from the Scope Sheet |
+| `docs/product/NYAYOS_FM0_CONCIERGE_DECK_V1_TEXT.md` | Derived (A-032) — verbatim text extract of a gitignored `.pptx` | source sha256 `904f5081ab7f6b94…`; 25 slides |
+
+**Not produced:** any code change. Fixes are listed, not applied.
+
+## A-043 outputs — 26 September 2026 (branch `feature/fma-foundation-v1`)
+
+| Output | Status | Notes |
+|---|---|---|
+| `app/src/mvp/` | Produced (A-043) | Seed fixtures, access rules, preview store, export manifest and staleness helpers |
+| `app/src/components/mvp/` | Produced (A-043) | Reusable states, fields, frame, header, guard, document row, screens U01 entry, U04–U09, U16, U17 |
+| `app/src/routes/login.tsx`, `app/src/routes/disputes*.tsx` | Produced (A-043) | Routed Wave-1 screens |
+| `app/tests/mvp.test.tsx` | Produced (A-043) | 34 tests |
+| `docs/ai/tool-output/lovable/A-043.md` | Produced (A-043) | Handoff, gaps, rollback |

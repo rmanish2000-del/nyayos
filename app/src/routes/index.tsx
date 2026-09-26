@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import * as React from "react";
 
 import { AppShell, type ShellSection } from "@/components/nyayos/app-shell";
@@ -718,6 +718,12 @@ function FoundationShowcase() {
           Provenance-first components for facts and evidence, with responsive navigation and
           accessible document states from upload through extraction.
         </p>
+        <Link
+          to="/login"
+          className="mt-4 inline-flex touch-target items-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          Open the MVP Wave-1 preview
+        </Link>
       </header>
 
       {section === "tokens" ? <TokensView /> : null}

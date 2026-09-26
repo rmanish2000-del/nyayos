@@ -1,0 +1,45 @@
+{
+  "$schema": "./schemas/next-task.schema.json",
+  "schema_version": "2.0",
+  "authority": "canonical",
+  "updated": "2026-09-26T19:43:35Z",
+  "after": "A-064",
+  "task_id": "A-065",
+  "title": "A-043 canonical fixes F-01 to F-10 — post-login return path, skip-link targets, document language, minor accessibility and mobile fixes",
+  "assigned_tool": "lovable",
+  "priority": "P1",
+  "dependencies": [
+    {
+      "item": "Founder merge of PR #2 (merge commit)",
+      "owner": "founder",
+      "satisfied": false
+    },
+    {
+      "item": "Canonical fix specification (A-064)",
+      "owner": "claude-code",
+      "satisfied": true
+    }
+  ],
+  "ready": false,
+  "repository_baseline": {
+    "branch": "feature/fma-foundation-v1",
+    "commit": "50cc63eb30a24399c5de8865a858aacdd0215530"
+  },
+  "required_inputs": [
+    "docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md",
+    "docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md",
+    "docs/ai/README.md",
+    "docs/ai/tool-output/lovable/A-043/HANDOFF.json"
+  ],
+  "expected_outputs": [
+    "F-01 to F-06 implemented with Vitest tests; F-07 to F-10 implemented or deferred in limitations",
+    "Pull request from fix/a065-a043-canonical-fixes to main (not merged)",
+    "docs/ai/tool-output/lovable/A-065/HANDOFF.json and SUMMARY.md; completion commit tagged [TOOL:LOVABLE][TASK:A-065]"
+  ],
+  "environment": "No deployment; local and CI only",
+  "deployment_permission": {
+    "allowed": false,
+    "environment": "none"
+  },
+  "rationale": "The validated A-063 findings are UI-only and independent of FD-02, so they can land right after the PR #2 merge, before Wave W1 (Claude Code: staging database, Google Login adapter, smoke suite in CI), which still waits on FD-02."
+}

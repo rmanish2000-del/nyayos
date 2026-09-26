@@ -4,7 +4,8 @@
 #   1. the status registry validates (only CANONICAL tasks may be inputs; no cycles;
 #      CANONICAL tasks have evidence; started tasks have no unresolved planned inputs);
 #   2. the generated governance documents are in sync with the registry;
-#   3. a pull request references at least one assignment ID (A-nnn) in its body.
+#   3. a pull request references at least one assignment ID (A-nnn) in its body;
+#   4. the tool handoffs under docs/ai are complete, valid and consistent with git (A-044, A-044-R).
 #
 # Required status check on `main` (branch protection). Job name must stay `task-gate`.
 # Rules: docs/founder/NYAYOS_CANONICAL_STATUS_RULES.md
@@ -30,6 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # docs/ai check proves recorded commits are in history
 
       - uses: actions/setup-node@v4
         with:
@@ -40,6 +43,19 @@ jobs:
 
       - name: Generated governance documents are in sync with the registry
         run: node scripts/governance/registry.mjs generate --check
+
+      - name: Handoff validator tests (docs/ai protocol, synthetic git fixtures)
+        run: node --test scripts/ai/state.test.mjs
+
+      - name: AI handoffs recorded (docs/ai — no missing, malformed, stale or contradictory handoff)
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [ -n "$HEAD_SHA" ]; then
+            node scripts/ai/state.mjs check --head "$HEAD_SHA"   # pull request: also no unrecorded work
+          else
+            node scripts/ai/state.mjs check
+          fi
 
       - name: Pull request references an assignment ID
         if: github.event_name == 'pull_request'

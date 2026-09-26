@@ -289,3 +289,34 @@ Legal opinion (item 1) · Rule 36 website-particulars schedule text · BCI/State
 ## 26. Handoff
 
 Owner: **M365 Copilot.** Read `NYAYOS_STATUS.json` for machine state and this document for the operating directive. Every gate question → Founder Authorization Record. Every status question → Status Registry. Every "why" → Decision Log.
+
+---
+
+## 27. Addendum — 23 September 2026 (A-030)
+
+Appended, not edited: §§ 1–26 describe `main` at `6c6b478` and remain accurate for `main`.
+
+| Claim | Label | Detail |
+|---|---|---|
+| Security & Data Architecture Spec V1 exists and is canonical | **VERIFIED** | `docs/architecture/NYAYOS_SECURITY_DATA_ARCHITECTURE_SPEC_V1.md`, sha256 `7dc6222b60547007…`; A-010 CANONICAL |
+| Fast Mode specification set is in the repository | **VERIFIED** | A-031: FMS V1, FM-A Scope Sheet V1, BB2, CB1, FM-0 pack; deck text extracts |
+| FM-A domain foundation exists as code | **VERIFIED (branch only)** | `app/src/domain/` on `feature/fma-foundation-v1`; 79 tests; not on `main` |
+| FM-A database schema exists | **SPECIFIED, NOT IMPLEMENTED** | `db/migrations/0001_fma_foundation.sql` is statically linted and parsed; **no database exists**; nothing applied |
+| Figma FM-A UI (U01–U21) imported | **NOT DONE** | Package not supplied and not found anywhere; A-008 OPEN |
+| Deployment / production | **NOT ALLOWED — unchanged** | FA-001 staging only; FA-002 not granted |
+| Next priority | — | Founder review and merge of the branch; FD-02 hosting decision; then wave W1 (`docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md` §7) |
+
+---
+
+## 28. Addendum — 26 September 2026 (A-044): repository-centric AI operating system
+
+| Element | Status | Where |
+|---|---|---|
+| Machine-readable project state for every tool | **VERIFIED** | [`docs/ai/`](docs/ai/README.md): `CURRENT_STATE.json`, `NEXT_TASK.json`, `DECISIONS.json`, `RISKS.json`, JSON Schemas |
+| Generated status summary | **VERIFIED** | [`docs/ai/STATUS_SUMMARY.md`](docs/ai/STATUS_SUMMARY.md) — the page M365 Copilot reads; replaces founder copy/paste |
+| Per-tool, per-task handoffs (A-044-R) | **VERIFIED** | `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` (`claude-code`, `gemini`, `lovable`, `figma`); schema `docs/ai/schemas/handoff.schema.json`; tagged completion commits `[TOOL:x][TASK:y]`; the founder reports only "<tool> done" — [`docs/ai/README.md`](docs/ai/README.md) |
+| Validator | **VERIFIED** | `scripts/ai/state.mjs check`: files exist, schema validity, derived fields in sync with the registry, Decision Log, A-032 §9 and Risk Register, last assignment recorded with a pushed commit and handoff, NEXT_TASK follows it. Runs in the required `task-gate` job |
+| Canonical operating state (A-044-R2) | **VERIFIED** | `docs/ai/CURRENT_STATE.json` and `docs/ai/NEXT_TASK.json` are canonical; every tool updates them; CI fails on a missing HANDOFF, stale CURRENT_STATE, stale NEXT_TASK or missing task ownership; `node scripts/ai/state.mjs status` is the one-command AI status |
+| Completion protocol | **REQUIRED** from A-044 onward | 1 commit · 2 push · 3 update `CURRENT_STATE` · 4 write the tool handoff · 5 update `NEXT_TASK` — then a state commit, pushed. [`CONTRIBUTING.md` §5](CONTRIBUTING.md) |
+
+The governance sources keep their authority (§ 26): the status registry for status, the Decision Log for decisions, the Founder Authorization Record for gates. `docs/ai/` summarises them for tools and is checked against them.

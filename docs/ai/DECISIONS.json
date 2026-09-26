@@ -1,0 +1,221 @@
+{
+  "$schema": "./schemas/decisions.schema.json",
+  "schema_version": "1.0",
+  "sources": [
+    "docs/founder/NYAYOS_DECISION_LOG_V1.md",
+    "docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md §9",
+    "Founder assignment briefs (rulings not yet logged)"
+  ],
+  "logged": [
+    {
+      "id": "D-001",
+      "title": "Keep the Dispute Readiness Engine",
+      "log_status": null
+    },
+    {
+      "id": "D-002",
+      "title": "Drop “OS” as the initial product claim",
+      "log_status": null
+    },
+    {
+      "id": "D-003",
+      "title": "Change initial commercial wedge",
+      "log_status": null
+    },
+    {
+      "id": "D-004",
+      "title": "Consumer disputes as sandbox",
+      "log_status": null
+    },
+    {
+      "id": "D-005",
+      "title": "Criminal case remains private",
+      "log_status": null
+    },
+    {
+      "id": "D-006",
+      "title": "Primary user",
+      "log_status": null
+    },
+    {
+      "id": "D-007",
+      "title": "Primary payer",
+      "log_status": null
+    },
+    {
+      "id": "D-008",
+      "title": "Deterministic workflow over autonomous agent",
+      "log_status": null
+    },
+    {
+      "id": "D-009",
+      "title": "Supabase/Postgres",
+      "log_status": null
+    },
+    {
+      "id": "D-010",
+      "title": "pgvector",
+      "log_status": null
+    },
+    {
+      "id": "D-011",
+      "title": "Multi-tenant model",
+      "log_status": null
+    },
+    {
+      "id": "D-012",
+      "title": "RAG corpus separation",
+      "log_status": null
+    },
+    {
+      "id": "D-013",
+      "title": "eCourts",
+      "log_status": null
+    },
+    {
+      "id": "D-014",
+      "title": "NALSA",
+      "log_status": null
+    },
+    {
+      "id": "D-015",
+      "title": "ODR",
+      "log_status": null
+    },
+    {
+      "id": "D-016",
+      "title": "Retention",
+      "log_status": null
+    },
+    {
+      "id": "D-017",
+      "title": "Private-case training",
+      "log_status": null
+    },
+    {
+      "id": "D-018",
+      "title": "Revenue model",
+      "log_status": null
+    },
+    {
+      "id": "D-019",
+      "title": "Dispute File platform with a professional-review layer",
+      "log_status": "Locked"
+    },
+    {
+      "id": "D-020",
+      "title": "Reviewer seat (MVP addition)",
+      "log_status": "Locked as MVP scope; NOT IMPLEMENTED"
+    },
+    {
+      "id": "D-021",
+      "title": "Communication outline (MVP addition)",
+      "log_status": "Locked as MVP scope; NOT IMPLEMENTED"
+    },
+    {
+      "id": "D-022",
+      "title": "Evidence-integrity manifest (MVP addition)",
+      "log_status": "Locked; NOT IMPLEMENTED"
+    },
+    {
+      "id": "D-023",
+      "title": "Purpose-bound sharing (MVP addition)",
+      "log_status": "Locked; NOT IMPLEMENTED"
+    },
+    {
+      "id": "D-024",
+      "title": "No lawyer-advertising marketplace (permanent)",
+      "log_status": "Locked — permanent rejection"
+    },
+    {
+      "id": "D-025",
+      "title": "No lead fees or success fees (permanent)",
+      "log_status": "Locked — permanent rejection"
+    },
+    {
+      "id": "D-026",
+      "title": "No paid placement (permanent)",
+      "log_status": "Locked — permanent rejection"
+    },
+    {
+      "id": "D-027",
+      "title": "No public ratings, reviews, win-rate metrics or rankings (permanent)",
+      "log_status": "Locked — permanent rejection"
+    },
+    {
+      "id": "D-028",
+      "title": "No autonomous legal actions (permanent)",
+      "log_status": "Locked — permanent"
+    },
+    {
+      "id": "D-029",
+      "title": "India-first; nyayos.global defensive only",
+      "log_status": "Locked"
+    },
+    {
+      "id": "D-030",
+      "title": "Security + Data Architecture Specification V1 is the next P0 work",
+      "log_status": "Locked as sequencing"
+    },
+    {
+      "id": "D-031",
+      "title": "Audit atomicity: a canonical write and its audit record commit or roll back together",
+      "log_status": "Locked"
+    },
+    {
+      "id": "D-032",
+      "title": "Deletion purge runs only through a server-controlled path",
+      "log_status": "Locked"
+    },
+    {
+      "id": "D-035",
+      "title": "Where the FM-A flow deck and the Scope Sheet disagree (partly decided)",
+      "log_status": "Locked for sign-in method and numbering; other points open"
+    },
+    {
+      "id": "D-036",
+      "title": "A-030 foundation defaults ratified",
+      "log_status": "Locked"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "D-031",
+      "question": "Audit atomicity pattern (M-7): internal audit function callable by definer functions, or transactional outbox"
+    },
+    {
+      "id": "D-032",
+      "question": "Deletion vs append-only (M-3): worker-only DELETE exemption on `document_versions`, `user_corrections`; `audit_events`, `audit_anchors`, `deletion_ledger` stay immutable"
+    },
+    {
+      "id": "D-033",
+      "question": "Deletion scope graph (M-6): multi-column allow-list registration"
+    },
+    {
+      "id": "D-034",
+      "question": "Single hasher (M-2): SQL trigger authoritative; TS verifier removed or made bit-identical with a cross-layer test"
+    },
+    {
+      "id": "D-035",
+      "question": "Which document governs where the FM-A flow deck and the Scope Sheet disagree (M-8): sign-in method, undo window, confirmed-only export, tombstone actor, party contact details"
+    },
+    {
+      "id": "D-036",
+      "question": "Ratify A-010 CANONICAL (m-8) and the three A-030 defaults (Scope Sheet S-numbering, `document_reference_policy = block`, content-free tombstone)"
+    }
+  ],
+  "rulings": [
+    {
+      "id": "D-031",
+      "ruling": "A canonical write and its audit record must commit or roll back together in one transaction.",
+      "source": "Founder brief for A-038 (24 Sep 2026); implemented by migration 0005",
+      "in_decision_log": true
+    },
+    {
+      "id": "D-032",
+      "ruling": "Deletion purge will use a server-controlled path (not implemented in A-038).",
+      "source": "Founder brief for A-038 (24 Sep 2026); implemented by A-040, migration 0007",
+      "in_decision_log": true
+    }
+  ]
+}

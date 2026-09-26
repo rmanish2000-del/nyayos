@@ -486,6 +486,42 @@ The founder-supplied Red Team and Global Benchmark contain secondary-source rese
 
 **Revisit trigger:** Specification accepted (A-010 CANONICAL) — then the build sequence in `NYAYOS_OPERATING_SYSTEM.md` § 25 applies.
 
+## D-031 — Audit atomicity: a canonical write and its audit record commit or roll back together
+
+**Decision:** A canonical write and its audit event are written in one transaction; if either fails, neither remains. Implemented by A-038 (migration `0005`: server functions call `audit_append_internal` inside the same transaction).
+
+**Evidence:** Founder ruling in the A-038 brief (24 Sep 2026); A-032 §9 candidate D-031. Recorded in this log by A-048 (26 Sep 2026). **Confidence:** High. **Status:** Locked.
+
+**Revisit trigger:** A transactional outbox or a separate audit store is proposed.
+
+## D-032 — Deletion purge runs only through a server-controlled path
+
+**Decision:** Physical deletion is performed only by a server-controlled worker; no client or role holds a direct DELETE path. Append-only tables accept DELETE only inside an active purge; `audit_events`, `audit_anchors` and `deletion_ledger` stay immutable. Implemented by A-040 (migration `0007`, `purge_deletion_request`).
+
+**Evidence:** Founder ruling in the A-038 brief (24 Sep 2026: "deletion purge will use a server-controlled path"); A-032 §9 candidate D-032. Recorded in this log by A-048 (26 Sep 2026). **Confidence:** High. **Status:** Locked.
+
+**Revisit trigger:** Object-storage deletion is designed (A-040 residual) or a managed deletion service is adopted.
+
+## D-035 — Where the FM-A flow deck and the Scope Sheet disagree (partly decided)
+
+**Decision (26 Sep 2026):** **Google Login is the MVP primary sign-in method.** This replaces, for the MVP, both the flow deck's mobile OTP and Scope Sheet F01's email/password + OTP (addendum conflict C-01). **Scope Sheet numbering controls** wherever the deck numbers screens differently (U01–U21 cross-map in `docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md`). The tombstone point is decided under D-036.
+
+**Still open under D-035:** deletion reversibility (deck "not reversible" vs the 7-day undo window, C-02); confirmed-only timeline and export (C-03); party contact details (C-05). Until decided, the Scope Sheet governs them.
+
+**Evidence:** Founder decision, 26 Sep 2026 (A-048 brief); A-032 §9 candidate D-035; addendum §6. **Confidence:** High. **Status:** Locked for sign-in method and numbering; other points open.
+
+**Revisit trigger:** An auth provider is selected (FD-02) or the Scope Sheet is revised.
+
+## D-036 — A-030 foundation defaults ratified
+
+**Decision (26 Sep 2026):** The three A-030 defaults are ratified: **Scope Sheet numbering controls** (screen and security S-numbering); **`document_reference_policy` remains `block`**; **deletion tombstones remain content-free** (OL-03 interim: scope type, scope id and time; no hash, label, filename or actor — addendum conflict C-04).
+
+**Not decided here:** the A-032 m-8 question of how A-010 became CANONICAL; A-010 stays CANONICAL in the registry.
+
+**Evidence:** Founder decision, 26 Sep 2026 (A-048 brief); A-032 §9 candidate D-036. **Confidence:** High. **Status:** Locked.
+
+**Revisit trigger:** Counsel resolves OL-03, or a cascade policy for document references is requested.
+
 ## Reported but not ratified (Ecosystem Review § 21 — recorded for continuity, not locked)
 
 L6 policy/jurisdiction adapter owns all regulatory rules (no hard-coded rules) · L7 "engagement request" terminology, client-initiated only · L8 advocate pricing independent of platform-sourced engagements (partly captured in D-025) · L10 fee quotes block contingent / share-of-proceeds structures. **Founder ratification pending.**
@@ -493,5 +529,7 @@ L6 policy/jurisdiction adapter owns all regulatory rules (no hard-coded rules) �
 ## Current locked list (supersedes the list above dated 20 Sep 2026)
 
 1–11 as before (Dispute Readiness Engine · "What happened?" entry · small-business/FPO commercial hypothesis · consumer sandbox · criminal private sandbox · human decision authority · provenance-first · multi-tenant-ready schema · Supabase/Postgres/RLS · pgvector · deterministic workflow), plus **12** Dispute File platform with professional-review layer (D-019) · **13** reviewer seat (D-020) · **14** communication outline (D-021) · **15** evidence-integrity manifest (D-022) · **16** purpose-bound sharing (D-023) · **17–21** permanent rejections (D-024 – D-028) · **22** India-first, nyayos.global defensive (D-029) · **23** Security + Data spec next (D-030).
+
+Added 26 Sep 2026 (A-048): **24** audit writes atomic with canonical writes (D-031) · **25** deletion purge only through a server-controlled path (D-032) · **26** Google Login is the MVP primary sign-in method; Scope Sheet numbering controls (D-035, partly decided) · **27** `document_reference_policy = block` and content-free deletion tombstones (D-036).
 
 **Provisional list unchanged**, plus: typography (Noto stack in code, decision unrecorded); exact reviewer identity fields; consent purpose catalogue.

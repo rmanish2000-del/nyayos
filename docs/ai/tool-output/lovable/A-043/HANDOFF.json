@@ -1,0 +1,156 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-043",
+  "tool": "lovable",
+  "status": "completed",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "b4a1f038b7dcf728de0955a5e2363f7b9e1b2693",
+  "completion_commit": "9d238423949eabea28452e4e6a924186a94030c4",
+  "completed_at": "2026-09-26T20:47:06+05:30",
+  "files_created": [
+    "app/src/components/mvp/dispute-frame.tsx",
+    "app/src/components/mvp/document-row.tsx",
+    "app/src/components/mvp/google-button.tsx",
+    "app/src/components/mvp/preview-header.tsx",
+    "app/src/components/mvp/require-session.tsx",
+    "app/src/components/mvp/screens/dispute-list-screen.tsx",
+    "app/src/components/mvp/screens/document-viewer-screen.tsx",
+    "app/src/components/mvp/screens/evidence-locker-screen.tsx",
+    "app/src/components/mvp/screens/export-screens.tsx",
+    "app/src/components/mvp/screens/fact-review-screen.tsx",
+    "app/src/components/mvp/screens/intake-screen.tsx",
+    "app/src/components/mvp/screens/login-screen.tsx",
+    "app/src/components/mvp/screens/timeline-screen.tsx",
+    "app/src/components/mvp/screens/what-happened-screen.tsx",
+    "app/src/components/mvp/states.tsx",
+    "app/src/components/mvp/text-field.tsx",
+    "app/src/components/mvp/use-dispute.ts",
+    "app/src/mvp/access.ts",
+    "app/src/mvp/export.ts",
+    "app/src/mvp/fixtures.ts",
+    "app/src/mvp/store.tsx",
+    "app/src/mvp/view-model.ts",
+    "app/src/routes/disputes.$disputeId.documents.$documentId.tsx",
+    "app/src/routes/disputes.$disputeId.evidence.tsx",
+    "app/src/routes/disputes.$disputeId.export.index.tsx",
+    "app/src/routes/disputes.$disputeId.export.result.tsx",
+    "app/src/routes/disputes.$disputeId.facts.tsx",
+    "app/src/routes/disputes.$disputeId.index.tsx",
+    "app/src/routes/disputes.$disputeId.intake.tsx",
+    "app/src/routes/disputes.$disputeId.timeline.tsx",
+    "app/src/routes/disputes.$disputeId.tsx",
+    "app/src/routes/disputes.index.tsx",
+    "app/src/routes/disputes.new.tsx",
+    "app/src/routes/disputes.tsx",
+    "app/src/routes/login.tsx",
+    "app/tests/mvp.test.tsx"
+  ],
+  "files_modified": [
+    "app/src/components/nyayos/button.tsx",
+    "app/src/routeTree.gen.ts",
+    "app/src/routes/__root.tsx",
+    "app/src/routes/index.tsx",
+    "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+    "docs/founder/NYAYOS_DEPENDENCY_GRAPH.md",
+    "docs/founder/NYAYOS_OUTPUT_REGISTER.md",
+    "docs/founder/NYAYOS_STATUS_DASHBOARD.md",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.md"
+  ],
+  "files_deleted": [],
+  "tests": [
+    {
+      "name": "vitest",
+      "command": "npx vitest run",
+      "result": "pass",
+      "detail": "233 passed, 0 failed in 19 files; A-043 suite app/tests/mvp.test.tsx (34 tests)"
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "result": "pass"
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "result": "pass",
+      "detail": "pass (0 errors; pre-existing react-refresh warnings)"
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "result": "pass"
+    },
+    {
+      "name": "playwright",
+      "command": "playwright flows at viewports 390, 834, 1280",
+      "result": "pass",
+      "detail": "sign-in to export result; cross-tenant URL blocked; keyboard focus order; single h1 True; horizontal overflow False; console errors 0"
+    }
+  ],
+  "evidence": [
+    {
+      "description": "A-043 test suite",
+      "ref": "app/tests/mvp.test.tsx"
+    },
+    {
+      "description": "42 screenshots at three viewports",
+      "ref": "docs/ai/tool-output/lovable/A-043/screenshots"
+    },
+    {
+      "description": "Lovable's detailed report (moved from docs/ai/tool-output/lovable/A-043.md)",
+      "ref": "docs/ai/tool-output/lovable/A-043/REPORT.md"
+    },
+    {
+      "description": "completion commit",
+      "ref": "9d238423949eabea28452e4e6a924186a94030c4"
+    },
+    {
+      "description": "Lovable state commit",
+      "ref": "2c77b163fa57df0bbab1b88ec119e6185ec80637"
+    },
+    {
+      "description": "Lovable normalization commit (A-043-R)",
+      "ref": "c1c49d535da1125982b48a728d7125c62159213c"
+    }
+  ],
+  "limitations": [
+    "Figma MVP Design Package V1 (A-008) not supplied; design conformance unverified",
+    "Google sign-in is entry UI only, not connected (no auth provider; FD-02); synthetic personas stand in",
+    "No storage or scanning: files are hashed in the browser and never uploaded",
+    "U17 produces a JSON integrity manifest only; no printable case file",
+    "Hindi covers existing provisional copy and intake questions only; native review owed",
+    "Client-side access rules mirror, but do not replace, server/RLS enforcement",
+    "U02 consent and full U03 dashboard out of scope",
+    "NVDA/VoiceOver pass not performed; automated accessibility checks only"
+  ],
+  "risks": [
+    {
+      "description": "Design conformance unverified: the Figma MVP Design Package V1 (A-008) was not supplied",
+      "severity": "medium",
+      "ref": "RES-04"
+    },
+    {
+      "description": "Client-side access rules mirror, but do not replace, server/RLS enforcement; no auth provider is connected",
+      "severity": "medium"
+    }
+  ],
+  "rollback": "git revert c1c49d535da1125982b48a728d7125c62159213c 2c77b163fa57df0bbab1b88ec119e6185ec80637 9d238423949eabea28452e4e6a924186a94030c4",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": null,
+    "tool": "founder",
+    "reason": "Founder supplies the Figma MVP Design Package V1 for an A-043 design conformance review and decides the F01 sign-in method; then the founder merge-readiness review of draft PR #2."
+  },
+  "backfill": {
+    "reason": "Lovable completed A-043 (and normalized it as A-043-R) before the A-044-R handoff schema existed; converted to the standard schema by A-044-R without changing its facts. baseline_commit is the commit the work was built on (b4a1f03); Lovable's original record named fc74038",
+    "source": "Lovable handoff at c1c49d5 (docs/ai/tool-output/lovable/A-043/HANDOFF.json), commits 9d23842, 2c77b16, c1c49d5"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-047",
+  "tool": "gemini",
+  "status": "blocked",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "14e9f1b816be77e1775c881724c08584f2c7b259",
+  "completion_commit": null,
+  "completed_at": null,
+  "files_created": [],
+  "files_modified": [],
+  "files_deleted": [],
+  "tests": [],
+  "evidence": [],
+  "limitations": [
+    "No A-047 commit, file or brief exists on any branch of the repository; its content is unknown here.",
+    "A-062 re-inspection (27 Sep 2026): docs/ai/tool-output/gemini/A-047/ holds only this blocked ownership placeholder, written by Claude Code under A-044-R2 (commit 02f2f95). No Gemini commit, output file or evidence exists on any branch (feature/fma-foundation-v1, main, fix/a050-accessibility-ux-mobile, governance/status-update) or in any pull request. Verdict: placeholder only — not a valid or partial completion; the blocked status is correct."
+  ],
+  "risks": [
+    {
+      "description": "Gemini A-047 output exists only outside GitHub, so M365 Copilot cannot read or verify it",
+      "severity": "medium"
+    }
+  ],
+  "rollback": "Nothing to roll back: no Gemini output is committed. Remove this directory if A-047 is withdrawn.",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": "A-047",
+    "tool": "gemini",
+    "reason": "Gemini commits its A-047 output with a [TOOL:GEMINI][TASK:A-047] completion commit and replaces this blocked handoff with a completed one."
+  },
+  "blocked_reason": "repository handoff missing — Gemini A-047 output exists only outside GitHub",
+  "backfill": {
+    "reason": "Recorded by Claude Code (A-044-R2) on the founder's instruction to backfill Gemini A-047; no repository evidence exists, so no completion is claimed",
+    "source": "Founder instruction, 26 Sep 2026; search of every branch (feature/fma-foundation-v1, main, fix/a050-accessibility-ux-mobile, governance/status-update) found no A-047 or Gemini commit"
+  }
+}

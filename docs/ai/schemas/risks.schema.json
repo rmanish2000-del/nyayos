@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "docs/ai/schemas/risks.schema.json",
+  "title": "NyayOS RISKS",
+  "description": "'risks' and 'top_five' are regenerated from docs/founder/NYAYOS_RISK_REGISTER_V1.md; 'residuals' are engineering residuals recorded by completed assignments.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "source", "risks", "top_five", "residuals"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": "1.0" },
+    "source": { "const": "docs/founder/NYAYOS_RISK_REGISTER_V1.md" },
+    "risks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "risk", "severity", "likelihood", "control", "trigger"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^R\\d{2}$" },
+          "risk": { "type": "string" },
+          "severity": { "type": "string" },
+          "likelihood": { "type": "string" },
+          "control": { "type": "string" },
+          "trigger": { "type": "string" }
+        }
+      }
+    },
+    "top_five": { "type": "array", "items": { "type": "string" } },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "residual", "origin", "severity", "owner", "status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^RES-\\d{2}$" },
+          "residual": { "type": "string", "minLength": 10 },
+          "origin": { "type": "string", "pattern": "^A-\\d{3}(-R\\d?)?$" },
+          "severity": { "enum": ["critical", "high", "medium", "low"] },
+          "owner": { "enum": ["founder", "counsel", "tool"] },
+          "status": { "enum": ["open", "closed"] }
+        }
+      }
+    }
+  }
+}

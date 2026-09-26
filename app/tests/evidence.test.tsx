@@ -17,6 +17,17 @@ const base = {
 } as const;
 
 describe("EvidenceCard", () => {
+  it("shows an informational duplicate chip when an identical file is already stored (A-036)", () => {
+    const { rerender } = render(<EvidenceCard {...base} lifecycle="extracted" />);
+    expect(screen.queryByText(/Duplicate of/)).not.toBeInTheDocument();
+    rerender(
+      <EvidenceCard {...base} lifecycle="extracted" duplicateOf="Invoice AT-4471 (first copy)" />,
+    );
+    expect(screen.getByText(/Duplicate of Invoice AT-4471 \(first copy\)/)).toBeInTheDocument();
+    // informational only: no merge/reject control appears
+    expect(screen.queryByRole("button", { name: /merge|reject/i })).not.toBeInTheDocument();
+  });
+
   it("renders every lifecycle state with document provenance", () => {
     for (const lifecycle of [
       "queued",

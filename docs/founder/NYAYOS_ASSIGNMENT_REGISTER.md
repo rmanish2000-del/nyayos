@@ -411,3 +411,367 @@ yayos` to canonical repository `rmanish2000-del/nyayos`, branch `main` |
 | **Evidence** | `app/src/components/nyayos/party-card.tsx`, `app/src/components/nyayos/timeline-event-card.tsx`, `app/src/components/nyayos/parties-timeline-workspace.tsx`, `app/src/components/nyayos/app-shell.tsx`, `app/src/routes/index.tsx`, `app/tests/parties-timeline.test.tsx` (13 tests), `app/README.md`, `app/roadmap.md` |
 | **Limitations** | Frontend staging fixtures only: parties and events are not persisted and no backend, OCR or AI was added. Conflict resolution is indicated, not resolved — no merge or adjudication flow exists. NVDA / VoiceOver verification remains open (owed since A-014); no formal contrast audit. A-008 design artefact remains absent, so visual conformance is judged against canonical text and existing components |
 | **Handoff back to M365 Copilot** | A-026 is CANONICAL as a validated staging implementation. No deployment occurred and no Sprint 5 work started. A design conformance review of S11 / S12 is recommended before Evidence Mapping |
+
+---
+
+### A-031 — Fast Mode specification set import
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-031 |
+| **Owner / tool** | Claude Chat — Opus with Extended Thinking (specification only); imported by Claude Code under A-030 |
+| **Purpose** | Bring the founder-supplied Fast Mode specification set into the canonical repository unchanged so that A-030 can cite CANONICAL inputs |
+| **Input files** | Founder-supplied on 23 Sep 2026: `NYAYOS_FAST_MODE_STRATEGY_V1.md`, `NYAYOS_FM_A_SCOPE_SHEET_V1.md`, `NYAYOS_BUILD_BRIEF_V2.md`, `NYAYOS_COUNSEL_BRIEF_V1.md`, `NYAYOS_FM0_CONCIERGE_PACK_V1.md`, `Executive Architecture Deck.pptx`, `Executive Product Vision Deck.pptx` |
+| **Gate** | None (documents only) |
+| **Deployment allowed** | Not applicable |
+| **Status** | **CANONICAL — 23 September 2026** (imported byte-identical; hashes in the registry notes) |
+| **Result** | Five Markdown specifications imported unchanged into `docs/product`, `docs/implementation`, `docs/founder`; two `.pptx` decks (gitignored) represented by verbatim text extracts with source SHA-256 |
+| **Evidence** | `docs/implementation/NYAYOS_FM_A_SCOPE_SHEET_V1.md` and the six sibling files listed in the registry |
+| **Limitations** | Specifications only; none asserts that any implementation exists. Deck layouts and diagrams are not reproduced. The Executive Architecture Deck numbers S1–S16 differently from the Scope Sheet — reconciled in the A-030 gap report §3 |
+| **Handoff back to M365 Copilot** | Record as canonical inputs; the Scope Sheet and the Security & Data Architecture Spec govern where the decks disagree |
+
+---
+
+### A-030 — FM-A Foundation Build (canonical integration branch)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-030 |
+| **Owner / tool** | Claude Code — Canonical Repository Integration and FM-A Foundation Build |
+| **Purpose** | Create `feature/fma-foundation-v1`; assess the repository; integrate the FM-A UI package; build the security foundation and FM-A data model; produce the U01–U21 gap report and S1–S16 coverage matrix |
+| **Input files** | A-010 Security & Data Architecture Spec V1; A-031 Fast Mode specification set; A-017/A-018/A-026 staging frontend (`app/`); A-029 operating system. **The Figma FM-A source handoff package was not supplied and does not exist locally** |
+| **Gate** | FA-001 (staging only). No deployment · no production change · no direct `main` commit · no legal functionality · no AI functionality · no advocate marketplace |
+| **Deployment allowed** | **NOT ALLOWED.** Nothing deployed; no database provisioned or written; SQL migration not applied |
+| **Status** | **REVIEW — 23 September 2026.** Branch pushed; founder to review and merge by pull request. 132/132 tests (79 new) · `tsc` clean · `eslint` 0 errors · build · schema-lint clean · migration executed on an ephemeral local Postgres 16.14 container: 41/41 smoke checks PASS (no environment created) |
+| **Result** | 1. Repository assessment and integration strategy (`docs/architecture/NYAYOS_FMA_REPOSITORY_ASSESSMENT_A030.md`). 2. Domain foundation `app/src/domain/` — 14 modules: reserved enums (CR-3), table registry and deletion allow-list (CR-4), [PROV] config, server-built request context, `isDisputeMember` / `grantAllows` (CR-2), consent enforcement with locked purposes, identity and personal-tenant sign-up, dispute core with the provenance contract (CR-8), single-writer proposal → correction pipeline with version-chain rebuild, evidence lifecycle state machine (no promotion without a clean verdict), hash-chained content-free audit, export manifest with provenance omissions, honest deletion lifecycle with content-free tombstones, bilingual required copy and prohibited-wording guard. 3. `db/migrations/0001_fma_foundation.sql` — 39 tables, RLS enabled and forced on every table, helpers, single-writer functions, audit trigger, allow-list registration (NOT applied). 4. `scripts/db/schema-lint.mjs` + `schema-lint` workflow (static SEC-RLS-01 / SEC-DEL-06). 5. Gap report (`docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md`): U01–U21 READY/PARTIAL/MISSING, S1–S16 mapping with deck/scope-sheet reconciliation, entity diagram, risks, implementation waves |
+| **Evidence** | `docs/architecture/NYAYOS_FMA_FOUNDATION_GAP_REPORT_A030.md`; `app/tests/domain/*.test.ts` (8 files, 79 tests); `node scripts/db/schema-lint.mjs` |
+| **Limitations** | Phase 2 (Figma UI import) not executed — package missing; U01–U21 mapped against existing components only. SQL migration has been executed only on a throwaway local container, never on a provider or an environment (none exists; FD-02 pending). Hindi copy strings are working translations awaiting native review; notice and integrity wording awaits counsel (OL-01, OL-04, OL-08). No server functions, auth provider, storage or scan adapter exist yet |
+| **Handoff back to M365 Copilot** | Record A-030 as REVIEW on `feature/fma-foundation-v1`; open a pull request to `main` for founder review; next implementation wave is W1 in the gap report §7 (auth + tenant + consent server functions on a staging database once FD-02 is decided) |
+
+---
+
+### A-032 — Independent review and merge-readiness audit of A-030
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-032 |
+| **Owner / tool** | Claude Code — Independent Review & Merge Readiness Audit |
+| **Purpose** | Fresh review of PR #2 (`feature/fma-foundation-v1`, commits `a23faf85`, `63ac9f29`) against the FM-A Scope Sheet, Security & Data Architecture Spec, Build Brief V2, Counsel Brief V1, the four decks and the A-030 reports; issue a merge recommendation |
+| **Input files** | The 14 mandated inputs. Two decks (FM-A Product & User Flow, FM-0 Concierge) were not in the repository and were not A-030 inputs; imported as text extracts under this task |
+| **Gate** | None required (review). Deployment NOT allowed; production NOT allowed — nothing deployed |
+| **Deployment allowed** | **NOT ALLOWED.** The migration was executed only on a throwaway local Postgres 16.14 container for the probes; destroyed afterwards |
+| **Status** | **CANONICAL — 23 September 2026** (review delivered; precedent A-021 / A-024) |
+| **Result** | **MERGE WITH FIXES.** Critical 2 · Major 8 · Minor 12. Nine defects verified by execution, two by a temporary test probe. Scope compliance verified (no AI, legal, representation, marketplace, deployment or dependency change). Required fixes before merge and design decisions before W1 are listed in the report §8–§9 |
+| **Evidence** | `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md`; probe transcripts summarised in §11 |
+| **Limitations** | Reviewer is the same tool that built A-030; independence is procedural (fresh session, execution-based verification, adversarial probes), not organisational. No fixes were applied. The FM-A Product & User Flow deck's U01–U21 differ from the Scope Sheet's; the cross-map is the reviewer's, not a founder decision |
+| **Handoff back to M365 Copilot** | Record A-032 CANONICAL; A-030 stays REVIEW until the §8 fixes land on the branch and the founder re-reviews; founder decisions D-031…D-036 candidates in §9 |
+
+---
+
+### A-033 — Critical fix pack for A-030
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-033 |
+| **Owner / tool** | Claude Code — A-033 Critical Fix Pack |
+| **Purpose** | Fix only the items blocking merge from the A-032 review: C-1 audit-chain concurrency fork, C-2 deletion-request authorisation, M-1 consent-withdrawal ordering, M-4 provenance and identity guards, M-5 export-manifest item typing |
+| **Input files** | PR #2; `docs/architecture/NYAYOS_FMA_MERGE_READINESS_REVIEW_A032.md`; `feature/fma-foundation-v1` at `05bbd1a4` |
+| **Gate** | FA-001 (staging only). Deployment NOT allowed; production NOT allowed |
+| **Deployment allowed** | **NOT ALLOWED.** Verified only on an ephemeral local Postgres 16.14 container, destroyed afterwards; nothing applied to any environment |
+| **Status** | **REVIEW — 23 September 2026.** All five scoped findings closed; PR #2 remains a draft for founder re-review |
+| **Result** | Migration `0001` (unmerged, so edited in place per A-032 §8): advisory transaction lock in the audit trigger; `request_deletion()` server function replaces the direct INSERT grant and policy; `decide_proposal` refuses identity keys, sets `created_by` from the session, refuses `ai_extraction`, validates `source_ref`; CHECK constraints `*_source_ref_shape` (11 tables) and `*_fma_origin_inert` (10 tables). Domain: order-independent `requirePurpose`; `SERVER_CONTROLLED_KEYS` guard in `proposeChange`; explicit `itemType` on every canonical item and a typed manifest; `newDeletionRequest` verifies ownership. Tests: 6 new Vitest tests; 13 new smoke checks; `audit_concurrency_0001.sh` two-session proof |
+| **Evidence** | `db/tests/smoke_0001.sql` (54/54 PASS); `db/tests/audit_concurrency_0001.sh` (PASS: chain intact, 0 forked predecessors); A-032 probes PROBE1/4/4b/5b/7 re-run and now fail closed; `vitest`, `tsc`, `eslint`, `schema-lint` clean |
+| **Limitations** | Scope was five items. Still open from A-032: m-1 (`status` in the dispute UPDATE grant), the M-8 U01–U21 cross-map addendum to the gap report, and the design decisions D-031…D-036 (M-2, M-3, M-6, M-7). No architecture change; no new document created |
+| **Handoff back to M365 Copilot** | Record A-033 REVIEW; risk rating Medium; recommendation SAFE TO MERGE once the founder accepts m-1 and the M-8 addendum as tracked follow-ups (or applies them in one further commit) |
+
+---
+
+### A-036 — Duplicate Detection V1
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-036 |
+| **Owner / tool** | Claude Code — development build on `feature/fma-foundation-v1` |
+| **Purpose** | Build the first WAVE0 item named by A-035: hash-level, tenant-scoped, informational duplicate detection |
+| **Input files** | A-035 plan §3.1; A-034 gap analysis; FM-A Scope Sheet (A10 `completeUpload`, S5 write-once originals); branch at `ff06012` |
+| **Gate** | FA-001 (staging only). Deployment NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** Migration `0002` executed only on a throwaway local container with `0001`; destroyed; no environment |
+| **Status** | **REVIEW — 24 September 2026.** On the draft PR #2 branch for founder review |
+| **Result** | `app/src/domain/duplicate.ts` (`findDuplicateVersions`, `assessDuplicate`, `duplicateAuditMetadata`); `db/migrations/0002_duplicate_lookup.sql` (index + SECURITY INVOKER `find_duplicate_versions(text)` + `duplicate_detection_mode = inform`); `EvidenceCard.duplicateOf` informational chip; bilingual `duplicate_detected` copy and `fillCopy` helper; docs updated |
+| **Evidence** | Vitest 146/146 (8 new domain tests + 1 component test); `tsc`, `eslint` (0 errors), build clean; schema-lint clean; smoke 62/62 incl. 8 `DUP_*` checks (owner sees both identical versions; hex case-insensitive; unknown hash none; labels returned; other tenant sees nothing; index present; mode inform; originals untouched); concurrency proof PASS |
+| **Limitations** | Not yet invoked by a server function (A10 arrives in wave W1); near-duplicates (re-scans) out of scope; Hindi copy is a working translation; UI chip is fed by props only until the evidence workspace is wired to storage |
+| **Handoff back to M365 Copilot** | Record A-036 REVIEW; next per A-035 order: Stale Output Detection (A-037 candidate) — pure, read-side, no prerequisites |
+
+---
+
+### A-037 — Stale Output Detection V1
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-037 |
+| **Owner / tool** | Claude Code — repository implementation on `feature/fma-foundation-v1` |
+| **Purpose** | Read-only detection of exports that reference item or document versions no longer current. Detection only: nothing rewritten, refreshed, replaced, deleted, merged or regenerated |
+| **Input files** | Operating system; status JSON; A-035 plan §3.2; gap analysis V1; backlog and validated requirements; A-036 at baseline `266d96e` |
+| **Gate** | FA-001 (staging only). Deployment NOT ALLOWED; production access NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** Migration `0003` executed only on disposable local containers with `0001` and `0002`; destroyed; no environment |
+| **Status** | **REVIEW — 24 September 2026.** On the draft PR #2 branch for founder review |
+| **Result** | `app/src/domain/staleness.ts` (row-level and summary assessment, CURRENT / STALE / UNKNOWN, version comparison only); `db/migrations/0003_export_staleness.sql` (SECURITY INVOKER, STABLE `export_staleness(uuid)`, dispute-confined lookups, no writes); `StaleOutputNotice` (warning, counts, review link, no regenerate control); bilingual copy |
+| **Evidence** | Vitest 162/162 (12 domain + 4 component new); `tsc`, `eslint` (0 errors), build, schema-lint clean; smoke 75/75 incl. 13 `STALE_*` checks (current, stale, multiple, missing, malformed, malformed manifest, other dispute no leak, dispute mismatch, other tenant zero rows, nonexistent indistinguishable, no mutation fingerprint, invoker + stable, no writes) and all 8 A-036 `DUP_*` checks |
+| **Limitations** | No export service exists yet, so exports in the smoke suite are written by the test superuser; the notice is fed by props until the export screens (U16/U17) exist; the SQL reason set omits `malformed_current_version` and `ambiguous_current_version`, which the schema makes impossible (NOT NULL, CHECK ≥ 1, primary keys); Hindi copy is a working translation |
+| **Rollback** | `git revert <A-037 commit>` on the branch, or delete `app/src/domain/staleness.ts`, `app/tests/domain/staleness.test.ts`, `app/src/components/nyayos/stale-output-notice.tsx`, `app/tests/stale-output-notice.test.tsx`, `db/migrations/0003_export_staleness.sql`, remove the `./staleness` export from `app/src/domain/index.ts`, the six `stale_output_*` keys from `copy.ts` and the A-037 section of `db/tests/smoke_0001.sql`. Database (disposable only): `drop function if exists nyayos.export_staleness(uuid);` |
+| **Handoff back to M365 Copilot** | Record A-037 REVIEW; next per A-035 order: Contradiction Registry surfacing, which needs the server layer (W1) and a founder decision on typed conflict kinds |
+
+---
+
+### A-033-R — Close outstanding A-032 critical findings
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-033-R |
+| **Owner / tool** | Claude Code — critical security remediation and regression verification |
+| **Purpose** | Verify at `8489353` whether A-032 C-1 and C-2 are still open; fix what is open; prove closure by adversarial execution |
+| **Gate** | FA-001 (staging only). Deployment, production access and PR merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** Migrations executed only on disposable local Postgres 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 24 September 2026** |
+| **Result** | **C-1 was still open** (forks under REPEATABLE READ and a concurrent READ COMMITTED burst); closed by append-only migration `0004_audit_chain_order.sql` (seq assigned under the advisory lock; unique index on `prev_hash`). **C-2 was already closed** by A-033; proven by 25 adversarial checks |
+| **Evidence** | `db/tests/audit_concurrency_matrix.sh` (baseline: FAIL; after: 4/4 PASS ×3 repeats, 162 rows, 0 forks); `db/tests/deletion_authz_0001.sql` 25/25; smoke 78/78 with `0001`–`0004` (8 `DUP_`, 13 `STALE_`, 3 new `C1R_`); Vitest 162/162; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | Writers at REPEATABLE READ or SERIALIZABLE that race another writer now fail (retryable) instead of forking; future server functions should run audit writes at READ COMMITTED. `request_deletion` remains SECURITY DEFINER by necessity. A non-positive `deletion_undo_window_days` set by an operator in `config_provisional` is not clamped in SQL (operator-only; TS config refuses it). Same-tenant multi-user cases were constructed directly because organisation tenants are reserved in FM-A |
+| **Rollback** | `git revert` the A-033-R commit; disposable databases only: `drop index if exists nyayos.audit_events_prev_hash_unique; revoke usage on sequence nyayos.audit_events_seq_seq from nyayos_service_audit;` then re-run the `tg_audit_before_insert` block from `0001` (reintroduces C-1) |
+| **Handoff back to M365 Copilot** | Record A-033-R REVIEW; A-032 critical count now 0; recommended next: close the remaining A-032 majors that block W1 (M-7 audit atomicity and M-3 deletion purge path, both founder decisions D-031/D-032) before further Wave-0 features |
+
+---
+
+### A-038 — Audit atomicity and hash interoperability fix pack
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-038 |
+| **Owner / tool** | Claude Code — security and data-integrity implementation |
+| **Purpose** | Close A-032 M-2 (TypeScript and SQL audit hashes not interoperable) and M-7 (audit not atomic with canonical writes) under founder decisions D-031 (commit or roll back together) and D-032 (no purge now) |
+| **Gate** | FA-001 (staging only). Deployment, production access and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** `0005` executed only on disposable local PostgreSQL 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 24 September 2026** |
+| **Result** | Migration `0005_audit_contract_and_atomicity.sql`: contract functions `audit_canonical_v1`, `audit_row_hash_v1`; trigger hashes through them (A-033-R locking unchanged) and validates metadata value types; `verify_audit_chain` on the same contract; `audit_append_internal` (no client grant) called inside `sign_up_personal_tenant`, `create_dispute`, `propose_change`, `decide_proposal`, `request_deletion`. `app/src/domain/audit.ts`: same contract, `normalizeAuditTimestamp`, `fromSqlAuditRow` |
+| **Evidence** | Golden vectors 13/13 in both runtimes (frozen after independent byte-for-byte agreement); TypeScript verifies a 10-row PostgreSQL-written chain; atomicity 21/21; concurrency matrix 5/5 (incl. server-function burst); smoke 79/79; deletion authz 25/25; Vitest 185/185; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | `0005` requires an empty `audit_events` (no environment holds rows; records are never rewritten). Server-side audit rows carry `ip_hash = null` and `user_agent_class = 'unknown'` until the server layer passes them. Request id and principal come from connection settings, which assumes clients never hold raw database sessions (existing architecture assumption). Audit writes serialise on one advisory lock, which bounds write throughput |
+| **Rollback** | `git revert` the A-038 commit; disposable databases only: re-run the server-function and `verify_audit_chain` blocks from `0001` and the trigger block from `0004`, then drop the five contract/writer functions listed in the `0005` header (reopens M-2 and M-7) |
+| **Handoff back to M365 Copilot** | Record A-038 REVIEW; A-032 critical 0; open majors M-3 (purge path, D-032), M-6 (deletion scope graph), M-8 (documentation addendum) |
+
+---
+
+### A-039 — Complete deletion scope graph
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-039 |
+| **Owner / tool** | Claude Code — security and data-integrity implementation |
+| **Purpose** | Close A-032 M-6: make deletion enumeration cover every dispute-linked record (including documents and quarantine uploads) without widening into other disputes or tenants. Enumeration only; no purge (D-032) |
+| **Gate** | FA-001 (staging only). Deployment, production access and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** `0006` executed only on disposable local PostgreSQL 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 24 September 2026** |
+| **Result** | Migration `0006_deletion_scope_graph.sql`: `deletion_graph_v1()` (70 edges over 39 tables, each with a reason), internal `deletion_document_refs_v1()`, read-only `enumerate_deletion_scope(request)` with six classifications, manual legal-hold config key. `deletion.ts`: `DELETION_GRAPH`, `graphUncoveredTables`, graph-driven `tablesForScope`. schema-lint enforces SQL/TS graph parity and full table coverage |
+| **Evidence** | `db/tests/deletion_scope_0001.sql` 28/28 (oracle completeness, documents/versions/uploads/derivatives/exports/corrections, cross-dispute and cross-tenant isolation, indistinguishable errors, shared records blocked, legal hold, block/cascade policy, zero-mutation fingerprint); negative controls for the oracle and for lint parity; smoke 82/82; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency 5/5; Vitest 192/192; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | Enumeration is callable by the requester only; the future purge worker's access path arrives with purge (D-032). Reference scans read whole canonical tables (acceptable for FM-A volumes). Account deletion does not pseudonymise the user's actor references in other tenants (later work). Legal hold is manual configuration pending counsel (OL-06). The old single-column `deletion_allowlist` remains as registration only; the graph is authoritative |
+| **Rollback** | `git revert` the A-039 commit; disposable databases only: the three `drop function` statements and the config `delete` listed in the `0006` header |
+| **Handoff back to M365 Copilot** | Record A-039 REVIEW; A-032 critical 0; open: M-3 (purge, D-032) and M-8 documentation addendum |
+
+---
+
+### A-040 — Deletion purge worker V1
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-040 |
+| **Owner / tool** | Claude Code — security and data-integrity implementation |
+| **Purpose** | Close A-032 M-3: a server-controlled purge worker (D-032) that deletes strictly from the A-039 enumeration, respects undo window, legal hold, blocked and configuration-controlled records, preserves audit, tombstones and retained metadata, and leaves no orphan |
+| **Gate** | FA-001 (staging only). Deployment, production access and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** `0007` executed only on disposable local PostgreSQL 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 24 September 2026** |
+| **Result** | Migration `0007_deletion_purge_worker.sql`: `purge_deletion_request(request)` (definer, service-only), internal `deletion_record_key_v1`, `deletion_purge_order_v1`, `deletion_logical_refs_v1`, `deletion_audit_internal`; worker-only DELETE exemption on `document_versions` and `user_corrections`. `deletion.ts`: `DELETION_PURGE_ORDER` twin, `purgeGate`, `purgeCandidates`, `purgeOutcome`, `purge_incomplete` transition. schema-lint enforces purge-order parity and coverage |
+| **Evidence** | `db/tests/deletion_purge_0001.sql` 55/55 (valid, blocked, document and account purges; undo window; undone; legal hold incl. unreadable; forged cross-tenant and cross-dispute requests; duplicate and incomplete reruns; audit chain; tombstones; whole-database snapshots per purge; independent orphan oracle); 7 negative controls each detected; `deletion_purge_concurrency.sh` 3/3; smoke 85/85; deletion scope 28/28; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency matrix 5/5; Vitest 199/199; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | Object-storage blobs (document originals, export files) are not deleted: no storage exists (FD-02) and the rows holding their paths are purged, so blob deletion must be designed before storage is provisioned. Account purge keeps the personal tenant row, and the own membership with it, because retained `deletion_requests` and `consents` reference it by foreign key; the tenant name therefore persists (founder decision). No scheduler invokes the worker (server runtime not built). Closure reads whole tables (FM-A volumes). Legal hold remains manual configuration (OL-06) |
+| **Rollback** | `git revert` the A-040 commit; disposable databases only: the statements listed in the `0007` header |
+| **Handoff back to M365 Copilot** | Record A-040 REVIEW; A-032 critical 0 and majors closed except the M-8 documentation addendum; decide the two residuals (blob deletion design; account tenant retention) |
+
+---
+
+### A-041 — U01–U21 documentation addendum and final A-032 closure
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-041 |
+| **Owner / tool** | Claude Code — documentation closure and traceability reconciliation |
+| **Purpose** | Close A-032 M-8: one authoritative U01–U21 map with evidence, and reconcile every alternative screen numbering, without changing product behaviour |
+| **Gate** | FA-001 (staging only). Deployment, production access, database writes and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** Documentation only; no database touched |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | `docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md`: canonical matrix (each ID once; READY 0 · PARTIAL 4 · MISSING 17), per-screen detail with twelve fields, cross-maps for the deck, Figma Brief V2, the absent Figma package, repository reports and code groupings, fifteen content conflicts with decisions, U18 deletion limitations, M-8 closure record. A-032 §0, A-030 gap report pointer and `docs/INDEX.md` updated |
+| **Evidence** | Validator: 21 matrix rows and 21 detail sections, allowed statuses only, every cited path and identifier present, internal links resolve, no private terms; negative controls (missing row, bad path) fail. No code, SQL, migration or test changed; typecheck, Vitest, lint, build and schema-lint re-run unchanged |
+| **Limitations** | Evidence is static reading at the baseline; the Figma FM-A package was never supplied, so no screen has prototype design evidence; m-1 stays open because SQL changes were out of scope; D-035 and D-036 are founder decisions |
+| **Rollback** | `git revert` the A-041 commit |
+| **Handoff back to M365 Copilot** | Record A-041 REVIEW; every A-032 critical and major finding is closed; remaining: m-1 and other minors, D-035 / D-036, and the A-040 residuals (object-storage deletion, account tenant row) |
+
+---
+
+### A-042 — Minor finding m-1 closure
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-042 |
+| **Owner / tool** | Claude Code — security implementation |
+| **Purpose** | Close A-032 m-1: no client may change dispute status directly; status changes only through a server-controlled path |
+| **Gate** | FA-001 (staging only). Deployment, production access and merge NOT ALLOWED |
+| **Deployment allowed** | **NOT ALLOWED.** `0008` executed only on disposable local PostgreSQL 16.14 containers; all destroyed |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | Reproduced on `0001`–`0007` (owner and editor each set status directly). Migration `0008_dispute_status_authorization.sql`: revoke `UPDATE (status)` on `disputes` from `nyayos_authenticated` (title and category label edits kept); trigger `deletion_requests_dispute_status` (definer, pinned search path) sets `deletion_requested` on a dispute-scope request and `active` on undo when no other request is open, auditing the undo as `deletion.undone` in the same transaction; the purge worker never sets status |
+| **Evidence** | `db/tests/dispute_status_0001.sql` 21/21, failing on the baseline; negative controls (re-grant, missing undo audit) detected; smoke 87/87; deletion purge 55/55 with one A-040 assertion updated for the intended undo side effects; deletion scope 28/28; deletion authz 25/25; atomicity 21/21; vectors 16/16; concurrency matrix 5/5; purge race 3/3; Vitest 199/199; `tsc`, `eslint` 0 errors, build, schema-lint clean |
+| **Limitations** | Status is driven only by dispute-scope requests; document and account requests leave dispute status unchanged, and their undo is not audited (pre-existing, outside m-1). `deleted` is never set in FM-A. A-032 minors m-2 to m-12 remain open as non-blocking follow-ups |
+| **Rollback** | `git revert` the A-042 commit; disposable databases only: the statements in the `0008` header |
+| **Handoff back to M365 Copilot** | Record A-042 REVIEW; every A-032 fix required before merge is closed; next is the founder's merge-readiness review |
+
+---
+
+### A-044 — Repository-centric AI operating system
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-044 |
+| **Owner / tool** | Claude Code — governance tooling |
+| **Purpose** | Give every tool one repository-held state (`docs/ai/`), per-tool handoffs, validators, and a mandatory completion protocol |
+| **Gate** | FA-001. No deployment, no production, no merge |
+| **Deployment allowed** | **NOT ALLOWED.** Repository files and a CI step only |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | `docs/ai/` (`CURRENT_STATE.json`, `NEXT_TASK.json`, `DECISIONS.json`, `RISKS.json`, `schemas/`, `tool-output/claude-code|figma|lovable|gemini/`), `scripts/ai/state.mjs` (generate, check), check wired into `task-gate`, completion protocol in `CONTRIBUTING.md` §5, PR template and Operating System §28 |
+| **Evidence** | `node scripts/ai/state.mjs check` clean after the state commit; five negative controls detected; registry validates; task-gate on PR #2 |
+| **Limitations** | Commit and push are enforced indirectly (the recorded SHA must be in history and the handoff says pushed); the validator cannot prove a push to a specific remote. Handoff content quality is not checked beyond required fields and sections. Registry `tool` stays free text; `docs/ai` uses four tool slugs. A-043 is not registered in this repository. The A-042 handoff is backfilled |
+| **Rollback** | `git revert` the A-044 work and state commits |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044/HANDOFF.json` (moved there by A-044-R; originally `A-044.md`) |
+| **Re-issued brief (26 Sep 2026)** | Added: standard handoff schema `docs/ai/schemas/handoff.schema.json` (with `Deployment`, never production); generated `docs/ai/STATUS_SUMMARY.md` (replaces founder copy/paste); `docs/ai/TOOL_OUTPUT_CONTRACT.md`; pull-request rule `check --head` failing on unrecorded work after the recorded commit |
+
+---
+
+### A-043 — MVP Wave-1 UI implementation
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-043 |
+| **Owner / tool** | Lovable — MVP UI implementation |
+| **Purpose** | Google login entry and routing; U04, U05, U06, U07, U08, U09, U16, U17 on seeded synthetic data |
+| **Gate** | FA-001 (staging only). Production NOT ALLOWED |
+| **Deployment allowed** | Staging only; nothing deployed by this assignment |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | Routed screens under `/login` and `/disputes/...`; five seeded personas; no backend, storage, scan or model call |
+| **Evidence** | `docs/ai/tool-output/lovable/A-043.md`; `app/tests/mvp.test.tsx` (34); Vitest, tsc, eslint 0 errors, build; Playwright 390/834/1280 |
+| **Limitations** | Figma MVP Design Package V1 not supplied (conformance unverified); Google sign-in not connected; no storage/scan; JSON manifest only; screen reader pass owed |
+| **Rollback** | `git revert` the A-043 commit (additive UI only) |
+| **Handoff back to M365 Copilot** | Record A-043 REVIEW; supply the Figma package for a conformance review; decide F01 sign-in method |
+
+---
+
+### A-044-R — Complete and repair the repository-centric tool handoff system
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-044-R |
+| **Owner / tool** | Claude Code — repository automation protocol correction |
+| **Purpose** | Let M365 Copilot learn from GitHub alone, after "CC done", "Gemini done", "Lovable done" or "Figma done", which tool finished which task, the commit, files, validations, risks, the awaited output and the next assignment |
+| **Gate** | FA-001. No deployment, no production, no merge |
+| **Deployment allowed** | **NOT ALLOWED.** Repository files, a validator, tests and a CI step only |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | Handoffs at `docs/ai/tool-output/<tool>/<task-id>/HANDOFF.json` + `SUMMARY.md` (schema `handoff.schema.json`); `CURRENT_STATE.json` 2.0 with per-tool latest completion, active and blocked tasks, awaited outputs; `NEXT_TASK.json` 2.0; `scripts/ai/state.mjs` rejects unknown tools, duplicate ownership, completions without a handoff, commits outside history, untagged completion commits, file lists that differ from git, stale or contradictory state and unrecorded work; `scripts/ai/state.test.mjs` (25 tests over throwaway git fixtures for all four tools); both run in `task-gate`. A-042 and A-044 handoffs backfilled; Markdown handoffs, the separate contract and the underscore-named schemas removed |
+| **Evidence** | `node --test scripts/ai/state.test.mjs` 25/25; `node scripts/ai/state.mjs check --head <head>` clean after the state commit; task-gate on PR #2 |
+| **Limitations** | Lovable's earlier staging builds and the Figma package have no repository handoff and are recorded as blocked, not completed; Gemini has no records. The validator proves commits are in the checked-out history, not which remote received them. Test fixtures are synthetic |
+| **Rollback** | `git revert` the A-044-R completion and state commits (listed in `docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json`) |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044-R/HANDOFF.json` |
+
+---
+
+### A-044-R2 — Fix the AI operating system itself
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-044-R2 (no ID was issued for this follow-up; recorded as the second remediation of A-044) |
+| **Owner / tool** | Claude Code — repository automation |
+| **Purpose** | Make `CURRENT_STATE.json` and `NEXT_TASK.json` canonical, make every tool update them, fail CI on a missing HANDOFF, stale CURRENT_STATE, stale NEXT_TASK or missing task ownership, add a one-command AI status, and backfill Lovable A-043, Gemini A-047 and Claude A-042/A-044 into the structure |
+| **Gate** | FA-001. No deployment, no production, no merge |
+| **Deployment allowed** | **NOT ALLOWED** |
+| **Status** | **REVIEW — 26 September 2026** |
+| **Result** | `authority: canonical` in both state files; `tools.<tool>` fully derived; ownership and NEXT_TASK-staleness gates; blocked handoffs (null commit, `blocked_reason`); `node scripts/ai/state.mjs status [--json]`; Gemini A-047 recorded as a blocked ownership record (registered OPEN) because no repository evidence exists |
+| **Evidence** | `node --test scripts/ai/state.test.mjs`; `node scripts/ai/state.mjs check --head <head>`; task-gate on PR #2 |
+| **Limitations** | Gemini A-047's content is unknown here; its registry type is assumed. Draft PR #3 (A-050, another branch) is recorded as an open item, not integrated |
+| **Rollback** | See `docs/ai/tool-output/claude-code/A-044-R2/HANDOFF.json` |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-044-R2/HANDOFF.json` |
+
+---
+
+### A-048 — FM-A merge readiness and decision reconciliation
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-048 (no ID was issued; next free ID claimed) |
+| **Owner / tool** | Claude Code — merge readiness review |
+| **Purpose** | Record the founder's decisions, rebaseline A-041 against A-043, verify PR #2's whole diff and every test, identify PR #3 conflicts without merging it, and prepare PR #2 for integration |
+| **Gate** | FA-001. No production, no merge, no deployment |
+| **Status** | **REVIEW — 27 September 2026** |
+| **Result** | Decision Log D-031, D-032, D-035 (partly), D-036; addendum rebaselined (PARTIAL 11, MISSING 10); report `docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md` (verdict: ready for the founder's merge with a merge commit); PR #3 conflicts documented |
+| **Evidence** | `docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md` §3–§5; DB suites, Vitest (CI), typecheck, lint, build, schema-lint, handoff validator |
+| **Limitations** | Local Windows Vitest 232/233 (A-043 U06 jsdom difference; CI 233/233). PR #2 left draft: marking it ready and merging are the founder's actions. Repository merge-method settings not changed |
+| **Rollback** | See `docs/ai/tool-output/claude-code/A-048/HANDOFF.json` |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-048/HANDOFF.json` |
+
+---
+
+### A-062 — Repository state reconciliation (Gemini A-047)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-062 |
+| **Owner / tool** | Claude Code — repository state reconciliation |
+| **Purpose** | Determine whether `docs/ai/tool-output/gemini/A-047/` is a valid completion, a placeholder or a partial completion, and reconcile `CURRENT_STATE`, `NEXT_TASK` and `STATUS_SUMMARY` |
+| **Status** | **REVIEW — 27 September 2026** |
+| **Result** | **Placeholder only.** The directory holds the blocked ownership record written by Claude Code under A-044-R2; no Gemini commit, output or evidence exists on any branch or pull request. The blocked status is correct and was kept. Placeholders are now reported as "placeholder only, no output committed" in the status command, `CURRENT_STATE` and `STATUS_SUMMARY` |
+| **Evidence** | `node scripts/ai/state.mjs status`; `node --test scripts/ai/state.test.mjs`; `docs/ai/tool-output/gemini/A-047/HANDOFF.json` |
+| **Limitations** | Only repository contents can be inspected; any Gemini output held outside GitHub remains invisible until committed |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-062/HANDOFF.json` |
+
+---
+
+### A-063 — A-043 implementation audit (Figma)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-063 |
+| **Owner / tool** | Figma — implementation audit (documentation only) |
+| **Purpose** | Audit the A-043 MVP Wave-1 UI for completeness, accessibility and mobile behaviour |
+| **Status** | **REVIEW — 27 September 2026** |
+| **Result** | Committed on draft PR #3 (`dbc415f`); integrated onto `feature/fma-foundation-v1` unchanged as `76b6eb6` by A-064 and validated finding by finding. Accepted items are specified for Lovable as A-065 |
+| **Evidence** | `docs/ai/tool-output/figma/A-063/` |
+| **Limitations** | Several line anchors did not match the audited code; the simulated-scan fix (FIX-C003) and the `role="button"` drop zone (FIX-m005) were rejected. See `docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md` |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/figma/A-063/HANDOFF.json` |
+
+---
+
+### A-064 — Canonical integration and branch cleanup
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-064 |
+| **Owner / tool** | Claude Code — audit validation and fix specification |
+| **Purpose** | Bring the valid Figma PR #3 audit onto the working branch against the actual A-043 files, reject findings that cite nonexistent paths, and write one canonical fix specification for Lovable |
+| **Status** | **REVIEW — 27 September 2026** |
+| **Result** | A-050 and A-057 rejected (0 of 7 and 0 of 9 cited paths exist). A-063 integrated and validated: 7 accepted, 4 reassigned, 2 merged, 1 fix rejected. Fix specification F-01 to F-10 issued as A-065. PR #2 merge readiness unchanged |
+| **Evidence** | `docs/design/NYAYOS_A063_AUDIT_VALIDATION_A064.md`; `docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md` |
+| **Limitations** | PR #3 was not merged, changed or closed; the founder should close it unmerged |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/claude-code/A-064/HANDOFF.json` |
+
+---
+
+### A-065 — A-043 canonical fixes (Lovable)
+
+| Field | Value |
+|---|---|
+| **Assignment ID** | A-065 |
+| **Owner / tool** | Lovable — UI fixes |
+| **Purpose** | Implement F-01 to F-10 of `docs/implementation/NYAYOS_A043_CANONICAL_FIX_SPEC_V1.md` |
+| **Status** | **OPEN — issued 27 September 2026; starts after the founder merges PR #2** |
+| **Handoff back to M365 Copilot** | `docs/ai/tool-output/lovable/A-065/HANDOFF.json` |
