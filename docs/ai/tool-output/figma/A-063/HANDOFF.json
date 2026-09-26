@@ -1,0 +1,60 @@
+{
+  "task": "A-063",
+  "branch": "feature/fma-foundation-v1",
+  "baselineCommit": "9d238423949eabea28452e4e6a924186a94030c4",
+  "resolvedTipCommit": "14c5ea0bc4234f2055dda879d324398e99c46d4c",
+  "auditDate": "2026-09-26",
+  "totalFindings": 16,
+  "critical": 4,
+  "major": 5,
+  "minor": 7,
+  "completionEstimate": "72% (staging preview) / 35% (production readiness)",
+  "screensAudited": [
+    "U01 LoginScreen — FULL implementation",
+    "U04 NewDisputeScreen — FULL implementation",
+    "U04 WhatHappenedSummary — FULL implementation",
+    "U05 IntakeScreen — FULL implementation",
+    "U06 EvidenceLockerScreen — FULL implementation",
+    "U07 DocumentViewerScreen — FULL implementation",
+    "U08 FactReviewScreen — FULL implementation",
+    "U09 TimelineScreen — FULL implementation",
+    "U16 ExportPreviewScreen — FULL implementation",
+    "U17 ExportResultScreen — FULL implementation",
+    "DisputeListScreen — FULL implementation",
+    "DisputeFrame (step nav) — FULL implementation",
+    "RequireSession (auth guard) — FULL implementation"
+  ],
+  "noStubsFound": true,
+  "prohibitedCopyClear": true,
+  "prohibitedTermsChecked": [
+    "AI Lawyer", "AI Judge", "Predict", "Win", "Best lawyer",
+    "Replace your lawyer", "File automatically", "Legally verified",
+    "Court approved", "Evidence certified", "Admissible", "Guaranteed",
+    "marketplace", "ranking", "score"
+  ],
+  "prohibitedTermsFound": [],
+  "authSystem": "sessionStorage synthetic personas only — no Supabase, no Google OAuth",
+  "dbIntegration": "NONE — no supabase/ directory, no integrations/ directory, no client",
+  "routerSystem": "TanStack Router (file-based, SSR-capable)",
+  "stateManagement": "React Context (MvpProvider/useMvp) + sessionStorage",
+  "topBlockers": [
+    "C-001: No Supabase / real backend — all data in sessionStorage, lost on tab close",
+    "C-002: No real Google OAuth — auth is synthetic personas only",
+    "C-003: Uploaded files permanently stuck in awaiting-scan; U07 Document Viewer unreachable for user-added files",
+    "C-004: Post-login redirect not implemented — deep links break after authentication",
+    "M-002: Root / renders component showcase, not the app entry point"
+  ],
+  "accessibilityStatus": {
+    "landmarks": "PASS",
+    "skipToContent": "PARTIAL — link present, destination lacks tabIndex=-1",
+    "formLabels": "PASS",
+    "ariaLive": "PASS — minor improvement needed on evidence locker hashing announcement",
+    "touchTargets": "PASS — touch-target utility used throughout",
+    "reducedMotion": "PASS",
+    "contrastAudit": "NOT RUN — self-reported open item",
+    "screenReaderPass": "NOT RUN — self-reported open item",
+    "htmlLang": "FAIL — document lang not updated when Hindi is selected"
+  },
+  "nextTask": "Fix C-001 through C-004 before merging to main; FIX-C001 (post-login redirect) and FIX-C003 (scan simulation) have no backend dependency and can land immediately",
+  "outputDir": "docs/ai/tool-output/figma/A-063/"
+}
