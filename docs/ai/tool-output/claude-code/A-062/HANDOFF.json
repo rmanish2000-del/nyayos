@@ -1,0 +1,99 @@
+{
+  "$schema": "../../../schemas/handoff.schema.json",
+  "schema_version": "1.0",
+  "project": "NyayOS",
+  "task_id": "A-062",
+  "tool": "claude-code",
+  "status": "completed",
+  "branch": "feature/fma-foundation-v1",
+  "baseline_commit": "14c5ea0bc4234f2055dda879d324398e99c46d4c",
+  "completion_commit": "1d2d2c72d2a17010394b02b85446b053701d185c",
+  "completed_at": "2026-09-26T19:15:46Z",
+  "files_created": [],
+  "files_modified": [
+    "docs/ai/CURRENT_STATE.json",
+    "docs/ai/STATUS_SUMMARY.md",
+    "docs/ai/tool-output/gemini/A-047/HANDOFF.json",
+    "docs/ai/tool-output/gemini/A-047/SUMMARY.md",
+    "docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md",
+    "docs/founder/NYAYOS_CHANGELOG.md",
+    "docs/founder/NYAYOS_DEPENDENCY_GRAPH.md",
+    "docs/founder/NYAYOS_STATUS_DASHBOARD.md",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.json",
+    "docs/founder/NYAYOS_STATUS_REGISTRY.md",
+    "scripts/ai/state.mjs",
+    "scripts/ai/state.test.mjs"
+  ],
+  "files_deleted": [],
+  "tests": [
+    {
+      "name": "A-047 inspection",
+      "command": "git ls-tree / git log on every remote branch; gh pr list --state all",
+      "result": "pass",
+      "detail": "only HANDOFF.json (status blocked, completion_commit null, no files, no evidence) and SUMMARY.md, both from commit 02f2f95 by Claude Code; no Gemini commit anywhere"
+    },
+    {
+      "name": "status generator",
+      "command": "node scripts/ai/state.mjs status",
+      "result": "pass",
+      "detail": "gemini: blocked — A-047: placeholder only, no output committed; claude-code A-062; lovable A-043; figma blocked (A-008)"
+    },
+    {
+      "name": "handoff validator tests",
+      "command": "node --test scripts/ai/state.test.mjs",
+      "result": "pass",
+      "detail": "31/31, incl. the placeholder wording"
+    },
+    {
+      "name": "repository state check",
+      "command": "node scripts/ai/state.mjs check --head <state commit>",
+      "result": "pass"
+    },
+    {
+      "name": "registry",
+      "command": "node scripts/governance/registry.mjs validate; generate --check",
+      "result": "pass",
+      "detail": "50 tasks, 0 errors"
+    }
+  ],
+  "evidence": [
+    {
+      "description": "Gemini A-047 placeholder with the A-062 finding",
+      "ref": "docs/ai/tool-output/gemini/A-047/HANDOFF.json"
+    },
+    {
+      "description": "status generator",
+      "ref": "scripts/ai/state.mjs"
+    },
+    {
+      "description": "commit that created the placeholder (A-044-R2)",
+      "ref": "02f2f9576c19fd065c88debcafd9a3e614e9f990"
+    },
+    {
+      "description": "completion commit",
+      "ref": "1d2d2c72d2a17010394b02b85446b053701d185c"
+    }
+  ],
+  "limitations": [
+    "Verdict: placeholder only. The blocked status was correct and was kept; removing it would claim a Gemini completion the repository does not contain.",
+    "Only repository contents can be inspected; Gemini output held outside GitHub stays invisible until committed."
+  ],
+  "risks": [
+    {
+      "description": "Gemini A-047 output exists only outside GitHub until Gemini commits it",
+      "severity": "medium"
+    }
+  ],
+  "rollback": "git revert --no-edit $(git log --format=%H --grep='^\\[TOOL:CLAUDE-CODE\\]\\[TASK:A-062\\]' 14c5ea0bc4234f2055dda879d324398e99c46d4c..HEAD) — reverts, newest first, the A-062 state commit and 1d2d2c72d2a17010394b02b85446b053701d185c; no force push",
+  "deployment": {
+    "allowed": false,
+    "environment": "none",
+    "status": "not_deployed",
+    "url": null
+  },
+  "next_recommendation": {
+    "task_id": "A-047",
+    "tool": "gemini",
+    "reason": "Gemini commits its A-047 output with a [TOOL:GEMINI][TASK:A-047] completion commit and replaces the placeholder with a completed HANDOFF.json; the founder's merge of PR #2 stays first in the awaited outputs."
+  }
+}

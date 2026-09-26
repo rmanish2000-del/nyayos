@@ -2,7 +2,7 @@
 
 # NyayOS — AI status summary
 
-Read this page first. Updated **2026-09-26T19:14:24Z**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.
+Read this page first. Updated **2026-09-26T19:15:46Z**. When the founder says **"CC done"**, **"Gemini done"**, **"Lovable done"** or **"Figma done"**, read that tool's row below, then its HANDOFF.json.
 
 ## At a glance
 
@@ -10,11 +10,11 @@ Output of `node scripts/ai/state.mjs status`:
 
 ```text
 Last completed task per tool:
-  claude-code  A-048     3edecc8  idle
+  claude-code  A-062     1d2d2c7  idle
   gemini       —         —        blocked — A-047: placeholder only, no output committed — repository handoff missing — Gemini A-047 output exists only outside GitHub
   lovable      A-043     9d23842  idle
   figma        —         —        blocked — A-008: Figma MVP Design Package never supplied to the repository (repository handoff missing).
-Latest completion overall: A-048 by claude-code (3edecc8)
+Latest completion overall: A-062 by claude-code (1d2d2c7)
 Active tasks: none
 Next awaited output: #1 (not issued) from founder — Mark PR #2 ready and merge it with a merge commit (A-048 report §6)
 Next recommended assignment: (ID to be issued) — Wave W1 — staging database with migrations applied, Google Login auth adapter, A01/A02/A28, smoke suite in CI (claude-code, P1, not ready) — blocked by: Founder merge of PR #2 (merge commit) (founder); FD-02 hosting / India-region decision and the Google auth provider (founder)
@@ -24,61 +24,45 @@ Next recommended assignment: (ID to be issued) — Wave W1 — staging database 
 
 | Tool | Status | Latest completed task | Completion commit | Handoff | Note |
 |---|---|---|---|---|---|
-| `claude-code` | idle | A-048 | `3edecc8b89c8da9ec89809787c6a8192cbf74e15` | [docs/ai/tool-output/claude-code/A-048/HANDOFF.json](tool-output/claude-code/A-048/HANDOFF.json) |  |
+| `claude-code` | idle | A-062 | `1d2d2c72d2a17010394b02b85446b053701d185c` | [docs/ai/tool-output/claude-code/A-062/HANDOFF.json](tool-output/claude-code/A-062/HANDOFF.json) |  |
 | `gemini` | blocked | — | — | — | A-047: placeholder only, no output committed — repository handoff missing — Gemini A-047 output exists only outside GitHub |
 | `lovable` | idle | A-043 | `9d238423949eabea28452e4e6a924186a94030c4` | [docs/ai/tool-output/lovable/A-043/HANDOFF.json](tool-output/lovable/A-043/HANDOFF.json) |  |
 | `figma` | blocked | — | — | — | A-008: Figma MVP Design Package never supplied to the repository (repository handoff missing). |
 
 ## Latest completion
 
-**A-048** by `claude-code` — commit `3edecc8b89c8da9ec89809787c6a8192cbf74e15`, completed 2026-09-26T18:51:46Z. Handoff: [docs/ai/tool-output/claude-code/A-048/HANDOFF.json](tool-output/claude-code/A-048/HANDOFF.json) · summary: [docs/ai/tool-output/claude-code/A-048/SUMMARY.md](tool-output/claude-code/A-048/SUMMARY.md).
+**A-062** by `claude-code` — commit `1d2d2c72d2a17010394b02b85446b053701d185c`, completed 2026-09-26T19:15:46Z. Handoff: [docs/ai/tool-output/claude-code/A-062/HANDOFF.json](tool-output/claude-code/A-062/HANDOFF.json) · summary: [docs/ai/tool-output/claude-code/A-062/SUMMARY.md](tool-output/claude-code/A-062/SUMMARY.md).
 
-Files: 1 created, 13 modified, 0 deleted.
+Files: 0 created, 12 modified, 0 deleted.
 
 ```text
-+ docs/architecture/NYAYOS_FMA_MERGE_READINESS_A048.md
-~ docs/INDEX.md
 ~ docs/ai/CURRENT_STATE.json
-~ docs/ai/DECISIONS.json
-~ docs/ai/NEXT_TASK.json
 ~ docs/ai/STATUS_SUMMARY.md
+~ docs/ai/tool-output/gemini/A-047/HANDOFF.json
+~ docs/ai/tool-output/gemini/A-047/SUMMARY.md
 ~ docs/founder/NYAYOS_ASSIGNMENT_REGISTER.md
 ~ docs/founder/NYAYOS_CHANGELOG.md
-~ docs/founder/NYAYOS_DECISION_LOG_V1.md
 ~ docs/founder/NYAYOS_DEPENDENCY_GRAPH.md
 ~ docs/founder/NYAYOS_STATUS_DASHBOARD.md
 ~ docs/founder/NYAYOS_STATUS_REGISTRY.json
 ~ docs/founder/NYAYOS_STATUS_REGISTRY.md
-~ docs/product/NYAYOS_FMA_U01_U21_TRACEABILITY_ADDENDUM_V1.md
+~ scripts/ai/state.mjs
+~ scripts/ai/state.test.mjs
 ```
 
 | Validation | Result |
 |---|---|
-| audit concurrency matrix | pass — 5/5, chain intact |
-| purge race | pass — 3/3 |
-| smoke | pass — 87/87 |
-| dispute status | pass — 21/21 |
-| deletion authz / scope / purge | pass — 25/25, 28/28, 55/55 |
-| audit atomicity / hash vectors | pass — 21/21 (5 deliberate fault injections), 16/16 |
-| vitest (CI) | pass — 233/233 |
-| vitest (local Windows) | fail — 232/233: A-043 U06 test hits a jsdom SubtleCrypto.digest buffer-type difference locally; passes in CI |
-| typecheck | pass |
-| lint | pass — 0 errors, 13 warnings (2 added by A-043) |
-| build | pass |
-| schema lint | pass |
-| handoff validator tests | pass — 31/31 |
-| registry | pass — 49 tasks, 0 errors |
-| addendum validation | pass — 83 paths, 237 identifiers; PARTIAL 11, MISSING 10 |
-| PR #2 diff scan | pass — 205 files; none found |
-| PR #3 textual merge | pass — no textual conflict; semantic conflicts in the report |
+| A-047 inspection | pass — only HANDOFF.json (status blocked, completion_commit null, no files, no evidence) and SUMMARY.md, both from commit 02f2f95 by Claude Code; no Gemini commit anywhere |
+| status generator | pass — gemini: blocked — A-047: placeholder only, no output committed; claude-code A-062; lovable A-043; figma blocked (A-008) |
+| handoff validator tests | pass — 31/31, incl. the placeholder wording |
+| repository state check | pass |
+| registry | pass — 50 tasks, 0 errors |
 
 Risks left by this task:
 
-- high: A squash or rebase merge of PR #2 would drop the handoff commit SHAs from main and turn task-gate red
-- low: D-035 points C-02, C-03 and C-05 remain open; the Scope Sheet governs them until decided
-- medium: Google Login has no provider yet (FD-02); no screen is READY (RES-05)
+- medium: Gemini A-047 output exists only outside GitHub until Gemini commits it
 
-Rollback: git revert --no-edit $(git log --format=%H --grep='^\[TOOL:CLAUDE-CODE\]\[TASK:A-048\]' 92be7c79b58640cfabfef36a23d5080b24d93cff..HEAD) — reverts, newest first, the A-048 state commit and 3edecc8b89c8da9ec89809787c6a8192cbf74e15; decisions then disappear from the Decision Log and the addendum returns to its A-041 statuses; no force push
+Rollback: git revert --no-edit $(git log --format=%H --grep='^\[TOOL:CLAUDE-CODE\]\[TASK:A-062\]' 14c5ea0bc4234f2055dda879d324398e99c46d4c..HEAD) — reverts, newest first, the A-062 state commit and 1d2d2c72d2a17010394b02b85446b053701d185c; no force push
 
 ## Awaited outputs (in order)
 
@@ -92,7 +76,7 @@ Rollback: git revert --no-edit $(git log --format=%H --grep='^\[TOOL:CLAUDE-CODE
 
 ## Next assignment
 
-**(ID to be issued by the founder) — Wave W1 — staging database with migrations applied, Google Login auth adapter, A01/A02/A28, smoke suite in CI** · tool `claude-code` · P1 · not ready · baseline `feature/fma-foundation-v1@3edecc8` · environment: Staging only under FA-001; no staging environment is provisioned yet · deployment not allowed.
+**(ID to be issued by the founder) — Wave W1 — staging database with migrations applied, Google Login auth adapter, A01/A02/A28, smoke suite in CI** · tool `claude-code` · P1 · not ready · baseline `feature/fma-foundation-v1@1d2d2c7` · environment: Staging only under FA-001; no staging environment is provisioned yet · deployment not allowed.
 
 > First build step after the merge: it turns the verified database foundation into a running staging environment behind the A-043 UI, using Google Login per D-035. The founder issues the task ID and grants staging deployment when ready.
 
@@ -166,3 +150,4 @@ Top five (Risk Register): Unsupported claims · Sensitive-data leakage · Episte
 - A-044-R2 — `claude-code` — completed — [docs/ai/tool-output/claude-code/A-044-R2/HANDOFF.json](tool-output/claude-code/A-044-R2/HANDOFF.json)
 - A-047 — `gemini` — blocked — [docs/ai/tool-output/gemini/A-047/HANDOFF.json](tool-output/gemini/A-047/HANDOFF.json)
 - A-048 — `claude-code` — completed — [docs/ai/tool-output/claude-code/A-048/HANDOFF.json](tool-output/claude-code/A-048/HANDOFF.json)
+- A-062 — `claude-code` — completed — [docs/ai/tool-output/claude-code/A-062/HANDOFF.json](tool-output/claude-code/A-062/HANDOFF.json)
